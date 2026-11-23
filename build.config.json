@@ -1,17 +1,5 @@
 {
-  "name": "Nombra",
   "filePrefix": "nombra",
-  "envPrefix": "NOMBRA",
-  "apkDrive": "D:/Mi unidad/APK",
-  "androidHome": "C:/Android/Sdk",
-  "javaHome": "C:/Program Files/Microsoft/jdk-17.0.20.101-hotspot",
-  "tempDir": "C:/gtmp",
-  "signing": {
-    "propertiesFile": "~/keys/nombra-upload.properties",
-    "passAsGradleProps": true
-  },
-  "env": {
-    "development": { "EXPO_PUBLIC_APP_ENV": "development" },
-    "production": { "EXPO_PUBLIC_APP_ENV": "production" }
-  }
+  "driveDir": "D:/Mi unidad/APK",
+  "uploadKeyPropertiesFile": "~/keys/nombra-upload.properties"
 }
