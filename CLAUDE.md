@@ -36,15 +36,17 @@ Ejecuta analyze y test antes de dar una tarea por terminada.
 - Estándar completo: `STANDARD.md`. Builds: `dart run scripts/build.dart` (ver `docs/BUILD.md`).
 
 ## Mapa de arquitectura
-- `lib/main.dart`: arranque (Firebase + `ProviderScope`). `lib/app/`: `NombraApp` y rutas.
-- `lib/core/`: `environment.dart` (flavors dev/prod), `bootstrap.dart`, `constants/tokens.dart`, `theme/`.
-- `lib/features/<feature>/`: pantallas, providers y repositorios de cada funcionalidad.
-- `lib/l10n/`: `.arb` (es, en). `android/`: flavors, firma y plugins de Firebase. Detalle en `docs/ARCHITECTURE.md`.
+- `lib/main.dart`: arranque (`main` y `shareMain`, la hoja de compartir). `lib/app/`: `NombraApp`, rutas y navegación.
+- `lib/core/`: `environment.dart` (flavors), `bootstrap.dart`, `constants/tokens.dart`, `theme/`, `widgets/` comunes.
+- `lib/features/`: `rules/` (reglas, editor), `download/` (inicio, descargas, guardado), `share/` (hoja de compartir), `naming/` (selector de regla y carpeta compartido), `settings/`.
+- `lib/l10n/`: `.arb` (es, en). `android/`: flavors, firma, Firebase y `ShareActivity`. Detalle en `docs/ARCHITECTURE.md`.
 
 ## Reglas vigentes
 - Flutter como plataforma: [001](docs/decisions/001-flutter.md). Estado con Riverpod: [002](docs/decisions/002-riverpod.md). Rutas con go_router: [003](docs/decisions/003-go-router.md).
 - Flavors `dev`/`prod`, Firebase nativo, una config por flavor: [004](docs/decisions/004-flavors-firebase.md).
 - Textos con `gen-l10n` (es y en): [005](docs/decisions/005-l10n.md). Builds locales con `scripts/build.dart`: [006](docs/decisions/006-local-build.md).
+- Datos en `shared_preferences` (JSON): [007](docs/decisions/007-persistence.md). Descarga con `background_downloader` y guardado por MediaStore, `minSdk` 29: [008](docs/decisions/008-download-and-save.md).
+- Compartir con `ShareActivity` translúcida y `shareMain`: [009](docs/decisions/009-share-intent.md). Fuentes empaquetadas, sin `google_fonts`: [010](docs/decisions/010-fonts.md).
 
 ## Qué no hacer
 

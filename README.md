@@ -1,10 +1,14 @@
 # Nombra
 
-App móvil Android hecha con Flutter, Riverpod, go_router y Firebase (Firestore y Crashlytics).
+App móvil Android para descargar un archivo y renombrarlo según reglas configurables. También aparece al compartir un archivo o un enlace desde otra app. Hecha con Flutter, Riverpod, go_router y Firebase (Crashlytics).
 
 ## Qué incluye
 
-- App Flutter mínima en `lib/`, con i18n (es y en), tema claro y oscuro y tokens de estilo.
+- Descarga desde una URL en segundo plano, con progreso y reintentos.
+- Reglas de renombrado: patrón con elementos (`{name}`, `{date}`, `{time}`, `{n:3}`, `{domain}`, `{type}`), mayúsculas, espacios, limpieza de nombre, carpeta de destino y qué hacer si el archivo existe.
+- Modo rápido (prefijo y sufijo) y carpeta de destino en Download, Documents, Pictures, Movies o Music.
+- Hoja "Guardar con Nombra" al compartir un archivo o un enlace desde otra app.
+- i18n (es y en), tema claro y oscuro y tokens de estilo.
 - Dos flavors de Android: `dev` y `prod`, cada uno con su paquete y su proyecto de Firebase.
 - `scripts/build.dart`: APK y AAB locales, firma de subida y copia a Drive.
 - `scripts/check_styles.dart`: verifica que los estilos salgan de los tokens.
@@ -14,6 +18,7 @@ App móvil Android hecha con Flutter, Riverpod, go_router y Firebase (Firestore 
 ## Requisitos
 
 - Flutter 3.50 o superior (incluye Dart 3.14), Java 17 o superior y el SDK de Android.
+- Un teléfono con Android 10 o superior (`minSdk` 29).
 - Un proyecto de Firebase por flavor (opcional para empezar: sin él la app arranca sin Firebase).
 
 ## Empezar
@@ -39,7 +44,7 @@ Para activar Firebase, descarga el `google-services.json` de cada proyecto y gu�
 | Comando | Qué hace |
 |---|---|
 | `dart run scripts/build.dart [--flavor dev\|prod] [--aab] [--upload]` | Compila APK o AAB en `builds/` |
-| `flutter analyze` · `flutter test` | Verificaciones antes de commitear |
+| `flutter analyze` · `flutter test` | Verificaciones antes de commitear (63 tests) |
 | `dart run scripts/check_styles.dart` | Revisa los tokens de estilo |
 | `flutter gen-l10n` | Regenera los textos tras editar `lib/l10n/*.arb` |
 
@@ -48,9 +53,9 @@ Para activar Firebase, descarga el `google-services.json` de cada proyecto y gu�
 ```
 lib/app/       NombraApp y rutas (go_router)
 lib/core/      entorno, arranque, tokens y tema
-lib/features/  una carpeta por funcionalidad
+lib/features/  rules, download, share, naming y settings
 lib/l10n/      textos (es y en)
-android/       flavors, firma y plugins de Firebase
+android/       flavors, firma, Firebase y ShareActivity (compartir)
 scripts/       build.dart y check_styles.dart
 docs/          gitflow, arquitectura, build y decisiones
 ```
