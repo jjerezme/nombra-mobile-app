@@ -1,0 +1,160 @@
+import '../../rules/domain/file_kind.dart';
+import '../../rules/domain/filename_builder.dart';
+import '../../rules/domain/rename_rule.dart';
+import '../../rules/domain/storage_root.dart';
+
+/// Everything decided before saving: where, under which rule, and optionally a hand-typed name.
+class DownloadPlan {
+  const DownloadPlan({
+    required this.folder,
+    this.url,
+    this.rule,
+    this.prefix = '',
+    this.suffix = '',
+    this.fixedFileName,
+  });
+
+  factory DownloadPlan.fromJson(Map<String, dynamic> json) => DownloadPlan(
+    url: json['url'] as String?,
+    folder: DestinationFolder.fromJson(json['folder'] as Map<String, dynamic>),
+    rule: json['rule'] == null ? null : RenameRule.fromJson(json['rule'] as Map<String, dynamic>),
+    prefix: json['prefix'] as String? ?? '',
+    suffix: json['suffix'] as String? ?? '',
+    fixedFileName: json['fixedFileName'] as String?,
+  );
+
+  /// Null when the file is already on the device (a shared file).
+  final String? url;
+  final DestinationFolder folder;
+
+  /// Snapshot of the rule; null means quick mode (prefix and suffix).
+  final RenameRule? rule;
+  final String prefix;
+  final String suffix;
+
+  /// A name the user typed by hand; wins over the rule.
+  final String? fixedFileName;
+
+  ConflictPolicy get conflict => rule?.conflict ?? ConflictPolicy.suffix;
+
+  bool get usesCounter => rule?.tokens.any((token) => RegExp(r'^\{n:\d+\}$').hasMatch(token)) ?? false;
+
+  /// Final file name for [source]; [takeCounter] is only called when the rule has a counter token.
+  String nameFor(SourceFile source, {required DateTime now, required int Function(String ruleId) takeCounter}) {
+    final fixed = fixedFileName;
+    if (fixed != null) return fixed;
+    final selected = rule;
+    if (selected == null) return buildQuickFileName(prefix, suffix, source);
+    return buildFileName(selected, source, now: now, counter: usesCounter ? takeCounter(selected.id) : null);
+  }
+
+  Map<String, dynamic> toJson() => {
+    'url': url,
+    'folder': folder.toJson(),
+    'rule': rule?.toJson(),
+    'prefix': prefix,
+    'suffix': suffix,
+    'fixedFileName': fixedFileName,
+  };
+}
+
+enum DownloadStatus { queued, running, finalizing, done, failed }
+
+enum DownloadError { http, notFound, failed, save }
+
+class DownloadItem {
+  const DownloadItem({
+    required this.id,
+    required this.fileName,
+    required this.status,
+    required this.plan,
+    required this.createdAt,
+    this.progress = 0,
+    this.receivedBytes,
+    this.totalBytes,
+    this.speedMegabytes,
+    this.folderPath = '',
+    this.finishedAt,
+    this.error,
+    this.httpCode,
+    this.fallbackKind,
+  });
+
+  factory DownloadItem.fromJson(Map<String, dynamic> json) => DownloadItem(
+    id: json['id'] as String,
+    fileName: json['fileName'] as String,
+    status: DownloadStatus.values.firstWhere((s) => s.name == json['status'], orElse: () => DownloadStatus.failed),
+    plan: DownloadPlan.fromJson(json['plan'] as Map<String, dynamic>),
+    createdAt: DateTime.fromMillisecondsSinceEpoch(json['createdAt'] as int),
+    folderPath: json['folderPath'] as String? ?? '',
+    finishedAt: json['finishedAt'] == null ? null : DateTime.fromMillisecondsSinceEpoch(json['finishedAt'] as int),
+    error: DownloadError.values.where((e) => e.name == json['error']).firstOrNull,
+    httpCode: json['httpCode'] as int?,
+    fallbackKind: FileKind.values.where((k) => k.name == json['fallbackKind']).firstOrNull,
+  );
+
+  final String id;
+  final String fileName;
+  final DownloadStatus status;
+  final DownloadPlan plan;
+  final DateTime createdAt;
+  final double progress;
+  final int? receivedBytes;
+  final int? totalBytes;
+  final double? speedMegabytes;
+
+  /// `/Download/Nombra`, set when the file is saved.
+  final String folderPath;
+  final DateTime? finishedAt;
+  final DownloadError? error;
+  final int? httpCode;
+
+  /// Set when the file could not go in the chosen folder and was saved in Download.
+  final FileKind? fallbackKind;
+
+  bool get isActive =>
+      status == DownloadStatus.queued || status == DownloadStatus.running || status == DownloadStatus.finalizing;
+
+  DownloadItem copyWith({
+    String? fileName,
+    DownloadStatus? status,
+    double? progress,
+    int? receivedBytes,
+    int? totalBytes,
+    double? speedMegabytes,
+    String? folderPath,
+    DateTime? finishedAt,
+    DownloadError? error,
+    int? httpCode,
+    FileKind? fallbackKind,
+    bool clearError = false,
+  }) => DownloadItem(
+    id: id,
+    fileName: fileName ?? this.fileName,
+    status: status ?? this.status,
+    plan: plan,
+    createdAt: createdAt,
+    progress: progress ?? this.progress,
+    receivedBytes: receivedBytes ?? this.receivedBytes,
+    totalBytes: totalBytes ?? this.totalBytes,
+    speedMegabytes: speedMegabytes ?? this.speedMegabytes,
+    folderPath: folderPath ?? this.folderPath,
+    finishedAt: finishedAt ?? this.finishedAt,
+    error: clearError ? null : error ?? this.error,
+    httpCode: clearError ? null : httpCode ?? this.httpCode,
+    fallbackKind: fallbackKind ?? this.fallbackKind,
+  );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'fileName': fileName,
+    'status': status.name,
+    'plan': plan.toJson(),
+    'createdAt': createdAt.millisecondsSinceEpoch,
+    'folderPath': folderPath,
+    'finishedAt': finishedAt?.millisecondsSinceEpoch,
+    'error': error?.name,
+    'httpCode': httpCode,
+    'fallbackKind': fallbackKind?.name,
+  };
+}
