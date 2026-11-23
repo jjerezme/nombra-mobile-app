@@ -1,6 +1,271 @@
 {
   "@@locale": "es",
   "appName": "Nombra",
-  "homeTitle": "Hola",
-  "homeSubtitle": "Esta es la app Nombra"
+  "navDownload": "Descargar",
+  "navRules": "Reglas",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "change": "Cambiar",
+  "retry": "Reintentar",
+  "delete": "Eliminar",
+  "accept": "Aceptar",
+  "modeSaved": "Guardada",
+  "modeQuick": "Rápida",
+  "ruleLabel": "Regla",
+  "ruleRemembered": "Se recuerda la última usada",
+  "editRules": "Editar reglas",
+  "noEnabledRules": "No hay reglas activas. Actívalas en Reglas.",
+  "prefix": "Prefijo",
+  "suffix": "Sufijo",
+  "prefixHint": "p. ej. acme_",
+  "suffixHint": "p. ej. _v2",
+  "saveIn": "Guardar en · {source}",
+  "@saveIn": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "folderSourceLastUsed": "última usada",
+  "folderSourceChosen": "elegida",
+  "folderSourceRule": "según regla «{rule}»",
+  "@folderSourceRule": {
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "changeFolderTooltip": "Cambiar carpeta de destino",
+  "homeUrlLabel": "URL del archivo",
+  "homePasteTooltip": "Pegar del portapapeles",
+  "homeUrlInvalid": "Introduce una URL http o https válida",
+  "homeSavedAs": "Se guardará como",
+  "homePreviewEmpty": "Pega una URL para ver el nombre",
+  "homeDownload": "Descargar",
+  "homeRecents": "Recientes",
+  "homeRecentsEmpty": "Aún no hay descargas",
+  "homeProgress": "{received} de {total} · {speed}",
+  "@homeProgress": {
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
+  "homeProgressNoTotal": "{received} · {speed}",
+  "@homeProgressNoTotal": {
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
+  "homeWaiting": "En espera…",
+  "homeFinishing": "Guardando…",
+  "homeSavedIn": "Guardado en {folder} · {when}",
+  "@homeSavedIn": {
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "homeFailedHttp": "Error {code} · no se pudo descargar",
+  "@homeFailedHttp": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+  "homeFailed": "No se pudo descargar",
+  "homeFailedSave": "No se pudo guardar el archivo",
+  "homeNotFound": "Error 404 · no se encontró el archivo",
+  "homeFallbackDownload": "Se guardó en Download: {kind} no admite esta carpeta",
+  "@homeFallbackDownload": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNotificationsRationale": "Activa las notificaciones para ver el progreso de las descargas.",
+  "relativeNow": "ahora",
+  "relativeMinutes": "hace {minutes} min",
+  "@relativeMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "relativeHours": "hace {hours} h",
+  "@relativeHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "relativeDays": "hace {days} d",
+  "@relativeDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "downloadNotificationRunning": "Descargando {filename}",
+  "downloadNotificationComplete": "Descarga completa",
+  "downloadNotificationError": "No se pudo descargar",
+  "shareTitle": "Guardar con Nombra",
+  "shareFileCount": "{count} archivos",
+  "@shareFileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "shareFinalName": "Nombre final",
+  "shareExtensionKept": "La extensión se mantiene. Toca el nombre para ajustarlo a mano.",
+  "shareRememberDefault": "Recordar como predeterminada para {kind}",
+  "@shareRememberDefault": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "kindImage": "imágenes",
+  "kindVideo": "videos",
+  "kindAudio": "audios",
+  "kindDocument": "documentos",
+  "kindOther": "archivos",
+  "shareNothing": "No hay un enlace ni archivos para guardar.",
+  "shareClose": "Cerrar",
+  "shareDownloading": "Descargando…",
+  "shareDone": "Listo, guardado en {folder}",
+  "@shareDone": {
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "shareLeaveHint": "Puedes cerrar esta hoja: el archivo terminará de guardarse la próxima vez que abras Nombra.",
+  "rulesTitle": "Reglas",
+  "rulesSubtitle": "Las reglas activas aparecen en este orden al descargar o compartir. Arrastra para reordenarlas.",
+  "ruleDefaultBadge": "Predeterminada",
+  "ruleNoFolder": "Sin carpeta · última usada",
+  "ruleToggleLabel": "Activar regla {name}",
+  "@ruleToggleLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ruleReorderHandle": "Arrastrar para reordenar",
+  "newRule": "Nueva regla",
+  "editorTitleEdit": "Editar regla",
+  "editorTitleNew": "Nueva regla",
+  "editorBackTooltip": "Volver a Reglas",
+  "editorRuleName": "Nombre de la regla",
+  "editorNameRequired": "Escribe un nombre",
+  "editorPattern": "Patrón",
+  "editorBackspaceTooltip": "Borrar último elemento",
+  "editorTapToInsert": "Toca para insertar",
+  "editorAddText": "Texto…",
+  "editorTextDialogTitle": "Texto fijo",
+  "editorTextDialogHint": "p. ej. Factura_",
+  "editorExample": "Ejemplo · {name}",
+  "@editorExample": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorTransformTitle": "Transformar nombre",
+  "editorCase": "Mayúsculas / minúsculas",
+  "editorCaseKeep": "Por defecto",
+  "editorCaseUpper": "MAYÚSCULAS",
+  "editorCaseLower": "minúsculas",
+  "editorStripCopy": "Quitar sufijos de copia «(2)»",
+  "editorReplaceSpaces": "Reemplazar espacios",
+  "editorReplaceWith": "Reemplazar por",
+  "editorSpaceDash": "guion",
+  "editorSpaceUnderscore": "guion bajo",
+  "editorSpaceDot": "punto",
+  "editorReplaceWithChar": "Reemplazar por {name}",
+  "@editorReplaceWithChar": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSanitize": "Sanitizar nombre",
+  "editorSanitizeDesc": "Quita acentos (á → a), emojis y caracteres no válidos en archivos ( / \\ : * ? \" < > | ), y deja solo letras, números, - _ y punto.",
+  "editorFolderTitle": "Carpeta de destino",
+  "editorOptional": "(opcional)",
+  "editorFolderAlways": "Los archivos con esta regla se guardan siempre aquí.",
+  "editorRemoveFolderTooltip": "Quitar carpeta",
+  "editorNoFolderTitle": "Sin carpeta asignada",
+  "editorNoFolderDesc": "Se usará la última carpeta en la que guardaste, y podrás cambiarla al descargar o compartir.",
+  "editorPickFolder": "Elegir carpeta…",
+  "editorIfExists": "Si el nombre ya existe",
+  "editorConflictSuffix": "Añadir (1)",
+  "editorConflictReplace": "Reemplazar",
+  "editorConflictAsk": "Preguntar",
+  "editorDeleteRule": "Eliminar regla",
+  "editorDeleteTitle": "¿Eliminar la regla?",
+  "editorDeleteBody": "Se eliminará «{name}». Esta acción no se puede deshacer.",
+  "@editorDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "folderPickerTitle": "Elegir carpeta",
+  "folderPickerRoot": "Ubicación",
+  "folderPickerSubfolder": "Subcarpeta (opcional)",
+  "folderPickerSubfolderHint": "p. ej. Nombra/Facturas",
+  "folderPickerUse": "Usar esta carpeta",
+  "conflictTitle": "El archivo ya existe",
+  "conflictBody": "«{name}» ya está en {folder}.",
+  "@conflictBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "conflictReplace": "Reemplazar",
+  "conflictKeepBoth": "Conservar ambos",
+  "seedOriginal": "Original",
+  "seedDateName": "Fecha + nombre",
+  "seedClean": "Limpio",
+  "seedInvoices": "Facturas",
+  "seedPhotos": "Fotos limpias",
+  "seedInvoicePrefix": "Factura_"
 }

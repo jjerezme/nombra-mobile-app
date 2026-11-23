@@ -1,6 +1,271 @@
 {
   "@@locale": "en",
   "appName": "Nombra",
-  "homeTitle": "Hello",
-  "homeSubtitle": "This is the Nombra app"
+  "navDownload": "Download",
+  "navRules": "Rules",
+  "cancel": "Cancel",
+  "save": "Save",
+  "change": "Change",
+  "retry": "Retry",
+  "delete": "Delete",
+  "accept": "OK",
+  "modeSaved": "Saved",
+  "modeQuick": "Quick",
+  "ruleLabel": "Rule",
+  "ruleRemembered": "The last one used is remembered",
+  "editRules": "Edit rules",
+  "noEnabledRules": "There are no active rules. Turn them on in Rules.",
+  "prefix": "Prefix",
+  "suffix": "Suffix",
+  "prefixHint": "e.g. acme_",
+  "suffixHint": "e.g. _v2",
+  "saveIn": "Save to · {source}",
+  "@saveIn": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "folderSourceLastUsed": "last used",
+  "folderSourceChosen": "chosen",
+  "folderSourceRule": "from rule “{rule}”",
+  "@folderSourceRule": {
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "changeFolderTooltip": "Change destination folder",
+  "homeUrlLabel": "File URL",
+  "homePasteTooltip": "Paste from clipboard",
+  "homeUrlInvalid": "Enter a valid http or https URL",
+  "homeSavedAs": "It will be saved as",
+  "homePreviewEmpty": "Paste a URL to see the name",
+  "homeDownload": "Download",
+  "homeRecents": "Recent",
+  "homeRecentsEmpty": "No downloads yet",
+  "homeProgress": "{received} of {total} · {speed}",
+  "@homeProgress": {
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
+  "homeProgressNoTotal": "{received} · {speed}",
+  "@homeProgressNoTotal": {
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
+  "homeWaiting": "Waiting…",
+  "homeFinishing": "Saving…",
+  "homeSavedIn": "Saved to {folder} · {when}",
+  "@homeSavedIn": {
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "homeFailedHttp": "Error {code} · could not download",
+  "@homeFailedHttp": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+  "homeFailed": "Could not download",
+  "homeFailedSave": "Could not save the file",
+  "homeNotFound": "Error 404 · file not found",
+  "homeFallbackDownload": "Saved to Download: {kind} cannot go in this folder",
+  "@homeFallbackDownload": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNotificationsRationale": "Turn on notifications to see download progress.",
+  "relativeNow": "now",
+  "relativeMinutes": "{minutes} min ago",
+  "@relativeMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "relativeHours": "{hours} h ago",
+  "@relativeHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "relativeDays": "{days} d ago",
+  "@relativeDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "downloadNotificationRunning": "Downloading {filename}",
+  "downloadNotificationComplete": "Download complete",
+  "downloadNotificationError": "Could not download",
+  "shareTitle": "Save with Nombra",
+  "shareFileCount": "{count} files",
+  "@shareFileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "shareFinalName": "Final name",
+  "shareExtensionKept": "The extension is kept. Tap the name to adjust it by hand.",
+  "shareRememberDefault": "Remember as default for {kind}",
+  "@shareRememberDefault": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "kindImage": "images",
+  "kindVideo": "videos",
+  "kindAudio": "audio files",
+  "kindDocument": "documents",
+  "kindOther": "files",
+  "shareNothing": "There is no link or file to save.",
+  "shareClose": "Close",
+  "shareDownloading": "Downloading…",
+  "shareDone": "Done, saved to {folder}",
+  "@shareDone": {
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "shareLeaveHint": "You can close this sheet: the file will finish saving the next time you open Nombra.",
+  "rulesTitle": "Rules",
+  "rulesSubtitle": "Active rules appear in this order when you download or share. Drag to reorder them.",
+  "ruleDefaultBadge": "Default",
+  "ruleNoFolder": "No folder · last used",
+  "ruleToggleLabel": "Turn on rule {name}",
+  "@ruleToggleLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ruleReorderHandle": "Drag to reorder",
+  "newRule": "New rule",
+  "editorTitleEdit": "Edit rule",
+  "editorTitleNew": "New rule",
+  "editorBackTooltip": "Back to Rules",
+  "editorRuleName": "Rule name",
+  "editorNameRequired": "Enter a name",
+  "editorPattern": "Pattern",
+  "editorBackspaceTooltip": "Delete last item",
+  "editorTapToInsert": "Tap to insert",
+  "editorAddText": "Text…",
+  "editorTextDialogTitle": "Fixed text",
+  "editorTextDialogHint": "e.g. Invoice_",
+  "editorExample": "Example · {name}",
+  "@editorExample": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorTransformTitle": "Transform name",
+  "editorCase": "Upper / lower case",
+  "editorCaseKeep": "Default",
+  "editorCaseUpper": "UPPERCASE",
+  "editorCaseLower": "lowercase",
+  "editorStripCopy": "Remove copy suffixes “(2)”",
+  "editorReplaceSpaces": "Replace spaces",
+  "editorReplaceWith": "Replace with",
+  "editorSpaceDash": "hyphen",
+  "editorSpaceUnderscore": "underscore",
+  "editorSpaceDot": "dot",
+  "editorReplaceWithChar": "Replace with {name}",
+  "@editorReplaceWithChar": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSanitize": "Sanitize name",
+  "editorSanitizeDesc": "Removes accents (á → a), emojis and characters not valid in file names ( / \\ : * ? \" < > | ), keeping only letters, digits, - _ and dots.",
+  "editorFolderTitle": "Destination folder",
+  "editorOptional": "(optional)",
+  "editorFolderAlways": "Files with this rule are always saved here.",
+  "editorRemoveFolderTooltip": "Remove folder",
+  "editorNoFolderTitle": "No folder assigned",
+  "editorNoFolderDesc": "The last folder you saved to will be used, and you can change it when you download or share.",
+  "editorPickFolder": "Choose folder…",
+  "editorIfExists": "If the name already exists",
+  "editorConflictSuffix": "Add (1)",
+  "editorConflictReplace": "Replace",
+  "editorConflictAsk": "Ask",
+  "editorDeleteRule": "Delete rule",
+  "editorDeleteTitle": "Delete the rule?",
+  "editorDeleteBody": "“{name}” will be deleted. This cannot be undone.",
+  "@editorDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "folderPickerTitle": "Choose folder",
+  "folderPickerRoot": "Location",
+  "folderPickerSubfolder": "Subfolder (optional)",
+  "folderPickerSubfolderHint": "e.g. Nombra/Invoices",
+  "folderPickerUse": "Use this folder",
+  "conflictTitle": "The file already exists",
+  "conflictBody": "“{name}” is already in {folder}.",
+  "@conflictBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "conflictReplace": "Replace",
+  "conflictKeepBoth": "Keep both",
+  "seedOriginal": "Original",
+  "seedDateName": "Date + name",
+  "seedClean": "Clean",
+  "seedInvoices": "Invoices",
+  "seedPhotos": "Clean photos",
+  "seedInvoicePrefix": "Invoice_"
 }

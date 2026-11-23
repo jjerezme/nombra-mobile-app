@@ -43,6 +43,8 @@ dependencies:
   firebase_crashlytics: ^6.1.0
   flutter_localizations:
     sdk: flutter
+  background_downloader: ^9.6.6
+  shared_preferences: ^2.5.6
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +63,14 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   generate: true
+
+  fonts:
+    - family: IBMPlexSans
+      fonts:
+        - asset: assets/fonts/IBMPlexSans-Variable.ttf
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Variable.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
