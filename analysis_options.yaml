@@ -12,3 +12,6 @@ linter:
     prefer_single_quotes: true
     require_trailing_commas: true
     always_use_package_imports: false
+
+formatter:
+  page_width: 120

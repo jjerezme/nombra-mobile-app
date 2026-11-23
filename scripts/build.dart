@@ -15,8 +15,7 @@ Never _fail(String message) {
 
 String _expandHome(String path) {
   if (!path.startsWith('~')) return path;
-  final home =
-      Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'] ?? '';
+  final home = Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'] ?? '';
   return home + path.substring(1);
 }
 
@@ -31,9 +30,7 @@ Map<String, String> _readProperties(String path) {
     }
     final index = trimmed.indexOf('=');
     if (index > 0) {
-      result[trimmed.substring(0, index).trim()] = trimmed
-          .substring(index + 1)
-          .trim();
+      result[trimmed.substring(0, index).trim()] = trimmed.substring(index + 1).trim();
     }
   }
   return result;
@@ -60,9 +57,7 @@ Future<void> main(List<String> args) async {
   }
   if (flavor != 'dev' && flavor != 'prod') _fail('flavor must be dev or prod');
 
-  final config = jsonDecode(
-    File('build.config.json').readAsStringSync(),
-  ) as Map<String, dynamic>;
+  final config = jsonDecode(File('build.config.json').readAsStringSync()) as Map<String, dynamic>;
   final prefix = config['filePrefix'] as String;
 
   final versionMatch = RegExp(
@@ -77,25 +72,15 @@ Future<void> main(List<String> args) async {
   final keyFile = config['uploadKeyPropertiesFile'] as String?;
   if (flavor == 'prod') {
     if (keyFile == null) {
-      _fail(
-        'uploadKeyPropertiesFile is required in build.config.json for prod',
-      );
+      _fail('uploadKeyPropertiesFile is required in build.config.json for prod');
     }
     final key = _readProperties(keyFile);
-    for (final name in [
-      'storeFile',
-      'storePassword',
-      'keyAlias',
-      'keyPassword',
-    ]) {
+    for (final name in ['storeFile', 'storePassword', 'keyAlias', 'keyPassword']) {
       if (key[name] == null) _fail('$name is missing in $keyFile');
     }
     // Gradle properties through the environment: passwords never show in a command line.
-    environment['ORG_GRADLE_PROJECT_UPLOAD_STORE_FILE'] = _expandHome(
-      key['storeFile']!,
-    );
-    environment['ORG_GRADLE_PROJECT_UPLOAD_STORE_PASSWORD'] =
-        key['storePassword']!;
+    environment['ORG_GRADLE_PROJECT_UPLOAD_STORE_FILE'] = _expandHome(key['storeFile']!);
+    environment['ORG_GRADLE_PROJECT_UPLOAD_STORE_PASSWORD'] = key['storePassword']!;
     environment['ORG_GRADLE_PROJECT_UPLOAD_KEY_ALIAS'] = key['keyAlias']!;
     environment['ORG_GRADLE_PROJECT_UPLOAD_KEY_PASSWORD'] = key['keyPassword']!;
   }
