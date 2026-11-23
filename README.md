@@ -1,61 +1,62 @@
 # Nombra
 
-Plantilla y estándar de las apps móviles propias (Android, Expo + React Native + Firebase con SDK nativo). Cada proyecto nuevo parte de aquí.
+App móvil Android hecha con Flutter, Riverpod, go_router y Firebase (Firestore y Crashlytics).
 
 ## Qué incluye
 
-- `STANDARD.md`: estándar técnico y de documentación (incluye el formato del README).
-- `CLAUDE.md` y `AGENTS.md`: instrucciones para agentes de IA (esqueleto fijo).
-- App Expo mínima en `src/`, con i18n, tokens de estilo y `check:styles`.
+- App Flutter mínima en `lib/`, con i18n (es y en), tema claro y oscuro y tokens de estilo.
+- Dos flavors de Android: `dev` y `prod`, cada uno con su paquete y su proyecto de Firebase.
+- `scripts/build.dart`: APK y AAB locales, firma de subida y copia a Drive.
+- `scripts/check_styles.dart`: verifica que los estilos salgan de los tokens.
 - `.github/`: CI, Dependabot y plantilla de PR.
-- `build.config.json`: configura el `build-apk` compartido (`@jujeme/mobile-tools`).
-- `docs/`: `GITFLOW.md`, `README.template.md` y la carpeta de ADR.
+- `docs/`: Gitflow, arquitectura, build y decisiones (ADR).
 
 ## Requisitos
 
-- Node.js 20 o superior, Java 17 y el SDK de Android.
-- Hace falta un build nativo (dev client o APK): Firebase usa los SDK nativos y no funciona en Expo Go.
+- Flutter 3.50 o superior (incluye Dart 3.14), Java 17 o superior y el SDK de Android.
+- Un proyecto de Firebase por flavor (opcional para empezar: sin él la app arranca sin Firebase).
 
 ## Empezar
 
-Copia estos archivos a un proyecto nuevo y completa los marcadores `<!-- -->`; luego:
-
 ```bash
-npm install
-npm run apk -- --prebuild   # primer build (genera android/)
+flutter pub get
+flutter run --flavor dev
 ```
+
+Para activar Firebase, descarga el `google-services.json` de cada proyecto y guárdalo en `android/app/src/dev/` y `android/app/src/prod/`. No se versionan.
 
 ## Entornos
 
-| | Desarrollo (debug y preview) | Producción |
+| | Desarrollo (`dev`) | Producción (`prod`) |
 |---|---|---|
+| Nombre | Nombra Dev | Nombra |
 | Paquete de Android | `com.jujeme.nombra.dev` | `com.jujeme.nombra` |
-| Proyecto de Firebase | el que pongas en `firebase/dev/` | el que pongas en `firebase/prod/` |
-| `APP_VARIANT` | `development` / `preview` | `production` |
-
-Los valores reales están en `src/constants/environments.json`; ajústalos al crear el proyecto.
+| Proyecto de Firebase | el de `android/app/src/dev/` | el de `android/app/src/prod/` |
+| Firma | debug | llave de subida |
 
 ## Scripts
 
 | Comando | Qué hace |
 |---|---|
-| `npm run apk` / `apk:preview` / `apk:production` | Compila el APK de cada variante |
-| `npm run aab` | App Bundle para Google Play |
-| `npm run typecheck` · `lint` · `test` · `check:styles` | Verificaciones antes de commitear |
+| `dart run scripts/build.dart [--flavor dev\|prod] [--aab] [--upload]` | Compila APK o AAB en `builds/` |
+| `flutter analyze` · `flutter test` | Verificaciones antes de commitear |
+| `dart run scripts/check_styles.dart` | Revisa los tokens de estilo |
+| `flutter gen-l10n` | Regenera los textos tras editar `lib/l10n/*.arb` |
 
 ## Estructura
 
 ```
-src/app/       rutas (Expo Router)
-src/           components/, constants/, hooks/, i18n/, lib/
-scripts/       check-styles.mjs
-docs/          gitflow, plantilla de README y decisiones
-.github/       CI, Dependabot y plantilla de PR
+lib/app/       NombraApp y rutas (go_router)
+lib/core/      entorno, arranque, tokens y tema
+lib/features/  una carpeta por funcionalidad
+lib/l10n/      textos (es y en)
+android/       flavors, firma y plugins de Firebase
+scripts/       build.dart y check_styles.dart
+docs/          gitflow, arquitectura, build y decisiones
 ```
 
 ## Documentación
 
-- [`STANDARD.md`](STANDARD.md): estándar completo.
-- [`docs/README.template.md`](docs/README.template.md): plantilla del README de cada proyecto.
-- [`docs/GITFLOW.md`](docs/GITFLOW.md): ramas, releases y commits.
+- [`STANDARD.md`](STANDARD.md): estándar del proyecto.
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · [`docs/BUILD.md`](docs/BUILD.md) · [`docs/GITFLOW.md`](docs/GITFLOW.md)
 - [`CLAUDE.md`](CLAUDE.md) y [`AGENTS.md`](AGENTS.md): instrucciones para agentes de IA.

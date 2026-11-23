@@ -1,40 +1,38 @@
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+This is a Flutter mobile application (Android). Prioritize mobile-first patterns, performance and accessibility.
 
-## Expo has changed — do not trust your training data
+## Flutter changes fast — do not trust your training data
 
-Expo ships breaking changes every SDK release. APIs you remember are likely renamed, moved, or removed. Before writing any code that touches an Expo, EAS, or React Native API:
+Flutter and its packages ship breaking changes (this project uses Flutter 3.50, where Material moved to the `material_ui` package). Before writing code that touches a Flutter or package API:
 
-1. Read the major version of the `expo` package in `package.json`.
-2. Fetch the matching versioned docs: `https://docs.expo.dev/versions/v<major>.0.0/`
-3. For anything else, fetch https://docs.expo.dev/llms.txt — an index of all Expo docs with corrections to common LLM misconceptions. Follow its links to the specific page you need; never answer from memory.
+1. Read the versions in `pubspec.yaml` / `pubspec.lock`.
+2. Check the docs of that version: https://docs.flutter.dev and the package page on https://pub.dev.
+3. Trust `flutter analyze` over memory: deprecations and removals show up there.
 
 ## Commands
 
-Use `bunx` instead of `npx` if the project uses bun (`bun.lock` present).
-
 ```bash
-npx expo install <package>  # ALWAYS use instead of npm/yarn/pnpm/bun add — resolves SDK-compatible versions
-npx expo start              # start the dev server
-npx expo lint               # lint
-npx tsc --noEmit            # typecheck
-npx expo-doctor             # diagnose dependency and config issues
-npx expo install --fix      # fix incompatible package versions
+flutter pub add <package>          # ALWAYS use instead of editing pubspec.yaml by hand — resolves compatible versions
+flutter run --flavor dev           # run the development flavor
+flutter analyze                    # lint
+flutter test                       # tests
+dart format lib test scripts       # format
+dart run scripts/check_styles.dart # design tokens check
+flutter gen-l10n                   # regenerate lib/l10n/app_localizations*.dart after editing the .arb files
 ```
 
-Run `npm run lint` and `npm run typecheck` (and `npm test`) before declaring any task done.
+Run `flutter analyze`, `flutter test` and `dart run scripts/check_styles.dart` before declaring any task done.
 
 ## Navigation & Routing
 
-- Use **Expo Router** for all navigation. Routes live in the `app/` directory (`src/app/` in projects that use `src/`; see the architecture map in CLAUDE.md) — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside the routes directory.
-- Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
-- Docs: https://docs.expo.dev/router/introduction.md
+- Use **go_router**. Routes are declared in `lib/app/router.dart`; screens live in `lib/features/<feature>/`. Navigate with `context.go` / `context.push`, never with raw `Navigator` calls.
+- Docs: https://pub.dev/packages/go_router
 
 ## Builds
 
-Builds are local, not EAS: `npm run apk`, `apk:preview`, `apk:production` and `aab` (where defined) run `build-apk` from `@jujeme/mobile-tools`, configured in `build.config.json`. After adding a native library run `npm run apk -- --prebuild`. Details in `docs/BUILD.md`. Do not use `eas build`, `eas submit` or `eas update`.
+Builds are local: `dart run scripts/build.dart [--flavor dev|prod] [--aab] [--upload]`, configured in `build.config.json`. Details in `docs/BUILD.md`. Do not add Codemagic, Fastlane or other hosted build services.
 
 ## Rules
 
-- If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
-- Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `npm run apk` (dev client build).
-- Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+- `android/` is versioned, but edit it only for native configuration (flavors, signing, Firebase plugins). Do not hand-edit generated files (`GeneratedPluginRegistrant.java`, `lib/l10n/app_localizations*.dart`).
+- Add Flutter/Dart packages with `flutter pub add`; after adding a package with native code, do a full rebuild (`flutter run`), not a hot reload.
+- Prefer first-party and well-maintained pub.dev packages, and check your available skills before adding dependencies.

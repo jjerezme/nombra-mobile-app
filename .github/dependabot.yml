@@ -1,15 +1,16 @@
 version: 2
 updates:
-  - package-ecosystem: npm
+  - package-ecosystem: pub
     directory: /
     schedule:
       interval: weekly
     target-branch: develop
     open-pull-requests-limit: 5
-    ignore:
-      # El SDK de Expo se actualiza a mano y a la vez en todos los proyectos.
-      - dependency-name: expo
-        update-types: ["version-update:semver-major"]
+  - package-ecosystem: gradle
+    directory: /android
+    schedule:
+      interval: weekly
+    target-branch: develop
   - package-ecosystem: github-actions
     directory: /
     schedule:

@@ -3,16 +3,15 @@
 @AGENTS.md
 
 ## Resumen
-<!-- Qué es la app, en 2-3 líneas. -->
+Nombra: app móvil Android hecha con Flutter, Riverpod, go_router y Firebase (Firestore y Crashlytics). Parte de la plantilla `mobile-base`.
 
 ## Comandos de verificación
 ```bash
-npm run lint
-npm run typecheck
-npm test
-npm run check:styles
+flutter analyze
+flutter test
+dart run scripts/check_styles.dart
 ```
-Ejecuta lint, typecheck y test antes de dar una tarea por terminada.
+Ejecuta analyze y test antes de dar una tarea por terminada.
 
 ## Reglas de proceso y comunicación
 
@@ -24,29 +23,33 @@ Ejecuta lint, typecheck y test antes de dar una tarea por terminada.
 - Commits pequeños (uno por cambio lógico), en inglés, Conventional Commits, terminando con `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`. Ramas `feature/*` desde `develop` (ver `docs/GITFLOW.md`; la rama de producción es `master`).
 - **No hagas `git push`, PR, fusión a `master`, despliegues (reglas, Hosting) ni subidas a tiendas sin que el usuario lo pida.** Compila solo cuando se pida; cada compilación se copia también a Drive (`--upload`).
 - **Secretos fuera del chat y del repo.** Nunca escribas ni pidas contraseñas, frases de paso ni claves. `google-services*.json`, `.env`, llaves y keystores no se versionan.
-- Interfaz y documentación en español neutro (tuteo, sin voseo); identificadores, comentarios nuevos y commits en inglés. Toda cadena visible va en `src/i18n/` (es y en, con las mismas claves).
+- Interfaz y documentación en español neutro (tuteo, sin voseo); identificadores, comentarios nuevos y commits en inglés. Toda cadena visible va en `lib/l10n/` (es y en, con las mismas claves).
 - **Ningún archivo pasa de 500 líneas**; si se acerca a 400, pártelo. **Función pura nueva = test.**
 - Si una pantalla cambió, pruébala en un dispositivo real, en tema claro y oscuro y en todos los idiomas.
 
 ## Convenciones
 
-- **Estilos** (detalle en `STANDARD.md`): tamaños, espacios, radios, bordes y fuentes solo de `constants/tokens.ts` y `typography.ts`; colores solo de `useTheme().colors`. `npm run check:styles` lo verifica; excepción deliberada: `// style-ok` al final de la línea. Si ningún token calza, piensa si falta uno.
-- Los estilos de un componente son `createXStyles(colors)` con `StyleSheet.create`; si el archivo crece, van en un `styles.ts` con un hook `useXStyles()`.
-- **Nombres:** componentes `PascalCase.tsx`, hooks `useX.ts`, `lib/` y `constants/` `camelCase.ts`, rutas `kebab-case`; props de evento `onX`, manejadores `handleX`, booleanos `isX`/`hasX`; constantes fijas `SCREAMING_SNAKE`.
-- **Componentes:** revisa `components/` antes de crear uno; si ninguno sirve, pregunta antes de crear uno nuevo. Un componente por archivo con su `XProps`, sin acceso directo a Firestore. Toda lista cubre carga, error con "Reintentar" y vacío (`EmptyState`). Avisos y confirmaciones con `ConfirmDialog`/`MessageDialog`, nunca `Alert.alert`; hojas con `BottomSheetModal`.
-- Un `Pressable` solo con icono lleva `accessibilityRole` y `accessibilityLabel`; áreas táctiles de 48 dp (`hitSlopFor`); iconos de `@expo/vector-icons/MaterialIcons` por ruta directa. No hay pantalla de "sistema de diseño".
-- Estándar completo: `STANDARD.md`. Builds: `npm run apk` / `apk:preview` / `apk:production` / `aab` usan el `build-apk` compartido de `@jujeme/mobile-tools`, configurado en `build.config.json`; tras agregar una librería nativa, `npm run apk -- --prebuild`.
+- **Estilos** (detalle en `STANDARD.md`): tamaños, espacios, radios e iconos solo de `core/constants/tokens.dart` (`AppSpacing`, `AppRadius`, `AppIconSize`, `AppFontSize`); colores solo de `Theme.of(context).colorScheme`. `dart run scripts/check_styles.dart` lo verifica; excepción deliberada: `// style-ok` al final de la línea. Si ningún token calza, piensa si falta uno.
+- **Nombres:** archivos `snake_case.dart`; clases `PascalCase`; pantallas `XScreen`, widgets reutilizables `XWidget` solo si hace falta distinguirlos; providers `xProvider`; booleanos `isX`/`hasX`; constantes `lowerCamelCase` (estilo Dart).
+- **Widgets:** revisa `lib/core/widgets/` antes de crear uno; si ninguno sirve, pregunta antes de crear uno nuevo. Un widget público por archivo. Los widgets no acceden a Firestore: usan providers/repositorios. Toda lista cubre carga, error con "Reintentar" y vacío.
+- Un botón solo con icono lleva `tooltip`/`Semantics`; áreas táctiles de 48 dp (`minTouchTarget`).
+- Estándar completo: `STANDARD.md`. Builds: `dart run scripts/build.dart` (ver `docs/BUILD.md`).
 
 ## Mapa de arquitectura
-<!-- Carpetas clave y su responsabilidad. Detalle en docs/ARCHITECTURE.md. -->
+- `lib/main.dart`: arranque (Firebase + `ProviderScope`). `lib/app/`: `NombraApp` y rutas.
+- `lib/core/`: `environment.dart` (flavors dev/prod), `bootstrap.dart`, `constants/tokens.dart`, `theme/`.
+- `lib/features/<feature>/`: pantallas, providers y repositorios de cada funcionalidad.
+- `lib/l10n/`: `.arb` (es, en). `android/`: flavors, firma y plugins de Firebase. Detalle en `docs/ARCHITECTURE.md`.
 
 ## Reglas vigentes
-<!-- Una línea por regla + enlace a su ADR en docs/decisions/. -->
+- Flutter como plataforma: [001](docs/decisions/001-flutter.md). Estado con Riverpod: [002](docs/decisions/002-riverpod.md). Rutas con go_router: [003](docs/decisions/003-go-router.md).
+- Flavors `dev`/`prod`, Firebase nativo, una config por flavor: [004](docs/decisions/004-flavors-firebase.md).
+- Textos con `gen-l10n` (es y en): [005](docs/decisions/005-l10n.md). Builds locales con `scripts/build.dart`: [006](docs/decisions/006-local-build.md).
 
 ## Qué no hacer
 
 - No uses CLAUDE.md como diario ni dupliques el README.
-- No agregues JavaScript nuevo (salvo archivos de configuración) ni el SDK web de Firebase.
+- No agregues el SDK web de Firebase ni plugins de Firebase fuera de `firebase_core`, `cloud_firestore` y `firebase_crashlytics` sin preguntar.
 - No versiones `google-services*.json`, `.env`, keystores ni llaves.
 - No dejes reglas de Firestore con escritura libre.
 - No pongas números de estilo, colores ni textos sueltos en las pantallas.

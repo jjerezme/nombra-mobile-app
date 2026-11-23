@@ -1,6 +1,6 @@
 # <Nombre de la app>
 
-<!-- Qué es, plataforma y stack en una frase. Ejemplo: App móvil (Android) para ... Construida con Expo, React Native y Firebase (SDK nativo). -->
+<!-- Qué es, plataforma y stack en una frase. Ejemplo: App móvil (Android) para ... Construida con Flutter, Riverpod y Firebase. -->
 
 ## Qué incluye
 
@@ -9,44 +9,42 @@
 
 ## Requisitos
 
-- Node.js 20 o superior, Java 17 y el SDK de Android.
-- Hace falta un build nativo (dev client o APK): Firebase usa los SDK nativos y no funciona en Expo Go.
+- Flutter 3.50 o superior, Java 17 y el SDK de Android.
 
 ## Empezar
 
 ```bash
-npm install
-cp .env.example .env      # completa las variables
-# coloca firebase/dev/google-services.json (y firebase/prod/ para producción); no se versionan
-npm run apk -- --prebuild   # primer build (genera android/)
+flutter pub get
+# coloca android/app/src/dev/google-services.json (y src/prod/ para producción); no se versionan
+flutter run --flavor dev
 ```
 
-Detalles de builds, firma y Metro: [`docs/BUILD.md`](docs/BUILD.md).
+Detalles de builds y firma: [`docs/BUILD.md`](docs/BUILD.md).
 
 ## Entornos
 
-| | Desarrollo (debug y preview) | Producción |
+| | Desarrollo (`dev`) | Producción (`prod`) |
 |---|---|---|
 | Paquete de Android | `<com.jujeme.x.dev>` | `<com.jujeme.x>` |
 | Proyecto de Firebase | `<proyecto-dev>` | `<proyecto-prod>` |
-| `APP_VARIANT` | `development` / `preview` | `production` |
+| Firma | debug | llave de subida |
 
 ## Scripts
 
 | Comando | Qué hace |
 |---|---|
-| `npm run apk` / `apk:preview` / `apk:production` | Compila el APK de cada variante y lo copia a Drive |
-| `npm run aab` | App Bundle para Google Play |
-| `npm run typecheck` · `lint` · `test` · `check:styles` | Verificaciones antes de commitear |
+| `dart run scripts/build.dart [--flavor dev\|prod] [--aab] [--upload]` | Compila APK o AAB y lo copia a Drive |
+| `flutter analyze` · `flutter test` | Verificaciones antes de commitear |
+| `dart run scripts/check_styles.dart` | Revisa los tokens de estilo |
 
 ## Estructura
 
 ```
-src/app/       rutas (Expo Router)
-src/           componentes, lib/, context/, i18n/ (según el proyecto)
-firebase/      google-services.json por entorno (ignorados)
+lib/app/       app y rutas (go_router)
+lib/           core/, features/, l10n/
+android/       flavors, firma y Firebase (google-services.json ignorados)
 docs/          arquitectura, decisiones, builds, gitflow
-scripts/       utilidades (check-styles, ...)
+scripts/       build.dart y check_styles.dart
 ```
 
 ## Documentación
