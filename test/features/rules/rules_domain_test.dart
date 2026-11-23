@@ -1,0 +1,112 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:nombra/features/rules/domain/file_kind.dart';
+import 'package:nombra/features/rules/domain/filename_builder.dart';
+import 'package:nombra/features/rules/domain/name_resolver.dart';
+import 'package:nombra/features/rules/domain/rename_rule.dart';
+import 'package:nombra/features/rules/domain/storage_root.dart';
+import 'package:nombra/features/settings/app_settings.dart';
+
+void main() {
+  final now = DateTime(2026, 11, 23);
+  const source = SourceFile(name: 'a.pdf');
+  final dated = RenameRule(
+    id: 'dated',
+    name: 'Dated',
+    tokens: const [PatternTokens.date, '_', PatternTokens.name],
+    folder: DestinationFolder(StorageRoot.download, 'Nombra'),
+    isDefault: true,
+  );
+  final plain = RenameRule(id: 'plain', name: 'Plain', tokens: const [PatternTokens.name]);
+
+  test('DestinationFolder normalizes the subfolder and prints its path', () {
+    expect(DestinationFolder(StorageRoot.documents, r' /Facturas\2026/../x: ').path, '/Documents/Facturas/2026/x');
+    expect(DestinationFolder(StorageRoot.music).path, '/Music');
+  });
+
+  test('RenameRule survives a JSON round trip', () {
+    final rule = dated.copyWith(
+      caseMode: CaseMode.upper,
+      replaceSpaces: true,
+      conflict: ConflictPolicy.ask,
+      counter: 9,
+    );
+    final copy = RenameRule.fromJson(rule.toJson());
+    expect(copy.toJson(), rule.toJson());
+    expect(copy.folder, rule.folder);
+  });
+
+  test('fileKindOf prefers the mime type and falls back to the extension', () {
+    expect(fileKindOf(mimeType: 'image/png'), FileKind.image);
+    expect(fileKindOf(extension: 'MP4'), FileKind.video);
+    expect(fileKindOf(extension: 'pdf'), FileKind.document);
+    expect(fileKindOf(extension: 'zip'), FileKind.other);
+  });
+
+  group('selectRule', () {
+    final rules = [plain, dated];
+
+    test('uses the last used rule, then the default', () {
+      expect(selectRule(AppSettings(lastRuleId: 'plain'), rules)?.id, 'plain');
+      expect(selectRule(AppSettings(), rules)?.id, 'dated');
+    });
+
+    test('prefers the default of the file kind', () {
+      final settings = AppSettings(lastRuleId: 'plain', defaultRuleByKind: const {'image': 'dated'});
+      expect(selectRule(settings, rules, kind: FileKind.image)?.id, 'dated');
+      expect(selectRule(settings, rules, kind: FileKind.video)?.id, 'plain');
+    });
+
+    test('ignores disabled rules', () {
+      expect(selectRule(AppSettings(lastRuleId: 'plain'), [plain.copyWith(isEnabled: false), dated])?.id, 'dated');
+      expect(selectRule(AppSettings(), [plain.copyWith(isEnabled: false)]), isNull);
+    });
+  });
+
+  group('resolveTarget', () {
+    test('saved mode: rule name and rule folder', () {
+      final target = resolveTarget(settings: AppSettings(), rules: [dated], source: source, now: now);
+      expect(target.fileName, '2026-11-23_a.pdf');
+      expect(target.folder.path, '/Download/Nombra');
+      expect(target.folderSource, FolderSource.rule);
+    });
+
+    test('a rule without folder uses the last used folder', () {
+      final settings = AppSettings(lastFolder: DestinationFolder(StorageRoot.pictures, 'Viajes'));
+      final target = resolveTarget(settings: settings, rules: [plain], source: source, now: now);
+      expect(target.folder.path, '/Pictures/Viajes');
+      expect(target.folderSource, FolderSource.lastUsed);
+    });
+
+    test('a chosen folder wins', () {
+      final chosen = DestinationFolder(StorageRoot.documents);
+      final target = resolveTarget(
+        settings: AppSettings(),
+        rules: [dated],
+        source: source,
+        now: now,
+        chosenFolder: chosen,
+      );
+      expect(target.folder, chosen);
+      expect(target.folderSource, FolderSource.chosen);
+    });
+
+    test('quick mode uses prefix and suffix', () {
+      final settings = AppSettings(mode: NamingMode.quick, prefix: 'x_', suffix: '_y');
+      final target = resolveTarget(settings: settings, rules: [dated], source: source, now: now);
+      expect(target.fileName, 'x_a_y.pdf');
+      expect(target.rule, isNull);
+    });
+  });
+
+  test('AppSettings survives a JSON round trip', () {
+    final settings = AppSettings(
+      mode: NamingMode.quick,
+      lastRuleId: 'r',
+      prefix: 'p',
+      suffix: 's',
+      lastFolder: DestinationFolder(StorageRoot.movies, 'a'),
+      defaultRuleByKind: const {'image': 'r'},
+    );
+    expect(AppSettings.fromJson(settings.toJson()).toJson(), settings.toJson());
+  });
+}
