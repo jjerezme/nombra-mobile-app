@@ -96,8 +96,11 @@ void main() {
 
     await tester.tap(find.text('Cambiar'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Documents'));
-    await tester.pump();
+    // The folder is picked from a select field, not from a row of chips.
+    await tester.tap(find.byType(DropdownButtonFormField<StorageRoot>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Documents').last);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Usar esta carpeta'));
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).lastFolder, DestinationFolder(StorageRoot.documents));

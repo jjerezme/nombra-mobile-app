@@ -4,7 +4,6 @@ import '../../../core/constants/tokens.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/validation.dart';
 import '../../../core/widgets/form_parts.dart';
-import '../../../core/widgets/pill_choice.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../rules/domain/storage_root.dart';
 
@@ -62,17 +61,17 @@ class _FolderPickerSheetState extends State<_FolderPickerSheet> {
             Text(l10n.folderPickerTitle, style: context.text.titleLarge),
             LabeledField(
               label: l10n.folderPickerRoot,
-              child: Wrap(
-                spacing: AppSpacing.sm,
-                runSpacing: AppSpacing.sm,
-                children: [
-                  for (final root in StorageRoot.values)
-                    PillChoice(
-                      label: root.dirName,
-                      isSelected: root == _root,
-                      onTap: () => setState(() => _root = root),
-                    ),
+              child: DropdownButtonFormField<StorageRoot>(
+                initialValue: _root,
+                isExpanded: true,
+                style: context.monoStyles.mono.copyWith(color: context.colors.onSurface),
+                decoration: const InputDecoration(constraints: BoxConstraints(minHeight: AppSize.control)),
+                items: [
+                  for (final root in StorageRoot.values) DropdownMenuItem(value: root, child: Text(root.dirName)),
                 ],
+                onChanged: (root) {
+                  if (root != null) setState(() => _root = root);
+                },
               ),
             ),
             LabeledField(
