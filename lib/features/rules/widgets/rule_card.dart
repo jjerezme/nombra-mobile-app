@@ -55,11 +55,11 @@ class RuleCard extends StatelessWidget {
           ),
           _DetailRow(
             icon: Icons.data_array,
-            child: Text(_visible(rule.pattern), style: mono.copyWith(color: colors.primary)),
+            child: _Line(_visible(rule.pattern), style: mono.copyWith(color: colors.primary)),
           ),
           _DetailRow(
             icon: Icons.arrow_forward,
-            child: Text(example, style: mono.copyWith(color: colors.onSurfaceVariant)),
+            child: _Line(example, style: mono.copyWith(color: colors.onSurfaceVariant)),
           ),
           _DetailRow(
             icon: Icons.tune,
@@ -71,7 +71,7 @@ class RuleCard extends StatelessWidget {
           ),
           _DetailRow(
             icon: Icons.folder_outlined,
-            child: Text(rule.folder?.path ?? l10n.ruleNoFolder, style: mono),
+            child: _Line(rule.folder?.path ?? l10n.ruleNoFolder, style: mono),
           ),
         ],
       ),
@@ -95,13 +95,37 @@ class _DetailRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: AppSpacing.sm,
       children: [
-        // Same height as a line of text, so the icon is centered on the first line.
+        // Same height as a line of text ([_Line]), so the icon is centered on the first line.
         SizedBox(
           height: AppIconSize.base,
           child: Icon(icon, size: AppIconSize.sm, color: context.colors.onSurfaceVariant),
         ),
         Expanded(child: child),
       ],
+    );
+  }
+}
+
+/// A line of text exactly as tall as the icon of its row ([AppIconSize.base]), so the icon and the first line share one
+/// center, and a name that wraps keeps an even line spacing.
+class _Line extends StatelessWidget {
+  const _Line(this.text, {required this.style});
+
+  final String text;
+  final TextStyle style;
+
+  @override
+  Widget build(BuildContext context) {
+    final fontSize = style.fontSize ?? AppFontSize.md;
+    return Text(
+      text,
+      style: style,
+      strutStyle: StrutStyle(
+        fontFamily: style.fontFamily,
+        fontSize: fontSize,
+        height: AppIconSize.base / fontSize,
+        forceStrutHeight: true,
+      ),
     );
   }
 }
