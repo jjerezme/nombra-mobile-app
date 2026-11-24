@@ -25,10 +25,24 @@ void main() {
     expect(env.container().read(rulesProvider).last.id, 'x');
   });
 
-  test('reorder moves a rule to its new position', () {
+  test('rules are always kept sorted by name, ignoring case', () {
     final container = env.container();
-    container.read(rulesProvider.notifier).reorder(3, 0);
-    expect(container.read(rulesProvider).first.id, 'invoices');
+    final notifier = container.read(rulesProvider.notifier);
+    expect(container.read(rulesProvider).map((rule) => rule.name), [
+      'Facturas',
+      'Fecha + nombre',
+      'Limpio',
+      'Original',
+    ]);
+
+    notifier.upsert(RenameRule(id: 'a', name: 'alfa', tokens: const ['{name}']));
+    notifier.upsert(RenameRule(id: 'z', name: 'Zeta', tokens: const ['{name}']));
+    notifier.upsert(RenameRule(id: 'f', name: 'Fecha + nombre', tokens: const ['{name}']));
+    expect(container.read(rulesProvider).map((rule) => rule.id).first, 'a');
+    expect(container.read(rulesProvider).map((rule) => rule.id).last, 'z');
+
+    // The stored list is sorted too, so another start shows the same order.
+    expect(env.container().read(rulesProvider).map((rule) => rule.id).first, 'a');
   });
 
   test('setEnabled toggles a rule', () {

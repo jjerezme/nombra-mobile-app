@@ -31,26 +31,23 @@ class RulesScreen extends ConsumerWidget {
                   _EmptyRules(title: l10n.rulesEmptyTitle, body: l10n.rulesEmptyBody),
                 ],
               )
-            : ReorderableListView.builder(
-                header: header,
-                buildDefaultDragHandles: false,
+            : ListView(
                 padding: padding,
-                itemCount: rules.length,
-                onReorderItem: notifier.reorder,
-                proxyDecorator: (child, index, animation) => Material(type: MaterialType.transparency, child: child),
-                itemBuilder: (context, index) {
-                  final rule = rules[index];
-                  return Padding(
-                    key: ValueKey(rule.id),
-                    padding: const EdgeInsets.only(bottom: AppLayout.itemGap),
-                    child: RuleCard(
-                      rule: rule,
-                      index: index,
-                      onTap: () => context.push(AppRoutes.rule(rule.id)),
-                      onToggle: (isEnabled) => notifier.setEnabled(rule.id, isEnabled: isEnabled),
-                    ),
-                  );
-                },
+                children: [
+                  header,
+                  Column(
+                    spacing: AppLayout.itemGap,
+                    children: [
+                      for (final rule in rules)
+                        RuleCard(
+                          key: ValueKey(rule.id),
+                          rule: rule,
+                          onTap: () => context.push(AppRoutes.rule(rule.id)),
+                          onToggle: (isEnabled) => notifier.setEnabled(rule.id, isEnabled: isEnabled),
+                        ),
+                    ],
+                  ),
+                ],
               ),
       ),
       floatingActionButton: FloatingActionButton.extended(

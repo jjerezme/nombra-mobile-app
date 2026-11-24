@@ -10,6 +10,7 @@ class AppCard extends StatelessWidget {
     super.key,
     this.padding = const EdgeInsets.all(AppLayout.cardPadding),
     this.color,
+    this.onTap,
   });
 
   /// A card whose content is a column of blocks separated by the standard gap.
@@ -25,12 +26,17 @@ class AppCard extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final Color? color;
 
+  /// Makes the whole card tappable.
+  final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
+    final content = Padding(padding: padding, child: child);
     return Material(
       color: color ?? context.colors.surface,
       borderRadius: BorderRadius.circular(AppLayout.cardRadius),
-      child: Padding(padding: padding, child: child),
+      clipBehavior: Clip.antiAlias,
+      child: onTap == null ? content : InkWell(onTap: onTap, child: content),
     );
   }
 }

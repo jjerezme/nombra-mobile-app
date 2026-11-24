@@ -29,3 +29,7 @@ Todas las pantallas se arman con las mismas piezas (`lib/core/widgets/`) y los v
 
 ## Hojas inferiores
 Color de superficie, asa del tema, margen `sheetGutter`, bloques con `sectionGap` y relleno inferior que respeta la barra de navegación de Android.
+
+## Lista de reglas
+- Siempre ordenada por nombre (sin distinguir mayúsculas), también en el selector de Descargar y de la hoja de compartir; no hay orden manual.
+- Cada tarjeta (`RuleCard`) tiene las mismas filas, en el mismo orden y alineadas al mismo borde: nombre con interruptor, tokens, ejemplo, opciones adicionales (etiquetas) y carpeta de destino. Tocar la tarjeta abre la regla.

@@ -461,7 +461,7 @@ abstract class AppLocalizations {
   /// No description provided for @rulesSubtitle.
   ///
   /// In es, this message translates to:
-  /// **'Las reglas activas aparecen en este orden al descargar o compartir. Arrastra para reordenarlas.'**
+  /// **'Las reglas activas se ofrecen al descargar o compartir, ordenadas por nombre.'**
   String get rulesSubtitle;
 
   /// No description provided for @ruleDefaultBadge.
@@ -481,12 +481,6 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Activar regla {name}'**
   String ruleToggleLabel(String name);
-
-  /// No description provided for @ruleReorderHandle.
-  ///
-  /// In es, this message translates to:
-  /// **'Arrastrar para reordenar'**
-  String get ruleReorderHandle;
 
   /// No description provided for @newRule.
   ///
@@ -1153,6 +1147,30 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Ejemplo: {example}'**
   String editorDigitsExample(String example);
+
+  /// No description provided for @ruleOptCopySuffix.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin sufijo (2)'**
+  String get ruleOptCopySuffix;
+
+  /// No description provided for @ruleOptSpaces.
+  ///
+  /// In es, this message translates to:
+  /// **'Espacios → {char}'**
+  String ruleOptSpaces(String char);
+
+  /// No description provided for @ruleOptSanitize.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre limpio'**
+  String get ruleOptSanitize;
+
+  /// No description provided for @ruleOptConflict.
+  ///
+  /// In es, this message translates to:
+  /// **'Si existe: {policy}'**
+  String ruleOptConflict(String policy);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

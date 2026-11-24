@@ -164,7 +164,7 @@
   },
   "shareLeaveHint": "You can close this sheet: the file will finish saving the next time you open Nombra.",
   "rulesTitle": "Rules",
-  "rulesSubtitle": "Active rules appear in this order when you download or share. Drag to reorder them.",
+  "rulesSubtitle": "Active rules are offered when downloading or sharing, sorted by name.",
   "ruleDefaultBadge": "Default",
   "ruleNoFolder": "No folder · last used",
   "ruleToggleLabel": "Turn on rule {name}",
@@ -175,7 +175,6 @@
       }
     }
   },
-  "ruleReorderHandle": "Drag to reorder",
   "newRule": "New rule",
   "editorTitleEdit": "Edit rule",
   "editorTitleNew": "New rule",
@@ -369,6 +368,24 @@
   "@editorDigitsExample": {
     "placeholders": {
       "example": {
+        "type": "String"
+      }
+    }
+  },
+  "ruleOptCopySuffix": "No (2) suffix",
+  "ruleOptSpaces": "Spaces → {char}",
+  "ruleOptSanitize": "Clean name",
+  "ruleOptConflict": "If it exists: {policy}",
+  "@ruleOptSpaces": {
+    "placeholders": {
+      "char": {
+        "type": "String"
+      }
+    }
+  },
+  "@ruleOptConflict": {
+    "placeholders": {
+      "policy": {
         "type": "String"
       }
     }

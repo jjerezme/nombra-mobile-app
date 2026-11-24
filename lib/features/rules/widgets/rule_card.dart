@@ -8,12 +8,30 @@ import '../domain/filename_builder.dart';
 import '../domain/rename_rule.dart';
 import '../domain/sample_file.dart';
 
-/// A rule in the list: name, pattern, example, folder, and an on/off switch.
+/// Short labels of the extra options a rule has turned on, in the order they apply to the name. The conflict policy is
+/// always listed because every rule has one.
+List<String> ruleOptions(AppLocalizations l10n, RenameRule rule) => [
+  switch (rule.caseMode) {
+    CaseMode.upper => l10n.editorCaseUpper,
+    CaseMode.lower => l10n.editorCaseLower,
+    CaseMode.keep => null,
+  },
+  if (rule.removeCopySuffix) l10n.ruleOptCopySuffix,
+  if (rule.replaceSpaces) l10n.ruleOptSpaces(rule.spaceChar),
+  if (rule.sanitize) l10n.ruleOptSanitize,
+  l10n.ruleOptConflict(switch (rule.conflict) {
+    ConflictPolicy.suffix => l10n.editorConflictSuffix,
+    ConflictPolicy.replace => l10n.editorConflictReplace,
+    ConflictPolicy.ask => l10n.editorConflictAsk,
+  }),
+].nonNulls.toList();
+
+/// A rule in the list: name, tokens, example, extra options, destination folder and an on/off switch. Tapping the card
+/// opens the rule. Every card has the same rows, in the same order, aligned to the same left edge.
 class RuleCard extends StatelessWidget {
-  const RuleCard({required this.rule, required this.index, required this.onTap, required this.onToggle, super.key});
+  const RuleCard({required this.rule, required this.onTap, required this.onToggle, super.key});
 
   final RenameRule rule;
-  final int index;
   final VoidCallback onTap;
   final ValueChanged<bool> onToggle;
 
@@ -24,88 +42,118 @@ class RuleCard extends StatelessWidget {
     final mono = context.monoStyles.monoSmall;
     final example = buildFileName(rule, sampleFile, now: DateTime.now());
     return AppCard(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.xs, AppSpacing.md, AppSpacing.sm, AppSpacing.md),
-      child: Row(
+      onTap: onTap,
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: AppLayout.labelGap,
         children: [
-          ReorderableDragStartListener(
-            index: index,
-            child: Semantics(
-              label: l10n.ruleReorderHandle,
-              child: SizedBox(
-                width: AppSize.dragHandle,
-                height: AppSize.control,
-                child: Icon(Icons.drag_indicator, size: AppIconSize.base, color: colors.onSurfaceVariant),
+          Row(
+            spacing: AppSpacing.sm,
+            children: [
+              Expanded(
+                child: Row(
+                  spacing: AppSpacing.sm,
+                  children: [
+                    Flexible(child: Text(rule.name, style: context.text.titleMedium)),
+                    if (rule.isDefault) _Tag(label: l10n.ruleDefaultBadge, isHighlighted: true),
+                  ],
+                ),
               ),
+              Semantics(
+                label: l10n.ruleToggleLabel(rule.name),
+                child: Switch(value: rule.isEnabled, onChanged: onToggle),
+              ),
+            ],
+          ),
+          _DetailRow(
+            icon: Icons.data_array,
+            child: Text(
+              _visible(rule.pattern),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: mono.copyWith(color: colors.primary),
             ),
           ),
-          Expanded(
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: AppSpacing.xs,
-                children: [
-                  Row(
-                    spacing: AppSpacing.sm,
-                    children: [
-                      Flexible(
-                        child: Text(rule.name, style: context.text.labelLarge?.copyWith(fontSize: AppFontSize.body)),
-                      ),
-                      if (rule.isDefault)
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.tight, vertical: AppSpacing.xxs),
-                          decoration: BoxDecoration(
-                            color: colors.primaryContainer,
-                            borderRadius: BorderRadius.circular(AppRadius.md - AppSpacing.xxs),
-                          ),
-                          child: Text(
-                            l10n.ruleDefaultBadge,
-                            style: context.text.labelSmall?.copyWith(
-                              fontSize: AppFontSize.xs,
-                              fontWeight: FontWeight.w600,
-                              color: colors.onPrimaryContainer,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                  Text(
-                    rule.pattern,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: mono.copyWith(color: colors.onPrimaryContainer),
-                  ),
-                  Text(
-                    '→ $example',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: mono.copyWith(color: colors.onSurfaceVariant),
-                  ),
-                  Row(
-                    spacing: AppSpacing.tight,
-                    children: [
-                      Icon(Icons.folder_outlined, size: AppIconSize.sm, color: colors.primary),
-                      Expanded(
-                        child: Text(
-                          rule.folder?.path ?? l10n.ruleNoFolder,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: mono,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+          _DetailRow(
+            icon: Icons.arrow_forward,
+            child: Text(
+              example,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: mono.copyWith(color: colors.onSurfaceVariant),
             ),
           ),
-          Semantics(
-            label: l10n.ruleToggleLabel(rule.name),
-            child: Switch(value: rule.isEnabled, onChanged: onToggle),
+          _DetailRow(
+            icon: Icons.tune,
+            child: Wrap(
+              spacing: AppSpacing.xs,
+              runSpacing: AppSpacing.xs,
+              children: [for (final option in ruleOptions(l10n, rule)) _Tag(label: option)],
+            ),
+          ),
+          _DetailRow(
+            icon: Icons.folder_outlined,
+            child: Text(
+              rule.folder?.path ?? l10n.ruleNoFolder,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: mono,
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  /// A blank space in the pattern would be invisible; it is drawn as the same mark the editor uses.
+  String _visible(String pattern) => pattern.replaceAll(PatternTokens.space, PatternTokens.spaceMark);
+}
+
+/// An icon and its content: the icon column is the same width on every row so the content lines up.
+class _DetailRow extends StatelessWidget {
+  const _DetailRow({required this.icon, required this.child});
+
+  final IconData icon;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: AppSpacing.sm,
+      children: [
+        // Same height as a line of text, so the icon is centered on the first line.
+        SizedBox(
+          height: AppIconSize.base,
+          child: Icon(icon, size: AppIconSize.sm, color: context.colors.onSurfaceVariant),
+        ),
+        Expanded(child: child),
+      ],
+    );
+  }
+}
+
+/// A small pill with a short label (an option, or "default").
+class _Tag extends StatelessWidget {
+  const _Tag({required this.label, this.isHighlighted = false});
+
+  final String label;
+  final bool isHighlighted;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xxs),
+      decoration: BoxDecoration(
+        color: isHighlighted ? colors.primaryContainer : colors.secondaryContainer,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+      ),
+      child: Text(
+        label,
+        style: context.text.labelSmall?.copyWith(
+          color: isHighlighted ? colors.onPrimaryContainer : colors.onSecondaryContainer,
+        ),
       ),
     );
   }

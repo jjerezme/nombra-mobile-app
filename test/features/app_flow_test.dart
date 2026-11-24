@@ -179,7 +179,7 @@ void main() {
     await tester.tap(find.text('Guardar'));
     await tester.pumpAndSettle();
 
-    final created = container.read(rulesProvider).last;
+    final created = container.read(rulesProvider).firstWhere((rule) => rule.name == 'Mi regla');
     expect(created.name, 'Mi regla');
     expect(created.tokens, ['{date}', '_', '{name}', '{n:3}']);
     expect(find.text('Reglas'), findsWidgets);
@@ -269,6 +269,59 @@ void main() {
       container.read(routerProvider).go('/nada/por/aqui');
       await tester.pumpAndSettle();
       expect(find.text('URL del archivo'), findsOneWidget);
+    });
+  });
+
+  group('rules list', () {
+    testWidgets('lists the rules by name, without a way to reorder them', (tester) async {
+      await pumpApp(tester, env);
+      await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Reglas')));
+      await tester.pumpAndSettle();
+
+      final names = ['Facturas', 'Fecha + nombre', 'Limpio', 'Original'];
+      final positions = [for (final name in names) tester.getTopLeft(find.text(name)).dy];
+      expect([...positions]..sort(), positions);
+      expect(find.byIcon(Icons.drag_indicator), findsNothing);
+      expect(find.textContaining('Arrastra'), findsNothing);
+    });
+
+    testWidgets('each card shows name, tokens, example, options and folder, aligned to one edge', (tester) async {
+      await pumpApp(tester, env);
+      await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Reglas')));
+      await tester.pumpAndSettle();
+
+      // "Limpio": lowercase, no (2) suffix, spaces replaced, clean name; saved in Documents/Nombra.
+      expect(find.text('{name}'), findsWidgets);
+      expect(find.text('minúsculas'), findsOneWidget);
+      expect(find.text('Sin sufijo (2)'), findsOneWidget);
+      expect(find.text('Espacios → -'), findsOneWidget);
+      expect(find.text('Nombre limpio'), findsOneWidget);
+      expect(find.text('/Documents/Nombra'), findsOneWidget);
+      // Every rule says what happens when the file exists, and where it is saved.
+      expect(find.textContaining('Si existe:'), findsNWidgets(4));
+      expect(find.byIcon(Icons.folder_outlined), findsNWidgets(4));
+
+      // The pattern, example, options and folder of a card start at the same left edge.
+      final card = find.ancestor(of: find.text('/Documents/Nombra'), matching: find.byType(AppCard)).first;
+      final edge = tester.getTopLeft(find.descendant(of: card, matching: find.text('/Documents/Nombra'))).dx;
+      // A tag is a pill: compare the left edge of the pill, not of its text.
+      final tag = find
+          .ancestor(
+            of: find.descendant(of: card, matching: find.text('Nombre limpio')),
+            matching: find.byType(Container),
+          )
+          .first;
+      expect(tester.getTopLeft(tag).dx, edge);
+      expect(tester.getTopLeft(find.descendant(of: card, matching: find.text('{name}'))).dx, edge);
+    });
+
+    testWidgets('tapping a card opens the rule', (tester) async {
+      await pumpApp(tester, env);
+      await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Reglas')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Limpio'));
+      await tester.pumpAndSettle();
+      expect(find.text('Editar regla'), findsOneWidget);
     });
   });
 

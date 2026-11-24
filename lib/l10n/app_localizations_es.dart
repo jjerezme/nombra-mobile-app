@@ -222,8 +222,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get rulesTitle => 'Reglas';
 
   @override
-  String get rulesSubtitle =>
-      'Las reglas activas aparecen en este orden al descargar o compartir. Arrastra para reordenarlas.';
+  String get rulesSubtitle => 'Las reglas activas se ofrecen al descargar o compartir, ordenadas por nombre.';
 
   @override
   String get ruleDefaultBadge => 'Predeterminada';
@@ -235,9 +234,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String ruleToggleLabel(String name) {
     return 'Activar regla $name';
   }
-
-  @override
-  String get ruleReorderHandle => 'Arrastrar para reordenar';
 
   @override
   String get newRule => 'Nueva regla';
@@ -599,5 +595,21 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String editorDigitsExample(String example) {
     return 'Ejemplo: $example';
+  }
+
+  @override
+  String get ruleOptCopySuffix => 'Sin sufijo (2)';
+
+  @override
+  String ruleOptSpaces(String char) {
+    return 'Espacios → $char';
+  }
+
+  @override
+  String get ruleOptSanitize => 'Nombre limpio';
+
+  @override
+  String ruleOptConflict(String policy) {
+    return 'Si existe: $policy';
   }
 }

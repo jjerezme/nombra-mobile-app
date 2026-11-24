@@ -164,7 +164,7 @@
   },
   "shareLeaveHint": "Puedes cerrar esta hoja: el archivo terminará de guardarse la próxima vez que abras Nombra.",
   "rulesTitle": "Reglas",
-  "rulesSubtitle": "Las reglas activas aparecen en este orden al descargar o compartir. Arrastra para reordenarlas.",
+  "rulesSubtitle": "Las reglas activas se ofrecen al descargar o compartir, ordenadas por nombre.",
   "ruleDefaultBadge": "Predeterminada",
   "ruleNoFolder": "Sin carpeta · última usada",
   "ruleToggleLabel": "Activar regla {name}",
@@ -175,7 +175,6 @@
       }
     }
   },
-  "ruleReorderHandle": "Arrastrar para reordenar",
   "newRule": "Nueva regla",
   "editorTitleEdit": "Editar regla",
   "editorTitleNew": "Nueva regla",
@@ -369,6 +368,24 @@
   "@editorDigitsExample": {
     "placeholders": {
       "example": {
+        "type": "String"
+      }
+    }
+  },
+  "ruleOptCopySuffix": "Sin sufijo (2)",
+  "ruleOptSpaces": "Espacios → {char}",
+  "ruleOptSanitize": "Nombre limpio",
+  "ruleOptConflict": "Si existe: {policy}",
+  "@ruleOptSpaces": {
+    "placeholders": {
+      "char": {
+        "type": "String"
+      }
+    }
+  },
+  "@ruleOptConflict": {
+    "placeholders": {
+      "policy": {
         "type": "String"
       }
     }
