@@ -63,24 +63,26 @@ class RuleSelector extends ConsumerWidget {
         if (settings.mode == NamingMode.none)
           Text(l10n.modeNoneHint, style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant))
         else if (settings.mode == NamingMode.saved)
-          Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              if (rules.isEmpty) Text(l10n.noRules, style: context.text.bodySmall),
-              for (final rule in rules)
-                PillChoice(
-                  label: rule.name,
-                  isSelected: rule.id == activeId,
-                  onTap: () {
-                    notifier.setRule(rule.id);
-                    onRuleSelected?.call(rule.id);
-                  },
-                ),
-              // An action, not a rule: same size as the rules, tinted and with a plus.
-              if (onAddRule != null) PillChoice.action(label: l10n.ruleAdd, icon: Icons.add, onTap: onAddRule!),
-            ],
+          // One row that scrolls sideways, like the folders: the rules do not pile up in several lines.
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              spacing: AppSpacing.sm,
+              children: [
+                if (rules.isEmpty) Text(l10n.noRules, style: context.text.bodySmall),
+                for (final rule in rules)
+                  PillChoice(
+                    label: rule.name,
+                    isSelected: rule.id == activeId,
+                    onTap: () {
+                      notifier.setRule(rule.id);
+                      onRuleSelected?.call(rule.id);
+                    },
+                  ),
+                // An action, not a rule: same size as the rules, tinted and with a plus.
+                if (onAddRule != null) PillChoice.action(label: l10n.ruleAdd, icon: Icons.add, onTap: onAddRule!),
+              ],
+            ),
           )
         else
           _QuickOptions(settings: settings, notifier: notifier),

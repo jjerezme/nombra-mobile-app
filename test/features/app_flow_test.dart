@@ -189,6 +189,9 @@ void main() {
     final addHeight = tester.getSize(find.widgetWithText(PillChoice, 'Agregar')).height;
     expect(addHeight, tester.getSize(find.widgetWithText(PillChoice, 'Fecha + nombre')).height);
 
+    // The chips are one row that scrolls sideways: "Agregar" is the last one.
+    await tester.ensureVisible(find.widgetWithText(PillChoice, 'Agregar'));
+    await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(PillChoice, 'Agregar'));
     await tester.pumpAndSettle();
     expect(find.text('Patrón'), findsOneWidget);
