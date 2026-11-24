@@ -23,8 +23,8 @@ abstract final class AppPage {
   );
 }
 
-/// Title of a screen: the same size, position and spacing everywhere. A detail screen adds a back button on the left
-/// and an action on the right, in a row above the title.
+/// Title of a screen: the same size and spacing everywhere. A detail screen has a back button on the left and the title
+/// right next to it, in one row; an optional [action] goes at the end of that row.
 class ScreenHeader extends StatelessWidget {
   const ScreenHeader({
     required this.title,
@@ -46,7 +46,7 @@ class ScreenHeader extends StatelessWidget {
   final VoidCallback? onBack;
   final String? backTooltip;
 
-  /// A button on the right of the back row (for example "Save").
+  /// A button at the end of the back row.
   final Widget? action;
 
   @override
@@ -69,7 +69,15 @@ class ScreenHeader extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   constraints: const BoxConstraints.tightFor(width: minTouchTarget, height: minTouchTarget),
                 ),
-              const Spacer(),
+              if (onBack != null)
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: AppSpacing.xs),
+                    child: Text(title, style: context.text.headlineSmall),
+                  ),
+                )
+              else
+                const Spacer(),
               ?action,
             ],
           ),
@@ -79,7 +87,9 @@ class ScreenHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: AppSpacing.xs,
             children: [
-              if (trailing == null)
+              if (onBack != null)
+                const SizedBox.shrink() // the title is in the back row
+              else if (trailing == null)
                 Text(title, style: context.text.headlineSmall)
               else
                 Row(

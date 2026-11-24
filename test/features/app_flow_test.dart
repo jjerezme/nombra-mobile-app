@@ -423,22 +423,33 @@ void main() {
   });
 
   group('rule editor header', () {
-    testWidgets('the back icon is flush with the content and the title lines up with the other screens', (
-      tester,
-    ) async {
+    testWidgets('the back icon is flush with the content and the title sits next to it, same style', (tester) async {
       await pumpApp(tester, env);
-      await tester.tap(find.text('Ajustes'));
-      await tester.pumpAndSettle();
-      final settingsTitle = tester.getTopLeft(find.text('Ajustes').first).dx;
-
       await tester.tap(find.text('Reglas'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Nueva regla'));
       await tester.pumpAndSettle();
 
       expect(tester.getTopLeft(find.byIcon(Icons.arrow_back)).dx, 16);
-      expect(tester.getTopLeft(find.text('Nueva regla')).dx, settingsTitle);
+      final back = tester.getCenter(find.byIcon(Icons.arrow_back));
+      final title = tester.getCenter(find.text('Nueva regla'));
+      expect(title.dy, closeTo(back.dy, 1), reason: 'the title is in the same row as the back icon');
+      expect(tester.getTopLeft(find.text('Nueva regla')).dx, greaterThan(back.dx));
       expect(tester.widget<Text>(find.text('Nueva regla')).style?.fontSize, 22);
+    });
+
+    testWidgets('Guardar is a full-width button at the bottom, below the example', (tester) async {
+      await pumpApp(tester, env);
+      await tester.tap(find.text('Reglas'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Nueva regla'));
+      await tester.pumpAndSettle();
+
+      final save = find.widgetWithText(FilledButton, 'Guardar');
+      expect(save, findsOneWidget);
+      expect(find.descendant(of: find.byType(ScreenHeader), matching: find.text('Guardar')), findsNothing);
+      expect(tester.getTopLeft(save).dy, greaterThan(tester.getBottomLeft(find.textContaining('Ejemplo ·')).dy));
+      expect(tester.getSize(save).width, greaterThan(300));
     });
   });
 

@@ -15,7 +15,7 @@ Todas las pantallas se arman con las mismas piezas (`lib/core/widgets/`) y los v
 | `buttonGap` | 12 | Entre botones de una fila |
 
 ## Piezas
-- `ScreenHeader`: título de cada pantalla (`headlineSmall`, 4 de sangría sobre el margen, subtítulo opcional). Las pantallas de detalle añaden atrás (pegado al margen izquierdo) y una acción a la derecha. Se coloca como primer elemento de la lista, con `AppPage.padding` (o `AppPage.paddingWithBack` si lleva fila de atrás).
+- `ScreenHeader`: título de cada pantalla (`headlineSmall`, 4 de sangría sobre el margen, subtítulo opcional). Las pantallas de detalle llevan atrás (pegado al margen izquierdo) con el título a su lado, en la misma fila; la acción principal (por ejemplo "Guardar" en el editor) va abajo, fija y visible, como `FilledButton` de ancho completo. Se coloca como primer elemento de la lista, con `AppPage.padding` (o `AppPage.paddingWithBack` si lleva fila de atrás).
 - `AppSection` / `SectionTitle`: título de un grupo (`titleMedium`) **encima** de su tarjeta; el título nunca va dentro de la tarjeta.
 - `AppCard` / `AppCard.stack`: superficie con radio y relleno únicos; `stack` apila los bloques con `sectionGap`.
 - `LabeledField`: etiqueta (`labelMedium`) + control + ayuda (`bodySmall`). Es la única forma de rotular un campo.

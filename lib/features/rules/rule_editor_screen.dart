@@ -159,7 +159,6 @@ class _RuleEditorScreenState extends ConsumerState<RuleEditorScreen> {
                       title: _isNew ? l10n.editorTitleNew : l10n.editorTitleEdit,
                       onBack: () => Navigator.of(context).maybePop(),
                       backTooltip: l10n.editorBackTooltip,
-                      action: TextButton(onPressed: _save, child: Text(l10n.save)),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -212,7 +211,12 @@ class _RuleEditorScreenState extends ConsumerState<RuleEditorScreen> {
                   ],
                 ),
               ),
+              // Pinned at the bottom, always in view: the example of the name and the main action.
               _ExampleBar(sampleName: sampleFile.name, example: example),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(AppLayout.gutter, 0, AppLayout.gutter, AppSpacing.md),
+                child: FilledButton(onPressed: _save, child: Text(l10n.save)),
+              ),
             ],
           ),
         ),
@@ -233,7 +237,7 @@ class _ExampleBar extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final colors = context.colors;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(AppLayout.gutter, AppSpacing.sm, AppLayout.gutter, AppSpacing.md),
+      padding: const EdgeInsets.fromLTRB(AppLayout.gutter, AppSpacing.sm, AppLayout.gutter, AppSpacing.sm),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(AppLayout.cardPadding),
