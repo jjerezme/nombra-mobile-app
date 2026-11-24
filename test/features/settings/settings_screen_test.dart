@@ -54,7 +54,7 @@ void main() {
     await pumpSettings(tester, env);
     expect(find.text('Apariencia'), findsOneWidget);
     expect(find.text('Idioma'), findsOneWidget);
-    expect(find.text('Modo de nombrado'), findsOneWidget);
+    expect(find.text('Modo de nombrado'), findsNothing); // the mode is chosen in Descargar, not here
     expect(find.text('Carpeta predeterminada'), findsOneWidget);
     expect(find.text('/Download'), findsOneWidget);
     expect(find.text('Versión 1.2.3 (45)'), findsOneWidget);
@@ -88,12 +88,8 @@ void main() {
     expect(find.text('Apariencia'), findsOneWidget);
   });
 
-  testWidgets('the naming mode and the default folder can be changed', (tester) async {
+  testWidgets('the default folder can be changed', (tester) async {
     final container = await pumpSettings(tester, env);
-    await tester.tap(find.text('Rápida'));
-    await tester.pumpAndSettle();
-    expect(container.read(settingsProvider).mode, NamingMode.quick);
-
     await tester.tap(find.text('Cambiar'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Documents'));

@@ -280,8 +280,6 @@
   "languageEs": "Español",
   "languageEn": "English",
   "settingsDownloads": "Descargas",
-  "settingsNamingMode": "Modo de nombrado",
-  "settingsNamingModeHint": "Cómo se nombran los archivos por defecto: sin regla, con una regla guardada o con un patrón rápido que se mantiene.",
   "settingsDefaultFolder": "Carpeta predeterminada",
   "settingsDefaultFolderHint": "Se usa cuando la regla no define una carpeta.",
   "settingsData": "Datos",

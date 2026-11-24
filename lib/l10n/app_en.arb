@@ -280,8 +280,6 @@
   "languageEs": "Español",
   "languageEn": "English",
   "settingsDownloads": "Downloads",
-  "settingsNamingMode": "Naming mode",
-  "settingsNamingModeHint": "How files are named by default: no rule, a saved rule, or a quick pattern that is kept.",
   "settingsDefaultFolder": "Default folder",
   "settingsDefaultFolderHint": "Used when the rule does not set a folder.",
   "settingsData": "Data",

@@ -468,13 +468,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsDownloads => 'Descargas';
 
   @override
-  String get settingsNamingMode => 'Modo de nombrado';
-
-  @override
-  String get settingsNamingModeHint =>
-      'Cómo se nombran los archivos por defecto: sin regla, con una regla guardada o con un patrón rápido que se mantiene.';
-
-  @override
   String get settingsDefaultFolder => 'Carpeta predeterminada';
 
   @override

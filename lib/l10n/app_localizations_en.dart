@@ -467,13 +467,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsDownloads => 'Downloads';
 
   @override
-  String get settingsNamingMode => 'Naming mode';
-
-  @override
-  String get settingsNamingModeHint =>
-      'How files are named by default: no rule, a saved rule, or a quick pattern that is kept.';
-
-  @override
   String get settingsDefaultFolder => 'Default folder';
 
   @override

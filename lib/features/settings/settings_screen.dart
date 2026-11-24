@@ -73,19 +73,6 @@ class SettingsScreen extends ConsumerWidget {
                   title: l10n.settingsDownloads,
                   child: AppCard.stack(
                     children: [
-                      LabeledField(
-                        label: l10n.settingsNamingMode,
-                        hint: l10n.settingsNamingModeHint,
-                        child: SegmentedToggle<NamingMode>(
-                          options: [
-                            ToggleOption(NamingMode.none, l10n.modeNone),
-                            ToggleOption(NamingMode.saved, l10n.modeSaved),
-                            ToggleOption(NamingMode.quick, l10n.modeQuick),
-                          ],
-                          selected: settings.mode,
-                          onChanged: notifier.setMode,
-                        ),
-                      ),
                       ToggleRow(
                         label: l10n.settingsShowRecents,
                         description: l10n.settingsShowRecentsHint,

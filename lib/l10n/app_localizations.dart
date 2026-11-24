@@ -926,18 +926,6 @@ abstract class AppLocalizations {
   /// **'Descargas'**
   String get settingsDownloads;
 
-  /// No description provided for @settingsNamingMode.
-  ///
-  /// In es, this message translates to:
-  /// **'Modo de nombrado'**
-  String get settingsNamingMode;
-
-  /// No description provided for @settingsNamingModeHint.
-  ///
-  /// In es, this message translates to:
-  /// **'Cómo se nombran los archivos por defecto: sin regla, con una regla guardada o con un patrón rápido que se mantiene.'**
-  String get settingsNamingModeHint;
-
   /// No description provided for @settingsDefaultFolder.
   ///
   /// In es, this message translates to:
