@@ -52,11 +52,17 @@ class RuleSelector extends ConsumerWidget {
           ],
         ),
         SegmentedToggle<NamingMode>(
-          options: [ToggleOption(NamingMode.saved, l10n.modeSaved), ToggleOption(NamingMode.quick, l10n.modeQuick)],
+          options: [
+            ToggleOption(NamingMode.none, l10n.modeNone),
+            ToggleOption(NamingMode.saved, l10n.modeSaved),
+            ToggleOption(NamingMode.quick, l10n.modeQuick),
+          ],
           selected: settings.mode,
           onChanged: notifier.setMode,
         ),
-        if (settings.mode == NamingMode.saved)
+        if (settings.mode == NamingMode.none)
+          Text(l10n.modeNoneHint, style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant))
+        else if (settings.mode == NamingMode.saved)
           Wrap(
             spacing: AppSpacing.sm,
             runSpacing: AppSpacing.sm,

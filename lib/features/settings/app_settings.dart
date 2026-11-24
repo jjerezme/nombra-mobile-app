@@ -9,7 +9,9 @@ import '../rules/domain/file_kind.dart';
 import '../rules/domain/rename_rule.dart';
 import '../rules/domain/storage_root.dart';
 
-enum NamingMode { saved, quick }
+/// How a file gets its name: [none] keeps the original name, [saved] uses one of the saved rules, [quick] builds the
+/// name from the quick pattern.
+enum NamingMode { none, saved, quick }
 
 /// Light, dark or follow the system.
 enum AppThemeMode { system, light, dark }

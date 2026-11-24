@@ -77,6 +77,7 @@ class SettingsScreen extends ConsumerWidget {
                         hint: l10n.settingsNamingModeHint,
                         child: SegmentedToggle<NamingMode>(
                           options: [
+                            ToggleOption(NamingMode.none, l10n.modeNone),
                             ToggleOption(NamingMode.saved, l10n.modeSaved),
                             ToggleOption(NamingMode.quick, l10n.modeQuick),
                           ],

@@ -84,6 +84,35 @@ void main() {
     expect(env.engine.enqueued, isEmpty);
   });
 
+  testWidgets('the file can be saved without any rule, with a saved rule, or with the quick pattern', (tester) async {
+    final container = await pumpApp(tester, env);
+    for (final mode in ['Ninguna', 'Guardada', 'Rápida']) {
+      expect(find.text(mode), findsOneWidget);
+    }
+
+    await tester.enterText(find.byType(TextField).first, _url);
+    await tester.tap(find.text('Ninguna'));
+    await tester.pumpAndSettle();
+    expect(container.read(settingsProvider).mode, NamingMode.none);
+    expect(find.text('El archivo se guarda con su nombre original, sin aplicar ninguna regla.'), findsOneWidget);
+    expect(find.text('Informe Q3 FINAL (2).pdf'), findsOneWidget);
+    expect(find.text('Fecha + nombre'), findsNothing); // the rules are not offered
+    expect(find.text('/Download'), findsOneWidget);
+
+    await tapDownload(tester);
+    expect(env.engine.enqueued, hasLength(1));
+    expect(container.read(downloadsProvider).single.plan.rule, isNull);
+    expect(container.read(downloadsProvider).single.fileName, 'Informe Q3 FINAL (2).pdf');
+
+    // A download in progress keeps an endless progress bar, so the page is pumped, not settled.
+    await tester.tap(find.text('Guardada'));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text('Fecha + nombre'), findsOneWidget);
+    await tester.tap(find.text('Rápida'));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text('Patrón'), findsOneWidget);
+  });
+
   testWidgets('quick mode builds the name with tokens, like a rule', (tester) async {
     final container = await pumpApp(tester, env);
     await tester.tap(find.text('Rápida'));

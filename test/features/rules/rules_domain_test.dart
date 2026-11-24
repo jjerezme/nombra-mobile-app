@@ -90,6 +90,26 @@ void main() {
       expect(target.folderSource, FolderSource.chosen);
     });
 
+    test('no rule: the original name, even with rules available, in the last folder', () {
+      final settings = AppSettings(mode: NamingMode.none, lastFolder: DestinationFolder(StorageRoot.movies, 'x'));
+      final target = resolveTarget(settings: settings, rules: [dated], source: source, now: now);
+      expect(target.fileName, 'a.pdf');
+      expect(target.rule, isNull);
+      expect(target.folder.path, '/Movies/x');
+      expect(target.folderSource, FolderSource.lastUsed);
+    });
+
+    test('no rule ignores a rule that was passed in as selected', () {
+      final target = resolveTarget(
+        settings: AppSettings(mode: NamingMode.none),
+        rules: [dated],
+        source: source,
+        now: now,
+        selected: dated,
+      );
+      expect(target.fileName, 'a.pdf');
+    });
+
     test('quick mode uses the quick pattern', () {
       final settings = AppSettings(mode: NamingMode.quick, quickTokens: ['x_', PatternTokens.name, '_y']);
       final target = resolveTarget(settings: settings, rules: [dated], source: source, now: now);

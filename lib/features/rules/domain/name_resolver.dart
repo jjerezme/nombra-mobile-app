@@ -45,7 +45,10 @@ ResolvedTarget resolveTarget({
       folderSource: chosenFolder == null ? FolderSource.lastUsed : FolderSource.chosen,
     );
   }
-  final rule = selected ?? selectRule(settings, rules, kind: fileKindOf(extension: source.extension));
+  // No rule: the file keeps its original name.
+  final rule = settings.mode == NamingMode.none
+      ? null
+      : selected ?? selectRule(settings, rules, kind: fileKindOf(extension: source.extension));
   if (rule == null) {
     return ResolvedTarget(
       fileName: source.name,

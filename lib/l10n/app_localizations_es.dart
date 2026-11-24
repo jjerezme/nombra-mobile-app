@@ -477,7 +477,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsNamingModeHint =>
-      'Cómo se nombran los archivos por defecto: con una regla guardada o con un patrón rápido que se mantiene.';
+      'Cómo se nombran los archivos por defecto: sin regla, con una regla guardada o con un patrón rápido que se mantiene.';
 
   @override
   String get settingsDefaultFolder => 'Carpeta predeterminada';
@@ -612,4 +612,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String ruleOptConflict(String policy) {
     return 'Si existe: $policy';
   }
+
+  @override
+  String get modeNone => 'Ninguna';
+
+  @override
+  String get modeNoneHint => 'El archivo se guarda con su nombre original, sin aplicar ninguna regla.';
 }

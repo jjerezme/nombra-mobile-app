@@ -289,7 +289,7 @@
   "languageEn": "English",
   "settingsDownloads": "Downloads",
   "settingsNamingMode": "Naming mode",
-  "settingsNamingModeHint": "How files are named by default: with a saved rule or with a quick pattern that is kept.",
+  "settingsNamingModeHint": "How files are named by default: no rule, a saved rule, or a quick pattern that is kept.",
   "settingsDefaultFolder": "Default folder",
   "settingsDefaultFolderHint": "Used when the rule does not set a folder.",
   "settingsData": "Data",
@@ -389,5 +389,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "modeNone": "None",
+  "modeNoneHint": "The file is saved with its original name, without applying any rule."
 }

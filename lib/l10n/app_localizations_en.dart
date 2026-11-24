@@ -476,7 +476,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsNamingModeHint =>
-      'How files are named by default: with a saved rule or with a quick pattern that is kept.';
+      'How files are named by default: no rule, a saved rule, or a quick pattern that is kept.';
 
   @override
   String get settingsDefaultFolder => 'Default folder';
@@ -610,4 +610,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String ruleOptConflict(String policy) {
     return 'If it exists: $policy';
   }
+
+  @override
+  String get modeNone => 'None';
+
+  @override
+  String get modeNoneHint => 'The file is saved with its original name, without applying any rule.';
 }

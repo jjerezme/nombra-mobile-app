@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
@@ -123,6 +125,24 @@ void main() {
 
     expect(channel.isMinimized, isTrue);
     expect(channel.isClosed, isTrue);
+  });
+
+  testWidgets('without a rule the file is saved with its original name', (tester) async {
+    env = await TestEnvironment.create(
+      preferences: {
+        ...storedRules(sampleRules()),
+        'settings': jsonEncode(AppSettings(mode: NamingMode.none).toJson()),
+      },
+    );
+    final (container, _) = await pumpShare(tester, env, _linkPayload);
+    expect(find.text('Fecha + nombre'), findsNothing);
+    expect(find.textContaining('Recordar como predeterminada'), findsNothing);
+
+    await tester.tap(find.text('Guardar'));
+    await tester.pump(const Duration(milliseconds: 200));
+    final item = container.read(downloadsProvider).single;
+    expect(item.plan.rule, isNull);
+    expect(container.read(settingsProvider).defaultRuleByKind, isEmpty);
   });
 
   testWidgets('several files show a count instead of a name field', (tester) async {

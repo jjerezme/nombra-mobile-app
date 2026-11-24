@@ -941,7 +941,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsNamingModeHint.
   ///
   /// In es, this message translates to:
-  /// **'Cómo se nombran los archivos por defecto: con una regla guardada o con un patrón rápido que se mantiene.'**
+  /// **'Cómo se nombran los archivos por defecto: sin regla, con una regla guardada o con un patrón rápido que se mantiene.'**
   String get settingsNamingModeHint;
 
   /// No description provided for @settingsDefaultFolder.
@@ -1171,6 +1171,18 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Si existe: {policy}'**
   String ruleOptConflict(String policy);
+
+  /// No description provided for @modeNone.
+  ///
+  /// In es, this message translates to:
+  /// **'Ninguna'**
+  String get modeNone;
+
+  /// No description provided for @modeNoneHint.
+  ///
+  /// In es, this message translates to:
+  /// **'El archivo se guarda con su nombre original, sin aplicar ninguna regla.'**
+  String get modeNoneHint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
