@@ -86,8 +86,33 @@ void main() {
     });
   });
 
-  test('buildQuickFileName wraps the original name', () {
-    expect(buildQuickFileName('acme_', '_v2', source), 'acme_Informe Q3 FINAL (2)_v2.pdf');
+  group('buildQuickFileName', () {
+    test('builds the name from the quick pattern and keeps the original extension', () {
+      expect(
+        buildQuickFileName(['acme_', PatternTokens.name, '_v2'], source, now: now),
+        'acme_Informe Q3 FINAL (2)_v2.pdf',
+      );
+    });
+
+    test('the counter token numbers the file, padded to its digits', () {
+      expect(buildQuickFileName(['Foto_', '{n:3}'], source, now: now, counter: 7), 'Foto_007.pdf');
+      expect(buildQuickFileName(['{n:2}'], source, now: now, counter: 12345), '12345.pdf');
+    });
+
+    test('date, domain and type tokens work as in a rule', () {
+      expect(
+        buildQuickFileName([PatternTokens.date, '_', PatternTokens.domain, '_', PatternTokens.type], source, now: now),
+        '2026-11-23_ejemplo.com_PDF.pdf',
+      );
+    });
+
+    test('a pattern without {name} replaces the original name', () {
+      expect(buildQuickFileName(['Foto_', '{n:3}'], source, now: now), 'Foto_001.pdf');
+    });
+
+    test('nothing left falls back to the default name', () {
+      expect(buildQuickFileName(const [], source, now: now), 'file.pdf');
+    });
   });
 
   test('withNumberSuffix numbers before the extension', () {

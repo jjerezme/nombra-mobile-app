@@ -42,7 +42,7 @@ class ShareHeader extends StatelessWidget {
           height: AppSize.thumb,
           decoration: BoxDecoration(
             color: colors.surfaceContainerHigh,
-            borderRadius: BorderRadius.circular(AppRadius.lg),
+            borderRadius: BorderRadius.circular(AppLayout.controlRadius),
           ),
           child: Icon(
             first.isUrl ? Icons.link : iconForKind(first.kind),

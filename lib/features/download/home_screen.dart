@@ -5,8 +5,12 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../core/constants/tokens.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/validation.dart';
 import '../../core/widgets/app_card.dart';
+import '../../core/widgets/form_parts.dart';
+import '../../core/widgets/screen_header.dart';
 import '../../l10n/app_localizations.dart';
+import '../../app/router.dart';
 import '../naming/widgets/destination_card.dart';
 import '../naming/widgets/folder_picker_sheet.dart';
 import '../naming/widgets/rule_selector.dart';
@@ -55,17 +59,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Future<void> _download(ResolvedTarget target) async {
     final settings = ref.read(settingsProvider);
     final url = _url.text.trim();
+    final isQuickInvalid = settings.mode == NamingMode.quick && !patternHasContent(settings.quickTokens);
+    if (isQuickInvalid) return;
     if (!isHttpUrl(url)) {
       setState(() => _showUrlError = true);
       return;
     }
-    final plan = DownloadPlan(
-      url: url,
-      folder: target.folder,
-      rule: target.rule,
-      prefix: settings.prefix,
-      suffix: settings.suffix,
-    );
+    final plan = settings.mode == NamingMode.quick
+        ? DownloadPlan.quick(settings: settings, folder: target.folder, url: url)
+        : DownloadPlan(url: url, folder: target.folder, rule: target.rule);
     ref.read(settingsProvider.notifier).setLastFolder(target.folder);
     setState(() {
       _url.clear();
@@ -99,85 +101,85 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.xl, AppSpacing.lg, AppSpacing.lg),
+          padding: AppPage.padding,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.xs, 0, 0, AppSpacing.lg),
-              child: Text(l10n.appName, style: context.text.headlineSmall),
-            ),
-            AppCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: AppSpacing.lg,
-                children: [
-                  Text(l10n.homeUrlLabel, style: context.text.labelMedium?.copyWith(color: colors.onSurfaceVariant)),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: AppSpacing.sm,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _url,
-                          keyboardType: TextInputType.url,
-                          onChanged: (_) => setState(() => _showUrlError = false),
-                          style: context.monoStyles.mono,
-                          decoration: InputDecoration(
-                            errorText: _showUrlError ? l10n.homeUrlInvalid : null,
-                            constraints: const BoxConstraints(minHeight: AppSize.control),
+            ScreenHeader(title: l10n.appName),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              spacing: AppLayout.sectionGap,
+              children: [
+                AppCard.stack(
+                  children: [
+                    LabeledField(
+                      label: l10n.homeUrlLabel,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: AppSpacing.sm,
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _url,
+                              keyboardType: TextInputType.url,
+                              onChanged: (_) => setState(() => _showUrlError = false),
+                              style: context.monoStyles.mono,
+                              decoration: InputDecoration(
+                                errorText: _showUrlError ? l10n.homeUrlInvalid : null,
+                                constraints: const BoxConstraints(minHeight: AppSize.control),
+                              ),
+                            ),
                           ),
-                        ),
+                          IconButton.outlined(
+                            onPressed: _paste,
+                            tooltip: l10n.homePasteTooltip,
+                            icon: const Icon(Icons.content_paste, size: AppIconSize.base),
+                            constraints: const BoxConstraints.tightFor(width: AppSize.control, height: AppSize.control),
+                            style: IconButton.styleFrom(
+                              side: BorderSide(color: colors.outlineVariant),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(AppLayout.controlRadius),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      IconButton.outlined(
-                        onPressed: _paste,
-                        tooltip: l10n.homePasteTooltip,
-                        icon: const Icon(Icons.content_paste, size: AppIconSize.base),
-                        constraints: const BoxConstraints.tightFor(width: AppSize.control, height: AppSize.control),
-                        style: IconButton.styleFrom(
-                          side: BorderSide(color: colors.outlineVariant),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.lg)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  RuleSelector(onEditRules: () => context.go('/rules')),
-                  _NamePreview(
-                    label: l10n.homeSavedAs,
-                    fileName: isValid ? target.fileName : l10n.homePreviewEmpty,
-                    isPlaceholder: !isValid,
-                  ),
-                  DestinationCard(
-                    path: target.folder.path,
-                    sourceLabel: folderSourceLabel(l10n, target.folderSource, target.rule),
-                    onChange: () => _changeFolder(target.folder),
-                  ),
-                  FilledButton.icon(
-                    onPressed: () => _download(target),
-                    icon: const Icon(Icons.file_download_outlined, size: AppIconSize.md),
-                    label: Text(l10n.homeDownload),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.xs, AppSpacing.xl, AppSpacing.xs, AppSpacing.md),
-              child: Text(l10n.homeRecents, style: context.text.titleMedium),
-            ),
-            if (downloads.isEmpty)
-              Padding(
-                padding: const EdgeInsets.all(AppSpacing.xs),
-                child: Text(
-                  l10n.homeRecentsEmpty,
-                  style: context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
+                    ),
+                    RuleSelector(onEditRules: () => context.go(AppRoutes.rules)),
+                    _NamePreview(
+                      label: l10n.homeSavedAs,
+                      fileName: isValid ? target.fileName : l10n.homePreviewEmpty,
+                      isPlaceholder: !isValid,
+                    ),
+                    DestinationCard(
+                      path: target.folder.path,
+                      sourceLabel: folderSourceLabel(l10n, target.folderSource, target.rule),
+                      onChange: () => _changeFolder(target.folder),
+                    ),
+                    FilledButton(onPressed: () => _download(target), child: Text(l10n.homeDownload)),
+                  ],
                 ),
-              )
-            else
-              Column(
-                spacing: AppSpacing.sm,
-                children: [
-                  for (final item in downloads)
-                    DownloadTile(item: item, onRetry: () => ref.read(downloadsProvider.notifier).retry(item.id)),
-                ],
-              ),
+                AppSection(
+                  title: l10n.homeRecents,
+                  child: downloads.isEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+                          child: Text(
+                            l10n.homeRecentsEmpty,
+                            style: context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
+                          ),
+                        )
+                      : Column(
+                          spacing: AppLayout.itemGap,
+                          children: [
+                            for (final item in downloads)
+                              DownloadTile(
+                                item: item,
+                                onRetry: () => ref.read(downloadsProvider.notifier).retry(item.id),
+                              ),
+                          ],
+                        ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -198,7 +200,10 @@ class _NamePreview extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(color: colors.secondaryContainer, borderRadius: BorderRadius.circular(AppRadius.lg)),
+      decoration: BoxDecoration(
+        color: colors.secondaryContainer,
+        borderRadius: BorderRadius.circular(AppLayout.controlRadius),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: AppSpacing.xs,

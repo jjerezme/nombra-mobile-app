@@ -62,3 +62,34 @@ abstract final class AppSize {
 
 /// Minimum touch target, in dp.
 const double minTouchTarget = 48;
+
+/// Layout rules shared by every screen, so spacing and shape feel the same everywhere. Use these instead of picking
+/// a value from the scales above.
+abstract final class AppLayout {
+  /// Space between the screen edge and the content of a page or a sheet's card row.
+  static const double gutter = AppSpacing.lg;
+
+  /// Space between the blocks of a page, and between the blocks inside a card.
+  static const double sectionGap = AppSpacing.lg;
+
+  /// Space between the items of a list (rules, downloads).
+  static const double itemGap = AppSpacing.sm;
+
+  /// Space between a field label and its control (and between a control and its hint).
+  static const double labelGap = AppSpacing.sm;
+
+  /// Space between the edge of a card and its content.
+  static const double cardPadding = AppSpacing.lg;
+
+  /// Corner radius of cards and large surfaces.
+  static const double cardRadius = AppRadius.xl;
+
+  /// Corner radius of controls: buttons, fields, boxes inside a card.
+  static const double controlRadius = AppRadius.lg;
+
+  /// Horizontal space of a bottom sheet.
+  static const double sheetGutter = AppSpacing.xl;
+
+  /// Space between buttons in a row.
+  static const double buttonGap = AppSpacing.md;
+}

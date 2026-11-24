@@ -16,6 +16,9 @@ abstract final class PatternTokens {
   static const List<String> palette = [name, date, time, counter, domain, type, '_', '-'];
 
   static bool isToken(String value) => value.length > 1 && value.startsWith('{') && value.endsWith('}');
+
+  /// `{n:3}`: the sequential number, padded to 3 digits.
+  static bool isCounter(String value) => RegExp(r'^\{n:\d+\}$').hasMatch(value);
 }
 
 class RenameRule {

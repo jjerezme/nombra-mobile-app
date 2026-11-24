@@ -5,18 +5,25 @@ import '../core/conflict_prompt.dart';
 import '../features/download/home_screen.dart';
 import '../features/rules/rule_editor_screen.dart';
 import '../features/rules/rules_screen.dart';
+import '../features/settings/settings_screen.dart';
 import 'app_shell.dart';
 
 abstract final class AppRoutes {
   static const String home = '/';
   static const String rules = '/rules';
+  static const String settings = '/settings';
   static const String newRule = '/rules/new';
   static const String editRule = '/rules/:id';
+
+  /// Location of the editor for the rule with [id].
+  static String rule(String id) => '/rules/${Uri.encodeComponent(id)}';
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: rootNavigatorKey,
+    // An unknown location (stale link, removed route) goes home instead of showing an error page.
+    onException: (context, state, router) => router.go(AppRoutes.home),
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => AppShell(navigationShell: shell),
@@ -26,6 +33,9 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           StatefulShellBranch(
             routes: [GoRoute(path: AppRoutes.rules, builder: (context, state) => const RulesScreen())],
+          ),
+          StatefulShellBranch(
+            routes: [GoRoute(path: AppRoutes.settings, builder: (context, state) => const SettingsScreen())],
           ),
         ],
       ),

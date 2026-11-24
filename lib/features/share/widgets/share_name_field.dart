@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../../core/constants/tokens.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/validation.dart';
 import '../../../l10n/app_localizations.dart';
 
 /// "Final name": the proposed name without extension, editable by hand, and the fixed extension.
@@ -25,6 +26,7 @@ class ShareNameField extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final colors = context.colors;
+    final error = validateFileBase(baseName);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: AppSpacing.sm,
@@ -35,8 +37,8 @@ class ShareNameField extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(AppSpacing.md, 0, AppSpacing.tight, 0),
           decoration: BoxDecoration(
             color: colors.surfaceContainerLowest,
-            border: Border.all(color: colors.primary, width: 1.5),
-            borderRadius: BorderRadius.circular(AppRadius.lg),
+            border: Border.all(color: error == null ? colors.primary : colors.error, width: 1.5),
+            borderRadius: BorderRadius.circular(AppLayout.controlRadius),
           ),
           child: Row(
             spacing: AppSpacing.tight,
@@ -68,7 +70,13 @@ class ShareNameField extends StatelessWidget {
             ],
           ),
         ),
-        Text(l10n.shareExtensionKept, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
+        if (error != null)
+          Text(
+            error.message(l10n, max: maxFileBaseLength),
+            style: context.text.bodySmall?.copyWith(color: colors.error),
+          )
+        else
+          Text(l10n.shareExtensionKept, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
       ],
     );
   }

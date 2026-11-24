@@ -16,6 +16,15 @@ List<LocalizationsDelegate<dynamic>> get appLocalizationsDelegates => [
   ...GlobalMaterialLocalizations.delegates,
 ];
 
+/// The language chosen in the settings as a locale; null follows the system.
+Locale? localeFor(AppSettings settings) => settings.languageCode == null ? null : Locale(settings.languageCode!);
+
+ThemeMode themeModeFor(AppSettings settings) => switch (settings.themeMode) {
+  AppThemeMode.system => ThemeMode.system,
+  AppThemeMode.light => ThemeMode.light,
+  AppThemeMode.dark => ThemeMode.dark,
+};
+
 class NombraApp extends ConsumerStatefulWidget {
   const NombraApp({super.key});
 
@@ -51,11 +60,13 @@ class _NombraAppState extends ConsumerState<NombraApp> with WidgetsBindingObserv
   Widget build(BuildContext context) {
     // Keeps the downloads listener alive so finished downloads are saved wherever the user is.
     ref.listen(downloadsProvider, (previous, next) {});
+    final settings = ref.watch(settingsProvider);
     return MaterialApp.router(
       onGenerateTitle: (context) => AppEnvironment.current.name,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
+      themeMode: themeModeFor(settings),
+      locale: localeFor(settings),
       routerConfig: ref.watch(routerProvider),
       localizationsDelegates: appLocalizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

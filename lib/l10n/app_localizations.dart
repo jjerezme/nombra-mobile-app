@@ -179,32 +179,8 @@ abstract class AppLocalizations {
   /// No description provided for @noEnabledRules.
   ///
   /// In es, this message translates to:
-  /// **'No hay reglas activas. Actívalas en Reglas.'**
+  /// **'No hay reglas activas. Crea o activa una en Reglas.'**
   String get noEnabledRules;
-
-  /// No description provided for @prefix.
-  ///
-  /// In es, this message translates to:
-  /// **'Prefijo'**
-  String get prefix;
-
-  /// No description provided for @suffix.
-  ///
-  /// In es, this message translates to:
-  /// **'Sufijo'**
-  String get suffix;
-
-  /// No description provided for @prefixHint.
-  ///
-  /// In es, this message translates to:
-  /// **'p. ej. acme_'**
-  String get prefixHint;
-
-  /// No description provided for @suffixHint.
-  ///
-  /// In es, this message translates to:
-  /// **'p. ej. _v2'**
-  String get suffixHint;
 
   /// No description provided for @saveIn.
   ///
@@ -379,12 +355,6 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Descargando {filename}'**
   String downloadNotificationRunning(Object filename);
-
-  /// No description provided for @downloadNotificationComplete.
-  ///
-  /// In es, this message translates to:
-  /// **'Descarga completa'**
-  String get downloadNotificationComplete;
 
   /// No description provided for @downloadNotificationError.
   ///
@@ -782,12 +752,6 @@ abstract class AppLocalizations {
   /// **'Subcarpeta (opcional)'**
   String get folderPickerSubfolder;
 
-  /// No description provided for @folderPickerSubfolderHint.
-  ///
-  /// In es, this message translates to:
-  /// **'p. ej. Nombra/Facturas'**
-  String get folderPickerSubfolderHint;
-
   /// No description provided for @folderPickerUse.
   ///
   /// In es, this message translates to:
@@ -818,41 +782,317 @@ abstract class AppLocalizations {
   /// **'Conservar ambos'**
   String get conflictKeepBoth;
 
-  /// No description provided for @seedOriginal.
+  /// No description provided for @errRequired.
   ///
   /// In es, this message translates to:
-  /// **'Original'**
-  String get seedOriginal;
+  /// **'Este campo es obligatorio'**
+  String get errRequired;
 
-  /// No description provided for @seedDateName.
+  /// No description provided for @errTooLong.
   ///
   /// In es, this message translates to:
-  /// **'Fecha + nombre'**
-  String get seedDateName;
+  /// **'Máximo {max} caracteres'**
+  String errTooLong(int max);
 
-  /// No description provided for @seedClean.
+  /// No description provided for @errInvalidChars.
   ///
   /// In es, this message translates to:
-  /// **'Limpio'**
-  String get seedClean;
+  /// **'No uses /  : * ? \" < > |'**
+  String get errInvalidChars;
 
-  /// No description provided for @seedInvoices.
+  /// No description provided for @errDuplicateName.
   ///
   /// In es, this message translates to:
-  /// **'Facturas'**
-  String get seedInvoices;
+  /// **'Ya existe una regla con ese nombre'**
+  String get errDuplicateName;
 
-  /// No description provided for @seedPhotos.
+  /// No description provided for @errPatternEmpty.
   ///
   /// In es, this message translates to:
-  /// **'Fotos limpias'**
-  String get seedPhotos;
+  /// **'Agrega al menos un elemento al patrón'**
+  String get errPatternEmpty;
 
-  /// No description provided for @seedInvoicePrefix.
+  /// No description provided for @errSubfolderInvalid.
   ///
   /// In es, this message translates to:
-  /// **'Factura_'**
-  String get seedInvoicePrefix;
+  /// **'Subcarpeta no válida: no uses .. ni : * ? \" < > |'**
+  String get errSubfolderInvalid;
+
+  /// No description provided for @editorDiscardTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Descartar cambios?'**
+  String get editorDiscardTitle;
+
+  /// No description provided for @editorDiscardBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Tienes cambios sin guardar en esta regla.'**
+  String get editorDiscardBody;
+
+  /// No description provided for @discard.
+  ///
+  /// In es, this message translates to:
+  /// **'Descartar'**
+  String get discard;
+
+  /// No description provided for @editorKeepEditing.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguir editando'**
+  String get editorKeepEditing;
+
+  /// No description provided for @ruleNotFound.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta regla ya no existe'**
+  String get ruleNotFound;
+
+  /// No description provided for @rulesEmptyTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Aún no tienes reglas'**
+  String get rulesEmptyTitle;
+
+  /// No description provided for @rulesEmptyBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Crea una regla para renombrar tus descargas con un patrón.'**
+  String get rulesEmptyBody;
+
+  /// No description provided for @navSettings.
+  ///
+  /// In es, this message translates to:
+  /// **'Ajustes'**
+  String get navSettings;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Ajustes'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Apariencia, idioma, descargas y datos.'**
+  String get settingsSubtitle;
+
+  /// No description provided for @settingsAppearance.
+  ///
+  /// In es, this message translates to:
+  /// **'Apariencia'**
+  String get settingsAppearance;
+
+  /// No description provided for @settingsTheme.
+  ///
+  /// In es, this message translates to:
+  /// **'Tema'**
+  String get settingsTheme;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In es, this message translates to:
+  /// **'Sistema'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In es, this message translates to:
+  /// **'Claro'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In es, this message translates to:
+  /// **'Oscuro'**
+  String get themeDark;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In es, this message translates to:
+  /// **'Idioma'**
+  String get settingsLanguage;
+
+  /// No description provided for @languageSystem.
+  ///
+  /// In es, this message translates to:
+  /// **'Sistema'**
+  String get languageSystem;
+
+  /// No description provided for @languageEs.
+  ///
+  /// In es, this message translates to:
+  /// **'Español'**
+  String get languageEs;
+
+  /// No description provided for @languageEn.
+  ///
+  /// In es, this message translates to:
+  /// **'English'**
+  String get languageEn;
+
+  /// No description provided for @settingsDownloads.
+  ///
+  /// In es, this message translates to:
+  /// **'Descargas'**
+  String get settingsDownloads;
+
+  /// No description provided for @settingsNamingMode.
+  ///
+  /// In es, this message translates to:
+  /// **'Modo de nombrado'**
+  String get settingsNamingMode;
+
+  /// No description provided for @settingsNamingModeHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo se nombran los archivos por defecto: con una regla guardada o con un patrón rápido que se mantiene.'**
+  String get settingsNamingModeHint;
+
+  /// No description provided for @settingsDefaultFolder.
+  ///
+  /// In es, this message translates to:
+  /// **'Carpeta predeterminada'**
+  String get settingsDefaultFolder;
+
+  /// No description provided for @settingsDefaultFolderHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Se usa cuando la regla no define una carpeta.'**
+  String get settingsDefaultFolderHint;
+
+  /// No description provided for @settingsData.
+  ///
+  /// In es, this message translates to:
+  /// **'Datos'**
+  String get settingsData;
+
+  /// No description provided for @settingsForgetRemembered.
+  ///
+  /// In es, this message translates to:
+  /// **'Olvidar reglas recordadas'**
+  String get settingsForgetRemembered;
+
+  /// No description provided for @settingsForgetRememberedHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Quita la regla predeterminada por tipo de archivo y la última usada.'**
+  String get settingsForgetRememberedHint;
+
+  /// No description provided for @settingsClearHistory.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar historial de descargas'**
+  String get settingsClearHistory;
+
+  /// No description provided for @settingsClearHistoryHint.
+  ///
+  /// In es, this message translates to:
+  /// **'No borra los archivos ya guardados.'**
+  String get settingsClearHistoryHint;
+
+  /// No description provided for @settingsClearRules.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar todas las reglas'**
+  String get settingsClearRules;
+
+  /// No description provided for @settingsClearRulesHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Empiezas de nuevo, sin reglas.'**
+  String get settingsClearRulesHint;
+
+  /// No description provided for @settingsConfirmForgetTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Olvidar reglas recordadas?'**
+  String get settingsConfirmForgetTitle;
+
+  /// No description provided for @settingsConfirmForgetBody.
+  ///
+  /// In es, this message translates to:
+  /// **'La regla se volverá a elegir automáticamente.'**
+  String get settingsConfirmForgetBody;
+
+  /// No description provided for @settingsConfirmHistoryTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar el historial?'**
+  String get settingsConfirmHistoryTitle;
+
+  /// No description provided for @settingsConfirmHistoryBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se quitan de la lista las descargas terminadas y con error. Los archivos guardados no se borran.'**
+  String get settingsConfirmHistoryBody;
+
+  /// No description provided for @settingsConfirmRulesTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar todas las reglas?'**
+  String get settingsConfirmRulesTitle;
+
+  /// No description provided for @settingsConfirmRulesBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se eliminan {count} reglas. No se puede deshacer.'**
+  String settingsConfirmRulesBody(int count);
+
+  /// No description provided for @settingsDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo'**
+  String get settingsDone;
+
+  /// No description provided for @settingsVersion.
+  ///
+  /// In es, this message translates to:
+  /// **'Versión {version} ({build})'**
+  String settingsVersion(String version, String build);
+
+  /// No description provided for @notificationChannelName.
+  ///
+  /// In es, this message translates to:
+  /// **'Archivos guardados'**
+  String get notificationChannelName;
+
+  /// No description provided for @notificationSavedTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardado'**
+  String get notificationSavedTitle;
+
+  /// No description provided for @notificationSavedBody.
+  ///
+  /// In es, this message translates to:
+  /// **'{name} · {folder}'**
+  String notificationSavedBody(String name, String folder);
+
+  /// No description provided for @notificationSaveFailedTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo guardar'**
+  String get notificationSaveFailedTitle;
+
+  /// No description provided for @quickNext.
+  ///
+  /// In es, this message translates to:
+  /// **'Siguiente número'**
+  String get quickNext;
+
+  /// No description provided for @errInvalidNumber.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribe un número entero mayor que 0'**
+  String get errInvalidNumber;
+
+  /// No description provided for @quickNextHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Con el elemento de número en el patrón, el número sigue mientras no cambies el patrón; si lo cambias, vuelve a 1.'**
+  String get quickNextHint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

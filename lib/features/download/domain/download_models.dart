@@ -1,4 +1,5 @@
 import '../../rules/domain/file_kind.dart';
+import '../../settings/app_settings.dart';
 import '../../rules/domain/filename_builder.dart';
 import '../../rules/domain/rename_rule.dart';
 import '../../rules/domain/storage_root.dart';
@@ -9,52 +10,81 @@ class DownloadPlan {
     required this.folder,
     this.url,
     this.rule,
-    this.prefix = '',
-    this.suffix = '',
     this.fixedFileName,
+    this.quickTokens,
+    this.quickSignature = '',
   });
+
+  /// Quick mode: the plan keeps the quick pattern it was created with, whatever the user changes while it runs.
+  factory DownloadPlan.quick({
+    required AppSettings settings,
+    required DestinationFolder folder,
+    String? url,
+    String? fixedFileName,
+  }) => DownloadPlan(
+    url: url,
+    folder: folder,
+    fixedFileName: fixedFileName,
+    quickTokens: settings.quickTokens,
+    quickSignature: settings.quickSignature,
+  );
 
   factory DownloadPlan.fromJson(Map<String, dynamic> json) => DownloadPlan(
     url: json['url'] as String?,
     folder: DestinationFolder.fromJson(json['folder'] as Map<String, dynamic>),
     rule: json['rule'] == null ? null : RenameRule.fromJson(json['rule'] as Map<String, dynamic>),
-    prefix: json['prefix'] as String? ?? '',
-    suffix: json['suffix'] as String? ?? '',
     fixedFileName: json['fixedFileName'] as String?,
+    quickTokens: _quickTokensFrom(json),
+    quickSignature: json['quickSignature'] as String? ?? '',
   );
 
   /// Null when the file is already on the device (a shared file).
   final String? url;
   final DestinationFolder folder;
 
-  /// Snapshot of the rule; null means quick mode (prefix and suffix).
+  /// Snapshot of the rule; null means quick mode (or the original name when [quickTokens] is null too).
   final RenameRule? rule;
-  final String prefix;
-  final String suffix;
 
-  /// A name the user typed by hand; wins over the rule.
+  /// A name the user typed by hand; wins over the rule and the quick pattern.
   final String? fixedFileName;
+
+  /// The quick pattern; null keeps the original name.
+  final List<String>? quickTokens;
+
+  /// `AppSettings.quickSignature` when the plan was made: the sequence only goes on while it matches.
+  final String quickSignature;
 
   ConflictPolicy get conflict => rule?.conflict ?? ConflictPolicy.suffix;
 
   bool get usesCounter => rule?.tokens.any((token) => RegExp(r'^\{n:\d+\}$').hasMatch(token)) ?? false;
 
-  /// Final file name for [source]; [takeCounter] is only called when the rule has a counter token.
-  String nameFor(SourceFile source, {required DateTime now, required int Function(String ruleId) takeCounter}) {
+  /// Final file name for [source]. [takeCounter] is only called when the rule has a counter token, and
+  /// [takeQuickNumber] only when the quick pattern has one; a name typed by hand uses neither.
+  String nameFor(
+    SourceFile source, {
+    required DateTime now,
+    required int Function(String ruleId) takeCounter,
+    required int Function(String signature) takeQuickNumber,
+  }) {
     final fixed = fixedFileName;
     if (fixed != null) return fixed;
     final selected = rule;
-    if (selected == null) return buildQuickFileName(prefix, suffix, source);
-    return buildFileName(selected, source, now: now, counter: usesCounter ? takeCounter(selected.id) : null);
+    if (selected != null) {
+      return buildFileName(selected, source, now: now, counter: usesCounter ? takeCounter(selected.id) : null);
+    }
+    final tokens = quickTokens;
+    if (tokens == null) return buildQuickFileName(defaultQuickTokens, source, now: now);
+    final counter = tokens.any(PatternTokens.isCounter) ? takeQuickNumber(quickSignature) : 1;
+    return buildQuickFileName(tokens, source, now: now, counter: counter);
   }
 
   Map<String, dynamic> toJson() => {
     'url': url,
     'folder': folder.toJson(),
     'rule': rule?.toJson(),
-    'prefix': prefix,
-    'suffix': suffix,
     'fixedFileName': fixedFileName,
+    'quickTokens': quickTokens,
+    'quickSignature': quickSignature,
   };
 }
 
@@ -157,4 +187,21 @@ class DownloadItem {
     'httpCode': httpCode,
     'fallbackKind': fallbackKind?.name,
   };
+}
+
+/// The quick pattern of a stored plan; plans saved by the first quick version have prefix and suffix instead.
+List<String>? _quickTokensFrom(Map<String, dynamic> json) {
+  final tokens = json['quickTokens'] as List<dynamic>?;
+  if (tokens != null) return tokens.cast<String>();
+  final prefix = json['prefix'] as String? ?? '';
+  final suffix = json['suffix'] as String? ?? '';
+  final isLegacy = prefix.isNotEmpty || suffix.isNotEmpty || (json['quickSequence'] as bool? ?? false);
+  if (!isLegacy) return null;
+  return legacyQuickTokens(
+    prefix: prefix,
+    suffix: suffix,
+    replaceName: json['quickReplaceName'] as bool? ?? false,
+    sequence: json['quickSequence'] as bool? ?? false,
+    digits: json['quickDigits'] as int? ?? 3,
+  );
 }

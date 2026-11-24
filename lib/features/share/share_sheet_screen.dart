@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../core/constants/tokens.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/validation.dart';
 import '../download/data/downloads_notifier.dart';
 import '../download/domain/download_models.dart';
 import '../download/widgets/download_tile.dart';
@@ -35,8 +36,13 @@ class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
   DestinationFolder? _chosenFolder;
   bool _remember = true;
   List<String>? _savedIds;
+  bool _isClosing = false;
 
-  void _close() => unawaited(ref.read(shareChannelProvider).close());
+  void _close() {
+    if (_isClosing) return;
+    _isClosing = true;
+    unawaited(ref.read(shareChannelProvider).close());
+  }
 
   Future<void> _changeFolder(DestinationFolder current) async {
     final folder = await showFolderPicker(context, current);
@@ -58,36 +64,36 @@ class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
       final extension = first.source.extension;
       fixedName = extension.isEmpty ? manual.trim() : '${manual.trim()}.$extension';
     }
-    DownloadPlan planFor(ShareItem item) => DownloadPlan(
-      url: item.url,
-      folder: target.folder,
-      rule: rule,
-      prefix: settings.prefix,
-      suffix: settings.suffix,
-      fixedFileName: fixedName,
-    );
+    DownloadPlan planFor(ShareItem item) => settings.mode == NamingMode.quick
+        ? DownloadPlan.quick(settings: settings, folder: target.folder, url: item.url, fixedFileName: fixedName)
+        : DownloadPlan(url: item.url, folder: target.folder, rule: rule, fixedFileName: fixedName);
 
+    // The permission dialog needs this screen in front, so it is asked before the sheet goes to the background.
+    await downloads.prepareNotifications();
     setState(() => _savedIds = const []);
-    final ids = <String>[];
-    for (final item in items) {
-      final path = item.path;
-      ids.add(
-        path == null
-            ? await downloads.start(planFor(item), displayName: fixedName ?? target.fileName)
-            : await downloads.saveLocalFile(planFor(item), path: path, fileName: item.name),
-      );
-    }
-    if (mounted) setState(() => _savedIds = ids);
+    final saves = [
+      for (final item in items)
+        item.path == null
+            ? downloads.start(planFor(item), displayName: fixedName ?? target.fileName)
+            : downloads.saveLocalFile(planFor(item), path: item.path!, fileName: item.name),
+    ];
+    // Saving goes on in the background, with its notification: the sheet does not stay on screen.
+    unawaited(ref.read(shareChannelProvider).minimize());
+    final ids = await Future.wait(saves);
+    if (!mounted) return;
+    setState(() => _savedIds = ids);
+    _closeWhenDone(ref.read(downloadsProvider));
   }
 
-  /// Closes the sheet shortly after everything has been saved.
+  /// Finishes the (hidden) activity once every save is done or failed.
   void _closeWhenDone(List<DownloadItem> downloads) {
     final ids = _savedIds;
     if (ids == null || ids.isEmpty) return;
     final tracked = downloads.where((item) => ids.contains(item.id));
-    if (tracked.isNotEmpty && tracked.every((item) => item.status == DownloadStatus.done)) {
-      Timer(const Duration(milliseconds: 900), _close);
-    }
+    final isFinished = tracked.every(
+      (item) => item.status == DownloadStatus.done || item.status == DownloadStatus.failed,
+    );
+    if (tracked.isEmpty || isFinished) _close();
   }
 
   @override
@@ -118,7 +124,12 @@ class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
                 child: SafeArea(
                   top: false,
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(AppSpacing.xl, AppSpacing.md, AppSpacing.xl, AppSpacing.xxl),
+                    padding: const EdgeInsets.fromLTRB(
+                      AppLayout.sheetGutter,
+                      AppSpacing.md,
+                      AppLayout.sheetGutter,
+                      AppSpacing.xxl,
+                    ),
                     child: payload.isLoading
                         ? const SizedBox(
                             height: AppSize.button,
@@ -211,6 +222,9 @@ class _Content extends ConsumerWidget {
       selected: settings.mode == NamingMode.saved ? selectRule(settings, rules, kind: first.kind) : null,
     );
     final (autoBase, extension) = splitFileName(target.fileName);
+    final typed = manualBase;
+    final isQuickPatternValid = settings.mode != NamingMode.quick || patternHasContent(settings.quickTokens);
+    final isNameValid = isQuickPatternValid && (items.length != 1 || typed == null || validateFileBase(typed) == null);
     final saved = savedIds;
     final tracked = saved == null
         ? const <DownloadItem>[]
@@ -218,7 +232,7 @@ class _Content extends ConsumerWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: AppSpacing.roomy,
+      spacing: AppLayout.sectionGap,
       children: [
         Center(
           child: Container(
@@ -260,13 +274,16 @@ class _Content extends ConsumerWidget {
               title: Text(l10n.shareRememberDefault(kindLabel(l10n, first.kind)), style: context.text.bodyMedium),
             ),
           Row(
-            spacing: AppSpacing.snug,
+            spacing: AppLayout.buttonGap,
             children: [
               Expanded(
                 child: OutlinedButton(onPressed: onClose, child: Text(l10n.cancel)),
               ),
               Expanded(
-                child: FilledButton(onPressed: () => onSave(items, target), child: Text(l10n.save)),
+                child: FilledButton(
+                  onPressed: isNameValid ? () => onSave(items, target) : null,
+                  child: Text(l10n.save),
+                ),
               ),
             ],
           ),

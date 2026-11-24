@@ -3,6 +3,8 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/constants/tokens.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/app_card.dart';
+import '../../../core/widgets/form_parts.dart';
+import '../../../core/widgets/screen_header.dart';
 import '../../../core/widgets/segmented_toggle.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/rename_rule.dart';
@@ -30,101 +32,62 @@ class FolderSection extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final colors = context.colors;
     final selected = folder;
-    return AppCard(
-      radius: AppRadius.xl,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: AppSpacing.md,
+    return AppSection(
+      title: '${l10n.editorFolderTitle} ${l10n.editorOptional}',
+      child: AppCard.stack(
         children: [
-          Text.rich(
-            TextSpan(
-              text: l10n.editorFolderTitle,
-              style: context.text.titleSmall,
-              children: [
-                TextSpan(
-                  text: ' ${l10n.editorOptional}',
-                  style: context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
-                ),
-              ],
-            ),
-          ),
-          if (selected != null)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: AppSpacing.tight,
-              children: [
-                Container(
-                  padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.xs, AppSpacing.xs, AppSpacing.xs),
-                  decoration: BoxDecoration(
-                    color: colors.primaryContainer.withValues(alpha: 0.4),
-                    border: Border.all(color: colors.primary, width: 1.5),
-                    borderRadius: BorderRadius.circular(AppRadius.xl - AppSpacing.xxs),
-                  ),
-                  child: Row(
-                    spacing: AppSpacing.sm,
-                    children: [
-                      Icon(Icons.folder_outlined, size: AppIconSize.md, color: colors.primary),
-                      Expanded(
-                        child: Text(
-                          selected.path,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.monoStyles.mono,
-                        ),
-                      ),
-                      TextButton(onPressed: onPickFolder, child: Text(l10n.change)),
-                      IconButton(
-                        onPressed: onClearFolder,
-                        tooltip: l10n.editorRemoveFolderTooltip,
-                        icon: const Icon(Icons.close, size: AppIconSize.base),
-                      ),
-                    ],
-                  ),
-                ),
-                Text(l10n.editorFolderAlways, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
-              ],
-            )
-          else
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.lg),
+          LabeledField(
+            hint: selected == null ? l10n.editorNoFolderDesc : l10n.editorFolderAlways,
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.xs, AppSpacing.xs, AppSpacing.xs),
               decoration: BoxDecoration(
                 color: colors.surfaceContainerLowest,
-                border: Border.all(color: colors.outline),
-                borderRadius: BorderRadius.circular(AppRadius.xl - AppSpacing.xxs),
+                border: Border.all(color: colors.outlineVariant),
+                borderRadius: BorderRadius.circular(AppLayout.controlRadius),
               ),
-              child: Column(
+              child: Row(
                 spacing: AppSpacing.sm,
                 children: [
-                  Icon(Icons.create_new_folder_outlined, size: AppIconSize.lg, color: colors.onSurfaceVariant),
-                  Text(l10n.editorNoFolderTitle, style: context.text.labelLarge?.copyWith(fontSize: AppFontSize.md)),
-                  Text(
-                    l10n.editorNoFolderDesc,
-                    textAlign: TextAlign.center,
-                    style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant),
+                  Icon(
+                    selected == null ? Icons.create_new_folder_outlined : Icons.folder_outlined,
+                    size: AppIconSize.md,
+                    color: selected == null ? colors.onSurfaceVariant : colors.primary,
                   ),
-                  OutlinedButton(
-                    onPressed: onPickFolder,
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: const Size(0, AppSize.control),
-                      foregroundColor: colors.primary,
-                      side: BorderSide(color: colors.primary),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.lg)),
+                  Expanded(
+                    child: Text(
+                      selected?.path ?? l10n.editorNoFolderTitle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: selected == null
+                          ? context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant)
+                          : context.monoStyles.mono,
                     ),
-                    child: Text(l10n.editorPickFolder),
                   ),
+                  TextButton(
+                    onPressed: onPickFolder,
+                    child: Text(selected == null ? l10n.editorPickFolder : l10n.change),
+                  ),
+                  if (selected != null)
+                    IconButton(
+                      onPressed: onClearFolder,
+                      tooltip: l10n.editorRemoveFolderTooltip,
+                      icon: const Icon(Icons.close, size: AppIconSize.base),
+                    ),
                 ],
               ),
             ),
-          Text(l10n.editorIfExists, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
-          SegmentedToggle<ConflictPolicy>(
-            options: [
-              ToggleOption(ConflictPolicy.suffix, l10n.editorConflictSuffix),
-              ToggleOption(ConflictPolicy.replace, l10n.editorConflictReplace),
-              ToggleOption(ConflictPolicy.ask, l10n.editorConflictAsk),
-            ],
-            selected: conflict,
-            onChanged: onConflictChanged,
+          ),
+          LabeledField(
+            label: l10n.editorIfExists,
+            child: SegmentedToggle<ConflictPolicy>(
+              options: [
+                ToggleOption(ConflictPolicy.suffix, l10n.editorConflictSuffix),
+                ToggleOption(ConflictPolicy.replace, l10n.editorConflictReplace),
+                ToggleOption(ConflictPolicy.ask, l10n.editorConflictAsk),
+              ],
+              selected: conflict,
+              onChanged: onConflictChanged,
+            ),
           ),
         ],
       ),

@@ -66,7 +66,6 @@ class _ProgressTile extends StatelessWidget {
     final colors = context.colors;
     final isIndeterminate = item.status != DownloadStatus.running || item.progress <= 0;
     return AppCard(
-      radius: AppRadius.xl,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +127,6 @@ class _ResultTile extends StatelessWidget {
             if (fallback != null) l10n.homeFallbackDownload(kindLabel(l10n, fallback)),
           ].join('\n');
     return AppCard(
-      radius: AppRadius.xl,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
       child: Row(
         spacing: AppSpacing.md,

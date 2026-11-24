@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:background_downloader/background_downloader.dart';
@@ -6,10 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/current_l10n.dart';
 import '../../../core/providers.dart';
 import '../../rules/data/rules_notifier.dart';
+import '../../settings/app_settings.dart';
 import '../../rules/domain/filename_builder.dart';
 import '../domain/download_models.dart';
 import 'download_engine.dart';
 import 'file_finalizer.dart';
+import 'notification_gateway.dart';
 
 const String _downloadsKey = 'downloads';
 const int _historyLimit = 50;
@@ -17,6 +20,8 @@ const int _historyLimit = 50;
 final downloadEngineProvider = Provider<DownloadEngine>((ref) => const PluginDownloadEngine());
 
 final storageGatewayProvider = Provider<SharedStorageGateway>((ref) => const PluginStorageGateway());
+
+final notificationGatewayProvider = Provider<NotificationGateway>((ref) => const PluginNotificationGateway());
 
 final finalizerProvider = Provider<FileFinalizer>((ref) => FileFinalizer(ref.watch(storageGatewayProvider)));
 
@@ -143,7 +148,12 @@ class DownloadsNotifier extends Notifier<List<DownloadItem>> {
       );
       final plan = item.plan;
       final rules = ref.read(rulesProvider.notifier);
-      final fileName = plan.nameFor(source, now: DateTime.now(), takeCounter: rules.takeCounter);
+      final fileName = plan.nameFor(
+        source,
+        now: DateTime.now(),
+        takeCounter: rules.takeCounter,
+        takeQuickNumber: ref.read(settingsProvider.notifier).takeQuickNumber,
+      );
       final saved = await ref
           .read(finalizerProvider)
           .save(
@@ -164,11 +174,37 @@ class DownloadsNotifier extends Notifier<List<DownloadItem>> {
           clearError: true,
         ),
       );
+      unawaited(_notifySaved(id, saved.fileName, saved.folderPath));
     } on SaveCancelled {
       _set(state.where((current) => current.id != id).toList());
     } on Object {
       _fail(id, DownloadError.save);
+      unawaited(_notifyFailed(id, item.fileName));
     }
+  }
+
+  Future<void> _notifySaved(String id, String fileName, String folderPath) {
+    final l10n = currentL10n();
+    return ref
+        .read(notificationGatewayProvider)
+        .show(
+          id: id.hashCode,
+          title: l10n.notificationSavedTitle,
+          text: l10n.notificationSavedBody(fileName, folderPath),
+          channelName: l10n.notificationChannelName,
+        );
+  }
+
+  Future<void> _notifyFailed(String id, String fileName) {
+    final l10n = currentL10n();
+    return ref
+        .read(notificationGatewayProvider)
+        .show(
+          id: id.hashCode,
+          title: l10n.notificationSaveFailedTitle,
+          text: fileName,
+          channelName: l10n.notificationChannelName,
+        );
   }
 
   DownloadItem _newItem(DownloadPlan plan, String fileName, DownloadStatus status) => DownloadItem(
@@ -191,13 +227,16 @@ class DownloadsNotifier extends Notifier<List<DownloadItem>> {
     metaData: item.id,
   );
 
+  /// Asks for the notification permission up front, while the screen that needs it is still in front.
+  Future<void> prepareNotifications() => ref.read(downloadEngineProvider).requestNotificationPermission();
+
   /// Starts downloading [plan]'s URL; [displayName] is the name shown while it downloads.
   Future<String> start(DownloadPlan plan, {required String displayName}) async {
     final engine = ref.read(downloadEngineProvider);
     final l10n = currentL10n();
     engine.configureNotifications(
       running: l10n.downloadNotificationRunning('{filename}'),
-      complete: l10n.downloadNotificationComplete,
+      complete: null,
       error: l10n.downloadNotificationError,
     );
     final item = _newItem(plan, displayName, DownloadStatus.queued);
@@ -228,6 +267,10 @@ class DownloadsNotifier extends Notifier<List<DownloadItem>> {
   }
 
   void dismiss(String id) => _set(state.where((item) => item.id != id).toList());
+
+  /// Clears the history: finished and failed items go, downloads still in flight stay.
+  void clearFinished() =>
+      _set(state.where((item) => item.status != DownloadStatus.done && item.status != DownloadStatus.failed).toList());
 }
 
 final downloadsProvider = NotifierProvider<DownloadsNotifier, List<DownloadItem>>(DownloadsNotifier.new);

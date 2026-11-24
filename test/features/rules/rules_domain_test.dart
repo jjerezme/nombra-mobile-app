@@ -90,20 +90,39 @@ void main() {
       expect(target.folderSource, FolderSource.chosen);
     });
 
-    test('quick mode uses prefix and suffix', () {
-      final settings = AppSettings(mode: NamingMode.quick, prefix: 'x_', suffix: '_y');
+    test('quick mode uses the quick pattern', () {
+      final settings = AppSettings(mode: NamingMode.quick, quickTokens: ['x_', PatternTokens.name, '_y']);
       final target = resolveTarget(settings: settings, rules: [dated], source: source, now: now);
       expect(target.fileName, 'x_a_y.pdf');
       expect(target.rule, isNull);
     });
   });
 
+  test('settings saved by the first quick version (prefix, suffix, sequence) become a quick pattern', () {
+    final settings = AppSettings.fromJson({
+      'prefix': 'p_',
+      'suffix': '_s',
+      'quickReplaceName': true,
+      'quickSequence': true,
+      'quickDigits': 3,
+    });
+    expect(settings.quickTokens, ['p_', '{n:3}', '_s']);
+    expect(AppSettings.fromJson(const {}).quickTokens, [PatternTokens.name]);
+  });
+
+  test('the quick sequence continues only while the pattern is the same', () {
+    final settings = AppSettings(quickTokens: ['a', '{n:3}'], quickNext: 9, quickNextKey: 'a\u0001{n:3}');
+    expect(settings.nextQuickNumber, 9);
+    expect(settings.copyWith(quickTokens: ['b', '{n:3}']).nextQuickNumber, 1);
+  });
+
   test('AppSettings survives a JSON round trip', () {
     final settings = AppSettings(
       mode: NamingMode.quick,
       lastRuleId: 'r',
-      prefix: 'p',
-      suffix: 's',
+      quickTokens: ['p_', PatternTokens.date, '{n:3}'],
+      quickNext: 4,
+      quickNextKey: 'k',
       lastFolder: DestinationFolder(StorageRoot.movies, 'a'),
       defaultRuleByKind: const {'image': 'r'},
     );

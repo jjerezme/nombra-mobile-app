@@ -14,11 +14,7 @@
   "ruleLabel": "Regla",
   "ruleRemembered": "Se recuerda la última usada",
   "editRules": "Editar reglas",
-  "noEnabledRules": "No hay reglas activas. Actívalas en Reglas.",
-  "prefix": "Prefijo",
-  "suffix": "Sufijo",
-  "prefixHint": "p. ej. acme_",
-  "suffixHint": "p. ej. _v2",
+  "noEnabledRules": "No hay reglas activas. Crea o activa una en Reglas.",
   "saveIn": "Guardar en · {source}",
   "@saveIn": {
     "placeholders": {
@@ -130,7 +126,6 @@
     }
   },
   "downloadNotificationRunning": "Descargando {filename}",
-  "downloadNotificationComplete": "Descarga completa",
   "downloadNotificationError": "No se pudo descargar",
   "shareTitle": "Guardar con Nombra",
   "shareFileCount": "{count} archivos",
@@ -246,7 +241,6 @@
   "folderPickerTitle": "Elegir carpeta",
   "folderPickerRoot": "Ubicación",
   "folderPickerSubfolder": "Subcarpeta (opcional)",
-  "folderPickerSubfolderHint": "p. ej. Nombra/Facturas",
   "folderPickerUse": "Usar esta carpeta",
   "conflictTitle": "El archivo ya existe",
   "conflictBody": "«{name}» ya está en {folder}.",
@@ -262,10 +256,90 @@
   },
   "conflictReplace": "Reemplazar",
   "conflictKeepBoth": "Conservar ambos",
-  "seedOriginal": "Original",
-  "seedDateName": "Fecha + nombre",
-  "seedClean": "Limpio",
-  "seedInvoices": "Facturas",
-  "seedPhotos": "Fotos limpias",
-  "seedInvoicePrefix": "Factura_"
+  "errRequired": "Este campo es obligatorio",
+  "errTooLong": "Máximo {max} caracteres",
+  "@errTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "errInvalidChars": "No uses /  : * ? \" < > |",
+  "errDuplicateName": "Ya existe una regla con ese nombre",
+  "errPatternEmpty": "Agrega al menos un elemento al patrón",
+  "errSubfolderInvalid": "Subcarpeta no válida: no uses .. ni : * ? \" < > |",
+  "editorDiscardTitle": "¿Descartar cambios?",
+  "editorDiscardBody": "Tienes cambios sin guardar en esta regla.",
+  "discard": "Descartar",
+  "editorKeepEditing": "Seguir editando",
+  "ruleNotFound": "Esta regla ya no existe",
+  "rulesEmptyTitle": "Aún no tienes reglas",
+  "rulesEmptyBody": "Crea una regla para renombrar tus descargas con un patrón.",
+  "navSettings": "Ajustes",
+  "settingsTitle": "Ajustes",
+  "settingsSubtitle": "Apariencia, idioma, descargas y datos.",
+  "settingsAppearance": "Apariencia",
+  "settingsTheme": "Tema",
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Oscuro",
+  "settingsLanguage": "Idioma",
+  "languageSystem": "Sistema",
+  "languageEs": "Español",
+  "languageEn": "English",
+  "settingsDownloads": "Descargas",
+  "settingsNamingMode": "Modo de nombrado",
+  "settingsNamingModeHint": "Cómo se nombran los archivos por defecto: con una regla guardada o con un patrón rápido que se mantiene.",
+  "settingsDefaultFolder": "Carpeta predeterminada",
+  "settingsDefaultFolderHint": "Se usa cuando la regla no define una carpeta.",
+  "settingsData": "Datos",
+  "settingsForgetRemembered": "Olvidar reglas recordadas",
+  "settingsForgetRememberedHint": "Quita la regla predeterminada por tipo de archivo y la última usada.",
+  "settingsClearHistory": "Borrar historial de descargas",
+  "settingsClearHistoryHint": "No borra los archivos ya guardados.",
+  "settingsClearRules": "Borrar todas las reglas",
+  "settingsClearRulesHint": "Empiezas de nuevo, sin reglas.",
+  "settingsConfirmForgetTitle": "¿Olvidar reglas recordadas?",
+  "settingsConfirmForgetBody": "La regla se volverá a elegir automáticamente.",
+  "settingsConfirmHistoryTitle": "¿Borrar el historial?",
+  "settingsConfirmHistoryBody": "Se quitan de la lista las descargas terminadas y con error. Los archivos guardados no se borran.",
+  "settingsConfirmRulesTitle": "¿Borrar todas las reglas?",
+  "settingsConfirmRulesBody": "Se eliminan {count} reglas. No se puede deshacer.",
+  "@settingsConfirmRulesBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsDone": "Listo",
+  "settingsVersion": "Versión {version} ({build})",
+  "@settingsVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "build": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationChannelName": "Archivos guardados",
+  "notificationSavedTitle": "Guardado",
+  "notificationSavedBody": "{name} · {folder}",
+  "notificationSaveFailedTitle": "No se pudo guardar",
+  "@notificationSavedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "quickNext": "Siguiente número",
+  "errInvalidNumber": "Escribe un número entero mayor que 0",
+  "quickNextHint": "Con el elemento de número en el patrón, el número sigue mientras no cambies el patrón; si lo cambias, vuelve a 1."
 }

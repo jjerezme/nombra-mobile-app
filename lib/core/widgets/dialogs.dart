@@ -24,26 +24,68 @@ Future<bool> showConfirmDialog(
   return result ?? false;
 }
 
-/// Asks for one line of text; null when cancelled or left empty.
-Future<String?> showTextDialog(BuildContext context, {required String title, required String hint}) async {
-  final l10n = AppLocalizations.of(context);
-  final controller = TextEditingController();
-  final result = await showDialog<String>(
+/// Asks for one line of text; null when cancelled. [validator] returns the error to show (null when valid) and
+/// the dialog stays open until the text is valid.
+Future<String?> showTextDialog(
+  BuildContext context, {
+  required String title,
+  required String hint,
+  String? Function(String value)? validator,
+}) {
+  return showDialog<String>(
     context: context,
-    builder: (context) => AlertDialog(
-      title: Text(title),
+    builder: (context) => _TextDialog(title: title, hint: hint, validator: validator),
+  );
+}
+
+class _TextDialog extends StatefulWidget {
+  const _TextDialog({required this.title, required this.hint, this.validator});
+
+  final String title;
+  final String hint;
+  final String? Function(String value)? validator;
+
+  @override
+  State<_TextDialog> createState() => _TextDialogState();
+}
+
+class _TextDialogState extends State<_TextDialog> {
+  // Owned by the State: it is disposed with the dialog, after the closing animation, not before.
+  final TextEditingController _controller = TextEditingController();
+  String? _error;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _accept() {
+    final text = _controller.text;
+    final error = widget.validator?.call(text) ?? (text.trim().isEmpty ? '' : null);
+    if (error != null) {
+      setState(() => _error = error.isEmpty ? null : error);
+      return;
+    }
+    Navigator.of(context).pop(text.trim());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return AlertDialog(
+      title: Text(widget.title),
       content: TextField(
-        controller: controller,
+        controller: _controller,
         autofocus: true,
-        decoration: InputDecoration(hintText: hint),
+        onChanged: (_) => setState(() => _error = null),
+        onSubmitted: (_) => _accept(),
+        decoration: InputDecoration(hintText: widget.hint, errorText: _error),
       ),
       actions: [
         TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.cancel)),
-        TextButton(onPressed: () => Navigator.of(context).pop(controller.text), child: Text(l10n.accept)),
+        TextButton(onPressed: _accept, child: Text(l10n.accept)),
       ],
-    ),
-  );
-  controller.dispose();
-  final trimmed = result?.trim();
-  return trimmed == null || trimmed.isEmpty ? null : trimmed;
+    );
+  }
 }

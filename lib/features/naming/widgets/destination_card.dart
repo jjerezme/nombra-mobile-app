@@ -29,7 +29,7 @@ class DestinationCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.surface,
         border: Border.all(color: colors.outlineVariant),
-        borderRadius: BorderRadius.circular(AppRadius.xl),
+        borderRadius: BorderRadius.circular(AppLayout.controlRadius),
       ),
       child: Row(
         spacing: AppSpacing.md,

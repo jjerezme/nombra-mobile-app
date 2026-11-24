@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:background_downloader/background_downloader.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nombra/features/download/data/downloads_notifier.dart';
 import 'package:nombra/features/download/domain/download_models.dart';
 import 'package:nombra/features/rules/data/rules_notifier.dart';
 import 'package:nombra/features/rules/domain/rename_rule.dart';
 import 'package:nombra/features/rules/domain/storage_root.dart';
+import 'package:nombra/features/settings/app_settings.dart';
 
 import '../../helpers/fakes.dart';
 
@@ -70,6 +72,12 @@ void main() {
     expect(item.folderPath, '/Documents/Facturas');
     expect(env.gateway.moved.single.directory, 'Facturas');
     expect(container.read(rulesProvider.notifier).byId('r1')!.counter, 15);
+
+    // The result is announced with a notification that names the final file and its folder.
+    final notification = env.notifications.shown.single;
+    expect(notification.title, 'Saved');
+    expect(notification.text, contains('Factura_014.pdf'));
+    expect(notification.text, contains('/Documents/Facturas'));
   });
 
   test('progress updates fill the item', () async {
@@ -132,6 +140,81 @@ void main() {
     expect(item.status, DownloadStatus.done);
     expect(item.fileName, 'mi-foto.jpg');
     expect(item.folderPath, '/Pictures/Nombra');
+  });
+
+  group('quick sequence', () {
+    AppSettings quickSettings({String prefix = 'Foto_'}) =>
+        AppSettings(mode: NamingMode.quick, quickTokens: [prefix, '{n:3}']);
+
+    Future<String> saveShared(ProviderContainer container, DownloadPlan plan, String name) async {
+      final file = await File('${tempDir.path}/$name').writeAsString('data');
+      await container.read(downloadsProvider.notifier).saveLocalFile(plan, path: file.path, fileName: name);
+      return container.read(downloadsProvider).first.fileName;
+    }
+
+    test('each file takes the next number and the next one is kept', () async {
+      final container = env.container();
+      final settings = quickSettings();
+      DownloadPlan plan() => DownloadPlan.quick(settings: settings, folder: DestinationFolder(StorageRoot.pictures));
+
+      expect(await saveShared(container, plan(), 'IMG_1.jpg'), 'Foto_001.jpg');
+      expect(await saveShared(container, plan(), 'IMG_2.jpg'), 'Foto_002.jpg');
+
+      // A new container (the app was closed and reopened) goes on from the saved number.
+      final reopened = env.container();
+      expect(reopened.read(settingsProvider).quickNext, 3);
+      expect(await saveShared(reopened, plan(), 'IMG_3.jpg'), 'Foto_003.jpg');
+    });
+
+    test('changing the pattern starts the sequence again at 1', () async {
+      final container = env.container();
+      final folder = DestinationFolder(StorageRoot.pictures);
+      await saveShared(container, DownloadPlan.quick(settings: quickSettings(), folder: folder), 'a.jpg');
+      await saveShared(container, DownloadPlan.quick(settings: quickSettings(), folder: folder), 'b.jpg');
+
+      final other = quickSettings(prefix: 'Otra_');
+      expect(await saveShared(container, DownloadPlan.quick(settings: other, folder: folder), 'c.jpg'), 'Otra_001.jpg');
+    });
+
+    test('a name typed by hand does not use up a number', () async {
+      final container = env.container();
+      final folder = DestinationFolder(StorageRoot.pictures);
+      final settings = quickSettings();
+      final fixed = DownloadPlan.quick(settings: settings, folder: folder, fixedFileName: 'mio.jpg');
+      expect(await saveShared(container, fixed, 'a.jpg'), 'mio.jpg');
+      expect(
+        await saveShared(container, DownloadPlan.quick(settings: settings, folder: folder), 'b.jpg'),
+        'Foto_001.jpg',
+      );
+    });
+
+    test('the plan keeps the pattern it was made with', () {
+      final plan = DownloadPlan.quick(settings: quickSettings(), folder: DestinationFolder(StorageRoot.pictures));
+      final restored = DownloadPlan.fromJson(plan.toJson());
+      expect(restored.quickTokens, ['Foto_', '{n:3}']);
+      expect(restored.quickSignature, plan.quickSignature);
+    });
+
+    test('a pattern without a number does not touch the saved sequence', () async {
+      final container = env.container();
+      final folder = DestinationFolder(StorageRoot.pictures);
+      final settings = AppSettings(mode: NamingMode.quick, quickTokens: ['Foto_', PatternTokens.name]);
+      final name = await saveShared(container, DownloadPlan.quick(settings: settings, folder: folder), 'a.jpg');
+      expect(name, 'Foto_a.jpg');
+      expect(container.read(settingsProvider).quickNextKey, isNull);
+    });
+
+    test('plans stored by the first quick version keep their name', () {
+      final plan = DownloadPlan.fromJson({
+        'folder': DestinationFolder(StorageRoot.pictures).toJson(),
+        'prefix': 'Foto_',
+        'suffix': '',
+        'quickReplaceName': true,
+        'quickSequence': true,
+        'quickDigits': 3,
+      });
+      expect(plan.quickTokens, ['Foto_', '{n:3}']);
+    });
   });
 
   test('history is persisted and restored', () async {

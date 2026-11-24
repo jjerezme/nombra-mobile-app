@@ -52,19 +52,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get editRules => 'Editar reglas';
 
   @override
-  String get noEnabledRules => 'No hay reglas activas. Actívalas en Reglas.';
-
-  @override
-  String get prefix => 'Prefijo';
-
-  @override
-  String get suffix => 'Sufijo';
-
-  @override
-  String get prefixHint => 'p. ej. acme_';
-
-  @override
-  String get suffixHint => 'p. ej. _v2';
+  String get noEnabledRules => 'No hay reglas activas. Crea o activa una en Reglas.';
 
   @override
   String saveIn(String source) {
@@ -174,9 +162,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String downloadNotificationRunning(Object filename) {
     return 'Descargando $filename';
   }
-
-  @override
-  String get downloadNotificationComplete => 'Descarga completa';
 
   @override
   String get downloadNotificationError => 'No se pudo descargar';
@@ -395,9 +380,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get folderPickerSubfolder => 'Subcarpeta (opcional)';
 
   @override
-  String get folderPickerSubfolderHint => 'p. ej. Nombra/Facturas';
-
-  @override
   String get folderPickerUse => 'Usar esta carpeta';
 
   @override
@@ -415,20 +397,169 @@ class AppLocalizationsEs extends AppLocalizations {
   String get conflictKeepBoth => 'Conservar ambos';
 
   @override
-  String get seedOriginal => 'Original';
+  String get errRequired => 'Este campo es obligatorio';
 
   @override
-  String get seedDateName => 'Fecha + nombre';
+  String errTooLong(int max) {
+    return 'Máximo $max caracteres';
+  }
 
   @override
-  String get seedClean => 'Limpio';
+  String get errInvalidChars => 'No uses /  : * ? \" < > |';
 
   @override
-  String get seedInvoices => 'Facturas';
+  String get errDuplicateName => 'Ya existe una regla con ese nombre';
 
   @override
-  String get seedPhotos => 'Fotos limpias';
+  String get errPatternEmpty => 'Agrega al menos un elemento al patrón';
 
   @override
-  String get seedInvoicePrefix => 'Factura_';
+  String get errSubfolderInvalid => 'Subcarpeta no válida: no uses .. ni : * ? \" < > |';
+
+  @override
+  String get editorDiscardTitle => '¿Descartar cambios?';
+
+  @override
+  String get editorDiscardBody => 'Tienes cambios sin guardar en esta regla.';
+
+  @override
+  String get discard => 'Descartar';
+
+  @override
+  String get editorKeepEditing => 'Seguir editando';
+
+  @override
+  String get ruleNotFound => 'Esta regla ya no existe';
+
+  @override
+  String get rulesEmptyTitle => 'Aún no tienes reglas';
+
+  @override
+  String get rulesEmptyBody => 'Crea una regla para renombrar tus descargas con un patrón.';
+
+  @override
+  String get navSettings => 'Ajustes';
+
+  @override
+  String get settingsTitle => 'Ajustes';
+
+  @override
+  String get settingsSubtitle => 'Apariencia, idioma, descargas y datos.';
+
+  @override
+  String get settingsAppearance => 'Apariencia';
+
+  @override
+  String get settingsTheme => 'Tema';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeDark => 'Oscuro';
+
+  @override
+  String get settingsLanguage => 'Idioma';
+
+  @override
+  String get languageSystem => 'Sistema';
+
+  @override
+  String get languageEs => 'Español';
+
+  @override
+  String get languageEn => 'English';
+
+  @override
+  String get settingsDownloads => 'Descargas';
+
+  @override
+  String get settingsNamingMode => 'Modo de nombrado';
+
+  @override
+  String get settingsNamingModeHint =>
+      'Cómo se nombran los archivos por defecto: con una regla guardada o con un patrón rápido que se mantiene.';
+
+  @override
+  String get settingsDefaultFolder => 'Carpeta predeterminada';
+
+  @override
+  String get settingsDefaultFolderHint => 'Se usa cuando la regla no define una carpeta.';
+
+  @override
+  String get settingsData => 'Datos';
+
+  @override
+  String get settingsForgetRemembered => 'Olvidar reglas recordadas';
+
+  @override
+  String get settingsForgetRememberedHint => 'Quita la regla predeterminada por tipo de archivo y la última usada.';
+
+  @override
+  String get settingsClearHistory => 'Borrar historial de descargas';
+
+  @override
+  String get settingsClearHistoryHint => 'No borra los archivos ya guardados.';
+
+  @override
+  String get settingsClearRules => 'Borrar todas las reglas';
+
+  @override
+  String get settingsClearRulesHint => 'Empiezas de nuevo, sin reglas.';
+
+  @override
+  String get settingsConfirmForgetTitle => '¿Olvidar reglas recordadas?';
+
+  @override
+  String get settingsConfirmForgetBody => 'La regla se volverá a elegir automáticamente.';
+
+  @override
+  String get settingsConfirmHistoryTitle => '¿Borrar el historial?';
+
+  @override
+  String get settingsConfirmHistoryBody =>
+      'Se quitan de la lista las descargas terminadas y con error. Los archivos guardados no se borran.';
+
+  @override
+  String get settingsConfirmRulesTitle => '¿Borrar todas las reglas?';
+
+  @override
+  String settingsConfirmRulesBody(int count) {
+    return 'Se eliminan $count reglas. No se puede deshacer.';
+  }
+
+  @override
+  String get settingsDone => 'Listo';
+
+  @override
+  String settingsVersion(String version, String build) {
+    return 'Versión $version ($build)';
+  }
+
+  @override
+  String get notificationChannelName => 'Archivos guardados';
+
+  @override
+  String get notificationSavedTitle => 'Guardado';
+
+  @override
+  String notificationSavedBody(String name, String folder) {
+    return '$name · $folder';
+  }
+
+  @override
+  String get notificationSaveFailedTitle => 'No se pudo guardar';
+
+  @override
+  String get quickNext => 'Siguiente número';
+
+  @override
+  String get errInvalidNumber => 'Escribe un número entero mayor que 0';
+
+  @override
+  String get quickNextHint =>
+      'Con el elemento de número en el patrón, el número sigue mientras no cambies el patrón; si lo cambias, vuelve a 1.';
 }

@@ -158,6 +158,15 @@ abstract final class AppTheme {
       // Soft shadows, as in the design (raised segment, floating button).
       shadowColor: scheme.shadow.withValues(alpha: 0.25),
       extensions: [AppTextStyles.standard],
+      // Sheets (folder picker) use the surface color, not the page color: against the dark scrim they would
+      // otherwise melt into the background. The handle gives the title room under the top edge.
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: scheme.surface,
+        surfaceTintColor: Colors.transparent, // style-ok
+        showDragHandle: true,
+        dragHandleColor: scheme.outline,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.sheet))),
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: scheme.surfaceContainerLow,
         surfaceTintColor: scheme.surfaceContainerLow,
@@ -178,7 +187,7 @@ abstract final class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           minimumSize: const Size.fromHeight(AppSize.button),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.xl)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppLayout.controlRadius)),
           textStyle: textTheme.labelLarge,
         ),
       ),
@@ -187,7 +196,7 @@ abstract final class AppTheme {
           minimumSize: const Size.fromHeight(AppSize.button),
           foregroundColor: scheme.onSurface,
           side: BorderSide(color: scheme.outline),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.xl)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppLayout.controlRadius)),
           textStyle: textTheme.labelLarge,
         ),
       ),
@@ -213,7 +222,7 @@ abstract final class AppTheme {
         backgroundColor: scheme.primary,
         foregroundColor: scheme.onPrimary,
         extendedTextStyle: textTheme.labelLarge,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.xl)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppLayout.controlRadius)),
       ),
       navigationBarTheme: NavigationBarThemeData(
         height: AppSize.navBar,

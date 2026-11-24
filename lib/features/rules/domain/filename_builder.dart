@@ -171,9 +171,19 @@ String buildFileName(RenameRule rule, SourceFile source, {required DateTime now,
   return _joinExtension(rendered, source.extension);
 }
 
-/// Final file name in quick mode: prefix + original name + suffix.
-String buildQuickFileName(String prefix, String suffix, SourceFile source) =>
-    _joinExtension('$prefix${source.baseName}$suffix', source.extension);
+/// Final file name in quick mode: the quick pattern [tokens] (the same tokens a rule uses) with the original name and
+/// extension of [source]. [counter] is the value of the `{n:3}` token.
+String buildQuickFileName(List<String> tokens, SourceFile source, {required DateTime now, int counter = 1}) {
+  final rendered = renderPattern(
+    tokens,
+    base: source.baseName,
+    domain: source.domain,
+    type: source.extension.toUpperCase(),
+    now: now,
+    counter: counter,
+  );
+  return _joinExtension(rendered, source.extension);
+}
 
 /// `report.pdf` -> `report (1).pdf`, `report (2).pdf`, ...
 String withNumberSuffix(String fileName, int number) {

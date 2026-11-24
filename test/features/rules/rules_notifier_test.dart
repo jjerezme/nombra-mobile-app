@@ -7,12 +7,17 @@ import '../../helpers/fakes.dart';
 void main() {
   late TestEnvironment env;
 
-  setUp(() async => env = await TestEnvironment.create());
+  setUp(() async => env = await TestEnvironment.create(preferences: storedRules(sampleRules())));
 
-  test('a fresh install gets the seed rules, with exactly one default', () {
-    final rules = env.container().read(rulesProvider);
-    expect(rules.map((rule) => rule.id), ['date-name', 'original', 'clean', 'invoices', 'photos']);
-    expect(rules.where((rule) => rule.isDefault).single.id, 'date-name');
+  test('a fresh install has no rules', () async {
+    final clean = await TestEnvironment.create();
+    expect(clean.container().read(rulesProvider), isEmpty);
+    expect(clean.preferences.getString('rules'), isNull);
+  });
+
+  test('a corrupted stored value falls back to no rules', () async {
+    final broken = await TestEnvironment.create(preferences: {'rules': '{not json'});
+    expect(broken.container().read(rulesProvider), isEmpty);
   });
 
   test('rules are persisted across containers', () {

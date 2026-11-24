@@ -15,9 +15,13 @@ class FakeShareChannel extends ShareChannel {
 
   final SharePayload data;
   bool isClosed = false;
+  bool isMinimized = false;
 
   @override
   Future<SharePayload> payload() async => data;
+
+  @override
+  Future<void> minimize() async => isMinimized = true;
 
   @override
   Future<void> close() async => isClosed = true;
@@ -55,7 +59,7 @@ const SharePayload _linkPayload = SharePayload(
 void main() {
   late TestEnvironment env;
 
-  setUp(() async => env = await TestEnvironment.create());
+  setUp(() async => env = await TestEnvironment.create(preferences: storedRules(sampleRules())));
 
   testWidgets('a shared link shows the sheet with the proposed name and saves it', (tester) async {
     final (container, channel) = await pumpShare(tester, env, _linkPayload);
@@ -97,6 +101,28 @@ void main() {
     await tester.tap(find.text('Guardar'));
     await tester.pump(const Duration(milliseconds: 200));
     expect(container.read(settingsProvider).defaultRuleByKind['document'], 'date-name');
+  });
+
+  testWidgets('saving sends the sheet to the background while the download goes on', (tester) async {
+    final (container, channel) = await pumpShare(tester, env, _linkPayload);
+    await tester.tap(find.text('Guardar'));
+    await tester.pump(const Duration(milliseconds: 200));
+
+    expect(channel.isMinimized, isTrue);
+    expect(env.engine.enqueued, hasLength(1));
+    expect(container.read(downloadsProvider).single.status, DownloadStatus.queued);
+    // Still downloading: the hidden activity must stay alive to finish the save.
+    expect(channel.isClosed, isFalse);
+  });
+
+  testWidgets('the hidden activity closes once the save has failed', (tester) async {
+    env.engine.enqueueResult = false;
+    final (_, channel) = await pumpShare(tester, env, _linkPayload);
+    await tester.tap(find.text('Guardar'));
+    await tester.pump(const Duration(milliseconds: 200));
+
+    expect(channel.isMinimized, isTrue);
+    expect(channel.isClosed, isTrue);
   });
 
   testWidgets('several files show a count instead of a name field', (tester) async {

@@ -12,6 +12,17 @@ class AppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    // Back from another tab returns to Download first; only from Download does it leave the app.
+    return PopScope(
+      canPop: navigationShell.currentIndex == 0,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) navigationShell.goBranch(0);
+      },
+      child: _scaffold(l10n),
+    );
+  }
+
+  Widget _scaffold(AppLocalizations l10n) {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
@@ -21,6 +32,7 @@ class AppShell extends StatelessWidget {
         destinations: [
           NavigationDestination(icon: const Icon(Icons.file_download_outlined), label: l10n.navDownload),
           NavigationDestination(icon: const Icon(Icons.tune), label: l10n.navRules),
+          NavigationDestination(icon: const Icon(Icons.settings_outlined), label: l10n.navSettings),
         ],
       ),
     );

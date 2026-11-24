@@ -14,11 +14,7 @@
   "ruleLabel": "Rule",
   "ruleRemembered": "The last one used is remembered",
   "editRules": "Edit rules",
-  "noEnabledRules": "There are no active rules. Turn them on in Rules.",
-  "prefix": "Prefix",
-  "suffix": "Suffix",
-  "prefixHint": "e.g. acme_",
-  "suffixHint": "e.g. _v2",
+  "noEnabledRules": "No active rules. Create or enable one in Rules.",
   "saveIn": "Save to · {source}",
   "@saveIn": {
     "placeholders": {
@@ -130,7 +126,6 @@
     }
   },
   "downloadNotificationRunning": "Downloading {filename}",
-  "downloadNotificationComplete": "Download complete",
   "downloadNotificationError": "Could not download",
   "shareTitle": "Save with Nombra",
   "shareFileCount": "{count} files",
@@ -246,7 +241,6 @@
   "folderPickerTitle": "Choose folder",
   "folderPickerRoot": "Location",
   "folderPickerSubfolder": "Subfolder (optional)",
-  "folderPickerSubfolderHint": "e.g. Nombra/Invoices",
   "folderPickerUse": "Use this folder",
   "conflictTitle": "The file already exists",
   "conflictBody": "“{name}” is already in {folder}.",
@@ -262,10 +256,90 @@
   },
   "conflictReplace": "Replace",
   "conflictKeepBoth": "Keep both",
-  "seedOriginal": "Original",
-  "seedDateName": "Date + name",
-  "seedClean": "Clean",
-  "seedInvoices": "Invoices",
-  "seedPhotos": "Clean photos",
-  "seedInvoicePrefix": "Invoice_"
+  "errRequired": "This field is required",
+  "errTooLong": "At most {max} characters",
+  "@errTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "errInvalidChars": "Do not use /  : * ? \" < > |",
+  "errDuplicateName": "A rule with that name already exists",
+  "errPatternEmpty": "Add at least one item to the pattern",
+  "errSubfolderInvalid": "Invalid subfolder: do not use .. or : * ? \" < > |",
+  "editorDiscardTitle": "Discard changes?",
+  "editorDiscardBody": "You have unsaved changes in this rule.",
+  "discard": "Discard",
+  "editorKeepEditing": "Keep editing",
+  "ruleNotFound": "This rule no longer exists",
+  "rulesEmptyTitle": "You have no rules yet",
+  "rulesEmptyBody": "Create a rule to rename your downloads with a pattern.",
+  "navSettings": "Settings",
+  "settingsTitle": "Settings",
+  "settingsSubtitle": "Appearance, language, downloads and data.",
+  "settingsAppearance": "Appearance",
+  "settingsTheme": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "settingsLanguage": "Language",
+  "languageSystem": "System",
+  "languageEs": "Español",
+  "languageEn": "English",
+  "settingsDownloads": "Downloads",
+  "settingsNamingMode": "Naming mode",
+  "settingsNamingModeHint": "How files are named by default: with a saved rule or with a quick pattern that is kept.",
+  "settingsDefaultFolder": "Default folder",
+  "settingsDefaultFolderHint": "Used when the rule does not set a folder.",
+  "settingsData": "Data",
+  "settingsForgetRemembered": "Forget remembered rules",
+  "settingsForgetRememberedHint": "Removes the default rule per file type and the last one used.",
+  "settingsClearHistory": "Clear download history",
+  "settingsClearHistoryHint": "Files already saved are not deleted.",
+  "settingsClearRules": "Delete all rules",
+  "settingsClearRulesHint": "Start over with no rules.",
+  "settingsConfirmForgetTitle": "Forget remembered rules?",
+  "settingsConfirmForgetBody": "The rule will be picked automatically again.",
+  "settingsConfirmHistoryTitle": "Clear the history?",
+  "settingsConfirmHistoryBody": "Finished and failed downloads are removed from the list. Saved files are not deleted.",
+  "settingsConfirmRulesTitle": "Delete all rules?",
+  "settingsConfirmRulesBody": "{count} rules will be deleted. This cannot be undone.",
+  "@settingsConfirmRulesBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsDone": "Done",
+  "settingsVersion": "Version {version} ({build})",
+  "@settingsVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "build": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationChannelName": "Saved files",
+  "notificationSavedTitle": "Saved",
+  "notificationSavedBody": "{name} · {folder}",
+  "notificationSaveFailedTitle": "Could not save",
+  "@notificationSavedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "quickNext": "Next number",
+  "errInvalidNumber": "Enter a whole number greater than 0",
+  "quickNextHint": "With the number item in the pattern, the number goes on as long as you do not change the pattern; if you do, it starts again at 1."
 }

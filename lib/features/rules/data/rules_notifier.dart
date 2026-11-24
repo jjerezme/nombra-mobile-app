@@ -2,55 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/l10n/current_l10n.dart';
 import '../../../core/providers.dart';
-import '../../../l10n/app_localizations.dart';
 import '../domain/rename_rule.dart';
-import '../domain/storage_root.dart';
 
 const String _rulesKey = 'rules';
-
-/// Rules a fresh install starts with; the user can edit, reorder and delete them.
-List<RenameRule> seedRules(AppLocalizations l10n) => [
-  RenameRule(
-    id: 'date-name',
-    name: l10n.seedDateName,
-    tokens: const [PatternTokens.date, '_', PatternTokens.name],
-    folder: DestinationFolder(StorageRoot.download, 'Nombra'),
-    isDefault: true,
-  ),
-  RenameRule(
-    id: 'original',
-    name: l10n.seedOriginal,
-    tokens: const [PatternTokens.name],
-    folder: DestinationFolder(StorageRoot.download),
-  ),
-  RenameRule(
-    id: 'clean',
-    name: l10n.seedClean,
-    tokens: const [PatternTokens.name],
-    caseMode: CaseMode.lower,
-    replaceSpaces: true,
-    removeCopySuffix: true,
-    sanitize: true,
-    folder: DestinationFolder(StorageRoot.documents, 'Nombra'),
-  ),
-  RenameRule(
-    id: 'invoices',
-    name: l10n.seedInvoices,
-    tokens: [l10n.seedInvoicePrefix, PatternTokens.date, '_', PatternTokens.counter],
-    folder: DestinationFolder(StorageRoot.documents, 'Facturas'),
-  ),
-  RenameRule(
-    id: 'photos',
-    name: l10n.seedPhotos,
-    tokens: const [PatternTokens.date, '_', PatternTokens.name],
-    caseMode: CaseMode.lower,
-    replaceSpaces: true,
-    sanitize: true,
-    folder: DestinationFolder(StorageRoot.pictures, 'Nombra'),
-  ),
-];
 
 class RulesNotifier extends Notifier<List<RenameRule>> {
   @override
@@ -63,12 +18,10 @@ class RulesNotifier extends Notifier<List<RenameRule>> {
             .map((json) => RenameRule.fromJson(json as Map<String, dynamic>))
             .toList();
       } on Object {
-        // A corrupted value falls back to the seed rules below.
+        // A corrupted value falls back to no rules: the user starts from a clean list.
       }
     }
-    final seeded = seedRules(currentL10n());
-    prefs.setString(_rulesKey, jsonEncode(seeded.map((rule) => rule.toJson()).toList()));
-    return seeded;
+    return const [];
   }
 
   void _update(List<RenameRule> next) {
@@ -89,6 +42,9 @@ class RulesNotifier extends Notifier<List<RenameRule>> {
       _update([...state]..[index] = rule);
     }
   }
+
+  /// Deletes every rule, including the default one.
+  void clear() => _update(const []);
 
   void remove(String id) => _update(state.where((rule) => rule.id != id || rule.isDefault).toList());
 

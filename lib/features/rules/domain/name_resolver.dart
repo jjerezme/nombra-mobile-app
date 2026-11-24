@@ -40,7 +40,7 @@ ResolvedTarget resolveTarget({
 }) {
   if (settings.mode == NamingMode.quick) {
     return ResolvedTarget(
-      fileName: buildQuickFileName(settings.prefix, settings.suffix, source),
+      fileName: buildQuickFileName(settings.quickTokens, source, now: now, counter: settings.nextQuickNumber),
       folder: chosenFolder ?? settings.lastFolder,
       folderSource: chosenFolder == null ? FolderSource.lastUsed : FolderSource.chosen,
     );

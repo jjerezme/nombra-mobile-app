@@ -14,6 +14,9 @@ class ShareChannel {
     return map == null ? const SharePayload() : SharePayload.fromMap(map);
   }
 
+  /// Sends the sheet to the background without finishing it, so saves in progress can finish.
+  Future<void> minimize() => _channel.invokeMethod<void>('minimize');
+
   /// Finishes the activity, which closes the sheet.
   Future<void> close() => _channel.invokeMethod<void>('close');
 }

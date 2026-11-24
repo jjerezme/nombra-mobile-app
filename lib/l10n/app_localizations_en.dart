@@ -52,19 +52,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editRules => 'Edit rules';
 
   @override
-  String get noEnabledRules => 'There are no active rules. Turn them on in Rules.';
-
-  @override
-  String get prefix => 'Prefix';
-
-  @override
-  String get suffix => 'Suffix';
-
-  @override
-  String get prefixHint => 'e.g. acme_';
-
-  @override
-  String get suffixHint => 'e.g. _v2';
+  String get noEnabledRules => 'No active rules. Create or enable one in Rules.';
 
   @override
   String saveIn(String source) {
@@ -174,9 +162,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String downloadNotificationRunning(Object filename) {
     return 'Downloading $filename';
   }
-
-  @override
-  String get downloadNotificationComplete => 'Download complete';
 
   @override
   String get downloadNotificationError => 'Could not download';
@@ -393,9 +378,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get folderPickerSubfolder => 'Subfolder (optional)';
 
   @override
-  String get folderPickerSubfolderHint => 'e.g. Nombra/Invoices';
-
-  @override
   String get folderPickerUse => 'Use this folder';
 
   @override
@@ -413,20 +395,169 @@ class AppLocalizationsEn extends AppLocalizations {
   String get conflictKeepBoth => 'Keep both';
 
   @override
-  String get seedOriginal => 'Original';
+  String get errRequired => 'This field is required';
 
   @override
-  String get seedDateName => 'Date + name';
+  String errTooLong(int max) {
+    return 'At most $max characters';
+  }
 
   @override
-  String get seedClean => 'Clean';
+  String get errInvalidChars => 'Do not use /  : * ? \" < > |';
 
   @override
-  String get seedInvoices => 'Invoices';
+  String get errDuplicateName => 'A rule with that name already exists';
 
   @override
-  String get seedPhotos => 'Clean photos';
+  String get errPatternEmpty => 'Add at least one item to the pattern';
 
   @override
-  String get seedInvoicePrefix => 'Invoice_';
+  String get errSubfolderInvalid => 'Invalid subfolder: do not use .. or : * ? \" < > |';
+
+  @override
+  String get editorDiscardTitle => 'Discard changes?';
+
+  @override
+  String get editorDiscardBody => 'You have unsaved changes in this rule.';
+
+  @override
+  String get discard => 'Discard';
+
+  @override
+  String get editorKeepEditing => 'Keep editing';
+
+  @override
+  String get ruleNotFound => 'This rule no longer exists';
+
+  @override
+  String get rulesEmptyTitle => 'You have no rules yet';
+
+  @override
+  String get rulesEmptyBody => 'Create a rule to rename your downloads with a pattern.';
+
+  @override
+  String get navSettings => 'Settings';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsSubtitle => 'Appearance, language, downloads and data.';
+
+  @override
+  String get settingsAppearance => 'Appearance';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get settingsLanguage => 'Language';
+
+  @override
+  String get languageSystem => 'System';
+
+  @override
+  String get languageEs => 'Español';
+
+  @override
+  String get languageEn => 'English';
+
+  @override
+  String get settingsDownloads => 'Downloads';
+
+  @override
+  String get settingsNamingMode => 'Naming mode';
+
+  @override
+  String get settingsNamingModeHint =>
+      'How files are named by default: with a saved rule or with a quick pattern that is kept.';
+
+  @override
+  String get settingsDefaultFolder => 'Default folder';
+
+  @override
+  String get settingsDefaultFolderHint => 'Used when the rule does not set a folder.';
+
+  @override
+  String get settingsData => 'Data';
+
+  @override
+  String get settingsForgetRemembered => 'Forget remembered rules';
+
+  @override
+  String get settingsForgetRememberedHint => 'Removes the default rule per file type and the last one used.';
+
+  @override
+  String get settingsClearHistory => 'Clear download history';
+
+  @override
+  String get settingsClearHistoryHint => 'Files already saved are not deleted.';
+
+  @override
+  String get settingsClearRules => 'Delete all rules';
+
+  @override
+  String get settingsClearRulesHint => 'Start over with no rules.';
+
+  @override
+  String get settingsConfirmForgetTitle => 'Forget remembered rules?';
+
+  @override
+  String get settingsConfirmForgetBody => 'The rule will be picked automatically again.';
+
+  @override
+  String get settingsConfirmHistoryTitle => 'Clear the history?';
+
+  @override
+  String get settingsConfirmHistoryBody =>
+      'Finished and failed downloads are removed from the list. Saved files are not deleted.';
+
+  @override
+  String get settingsConfirmRulesTitle => 'Delete all rules?';
+
+  @override
+  String settingsConfirmRulesBody(int count) {
+    return '$count rules will be deleted. This cannot be undone.';
+  }
+
+  @override
+  String get settingsDone => 'Done';
+
+  @override
+  String settingsVersion(String version, String build) {
+    return 'Version $version ($build)';
+  }
+
+  @override
+  String get notificationChannelName => 'Saved files';
+
+  @override
+  String get notificationSavedTitle => 'Saved';
+
+  @override
+  String notificationSavedBody(String name, String folder) {
+    return '$name · $folder';
+  }
+
+  @override
+  String get notificationSaveFailedTitle => 'Could not save';
+
+  @override
+  String get quickNext => 'Next number';
+
+  @override
+  String get errInvalidNumber => 'Enter a whole number greater than 0';
+
+  @override
+  String get quickNextHint =>
+      'With the number item in the pattern, the number goes on as long as you do not change the pattern; if you do, it starts again at 1.';
 }

@@ -24,7 +24,6 @@ class RuleCard extends StatelessWidget {
     final mono = context.monoStyles.monoSmall;
     final example = buildFileName(rule, sampleFile, now: DateTime.now());
     return AppCard(
-      radius: AppRadius.xl,
       padding: const EdgeInsets.fromLTRB(AppSpacing.xs, AppSpacing.md, AppSpacing.sm, AppSpacing.md),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
