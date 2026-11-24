@@ -115,7 +115,7 @@ class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.sheet)),
                 child: SafeArea(
                   top: false,
-                  child: SingleChildScrollView(
+                  child: Padding(
                     padding: const EdgeInsets.fromLTRB(
                       AppLayout.sheetGutter,
                       AppSpacing.md,
@@ -210,44 +210,37 @@ class _Content extends ConsumerWidget {
         ? const <DownloadItem>[]
         : ref.watch(downloadsProvider).where((item) => saved.contains(item.id)).toList();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: AppLayout.sectionGap,
-      children: [
-        Center(
-          child: Container(
-            width: AppSize.handleWidth,
-            height: AppSize.handleHeight,
-            decoration: BoxDecoration(color: colors.outline, borderRadius: BorderRadius.circular(AppRadius.sm)),
-          ),
+    final body = <Widget>[
+      ShareHeader(items: items),
+      if (saved != null) ...[
+        for (final item in tracked)
+          DownloadTile(item: item, onRetry: () => ref.read(downloadsProvider.notifier).retry(item.id)),
+        if (tracked.any(
+          (item) => item.plan.url != null && item.status != DownloadStatus.done && item.status != DownloadStatus.failed,
+        ))
+          Text(l10n.shareLeaveHint, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
+      ] else ...[
+        RuleSelector(selectedRuleId: target.rule?.id),
+        if (items.length == 1) ShareNameField(fileName: target.fileName),
+        DestinationCard(
+          path: target.folder.path,
+          sourceLabel: folderSourceLabel(l10n, target.folderSource, target.rule),
+          onChange: () => onChangeFolder(target.folder),
         ),
-        ShareHeader(items: items),
-        if (saved != null) ...[
-          for (final item in tracked)
-            DownloadTile(item: item, onRetry: () => ref.read(downloadsProvider.notifier).retry(item.id)),
-          if (tracked.any(
-            (item) =>
-                item.plan.url != null && item.status != DownloadStatus.done && item.status != DownloadStatus.failed,
-          ))
-            Text(l10n.shareLeaveHint, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
-          FilledButton(onPressed: onClose, child: Text(l10n.shareClose)),
-        ] else ...[
-          RuleSelector(selectedRuleId: target.rule?.id),
-          if (items.length == 1) ShareNameField(fileName: target.fileName),
-          DestinationCard(
-            path: target.folder.path,
-            sourceLabel: folderSourceLabel(l10n, target.folderSource, target.rule),
-            onChange: () => onChangeFolder(target.folder),
+        if (settings.mode == NamingMode.saved)
+          CheckboxListTile(
+            value: remember,
+            onChanged: (value) => onRememberChanged(value ?? false),
+            contentPadding: EdgeInsets.zero,
+            controlAffinity: ListTileControlAffinity.leading,
+            title: Text(l10n.shareRememberDefault(kindLabel(l10n, first.kind)), style: context.text.bodyMedium),
           ),
-          if (settings.mode == NamingMode.saved)
-            CheckboxListTile(
-              value: remember,
-              onChanged: (value) => onRememberChanged(value ?? false),
-              contentPadding: EdgeInsets.zero,
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(l10n.shareRememberDefault(kindLabel(l10n, first.kind)), style: context.text.bodyMedium),
-            ),
-          Row(
+      ],
+    ];
+    // The buttons are pinned at the bottom: only the content above them scrolls.
+    final actions = saved != null
+        ? FilledButton(onPressed: onClose, child: Text(l10n.shareClose))
+        : Row(
             spacing: AppLayout.buttonGap,
             children: [
               Expanded(
@@ -260,8 +253,26 @@ class _Content extends ConsumerWidget {
                 ),
               ),
             ],
+          );
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: AppLayout.sectionGap,
+      children: [
+        Center(
+          child: Container(
+            width: AppSize.handleWidth,
+            height: AppSize.handleHeight,
+            decoration: BoxDecoration(color: colors.outline, borderRadius: BorderRadius.circular(AppRadius.sm)),
           ),
-        ],
+        ),
+        Flexible(
+          child: SingleChildScrollView(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, spacing: AppLayout.sectionGap, children: body),
+          ),
+        ),
+        actions,
       ],
     );
   }

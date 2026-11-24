@@ -130,6 +130,14 @@ void main() {
     expect(image.fit, BoxFit.cover);
   });
 
+  testWidgets('Guardar and Cancelar are pinned below the scrolling content', (tester) async {
+    await pumpShare(tester, env, _linkPayload);
+    for (final label in ['Guardar', 'Cancelar']) {
+      expect(find.descendant(of: find.byType(SingleChildScrollView), matching: find.text(label)), findsNothing);
+      expect(find.text(label), findsOneWidget);
+    }
+  });
+
   testWidgets('a document has no thumbnail', (tester) async {
     await pumpShare(
       tester,
