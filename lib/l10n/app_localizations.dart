@@ -1070,6 +1070,12 @@ abstract class AppLocalizations {
   /// **'Siguiente número'**
   String get quickNext;
 
+  /// No description provided for @quickNextReset.
+  ///
+  /// In es, this message translates to:
+  /// **'Reiniciar a 1'**
+  String get quickNextReset;
+
   /// No description provided for @errInvalidNumber.
   ///
   /// In es, this message translates to:

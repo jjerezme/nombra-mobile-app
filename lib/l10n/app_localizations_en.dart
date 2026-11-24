@@ -547,6 +547,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quickNext => 'Next number';
 
   @override
+  String get quickNextReset => 'Reset to 1';
+
+  @override
   String get errInvalidNumber => 'Enter a whole number greater than 0';
 
   @override

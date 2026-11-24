@@ -548,6 +548,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get quickNext => 'Siguiente número';
 
   @override
+  String get quickNextReset => 'Reiniciar a 1';
+
+  @override
   String get errInvalidNumber => 'Escribe un número entero mayor que 0';
 
   @override

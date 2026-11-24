@@ -331,6 +331,7 @@
     }
   },
   "quickNext": "Next number",
+  "quickNextReset": "Reset to 1",
   "errInvalidNumber": "Enter a whole number greater than 0",
   "quickNextHint": "With the number item in the pattern, the number goes on as long as you do not change the pattern; if you do, it starts again at 1.",
   "homeClearRecents": "Clear",

@@ -331,6 +331,7 @@
     }
   },
   "quickNext": "Siguiente número",
+  "quickNextReset": "Reiniciar a 1",
   "errInvalidNumber": "Escribe un número entero mayor que 0",
   "quickNextHint": "Con el elemento de número en el patrón, el número sigue mientras no cambies el patrón; si lo cambias, vuelve a 1.",
   "homeClearRecents": "Borrar",

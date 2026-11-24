@@ -168,24 +168,51 @@ class _NextNumberFieldState extends State<_NextNumberField> {
     if (error == null) widget.onChanged(int.parse(text.trim()));
   }
 
+  /// Starts the sequence again at 1.
+  void _reset() {
+    _controller.text = '1';
+    setState(() => _error = null);
+    widget.onChanged(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: AppSpacing.xs,
       children: [
-        Text(widget.label, style: context.text.labelMedium?.copyWith(color: context.colors.onSurfaceVariant)),
-        TextField(
-          controller: _controller,
-          focusNode: _focus,
-          keyboardType: TextInputType.number,
-          onChanged: _changed,
-          style: context.monoStyles.mono,
-          decoration: InputDecoration(
-            errorText: _error?.message(l10n),
-            constraints: const BoxConstraints(minHeight: AppSize.control),
-          ),
+        Text(widget.label, style: context.text.labelMedium?.copyWith(color: colors.onSurfaceVariant)),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: AppSpacing.sm,
+          children: [
+            Expanded(
+              child: TextField(
+                controller: _controller,
+                focusNode: _focus,
+                keyboardType: TextInputType.number,
+                onChanged: _changed,
+                style: context.monoStyles.mono,
+                decoration: InputDecoration(
+                  errorText: _error?.message(l10n),
+                  constraints: const BoxConstraints(minHeight: AppSize.control),
+                ),
+              ),
+            ),
+            // Same look as the paste button of the URL field.
+            IconButton.outlined(
+              onPressed: widget.value == 1 && _error == null ? null : _reset,
+              tooltip: l10n.quickNextReset,
+              icon: const Icon(Icons.restart_alt, size: AppIconSize.base),
+              constraints: const BoxConstraints.tightFor(width: AppSize.control, height: AppSize.control),
+              style: IconButton.styleFrom(
+                side: BorderSide(color: colors.outlineVariant),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppLayout.controlRadius)),
+              ),
+            ),
+          ],
         ),
         Text(widget.hint, style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
       ],

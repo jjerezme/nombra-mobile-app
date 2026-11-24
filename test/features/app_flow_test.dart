@@ -176,6 +176,28 @@ void main() {
     expect(tester.widget<TextField>(find.byType(TextField).at(1)).controller!.text, '1');
   });
 
+  testWidgets('a button starts the sequential number again at 1', (tester) async {
+    final container = await pumpApp(tester, env);
+    await tester.tap(find.text('Rápida'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).first, _url);
+    await addCounter(tester);
+    await tester.pumpAndSettle();
+
+    final reset = find.widgetWithIcon(IconButton, Icons.restart_alt);
+    expect(tester.widget<IconButton>(reset).onPressed, isNull, reason: 'already at 1');
+
+    await tester.enterText(find.byType(TextField).at(1), '25');
+    await tester.pumpAndSettle();
+    expect(find.text('Informe Q3 FINAL (2)025.pdf'), findsOneWidget);
+
+    await tester.tap(reset);
+    await tester.pumpAndSettle();
+    expect(container.read(settingsProvider).nextQuickNumber, 1);
+    expect(tester.widget<TextField>(find.byType(TextField).at(1)).controller!.text, '1');
+    expect(find.text('Informe Q3 FINAL (2)001.pdf'), findsOneWidget);
+  });
+
   testWidgets('choosing a rule changes the folder and is remembered', (tester) async {
     final container = await pumpApp(tester, env);
     await tester.enterText(find.byType(TextField).first, _url);
