@@ -17,7 +17,6 @@ class RulesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final rules = ref.watch(rulesProvider);
-    final notifier = ref.read(rulesProvider.notifier);
     final header = ScreenHeader(title: l10n.rulesTitle, subtitle: l10n.rulesSubtitle);
     // Room under the last card for the floating button.
     final padding = AppPage.padding.copyWith(bottom: AppSize.fab + AppSpacing.xxxl);
@@ -43,7 +42,6 @@ class RulesScreen extends ConsumerWidget {
                           key: ValueKey(rule.id),
                           rule: rule,
                           onTap: () => context.push(AppRoutes.rule(rule.id)),
-                          onToggle: (isEnabled) => notifier.setEnabled(rule.id, isEnabled: isEnabled),
                         ),
                     ],
                   ),

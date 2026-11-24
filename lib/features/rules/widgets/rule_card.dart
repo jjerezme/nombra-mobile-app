@@ -26,14 +26,13 @@ List<String> ruleOptions(AppLocalizations l10n, RenameRule rule) => [
   }),
 ].nonNulls.toList();
 
-/// A rule in the list: name, tokens, example, extra options, destination folder and an on/off switch. Tapping the card
-/// opens the rule. Every card has the same rows, in the same order, aligned to the same left edge.
+/// A rule in the list: name, tokens, example, extra options and destination folder. Tapping the card opens the rule.
+/// Every card has the same rows, in the same order, aligned to the same left edge, close together.
 class RuleCard extends StatelessWidget {
-  const RuleCard({required this.rule, required this.onTap, required this.onToggle, super.key});
+  const RuleCard({required this.rule, required this.onTap, super.key});
 
   final RenameRule rule;
   final VoidCallback onTap;
-  final ValueChanged<bool> onToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -45,24 +44,13 @@ class RuleCard extends StatelessWidget {
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: AppLayout.labelGap,
+        spacing: AppSpacing.xs,
         children: [
           Row(
             spacing: AppSpacing.sm,
             children: [
-              Expanded(
-                child: Row(
-                  spacing: AppSpacing.sm,
-                  children: [
-                    Flexible(child: Text(rule.name, style: context.text.titleMedium)),
-                    if (rule.isDefault) _Tag(label: l10n.ruleDefaultBadge, isHighlighted: true),
-                  ],
-                ),
-              ),
-              Semantics(
-                label: l10n.ruleToggleLabel(rule.name),
-                child: Switch(value: rule.isEnabled, onChanged: onToggle),
-              ),
+              Flexible(child: Text(rule.name, style: context.text.titleMedium)),
+              if (rule.isDefault) _Tag(label: l10n.ruleDefaultBadge, isHighlighted: true),
             ],
           ),
           _DetailRow(

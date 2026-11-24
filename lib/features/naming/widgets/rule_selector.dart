@@ -30,7 +30,7 @@ class RuleSelector extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final settings = ref.watch(settingsProvider);
-    final rules = ref.watch(rulesProvider).where((rule) => rule.isEnabled).toList();
+    final rules = ref.watch(rulesProvider);
     final notifier = ref.read(settingsProvider.notifier);
     final activeId = selectedRuleId ?? selectRule(settings, rules)?.id;
     return Column(
@@ -68,7 +68,7 @@ class RuleSelector extends ConsumerWidget {
             runSpacing: AppSpacing.sm,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              if (rules.isEmpty) Text(l10n.noEnabledRules, style: context.text.bodySmall),
+              if (rules.isEmpty) Text(l10n.noRules, style: context.text.bodySmall),
               for (final rule in rules)
                 PillChoice(
                   label: rule.name,

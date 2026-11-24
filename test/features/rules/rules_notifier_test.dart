@@ -45,12 +45,6 @@ void main() {
     expect(env.container().read(rulesProvider).map((rule) => rule.id).first, 'a');
   });
 
-  test('setEnabled toggles a rule', () {
-    final container = env.container();
-    container.read(rulesProvider.notifier).setEnabled('clean', isEnabled: false);
-    expect(container.read(rulesProvider).firstWhere((rule) => rule.id == 'clean').isEnabled, isFalse);
-  });
-
   test('the default rule cannot be removed; others can', () {
     final container = env.container();
     final notifier = container.read(rulesProvider.notifier);

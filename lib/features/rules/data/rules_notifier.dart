@@ -53,10 +53,6 @@ class RulesNotifier extends Notifier<List<RenameRule>> {
 
   void remove(String id) => _update(state.where((rule) => rule.id != id || rule.isDefault).toList());
 
-  void setEnabled(String id, {required bool isEnabled}) {
-    _update([for (final rule in state) rule.id == id ? rule.copyWith(isEnabled: isEnabled) : rule]);
-  }
-
   /// Returns the current `{n:3}` value of the rule and advances it.
   int takeCounter(String id) {
     final rule = byId(id);

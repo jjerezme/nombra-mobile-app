@@ -56,9 +56,13 @@ void main() {
       expect(selectRule(settings, rules, kind: FileKind.video)?.id, 'plain');
     });
 
-    test('ignores disabled rules', () {
-      expect(selectRule(AppSettings(lastRuleId: 'plain'), [plain.copyWith(isEnabled: false), dated])?.id, 'dated');
-      expect(selectRule(AppSettings(), [plain.copyWith(isEnabled: false)]), isNull);
+    test('no rules: nothing is selected', () {
+      expect(selectRule(AppSettings(), const []), isNull);
+    });
+
+    test('a rule stored as switched off by an earlier version is a normal rule', () {
+      final stored = RenameRule.fromJson({...plain.toJson(), 'isEnabled': false});
+      expect(selectRule(AppSettings(lastRuleId: 'plain'), [stored, dated])?.id, 'plain');
     });
   });
 

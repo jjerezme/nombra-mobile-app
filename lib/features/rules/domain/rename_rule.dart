@@ -70,7 +70,6 @@ class RenameRule {
     this.sanitize = false,
     this.folder,
     this.conflict = ConflictPolicy.suffix,
-    this.isEnabled = true,
     this.isDefault = false,
     this.counter = 1,
   });
@@ -89,7 +88,6 @@ class RenameRule {
       (policy) => policy.name == json['conflict'],
       orElse: () => ConflictPolicy.suffix,
     ),
-    isEnabled: json['isEnabled'] as bool? ?? true,
     isDefault: json['isDefault'] as bool? ?? false,
     counter: json['counter'] as int? ?? 1,
   );
@@ -106,7 +104,6 @@ class RenameRule {
   /// Null means "use the last folder the user saved to".
   final DestinationFolder? folder;
   final ConflictPolicy conflict;
-  final bool isEnabled;
   final bool isDefault;
 
   /// Next value of `{n:3}`.
@@ -125,7 +122,6 @@ class RenameRule {
     DestinationFolder? folder,
     bool clearFolder = false,
     ConflictPolicy? conflict,
-    bool? isEnabled,
     bool? isDefault,
     int? counter,
   }) => RenameRule(
@@ -139,7 +135,6 @@ class RenameRule {
     sanitize: sanitize ?? this.sanitize,
     folder: clearFolder ? null : folder ?? this.folder,
     conflict: conflict ?? this.conflict,
-    isEnabled: isEnabled ?? this.isEnabled,
     isDefault: isDefault ?? this.isDefault,
     counter: counter ?? this.counter,
   );
@@ -155,7 +150,6 @@ class RenameRule {
     'sanitize': sanitize,
     'folder': folder?.toJson(),
     'conflict': conflict.name,
-    'isEnabled': isEnabled,
     'isDefault': isDefault,
     'counter': counter,
   };

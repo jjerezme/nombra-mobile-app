@@ -52,7 +52,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ruleAdd => 'Add';
 
   @override
-  String get noEnabledRules => 'No active rules. Create or enable one in Rules.';
+  String get noRules => 'No rules yet. Create one with Add.';
 
   @override
   String saveIn(String source) {
@@ -225,11 +225,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ruleNoFolder => 'No folder · last used';
-
-  @override
-  String ruleToggleLabel(String name) {
-    return 'Turn on rule $name';
-  }
 
   @override
   String get newRule => 'New rule';

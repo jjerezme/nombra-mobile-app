@@ -176,11 +176,11 @@ abstract class AppLocalizations {
   /// **'Agregar'**
   String get ruleAdd;
 
-  /// No description provided for @noEnabledRules.
+  /// No description provided for @noRules.
   ///
   /// In es, this message translates to:
-  /// **'No hay reglas activas. Crea o activa una en Reglas.'**
-  String get noEnabledRules;
+  /// **'No hay reglas. Crea una con Agregar.'**
+  String get noRules;
 
   /// No description provided for @saveIn.
   ///
@@ -469,12 +469,6 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Sin carpeta · última usada'**
   String get ruleNoFolder;
-
-  /// No description provided for @ruleToggleLabel.
-  ///
-  /// In es, this message translates to:
-  /// **'Activar regla {name}'**
-  String ruleToggleLabel(String name);
 
   /// No description provided for @newRule.
   ///

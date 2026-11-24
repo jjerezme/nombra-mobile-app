@@ -14,7 +14,7 @@
   "ruleLabel": "Rule",
   "ruleRemembered": "The last one used is remembered",
   "ruleAdd": "Add",
-  "noEnabledRules": "No active rules. Create or enable one in Rules.",
+  "noRules": "No rules yet. Create one with Add.",
   "saveIn": "Save to · {source}",
   "@saveIn": {
     "placeholders": {
@@ -166,14 +166,6 @@
   "rulesSubtitle": "Active rules are offered when downloading or sharing, sorted by name.",
   "ruleDefaultBadge": "Default",
   "ruleNoFolder": "No folder · last used",
-  "ruleToggleLabel": "Turn on rule {name}",
-  "@ruleToggleLabel": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "newRule": "New rule",
   "editorTitleEdit": "Edit rule",
   "editorTitleNew": "New rule",

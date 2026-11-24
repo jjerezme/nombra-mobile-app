@@ -20,14 +20,10 @@ class ResolvedTarget {
 
 /// The rule to use: the default of the file's kind, then the last one used, then the default rule, then the first.
 RenameRule? selectRule(AppSettings settings, List<RenameRule> rules, {FileKind? kind}) {
-  final enabled = rules.where((rule) => rule.isEnabled).toList();
-  if (enabled.isEmpty) return null;
-  RenameRule? byId(String? id) => enabled.where((rule) => rule.id == id).firstOrNull;
+  if (rules.isEmpty) return null;
+  RenameRule? byId(String? id) => rules.where((rule) => rule.id == id).firstOrNull;
   final kindDefault = kind == null ? null : byId(settings.defaultRuleByKind[kind.name]);
-  return kindDefault ??
-      byId(settings.lastRuleId) ??
-      enabled.where((rule) => rule.isDefault).firstOrNull ??
-      enabled.first;
+  return kindDefault ?? byId(settings.lastRuleId) ?? rules.where((rule) => rule.isDefault).firstOrNull ?? rules.first;
 }
 
 ResolvedTarget resolveTarget({

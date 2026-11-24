@@ -210,16 +210,13 @@ void main() {
     await tester.pump();
   });
 
-  testWidgets('Rules lists the seed rules and a rule can be switched off', (tester) async {
-    final container = await pumpApp(tester, env);
+  testWidgets('Rules lists the seed rules, with no switch to turn one off', (tester) async {
+    await pumpApp(tester, env);
     await tester.tap(find.text('Reglas'));
     await tester.pumpAndSettle();
     expect(find.text('Predeterminada'), findsOneWidget);
     expect(find.text('Original'), findsOneWidget);
-
-    await tester.tap(find.byType(Switch).at(1));
-    await tester.pumpAndSettle();
-    expect(container.read(rulesProvider)[1].isEnabled, isFalse);
+    expect(find.byType(Switch), findsNothing);
   });
 
   testWidgets('a new rule can be created from the editor', (tester) async {
@@ -251,7 +248,7 @@ void main() {
 
     testWidgets('Home offers to create a rule and still names the file after the original', (tester) async {
       await pumpApp(tester, env);
-      expect(find.text('No hay reglas activas. Crea o activa una en Reglas.'), findsOneWidget);
+      expect(find.text('No hay reglas. Crea una con Agregar.'), findsOneWidget);
       await tester.enterText(find.byType(TextField).first, _url);
       await tester.pumpAndSettle();
       expect(find.textContaining('Informe Q3 FINAL (2).pdf'), findsOneWidget);

@@ -52,7 +52,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ruleAdd => 'Agregar';
 
   @override
-  String get noEnabledRules => 'No hay reglas activas. Crea o activa una en Reglas.';
+  String get noRules => 'No hay reglas. Crea una con Agregar.';
 
   @override
   String saveIn(String source) {
@@ -226,11 +226,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ruleNoFolder => 'Sin carpeta · última usada';
-
-  @override
-  String ruleToggleLabel(String name) {
-    return 'Activar regla $name';
-  }
 
   @override
   String get newRule => 'Nueva regla';

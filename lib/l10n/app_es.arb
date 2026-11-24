@@ -14,7 +14,7 @@
   "ruleLabel": "Regla",
   "ruleRemembered": "Se recuerda la última usada",
   "ruleAdd": "Agregar",
-  "noEnabledRules": "No hay reglas activas. Crea o activa una en Reglas.",
+  "noRules": "No hay reglas. Crea una con Agregar.",
   "saveIn": "Guardar en · {source}",
   "@saveIn": {
     "placeholders": {
@@ -166,14 +166,6 @@
   "rulesSubtitle": "Las reglas activas se ofrecen al descargar o compartir, ordenadas por nombre.",
   "ruleDefaultBadge": "Predeterminada",
   "ruleNoFolder": "Sin carpeta · última usada",
-  "ruleToggleLabel": "Activar regla {name}",
-  "@ruleToggleLabel": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "newRule": "Nueva regla",
   "editorTitleEdit": "Editar regla",
   "editorTitleNew": "Nueva regla",
