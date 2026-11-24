@@ -18,7 +18,7 @@ import 'data/rules_notifier.dart';
 import 'domain/filename_builder.dart';
 import 'domain/rename_rule.dart';
 import 'domain/sample_file.dart';
-import 'domain/storage_root.dart';
+import '../settings/app_settings.dart';
 import 'widgets/folder_section.dart';
 import 'widgets/pattern_section.dart';
 import 'widgets/transform_section.dart';
@@ -56,7 +56,13 @@ class _RuleEditorScreenState extends ConsumerState<RuleEditorScreen> {
     _isNew = existing == null;
     _draft =
         existing ??
-        RenameRule(id: notifier.newId(), name: '', tokens: const [PatternTokens.date, '_', PatternTokens.name]);
+        RenameRule(
+          id: notifier.newId(),
+          name: '',
+          tokens: const [PatternTokens.date, '_', PatternTokens.name],
+          // A new rule starts with the default folder of Settings; it can be changed or removed.
+          folder: ref.read(settingsProvider).lastFolder,
+        );
     _name = TextEditingController(text: _draft.name);
     _baseline = _snapshot();
   }
@@ -74,7 +80,7 @@ class _RuleEditorScreenState extends ConsumerState<RuleEditorScreen> {
   void _update(RenameRule next) => setState(() => _draft = next);
 
   Future<void> _pickFolder() async {
-    final folder = await showFolderPicker(context, _draft.folder ?? DestinationFolder(StorageRoot.download));
+    final folder = await showFolderPicker(context, _draft.folder ?? ref.read(settingsProvider).lastFolder);
     if (folder != null) _update(_draft.copyWith(folder: folder));
   }
 

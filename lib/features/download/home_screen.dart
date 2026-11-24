@@ -161,15 +161,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                     ),
                     RuleSelector(onAddRule: () => context.push(AppRoutes.newRule)),
-                    InfoBox(
-                      label: l10n.homeSavedAs,
-                      value: isValid ? target.fileName : l10n.homePreviewEmpty,
-                      isPlaceholder: !isValid,
-                    ),
                     DestinationCard(
                       path: target.folder.path,
                       tag: folderSourceLabel(l10n, target.folderSource),
                       onChange: () => _changeFolder(target.folder),
+                    ),
+                    InfoBox(
+                      label: l10n.homeSavedAs,
+                      value: isValid ? target.fileName : l10n.homePreviewEmpty,
+                      isPlaceholder: !isValid,
                     ),
                     FilledButton(onPressed: () => _download(target), child: Text(l10n.homeDownload)),
                   ],

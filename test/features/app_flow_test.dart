@@ -8,12 +8,14 @@ import 'package:nombra/app/router.dart';
 import 'package:nombra/core/constants/tokens.dart';
 import 'package:nombra/core/widgets/app_card.dart';
 import 'package:nombra/core/widgets/app_logo.dart';
+import 'package:nombra/core/widgets/info_box.dart';
 import 'package:nombra/core/widgets/pill_choice.dart';
 import 'package:nombra/core/widgets/screen_header.dart';
 import 'package:nombra/features/naming/widgets/destination_card.dart';
 import 'package:nombra/features/rules/widgets/rule_card.dart';
 import 'package:nombra/core/widgets/segmented_toggle.dart';
 import 'package:nombra/features/rules/domain/rename_rule.dart';
+import 'package:nombra/features/rules/domain/storage_root.dart';
 import 'package:nombra/features/download/data/downloads_notifier.dart';
 import 'package:nombra/features/rules/data/rules_notifier.dart';
 import 'package:nombra/features/settings/app_settings.dart';
@@ -298,8 +300,30 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Nueva regla'));
     await tester.pumpAndSettle();
-    expect(find.byType(DestinationCard), findsOneWidget); // rule editor, with no folder yet
-    expect(find.text('Elegir carpeta…'), findsOneWidget);
+    expect(find.byType(DestinationCard), findsOneWidget); // rule editor
+  });
+
+  testWidgets('Home shows the name preview below the folder', (tester) async {
+    await pumpApp(tester, env);
+    final folder = tester.getTopLeft(find.byType(DestinationCard)).dy;
+    final preview = tester.getTopLeft(find.byType(InfoBox)).dy;
+    expect(preview, greaterThan(folder));
+  });
+
+  testWidgets('a new rule starts with the default folder of Settings; Download if none was set', (tester) async {
+    final container = await pumpApp(tester, env);
+    await tester.tap(find.text('Reglas'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Nueva regla'));
+    await tester.pumpAndSettle();
+    expect(find.descendant(of: find.byType(DestinationCard), matching: find.text('/Download')), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    await tester.pumpAndSettle();
+    container.read(settingsProvider.notifier).setLastFolder(DestinationFolder(StorageRoot.documents, 'Trabajo'));
+    await tester.tap(find.text('Nueva regla'));
+    await tester.pumpAndSettle();
+    expect(find.text('/Documents/Trabajo'), findsOneWidget);
   });
 
   testWidgets('a new rule can be created from the editor', (tester) async {
