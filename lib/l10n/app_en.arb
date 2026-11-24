@@ -15,24 +15,9 @@
   "ruleRemembered": "The last one used is remembered",
   "ruleAdd": "Add",
   "noRules": "No rules yet. Create one with Add.",
-  "saveIn": "Save to · {source}",
-  "@saveIn": {
-    "placeholders": {
-      "source": {
-        "type": "String"
-      }
-    }
-  },
-  "folderSourceLastUsed": "last used",
-  "folderSourceChosen": "chosen",
-  "folderSourceRule": "from rule “{rule}”",
-  "@folderSourceRule": {
-    "placeholders": {
-      "rule": {
-        "type": "String"
-      }
-    }
-  },
+  "folderSourceLastUsed": "Last used",
+  "folderSourceChosen": "Chosen",
+  "folderSourceRule": "From the rule",
   "changeFolderTooltip": "Change destination folder",
   "homeUrlLabel": "File URL",
   "homePasteTooltip": "Paste from clipboard",

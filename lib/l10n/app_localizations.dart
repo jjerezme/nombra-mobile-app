@@ -182,29 +182,23 @@ abstract class AppLocalizations {
   /// **'No hay reglas. Crea una con Agregar.'**
   String get noRules;
 
-  /// No description provided for @saveIn.
-  ///
-  /// In es, this message translates to:
-  /// **'Guardar en · {source}'**
-  String saveIn(String source);
-
   /// No description provided for @folderSourceLastUsed.
   ///
   /// In es, this message translates to:
-  /// **'última usada'**
+  /// **'Última usada'**
   String get folderSourceLastUsed;
 
   /// No description provided for @folderSourceChosen.
   ///
   /// In es, this message translates to:
-  /// **'elegida'**
+  /// **'Elegida'**
   String get folderSourceChosen;
 
   /// No description provided for @folderSourceRule.
   ///
   /// In es, this message translates to:
-  /// **'según regla «{rule}»'**
-  String folderSourceRule(String rule);
+  /// **'De la regla'**
+  String get folderSourceRule;
 
   /// No description provided for @changeFolderTooltip.
   ///

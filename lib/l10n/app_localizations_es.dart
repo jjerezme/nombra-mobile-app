@@ -55,20 +55,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noRules => 'No hay reglas. Crea una con Agregar.';
 
   @override
-  String saveIn(String source) {
-    return 'Guardar en · $source';
-  }
+  String get folderSourceLastUsed => 'Última usada';
 
   @override
-  String get folderSourceLastUsed => 'última usada';
+  String get folderSourceChosen => 'Elegida';
 
   @override
-  String get folderSourceChosen => 'elegida';
-
-  @override
-  String folderSourceRule(String rule) {
-    return 'según regla «$rule»';
-  }
+  String get folderSourceRule => 'De la regla';
 
   @override
   String get changeFolderTooltip => 'Cambiar carpeta de destino';

@@ -15,24 +15,9 @@
   "ruleRemembered": "Se recuerda la última usada",
   "ruleAdd": "Agregar",
   "noRules": "No hay reglas. Crea una con Agregar.",
-  "saveIn": "Guardar en · {source}",
-  "@saveIn": {
-    "placeholders": {
-      "source": {
-        "type": "String"
-      }
-    }
-  },
-  "folderSourceLastUsed": "última usada",
-  "folderSourceChosen": "elegida",
-  "folderSourceRule": "según regla «{rule}»",
-  "@folderSourceRule": {
-    "placeholders": {
-      "rule": {
-        "type": "String"
-      }
-    }
-  },
+  "folderSourceLastUsed": "Última usada",
+  "folderSourceChosen": "Elegida",
+  "folderSourceRule": "De la regla",
   "changeFolderTooltip": "Cambiar carpeta de destino",
   "homeUrlLabel": "URL del archivo",
   "homePasteTooltip": "Pegar del portapapeles",

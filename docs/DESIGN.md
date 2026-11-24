@@ -19,7 +19,7 @@ Todas las pantallas se arman con las mismas piezas (`lib/core/widgets/`) y los v
 - `AppSection` / `SectionTitle`: título de un grupo (`titleMedium`) **encima** de su tarjeta; el título nunca va dentro de la tarjeta.
 - `AppCard` / `AppCard.stack`: superficie con radio y relleno únicos; `stack` apila los bloques con `sectionGap`.
 - `LabeledField`: etiqueta (`labelMedium`) + control + ayuda (`bodySmall`). Es la única forma de rotular un campo.
-- `DestinationCard`: la única forma de mostrar y cambiar una carpeta (Descargar, hoja de compartir, Ajustes, editor de reglas): ruta elegida (o mensaje si no hay) y botón que abre el selector; opcionalmente una línea de origen y un botón para quitarla.
+- `DestinationCard`: la única forma de mostrar y cambiar una carpeta (Descargar, hoja de compartir, Ajustes, editor de reglas): ruta elegida (o mensaje si no hay) y botón que abre el selector; opcionalmente una etiqueta (`TagChip`) que dice de dónde viene (de la regla, última usada o elegida; nunca el nombre de la regla) y un botón para quitarla.
 - `ToggleRow`, `ActionRow`: filas con interruptor y filas de acción.
 - `SegmentedToggle`, `PillChoice`: elecciones exclusivas.
 

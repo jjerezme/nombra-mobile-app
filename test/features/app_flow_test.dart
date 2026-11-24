@@ -210,6 +210,23 @@ void main() {
     expect(find.textContaining('Factura_'), findsWidgets);
   });
 
+  testWidgets('the folder shows a tag with where it comes from, not the rule name and not "Guardar en"', (
+    tester,
+  ) async {
+    await pumpApp(tester, env);
+    await tester.enterText(find.byType(TextField).first, _url);
+    await tester.tap(find.text('Facturas')); // a rule with its own folder
+    await tester.pumpAndSettle();
+    expect(find.text('De la regla'), findsOneWidget);
+    expect(find.text('Facturas'), findsOneWidget); // only the chip of the rule: its name is not repeated
+    expect(find.textContaining('Guardar en'), findsNothing);
+
+    await tester.tap(find.text('Ninguna')); // no rule: the last folder used
+    await tester.pumpAndSettle();
+    expect(find.text('Última usada'), findsOneWidget);
+    expect(find.text('De la regla'), findsNothing);
+  });
+
   testWidgets('Home has an "Agregar" chip, apart from the rules, that opens the new rule screen', (tester) async {
     await pumpApp(tester, env);
     await tester.tap(find.text('Guardada'));

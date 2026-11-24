@@ -55,20 +55,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noRules => 'No rules yet. Create one with Add.';
 
   @override
-  String saveIn(String source) {
-    return 'Save to · $source';
-  }
+  String get folderSourceLastUsed => 'Last used';
 
   @override
-  String get folderSourceLastUsed => 'last used';
+  String get folderSourceChosen => 'Chosen';
 
   @override
-  String get folderSourceChosen => 'chosen';
-
-  @override
-  String folderSourceRule(String rule) {
-    return 'from rule “$rule”';
-  }
+  String get folderSourceRule => 'From the rule';
 
   @override
   String get changeFolderTooltip => 'Change destination folder';

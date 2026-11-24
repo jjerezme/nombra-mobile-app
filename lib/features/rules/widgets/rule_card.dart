@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/constants/tokens.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/app_card.dart';
+import '../../../core/widgets/tag_chip.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/filename_builder.dart';
 import '../domain/rename_rule.dart';
@@ -50,7 +51,7 @@ class RuleCard extends StatelessWidget {
             spacing: AppSpacing.sm,
             children: [
               Flexible(child: Text(rule.name, style: context.text.titleMedium)),
-              if (rule.isDefault) _Tag(label: l10n.ruleDefaultBadge, isHighlighted: true),
+              if (rule.isDefault) TagChip(label: l10n.ruleDefaultBadge, isHighlighted: true),
             ],
           ),
           _DetailRow(
@@ -66,7 +67,7 @@ class RuleCard extends StatelessWidget {
             child: Wrap(
               spacing: AppSpacing.xs,
               runSpacing: AppSpacing.xs,
-              children: [for (final option in ruleOptions(l10n, rule)) _Tag(label: option)],
+              children: [for (final option in ruleOptions(l10n, rule)) TagChip(label: option)],
             ),
           ),
           _DetailRow(
@@ -125,32 +126,6 @@ class _Line extends StatelessWidget {
         fontSize: fontSize,
         height: AppIconSize.base / fontSize,
         forceStrutHeight: true,
-      ),
-    );
-  }
-}
-
-/// A small pill with a short label (an option, or "default").
-class _Tag extends StatelessWidget {
-  const _Tag({required this.label, this.isHighlighted = false});
-
-  final String label;
-  final bool isHighlighted;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xxs),
-      decoration: BoxDecoration(
-        color: isHighlighted ? colors.primaryContainer : colors.secondaryContainer,
-        borderRadius: BorderRadius.circular(AppRadius.md),
-      ),
-      child: Text(
-        label,
-        style: context.text.labelSmall?.copyWith(
-          color: isHighlighted ? colors.onPrimaryContainer : colors.onSecondaryContainer,
-        ),
       ),
     );
   }

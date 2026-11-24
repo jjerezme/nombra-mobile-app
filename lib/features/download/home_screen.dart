@@ -168,7 +168,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                     DestinationCard(
                       path: target.folder.path,
-                      caption: l10n.saveIn(folderSourceLabel(l10n, target.folderSource, target.rule)),
+                      tag: folderSourceLabel(l10n, target.folderSource),
                       onChange: () => _changeFolder(target.folder),
                     ),
                     FilledButton(onPressed: () => _download(target), child: Text(l10n.homeDownload)),

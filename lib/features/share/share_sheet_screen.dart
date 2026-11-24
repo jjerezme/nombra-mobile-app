@@ -224,7 +224,7 @@ class _Content extends ConsumerWidget {
         if (items.length == 1) ShareNameField(fileName: target.fileName),
         DestinationCard(
           path: target.folder.path,
-          caption: l10n.saveIn(folderSourceLabel(l10n, target.folderSource, target.rule)),
+          tag: folderSourceLabel(l10n, target.folderSource),
           onChange: () => onChangeFolder(target.folder),
         ),
         if (settings.mode == NamingMode.saved)
