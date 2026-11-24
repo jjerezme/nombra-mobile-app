@@ -13,7 +13,7 @@
   "modeQuick": "Rápida",
   "ruleLabel": "Regla",
   "ruleRemembered": "Se recuerda la última usada",
-  "editRules": "Editar reglas",
+  "ruleAdd": "Agregar",
   "noEnabledRules": "No hay reglas activas. Crea o activa una en Reglas.",
   "saveIn": "Guardar en · {source}",
   "@saveIn": {
@@ -240,6 +240,7 @@
   "folderPickerRoot": "Ubicación",
   "folderPickerSubfolder": "Subcarpeta (opcional)",
   "folderPickerUse": "Usar esta carpeta",
+  "folderPickerSavedIn": "Se guardará en",
   "conflictTitle": "El archivo ya existe",
   "conflictBody": "«{name}» ya está en {folder}.",
   "@conflictBody": {

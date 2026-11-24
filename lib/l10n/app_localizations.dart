@@ -170,11 +170,11 @@ abstract class AppLocalizations {
   /// **'Se recuerda la última usada'**
   String get ruleRemembered;
 
-  /// No description provided for @editRules.
+  /// No description provided for @ruleAdd.
   ///
   /// In es, this message translates to:
-  /// **'Editar reglas'**
-  String get editRules;
+  /// **'Agregar'**
+  String get ruleAdd;
 
   /// No description provided for @noEnabledRules.
   ///
@@ -745,6 +745,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Usar esta carpeta'**
   String get folderPickerUse;
+
+  /// No description provided for @folderPickerSavedIn.
+  ///
+  /// In es, this message translates to:
+  /// **'Se guardará en'**
+  String get folderPickerSavedIn;
 
   /// No description provided for @conflictTitle.
   ///

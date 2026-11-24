@@ -4,6 +4,7 @@ import '../../../core/constants/tokens.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/validation.dart';
 import '../../../core/widgets/form_parts.dart';
+import '../../../core/widgets/info_box.dart';
 import '../../../core/widgets/input_sheets.dart';
 import '../../../core/widgets/pill_choice.dart';
 import '../../../l10n/app_localizations.dart';
@@ -66,7 +67,6 @@ class _FolderPickerSheetState extends State<_FolderPickerSheet> {
         ),
         LabeledField(
           label: l10n.folderPickerSubfolder,
-          hint: _folder.path,
           child: TextField(
             controller: _subfolder,
             onChanged: (_) => setState(() {}),
@@ -77,6 +77,7 @@ class _FolderPickerSheetState extends State<_FolderPickerSheet> {
             ),
           ),
         ),
+        InfoBox(label: l10n.folderPickerSavedIn, value: _folder.path),
       ],
     );
   }

@@ -13,7 +13,7 @@
   "modeQuick": "Quick",
   "ruleLabel": "Rule",
   "ruleRemembered": "The last one used is remembered",
-  "editRules": "Edit rules",
+  "ruleAdd": "Add",
   "noEnabledRules": "No active rules. Create or enable one in Rules.",
   "saveIn": "Save to · {source}",
   "@saveIn": {
@@ -240,6 +240,7 @@
   "folderPickerRoot": "Location",
   "folderPickerSubfolder": "Subfolder (optional)",
   "folderPickerUse": "Use this folder",
+  "folderPickerSavedIn": "It will be saved in",
   "conflictTitle": "The file already exists",
   "conflictBody": "“{name}” is already in {folder}.",
   "@conflictBody": {

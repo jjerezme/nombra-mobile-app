@@ -178,6 +178,34 @@ void main() {
     expect(find.textContaining('Factura_'), findsWidgets);
   });
 
+  testWidgets('Home has an "Agregar" chip, apart from the rules, that opens the new rule screen', (tester) async {
+    await pumpApp(tester, env);
+    await tester.tap(find.text('Guardada'));
+    await tester.pumpAndSettle();
+    expect(find.byType(ActionChip), findsOneWidget);
+    expect(find.text('Editar reglas'), findsNothing);
+
+    await tester.tap(find.widgetWithText(ActionChip, 'Agregar'));
+    await tester.pumpAndSettle();
+    expect(find.text('Patrón'), findsOneWidget);
+    expect(find.text('Guardar'), findsOneWidget);
+  });
+
+  testWidgets('leaving the app closes the keyboard, so it does not come back with its space reserved', (tester) async {
+    await pumpApp(tester, env);
+    await tester.tap(find.byType(TextField).first);
+    await tester.pump();
+    expect(FocusManager.instance.primaryFocus?.hasPrimaryFocus, isTrue);
+    expect(tester.testTextInput.isVisible, isTrue);
+
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+    await tester.pump();
+    expect(tester.testTextInput.isVisible, isFalse);
+
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pump();
+  });
+
   testWidgets('Rules lists the seed rules and a rule can be switched off', (tester) async {
     final container = await pumpApp(tester, env);
     await tester.tap(find.text('Reglas'));

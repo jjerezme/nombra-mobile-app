@@ -121,6 +121,9 @@ void main() {
 
     await tester.tap(find.text('Music'));
     await tester.pumpAndSettle();
+    // The resulting path is shown in the same info box as "Se guardará como".
+    expect(find.text('Se guardará en'), findsOneWidget);
+    expect(find.text('/Music'), findsOneWidget);
     await tester.tap(find.text('Usar esta carpeta'));
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).lastFolder, DestinationFolder(StorageRoot.music));

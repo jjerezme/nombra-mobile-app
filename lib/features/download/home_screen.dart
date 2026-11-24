@@ -9,6 +9,7 @@ import '../../core/validation.dart';
 import '../../core/widgets/app_card.dart';
 import '../../core/widgets/dialogs.dart';
 import '../../core/widgets/form_parts.dart';
+import '../../core/widgets/info_box.dart';
 import '../../core/widgets/screen_header.dart';
 import '../../l10n/app_localizations.dart';
 import '../../app/router.dart';
@@ -158,10 +159,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ],
                       ),
                     ),
-                    RuleSelector(onEditRules: () => context.go(AppRoutes.rules)),
-                    _NamePreview(
+                    RuleSelector(onAddRule: () => context.push(AppRoutes.newRule)),
+                    InfoBox(
                       label: l10n.homeSavedAs,
-                      fileName: isValid ? target.fileName : l10n.homePreviewEmpty,
+                      value: isValid ? target.fileName : l10n.homePreviewEmpty,
                       isPlaceholder: !isValid,
                     ),
                     DestinationCard(
@@ -201,40 +202,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _NamePreview extends StatelessWidget {
-  const _NamePreview({required this.label, required this.fileName, required this.isPlaceholder});
-
-  final String label;
-  final String fileName;
-  final bool isPlaceholder;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: colors.secondaryContainer,
-        borderRadius: BorderRadius.circular(AppLayout.controlRadius),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: AppSpacing.xs,
-        children: [
-          Text(label, style: context.text.labelSmall?.copyWith(color: colors.onSecondaryContainer)),
-          Text(
-            fileName,
-            style: isPlaceholder
-                ? context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant)
-                : context.monoStyles.mono.copyWith(fontSize: AppFontSize.md, color: colors.onSurface),
-          ),
-        ],
       ),
     );
   }

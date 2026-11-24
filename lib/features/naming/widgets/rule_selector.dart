@@ -15,13 +15,13 @@ import '../../settings/app_settings.dart';
 
 /// Saved rule or quick pattern: the naming choice shared by Home and the share sheet.
 class RuleSelector extends ConsumerWidget {
-  const RuleSelector({super.key, this.selectedRuleId, this.onEditRules, this.onRuleSelected});
+  const RuleSelector({super.key, this.selectedRuleId, this.onAddRule, this.onRuleSelected});
 
   /// The rule currently in effect, so the chip is highlighted even before the user taps one.
   final String? selectedRuleId;
 
-  /// Opens the rules screen; hidden when null (the share sheet has no router).
-  final VoidCallback? onEditRules;
+  /// Opens the new rule screen; the "add" chip is hidden when null (the share sheet has no router).
+  final VoidCallback? onAddRule;
 
   /// Called after the user picks a rule.
   final ValueChanged<String>? onRuleSelected;
@@ -78,7 +78,20 @@ class RuleSelector extends ConsumerWidget {
                     onRuleSelected?.call(rule.id);
                   },
                 ),
-              if (onEditRules != null) TextButton(onPressed: onEditRules, child: Text(l10n.editRules)),
+              // An action, not a rule: tinted and with a plus, so it is not read as one more rule to pick.
+              if (onAddRule != null)
+                ActionChip(
+                  onPressed: onAddRule,
+                  avatar: Icon(Icons.add, size: AppIconSize.sm, color: context.colors.onPrimaryContainer),
+                  label: Text(l10n.ruleAdd),
+                  labelStyle: context.text.labelMedium?.copyWith(
+                    color: context.colors.onPrimaryContainer,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  backgroundColor: context.colors.primaryContainer,
+                  side: BorderSide.none,
+                  shape: const StadiumBorder(),
+                ),
             ],
           )
         else

@@ -49,7 +49,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ruleRemembered => 'The last one used is remembered';
 
   @override
-  String get editRules => 'Edit rules';
+  String get ruleAdd => 'Add';
 
   @override
   String get noEnabledRules => 'No active rules. Create or enable one in Rules.';
@@ -373,6 +373,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get folderPickerUse => 'Use this folder';
+
+  @override
+  String get folderPickerSavedIn => 'It will be saved in';
 
   @override
   String get conflictTitle => 'The file already exists';
