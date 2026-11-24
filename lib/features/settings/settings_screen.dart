@@ -84,6 +84,12 @@ class SettingsScreen extends ConsumerWidget {
                           onChanged: notifier.setMode,
                         ),
                       ),
+                      ToggleRow(
+                        label: l10n.settingsShowRecents,
+                        description: l10n.settingsShowRecentsHint,
+                        value: settings.showRecents,
+                        onChanged: (value) => notifier.setShowRecents(isShown: value),
+                      ),
                       LabeledField(
                         label: l10n.settingsDefaultFolder,
                         hint: l10n.settingsDefaultFolderHint,

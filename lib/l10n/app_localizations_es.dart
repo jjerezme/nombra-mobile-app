@@ -562,4 +562,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get quickNextHint =>
       'Con el elemento de número en el patrón, el número sigue mientras no cambies el patrón; si lo cambias, vuelve a 1.';
+
+  @override
+  String get homeClearRecents => 'Borrar';
+
+  @override
+  String get settingsShowRecents => 'Mostrar archivos recientes';
+
+  @override
+  String get settingsShowRecentsHint =>
+      'Lista en Descargar los archivos guardados. Las descargas en curso siempre se ven.';
 }

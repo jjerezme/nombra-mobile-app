@@ -341,5 +341,8 @@
   },
   "quickNext": "Next number",
   "errInvalidNumber": "Enter a whole number greater than 0",
-  "quickNextHint": "With the number item in the pattern, the number goes on as long as you do not change the pattern; if you do, it starts again at 1."
+  "quickNextHint": "With the number item in the pattern, the number goes on as long as you do not change the pattern; if you do, it starts again at 1.",
+  "homeClearRecents": "Clear",
+  "settingsShowRecents": "Show recent files",
+  "settingsShowRecentsHint": "Lists the saved files in Download. Downloads in progress are always shown."
 }

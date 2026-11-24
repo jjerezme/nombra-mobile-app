@@ -53,6 +53,7 @@ class AppSettings {
     this.quickTokens = defaultQuickTokens,
     this.quickNext = 1,
     this.quickNextKey,
+    this.showRecents = true,
   }) : lastFolder = lastFolder ?? DestinationFolder(StorageRoot.download);
 
   factory AppSettings.fromJson(Map<String, dynamic> json) => AppSettings(
@@ -78,6 +79,7 @@ class AppSettings {
         : (json['quickTokens'] as List<dynamic>).cast<String>(),
     quickNext: ((json['quickNext'] as int?) ?? 1).clamp(1, maxSequenceNumber),
     quickNextKey: json['quickNextKey'] as String?,
+    showRecents: json['showRecents'] as bool? ?? true,
   );
 
   final NamingMode mode;
@@ -97,6 +99,9 @@ class AppSettings {
   /// Number the next file gets, valid while [quickNextKey] equals [quickSignature].
   final int quickNext;
   final String? quickNextKey;
+
+  /// Whether Download lists the files saved before (finished and failed downloads). Downloads in progress always show.
+  final bool showRecents;
 
   /// Identifies the quick pattern: the sequence goes on only while the pattern does not change.
   String get quickSignature => quickTokens.join('\u0001');
@@ -118,6 +123,7 @@ class AppSettings {
     List<String>? quickTokens,
     int? quickNext,
     String? quickNextKey,
+    bool? showRecents,
   }) => AppSettings(
     mode: mode ?? this.mode,
     lastRuleId: lastRuleId ?? this.lastRuleId,
@@ -128,6 +134,7 @@ class AppSettings {
     quickTokens: quickTokens ?? this.quickTokens,
     quickNext: quickNext ?? this.quickNext,
     quickNextKey: quickNextKey ?? this.quickNextKey,
+    showRecents: showRecents ?? this.showRecents,
   );
 
   Map<String, dynamic> toJson() => {
@@ -140,6 +147,7 @@ class AppSettings {
     'quickTokens': quickTokens,
     'quickNext': quickNext,
     'quickNextKey': quickNextKey,
+    'showRecents': showRecents,
   };
 }
 
@@ -183,8 +191,11 @@ class SettingsNotifier extends Notifier<AppSettings> {
       quickTokens: state.quickTokens,
       quickNext: state.quickNext,
       quickNextKey: state.quickNextKey,
+      showRecents: state.showRecents,
     ),
   );
+
+  void setShowRecents({required bool isShown}) => _update(state.copyWith(showRecents: isShown));
 
   void setMode(NamingMode mode) => _update(state.copyWith(mode: mode));
 

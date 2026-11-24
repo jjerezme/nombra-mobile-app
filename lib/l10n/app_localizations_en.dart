@@ -560,4 +560,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get quickNextHint =>
       'With the number item in the pattern, the number goes on as long as you do not change the pattern; if you do, it starts again at 1.';
+
+  @override
+  String get homeClearRecents => 'Clear';
+
+  @override
+  String get settingsShowRecents => 'Show recent files';
+
+  @override
+  String get settingsShowRecentsHint => 'Lists the saved files in Download. Downloads in progress are always shown.';
 }

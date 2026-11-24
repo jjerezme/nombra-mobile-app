@@ -341,5 +341,8 @@
   },
   "quickNext": "Siguiente número",
   "errInvalidNumber": "Escribe un número entero mayor que 0",
-  "quickNextHint": "Con el elemento de número en el patrón, el número sigue mientras no cambies el patrón; si lo cambias, vuelve a 1."
+  "quickNextHint": "Con el elemento de número en el patrón, el número sigue mientras no cambies el patrón; si lo cambias, vuelve a 1.",
+  "homeClearRecents": "Borrar",
+  "settingsShowRecents": "Mostrar archivos recientes",
+  "settingsShowRecentsHint": "Lista en Descargar los archivos guardados. Las descargas en curso siempre se ven."
 }

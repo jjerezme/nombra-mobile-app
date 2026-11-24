@@ -1093,6 +1093,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Con el elemento de número en el patrón, el número sigue mientras no cambies el patrón; si lo cambias, vuelve a 1.'**
   String get quickNextHint;
+
+  /// No description provided for @homeClearRecents.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar'**
+  String get homeClearRecents;
+
+  /// No description provided for @settingsShowRecents.
+  ///
+  /// In es, this message translates to:
+  /// **'Mostrar archivos recientes'**
+  String get settingsShowRecents;
+
+  /// No description provided for @settingsShowRecentsHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Lista en Descargar los archivos guardados. Las descargas en curso siempre se ven.'**
+  String get settingsShowRecentsHint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

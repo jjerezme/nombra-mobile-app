@@ -7,6 +7,7 @@ import '../../core/constants/tokens.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/validation.dart';
 import '../../core/widgets/app_card.dart';
+import '../../core/widgets/dialogs.dart';
 import '../../core/widgets/form_parts.dart';
 import '../../core/widgets/screen_header.dart';
 import '../../l10n/app_localizations.dart';
@@ -51,6 +52,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
   }
 
+  Future<void> _confirmClear() async {
+    final l10n = AppLocalizations.of(context);
+    final isConfirmed = await showConfirmDialog(
+      context,
+      title: l10n.settingsConfirmHistoryTitle,
+      message: l10n.settingsConfirmHistoryBody,
+      confirmLabel: l10n.delete,
+    );
+    if (isConfirmed && mounted) ref.read(downloadsProvider.notifier).clearFinished();
+  }
+
   Future<void> _changeFolder(DestinationFolder current) async {
     final folder = await showFolderPicker(context, current);
     if (folder != null) setState(() => _chosenFolder = folder);
@@ -84,6 +96,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final settings = ref.watch(settingsProvider);
     final rules = ref.watch(rulesProvider);
     final downloads = ref.watch(downloadsProvider);
+    // With "show recent files" off only the downloads still in progress are listed.
+    final recents = settings.showRecents ? downloads : downloads.where((item) => item.isActive).toList();
+    final hasHistory = downloads.any((item) => !item.isActive);
     final url = _url.text.trim();
     final isValid = isHttpUrl(url);
     final fromUrl = isValid ? sourceFromUrl(url) : null;
@@ -157,27 +172,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     FilledButton(onPressed: () => _download(target), child: Text(l10n.homeDownload)),
                   ],
                 ),
-                AppSection(
-                  title: l10n.homeRecents,
-                  child: downloads.isEmpty
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
-                          child: Text(
-                            l10n.homeRecentsEmpty,
-                            style: context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
+                if (recents.isNotEmpty || settings.showRecents)
+                  AppSection(
+                    title: l10n.homeRecents,
+                    action: hasHistory && settings.showRecents
+                        ? TextButton(onPressed: _confirmClear, child: Text(l10n.homeClearRecents))
+                        : null,
+                    child: recents.isEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+                            child: Text(
+                              l10n.homeRecentsEmpty,
+                              style: context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
+                            ),
+                          )
+                        : Column(
+                            spacing: AppLayout.itemGap,
+                            children: [
+                              for (final item in recents)
+                                DownloadTile(
+                                  item: item,
+                                  onRetry: () => ref.read(downloadsProvider.notifier).retry(item.id),
+                                ),
+                            ],
                           ),
-                        )
-                      : Column(
-                          spacing: AppLayout.itemGap,
-                          children: [
-                            for (final item in downloads)
-                              DownloadTile(
-                                item: item,
-                                onRetry: () => ref.read(downloadsProvider.notifier).retry(item.id),
-                              ),
-                          ],
-                        ),
-                ),
+                  ),
               ],
             ),
           ],

@@ -145,6 +145,89 @@ void main() {
     expect(container.read(rulesProvider), isEmpty);
   });
 
+  group('recent files', () {
+    Future<void> withHistory() async {
+      final finished = DownloadItem(
+        id: 'old',
+        fileName: 'a.pdf',
+        status: DownloadStatus.done,
+        plan: DownloadPlan(folder: DestinationFolder(StorageRoot.download)),
+        createdAt: DateTime(2026),
+      );
+      env = await TestEnvironment.create(
+        preferences: {
+          ...storedRules(sampleRules()),
+          'downloads': jsonEncode([finished.toJson()]),
+        },
+      );
+    }
+
+    Future<void> openDownload(WidgetTester tester) async {
+      await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Descargar')));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('can be cleared from the Download tab, after asking', (tester) async {
+      await withHistory();
+      await pumpSettings(tester, env);
+      await openDownload(tester);
+      expect(find.text('a.pdf'), findsOneWidget);
+
+      await tester.tap(find.text('Borrar'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Cancelar'));
+      await tester.pumpAndSettle();
+      expect(find.text('a.pdf'), findsOneWidget);
+
+      await tester.tap(find.text('Borrar'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Eliminar'));
+      await tester.pumpAndSettle();
+      expect(find.text('a.pdf'), findsNothing);
+      expect(find.text('Aún no hay descargas'), findsOneWidget);
+      expect(find.text('Borrar'), findsNothing);
+    });
+
+    testWidgets('a setting hides them, and shows them again', (tester) async {
+      await withHistory();
+      final container = await pumpSettings(tester, env);
+      expect(container.read(settingsProvider).showRecents, isTrue);
+
+      await tester.tap(find.text('Mostrar archivos recientes'));
+      await tester.pumpAndSettle();
+      expect(container.read(settingsProvider).showRecents, isFalse);
+
+      await openDownload(tester);
+      expect(find.text('Recientes'), findsNothing);
+      expect(find.text('a.pdf'), findsNothing);
+      // The history is kept, only hidden.
+      expect(container.read(downloadsProvider), hasLength(1));
+
+      await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Ajustes')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Mostrar archivos recientes'));
+      await tester.pumpAndSettle();
+      await openDownload(tester);
+      expect(find.text('a.pdf'), findsOneWidget);
+    });
+
+    testWidgets('downloads in progress are shown even when recents are hidden', (tester) async {
+      final container = await pumpSettings(tester, env);
+      container.read(settingsProvider.notifier).setShowRecents(isShown: false);
+      await container
+          .read(downloadsProvider.notifier)
+          .start(
+            DownloadPlan(url: 'https://x.com/b.pdf', folder: DestinationFolder(StorageRoot.download)),
+            displayName: 'b.pdf',
+          );
+      await tester.pump(const Duration(milliseconds: 200));
+      // A download in progress shows an endless progress bar, so the page never settles.
+      await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Descargar')));
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(find.text('b.pdf'), findsOneWidget);
+    });
+  });
+
   testWidgets('clearing the history keeps downloads still in flight', (tester) async {
     final finished = DownloadItem(
       id: 'old',
