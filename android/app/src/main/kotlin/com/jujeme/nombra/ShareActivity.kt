@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.OpenableColumns
+import android.webkit.MimeTypeMap
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterActivityLaunchConfigs.BackgroundMode
 import io.flutter.embedding.engine.FlutterEngine
@@ -24,9 +25,15 @@ class ShareActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        SaveNotifications.register(flutterEngine, this)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
                 "payload" -> readPayloadAsync(result)
+                // Hides the sheet but keeps the activity (and its Dart code) alive, so the saves can finish.
+                "minimize" -> {
+                    moveTaskToBack(true)
+                    result.success(null)
+                }
                 "close" -> {
                     finish()
                     result.success(null)
@@ -90,7 +97,9 @@ class ShareActivity : FlutterActivity() {
                 if (index >= 0) displayName = cursor.getString(index)
             }
         }
-        val fileName = (displayName ?: uri.lastPathSegment ?: "file").replace(Regex("[\\\\/:*?\"<>|]"), "_")
+        val mimeType = contentResolver.getType(uri)
+        val cleanName = (displayName ?: uri.lastPathSegment ?: "file").replace(Regex("[\\\\/:*?\"<>|]"), "_")
+        val fileName = withExtensionFor(cleanName, mimeType)
         val target = File(dir, fileName)
         try {
             val input = contentResolver.openInputStream(uri) ?: return null
@@ -101,9 +110,20 @@ class ShareActivity : FlutterActivity() {
         return mapOf(
             "path" to target.absolutePath,
             "name" to fileName,
-            "mimeType" to contentResolver.getType(uri),
+            "mimeType" to mimeType,
             "size" to target.length(),
         )
+    }
+
+    /**
+     * Some apps share files with a bare id as name (no extension). The extension is then taken from the MIME type,
+     * so the file keeps its type (`image/jpeg` -> `.jpg`). A name that already has an extension is left alone.
+     */
+    private fun withExtensionFor(name: String, mimeType: String?): String {
+        val hasExtension = name.substringAfterLast('.', "").let { it.isNotEmpty() && name.length > it.length + 1 }
+        if (hasExtension || mimeType == null) return name
+        val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType) ?: return name
+        return "$name.$extension"
     }
 
     /** Copies that were never saved (the user cancelled) are removed after a day. */
