@@ -1111,6 +1111,48 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Lista en Descargar los archivos guardados. Las descargas en curso siempre se ven.'**
   String get settingsShowRecentsHint;
+
+  /// No description provided for @editorMaxTokens.
+  ///
+  /// In es, this message translates to:
+  /// **'Máximo {max} elementos'**
+  String editorMaxTokens(int max);
+
+  /// No description provided for @editorSpaceToken.
+  ///
+  /// In es, this message translates to:
+  /// **'Espacio'**
+  String get editorSpaceToken;
+
+  /// No description provided for @editorDigitsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Dígitos del número'**
+  String get editorDigitsTitle;
+
+  /// No description provided for @editorDigitsLess.
+  ///
+  /// In es, this message translates to:
+  /// **'Menos dígitos'**
+  String get editorDigitsLess;
+
+  /// No description provided for @editorDigitsMore.
+  ///
+  /// In es, this message translates to:
+  /// **'Más dígitos'**
+  String get editorDigitsMore;
+
+  /// No description provided for @editorDigitsCount.
+  ///
+  /// In es, this message translates to:
+  /// **'{count, plural, one{{count} dígito} other{{count} dígitos}}'**
+  String editorDigitsCount(int count);
+
+  /// No description provided for @editorDigitsExample.
+  ///
+  /// In es, this message translates to:
+  /// **'Ejemplo: {example}'**
+  String editorDigitsExample(String example);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

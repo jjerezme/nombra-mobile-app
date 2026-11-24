@@ -1,9 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../../core/constants/tokens.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/form_parts.dart';
-import '../../../core/widgets/pill_choice.dart';
 import '../../../core/widgets/screen_header.dart';
 import '../../../core/widgets/segmented_toggle.dart';
 import '../../../l10n/app_localizations.dart';
@@ -49,18 +47,10 @@ class TransformSection extends StatelessWidget {
           if (rule.replaceSpaces)
             LabeledField(
               label: l10n.editorReplaceWith,
-              child: Wrap(
-                spacing: AppSpacing.sm,
-                runSpacing: AppSpacing.sm,
-                children: [
-                  for (final (char, name) in spaceChars)
-                    PillChoice(
-                      label: char,
-                      semanticLabel: l10n.editorReplaceWithChar(name),
-                      isSelected: rule.spaceChar == char,
-                      onTap: () => onChanged(rule.copyWith(spaceChar: char)),
-                    ),
-                ],
+              child: SegmentedToggle<String>(
+                options: [for (final (char, name) in spaceChars) ToggleOption(char, '$char $name')],
+                selected: rule.spaceChar,
+                onChanged: (char) => onChanged(rule.copyWith(spaceChar: char)),
               ),
             ),
           ToggleRow(

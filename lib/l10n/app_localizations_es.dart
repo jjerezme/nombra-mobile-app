@@ -572,4 +572,32 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingsShowRecentsHint =>
       'Lista en Descargar los archivos guardados. Las descargas en curso siempre se ven.';
+
+  @override
+  String editorMaxTokens(int max) {
+    return 'Máximo $max elementos';
+  }
+
+  @override
+  String get editorSpaceToken => 'Espacio';
+
+  @override
+  String get editorDigitsTitle => 'Dígitos del número';
+
+  @override
+  String get editorDigitsLess => 'Menos dígitos';
+
+  @override
+  String get editorDigitsMore => 'Más dígitos';
+
+  @override
+  String editorDigitsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count dígitos', one: '$count dígito');
+    return '$_temp0';
+  }
+
+  @override
+  String editorDigitsExample(String example) {
+    return 'Ejemplo: $example';
+  }
 }

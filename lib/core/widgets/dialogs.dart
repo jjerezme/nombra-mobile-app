@@ -30,19 +30,21 @@ Future<String?> showTextDialog(
   BuildContext context, {
   required String title,
   required String hint,
+  String initialText = '',
   String? Function(String value)? validator,
 }) {
   return showDialog<String>(
     context: context,
-    builder: (context) => _TextDialog(title: title, hint: hint, validator: validator),
+    builder: (context) => _TextDialog(title: title, hint: hint, initialText: initialText, validator: validator),
   );
 }
 
 class _TextDialog extends StatefulWidget {
-  const _TextDialog({required this.title, required this.hint, this.validator});
+  const _TextDialog({required this.title, required this.hint, required this.initialText, this.validator});
 
   final String title;
   final String hint;
+  final String initialText;
   final String? Function(String value)? validator;
 
   @override
@@ -51,7 +53,7 @@ class _TextDialog extends StatefulWidget {
 
 class _TextDialogState extends State<_TextDialog> {
   // Owned by the State: it is disposed with the dialog, after the closing animation, not before.
-  final TextEditingController _controller = TextEditingController();
+  late final TextEditingController _controller = TextEditingController(text: widget.initialText);
   String? _error;
 
   @override

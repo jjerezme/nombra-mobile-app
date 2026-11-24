@@ -344,5 +344,33 @@
   "quickNextHint": "With the number item in the pattern, the number goes on as long as you do not change the pattern; if you do, it starts again at 1.",
   "homeClearRecents": "Clear",
   "settingsShowRecents": "Show recent files",
-  "settingsShowRecentsHint": "Lists the saved files in Download. Downloads in progress are always shown."
+  "settingsShowRecentsHint": "Lists the saved files in Download. Downloads in progress are always shown.",
+  "editorMaxTokens": "At most {max} items",
+  "editorSpaceToken": "Space",
+  "editorDigitsTitle": "Digits of the number",
+  "editorDigitsLess": "Fewer digits",
+  "editorDigitsMore": "More digits",
+  "editorDigitsCount": "{count, plural, one{{count} digit} other{{count} digits}}",
+  "editorDigitsExample": "Example: {example}",
+  "@editorMaxTokens": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "@editorDigitsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@editorDigitsExample": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  }
 }

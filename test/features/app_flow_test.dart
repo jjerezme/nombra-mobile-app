@@ -8,6 +8,8 @@ import 'package:nombra/app/router.dart';
 import 'package:nombra/core/constants/tokens.dart';
 import 'package:nombra/core/widgets/app_card.dart';
 import 'package:nombra/core/widgets/screen_header.dart';
+import 'package:nombra/core/widgets/segmented_toggle.dart';
+import 'package:nombra/features/rules/domain/rename_rule.dart';
 import 'package:nombra/features/download/data/downloads_notifier.dart';
 import 'package:nombra/features/rules/data/rules_notifier.dart';
 import 'package:nombra/features/settings/app_settings.dart';
@@ -29,6 +31,14 @@ Future<ProviderContainer> pumpApp(WidgetTester tester, TestEnvironment env) asyn
   await tester.pumpWidget(ProviderScope(overrides: env.overrides, child: const NombraApp()));
   await tester.pumpAndSettle();
   return ProviderScope.containerOf(tester.element(find.byType(MaterialApp)));
+}
+
+/// Adds a number token from the palette; the digits dialog keeps its default of 3 digits.
+Future<void> addCounter(WidgetTester tester) async {
+  await tester.tap(find.text('{n}'));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text('Aceptar'));
+  await tester.pumpAndSettle();
 }
 
 Future<void> tapDownload(WidgetTester tester) async {
@@ -95,7 +105,7 @@ void main() {
     final container = await pumpApp(tester, env);
     await tester.tap(find.text('Rápida'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('{n:3}'));
+    await addCounter(tester);
     await tester.pumpAndSettle();
     expect(container.read(rulesProvider), hasLength(4));
     expect(env.preferences.getString('settings'), contains('"quickTokens":["{name}","{n:3}"]'));
@@ -106,7 +116,7 @@ void main() {
     await tester.tap(find.text('Rápida'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField).first, _url);
-    await tester.tap(find.text('{n:3}'));
+    await addCounter(tester);
     await tester.pumpAndSettle();
     expect(find.text('Informe Q3 FINAL (2)001.pdf'), findsOneWidget);
 
@@ -164,7 +174,7 @@ void main() {
     expect(find.text('Este campo es obligatorio'), findsOneWidget);
 
     await tester.enterText(find.byType(TextField).first, 'Mi regla');
-    await tester.tap(find.text('{n:3}'));
+    await addCounter(tester);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Guardar'));
     await tester.pumpAndSettle();
@@ -311,6 +321,117 @@ void main() {
     });
   });
 
+  group('pattern builder', () {
+    Future<ProviderContainer> openQuick(WidgetTester tester) async {
+      final container = await pumpApp(tester, env);
+      await tester.tap(find.text('Rápida'));
+      await tester.pumpAndSettle();
+      return container;
+    }
+
+    List<String> quickTokens(ProviderContainer container) => container.read(settingsProvider).quickTokens;
+
+    testWidgets('the tokens, the .ext and the delete button share one center line', (tester) async {
+      await openQuick(tester);
+      final backspace = find.byIcon(Icons.backspace_outlined);
+      final tokenCenter = tester.getCenter(find.text('{name}').first).dy;
+      expect(tokenCenter, closeTo(tester.getCenter(backspace).dy, 1));
+
+      await tester.tap(backspace);
+      await tester.pumpAndSettle();
+      expect(tester.getCenter(find.text('.ext')).dy, closeTo(tester.getCenter(backspace).dy, 1));
+    });
+
+    testWidgets('a blank space can be added, and shows as a visible mark', (tester) async {
+      final container = await openQuick(tester);
+      await tester.tap(find.bySemanticsLabel('Espacio'));
+      await tester.pumpAndSettle();
+      expect(quickTokens(container), ['{name}', ' ']);
+      expect(find.text('␣'), findsWidgets);
+    });
+
+    testWidgets('a pattern takes at most 5 tokens', (tester) async {
+      final container = await openQuick(tester);
+      for (var i = 0; i < 4; i++) {
+        // The palette comes after the tokens already in the pattern.
+        await tester.tap(find.text('_').last);
+        await tester.pumpAndSettle();
+      }
+      expect(quickTokens(container), hasLength(5));
+      expect(find.text('Máximo 5 elementos'), findsOneWidget);
+
+      await tester.tap(find.text('-'));
+      await tester.pumpAndSettle();
+      expect(quickTokens(container), hasLength(5));
+
+      // Deleting one makes room again.
+      await tester.tap(find.byIcon(Icons.backspace_outlined));
+      await tester.pumpAndSettle();
+      expect(find.text('Máximo 5 elementos'), findsNothing);
+    });
+
+    testWidgets('a text token is changed by tapping it', (tester) async {
+      final container = await openQuick(tester);
+      await tester.tap(find.text('Texto…'));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byType(TextField).last, 'Doc_');
+      await tester.tap(find.text('Aceptar'));
+      await tester.pumpAndSettle();
+      expect(quickTokens(container), ['{name}', 'Doc_']);
+
+      await tester.tap(find.text('Doc_'));
+      await tester.pumpAndSettle();
+      expect(tester.widget<TextField>(find.byType(TextField).last).controller!.text, 'Doc_');
+      await tester.enterText(find.byType(TextField).last, 'Fac_');
+      await tester.tap(find.text('Aceptar'));
+      await tester.pumpAndSettle();
+      expect(quickTokens(container), ['{name}', 'Fac_']);
+    });
+
+    testWidgets('the number token asks for its digits, and they can be changed later', (tester) async {
+      final container = await openQuick(tester);
+      await tester.tap(find.text('{n}'));
+      await tester.pumpAndSettle();
+      expect(find.text('3 dígitos'), findsOneWidget);
+      expect(find.text('Ejemplo: 007'), findsOneWidget);
+
+      await tester.tap(find.byTooltip('Más dígitos'));
+      await tester.tap(find.byTooltip('Más dígitos'));
+      await tester.pumpAndSettle();
+      expect(find.text('Ejemplo: 00007'), findsOneWidget);
+      await tester.tap(find.text('Aceptar'));
+      await tester.pumpAndSettle();
+      expect(quickTokens(container), ['{name}', '{n:5}']);
+
+      await tester.tap(find.text('{n:5}'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Menos dígitos'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Aceptar'));
+      await tester.pumpAndSettle();
+      expect(quickTokens(container), ['{name}', '{n:4}']);
+    });
+
+    testWidgets('cancelling the digits does not add the token', (tester) async {
+      final container = await openQuick(tester);
+      await tester.tap(find.text('{n}'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Cancelar'));
+      await tester.pumpAndSettle();
+      expect(quickTokens(container), ['{name}']);
+    });
+
+    testWidgets('replacing spaces uses the same toggle as the letter case', (tester) async {
+      await pumpApp(tester, env);
+      await openEditor(tester);
+      await tester.tap(find.text('Reemplazar espacios'));
+      await tester.pumpAndSettle();
+      expect(find.text('- guion'), findsOneWidget);
+      expect(find.byType(SegmentedToggle<String>), findsOneWidget);
+      expect(find.byType(SegmentedToggle<CaseMode>), findsOneWidget);
+    });
+  });
+
   group('rule editor example', () {
     testWidgets('is pinned below the form, outside the scrolling list, and follows the pattern', (tester) async {
       await pumpApp(tester, env);
@@ -323,7 +444,7 @@ void main() {
       expect(tester.getBottomLeft(example).dy, greaterThan(tester.getTopLeft(find.text('Patrón')).dy));
 
       expect(find.textContaining('Informe Q3 FINAL (2).pdf'), findsWidgets);
-      await tester.tap(find.text('{n:3}'));
+      await addCounter(tester);
       await tester.pumpAndSettle();
       expect(
         find.text('${DateTime.now().toIso8601String().substring(0, 10)}_Informe Q3 FINAL (2)001.pdf'),

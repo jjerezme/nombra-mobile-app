@@ -13,7 +13,35 @@ abstract final class PatternTokens {
   static const String domain = '{domain}';
   static const String type = '{type}';
 
-  static const List<String> palette = [name, date, time, counter, domain, type, '_', '-'];
+  /// A blank space. It is stored as a plain text token, so it is also valid in rules saved as text.
+  static const String space = ' ';
+
+  /// How a blank space is drawn inside the pattern, where it would otherwise be invisible.
+  static const String spaceMark = '␣';
+
+  /// Stands for "write some text" in the palette; never stored in a pattern.
+  static const String textPlaceholder = '\u0000text';
+
+  /// A pattern holds at most this many tokens.
+  static const int maxCount = 5;
+
+  static const int defaultCounterDigits = 3;
+  static const int maxCounterDigits = 8;
+
+  static const List<String> palette = [name, date, time, counter, domain, type, '_', '-', space];
+
+  /// `{n:5}`: the sequential number padded to [digits] digits.
+  static String counterWith(int digits) => '{n:$digits}';
+
+  /// Digits of a `{n:3}` token.
+  static int counterDigits(String token) =>
+      int.tryParse(RegExp(r'^\{n:(\d+)\}$').firstMatch(token)?.group(1) ?? '') ?? defaultCounterDigits;
+
+  /// What a number token writes for the number 7, to show the effect of the digits.
+  static String counterExample(int digits) => '7'.padLeft(digits, '0');
+
+  /// Free text the user can change by tapping it: not a token and not just blank space.
+  static bool isEditable(String token) => !isToken(token) && token.trim().isNotEmpty;
 
   static bool isToken(String value) => value.length > 1 && value.startsWith('{') && value.endsWith('}');
 

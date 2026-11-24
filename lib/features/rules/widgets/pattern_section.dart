@@ -7,7 +7,8 @@ import '../../../core/widgets/dialogs.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/rename_rule.dart';
 
-/// The pattern as a row of tokens, and the palette to add more.
+/// The pattern as a row of tokens, and the palette to add more. At most [PatternTokens.maxCount] tokens fit; a text
+/// token is edited by tapping it, and so are the digits of a number token.
 class PatternSection extends StatelessWidget {
   const PatternSection({required this.tokens, required this.onChanged, this.errorText, super.key});
 
@@ -17,15 +18,50 @@ class PatternSection extends StatelessWidget {
   /// Shown under the pattern when it cannot be saved.
   final String? errorText;
 
-  Future<void> _addText(BuildContext context) async {
+  bool get _isFull => tokens.length >= PatternTokens.maxCount;
+
+  Future<String?> _askText(BuildContext context, {String initialText = ''}) {
     final l10n = AppLocalizations.of(context);
-    final text = await showTextDialog(
+    return showTextDialog(
       context,
       title: l10n.editorTextDialogTitle,
       hint: l10n.editorTextDialogHint,
+      initialText: initialText,
       validator: (value) => validatePatternText(value)?.message(l10n),
     );
-    if (text != null) onChanged([...tokens, text]);
+  }
+
+  /// Asks how many digits the number has; null when cancelled.
+  Future<String?> _askCounter(BuildContext context, {int digits = PatternTokens.defaultCounterDigits}) async {
+    final chosen = await showDigitsDialog(context, initial: digits);
+    return chosen == null ? null : PatternTokens.counterWith(chosen);
+  }
+
+  Future<void> _add(BuildContext context, String token) async {
+    if (_isFull) return;
+    var next = token;
+    if (token == PatternTokens.counter) {
+      final counter = await _askCounter(context);
+      if (counter == null) return;
+      next = counter;
+    } else if (token == PatternTokens.textPlaceholder) {
+      final text = await _askText(context);
+      if (text == null) return;
+      next = text;
+    }
+    onChanged([...tokens, next]);
+  }
+
+  Future<void> _edit(BuildContext context, int index) async {
+    final token = tokens[index];
+    String? replacement;
+    if (PatternTokens.isCounter(token)) {
+      replacement = await _askCounter(context, digits: PatternTokens.counterDigits(token));
+    } else if (PatternTokens.isEditable(token)) {
+      replacement = await _askText(context, initialText: token);
+    }
+    if (replacement == null || replacement == token) return;
+    onChanged([...tokens]..[index] = replacement);
   }
 
   @override
@@ -39,27 +75,31 @@ class PatternSection extends StatelessWidget {
         Container(
           width: double.infinity,
           constraints: const BoxConstraints(minHeight: AppSize.control),
-          padding: const EdgeInsets.fromLTRB(AppSpacing.sm, AppSpacing.sm, AppSpacing.xs, AppSpacing.sm),
+          padding: const EdgeInsets.fromLTRB(AppSpacing.sm, AppSpacing.xs, AppSpacing.xs, AppSpacing.xs),
           decoration: BoxDecoration(
             color: colors.surfaceContainerLowest,
             border: Border.all(color: errorText == null ? colors.primary : colors.error, width: 1.5),
             borderRadius: BorderRadius.circular(AppLayout.controlRadius),
           ),
+          // The tokens and the delete button share one center line, also when there are no tokens.
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: AppSpacing.xs),
-                  child: Wrap(
-                    spacing: AppSpacing.xs,
-                    runSpacing: AppSpacing.xs,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      for (final token in tokens) _TokenChip(label: token, isToken: PatternTokens.isToken(token)),
-                      Text('.ext', style: context.monoStyles.mono.copyWith(color: colors.onSurfaceVariant)),
-                    ],
-                  ),
+                child: Wrap(
+                  spacing: AppSpacing.xs,
+                  runSpacing: AppSpacing.xs,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    for (var i = 0; i < tokens.length; i++)
+                      _TokenChip(
+                        label: _labelOf(tokens[i]),
+                        isToken: PatternTokens.isToken(tokens[i]),
+                        onTap: PatternTokens.isCounter(tokens[i]) || PatternTokens.isEditable(tokens[i])
+                            ? () => _edit(context, i)
+                            : null,
+                      ),
+                    Text('.ext', style: context.monoStyles.mono.copyWith(color: colors.onSurfaceVariant)),
+                  ],
                 ),
               ),
               IconButton(
@@ -71,44 +111,66 @@ class PatternSection extends StatelessWidget {
           ),
         ),
         if (errorText != null) Text(errorText!, style: context.text.bodySmall?.copyWith(color: colors.error)),
-        Text(l10n.editorTapToInsert, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
+        Text(
+          _isFull ? l10n.editorMaxTokens(PatternTokens.maxCount) : l10n.editorTapToInsert,
+          style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant),
+        ),
         Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
           children: [
             for (final token in PatternTokens.palette)
-              _PaletteChip(label: token, onTap: () => onChanged([...tokens, token])),
-            _PaletteChip(label: l10n.editorAddText, onTap: () => _addText(context)),
+              _PaletteChip(
+                label: token == PatternTokens.counter ? '{n}' : _labelOf(token),
+                semanticLabel: token == PatternTokens.space ? l10n.editorSpaceToken : null,
+                onTap: _isFull ? null : () => _add(context, token),
+              ),
+            _PaletteChip(
+              label: l10n.editorAddText,
+              onTap: _isFull ? null : () => _add(context, PatternTokens.textPlaceholder),
+            ),
           ],
         ),
       ],
     );
   }
+
+  /// What a token looks like inside the pattern box: a blank space is shown as a visible mark.
+  String _labelOf(String token) => token.trim().isEmpty ? PatternTokens.spaceMark : token;
 }
 
 class _TokenChip extends StatelessWidget {
-  const _TokenChip({required this.label, required this.isToken});
+  const _TokenChip({required this.label, required this.isToken, this.onTap});
 
   final String label;
   final bool isToken;
 
+  /// Opens the editor of this token; null when there is nothing to edit.
+  final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return Container(
-      constraints: const BoxConstraints(minWidth: AppIconSize.md),
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
-      decoration: BoxDecoration(
-        color: isToken ? colors.primaryContainer : colors.surface,
-        border: isToken ? null : Border.all(color: colors.primary.withValues(alpha: 0.5)),
+    return Material(
+      color: isToken ? colors.primaryContainer : colors.surface,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
+        side: isToken ? BorderSide.none : BorderSide(color: colors.primary.withValues(alpha: 0.5)),
       ),
-      child: Text(
-        label,
-        textAlign: TextAlign.center,
-        style: context.monoStyles.mono.copyWith(
-          color: colors.onPrimaryContainer,
-          fontWeight: isToken ? FontWeight.w400 : FontWeight.w600,
+      child: InkWell(
+        customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.md)),
+        onTap: onTap,
+        child: Container(
+          constraints: const BoxConstraints(minWidth: AppIconSize.md),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: context.monoStyles.mono.copyWith(
+              color: colors.onPrimaryContainer,
+              fontWeight: isToken ? FontWeight.w400 : FontWeight.w600,
+            ),
+          ),
         ),
       ),
     );
@@ -116,37 +178,120 @@ class _TokenChip extends StatelessWidget {
 }
 
 class _PaletteChip extends StatelessWidget {
-  const _PaletteChip({required this.label, required this.onTap});
+  const _PaletteChip({required this.label, required this.onTap, this.semanticLabel});
 
   final String label;
-  final VoidCallback onTap;
+  final String? semanticLabel;
+
+  /// Null when the pattern is full: the chip is shown dimmed and does nothing.
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return Material(
-      color: colors.primaryContainer.withValues(alpha: 0.4),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: colors.primary.withValues(alpha: 0.5)),
-      ),
-      child: InkWell(
-        customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.md)),
-        onTap: onTap,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: minTouchTarget, minWidth: minTouchTarget),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-            child: Center(
-              widthFactor: 1,
-              child: Text(
-                label,
-                style: context.monoStyles.mono.copyWith(color: colors.onPrimaryContainer, fontWeight: FontWeight.w400),
+    final isEnabled = onTap != null;
+    return Semantics(
+      button: true,
+      enabled: isEnabled,
+      label: semanticLabel ?? label,
+      excludeSemantics: true,
+      child: Opacity(
+        opacity: isEnabled ? 1 : 0.4,
+        child: Material(
+          color: colors.primaryContainer.withValues(alpha: 0.4),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.md),
+            side: BorderSide(color: colors.primary.withValues(alpha: 0.5)),
+          ),
+          child: InkWell(
+            customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.md)),
+            onTap: onTap,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: minTouchTarget, minWidth: minTouchTarget),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                child: Center(
+                  widthFactor: 1,
+                  child: Text(
+                    label,
+                    style: context.monoStyles.mono.copyWith(
+                      color: colors.onPrimaryContainer,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Asks how many digits the sequential number has (`{n:3}` writes `007`); null when cancelled.
+Future<int?> showDigitsDialog(BuildContext context, {required int initial}) {
+  return showDialog<int>(
+    context: context,
+    builder: (context) => _DigitsDialog(initial: initial),
+  );
+}
+
+class _DigitsDialog extends StatefulWidget {
+  const _DigitsDialog({required this.initial});
+
+  final int initial;
+
+  @override
+  State<_DigitsDialog> createState() => _DigitsDialogState();
+}
+
+class _DigitsDialogState extends State<_DigitsDialog> {
+  late int _digits = widget.initial.clamp(1, PatternTokens.maxCounterDigits);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final colors = context.colors;
+    return AlertDialog(
+      title: Text(l10n.editorDigitsTitle),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        spacing: AppLayout.sectionGap,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: AppSpacing.sm,
+            children: [
+              IconButton.outlined(
+                onPressed: _digits > 1 ? () => setState(() => _digits--) : null,
+                tooltip: l10n.editorDigitsLess,
+                icon: const Icon(Icons.remove),
+              ),
+              Flexible(
+                child: Text(
+                  l10n.editorDigitsCount(_digits),
+                  style: context.text.titleMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              IconButton.outlined(
+                onPressed: _digits < PatternTokens.maxCounterDigits ? () => setState(() => _digits++) : null,
+                tooltip: l10n.editorDigitsMore,
+                icon: const Icon(Icons.add),
+              ),
+            ],
+          ),
+          Text(
+            l10n.editorDigitsExample(PatternTokens.counterExample(_digits)),
+            style: context.monoStyles.mono.copyWith(color: colors.primary),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.cancel)),
+        TextButton(onPressed: () => Navigator.of(context).pop(_digits), child: Text(l10n.accept)),
+      ],
     );
   }
 }

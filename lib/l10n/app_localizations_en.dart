@@ -569,4 +569,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsShowRecentsHint => 'Lists the saved files in Download. Downloads in progress are always shown.';
+
+  @override
+  String editorMaxTokens(int max) {
+    return 'At most $max items';
+  }
+
+  @override
+  String get editorSpaceToken => 'Space';
+
+  @override
+  String get editorDigitsTitle => 'Digits of the number';
+
+  @override
+  String get editorDigitsLess => 'Fewer digits';
+
+  @override
+  String get editorDigitsMore => 'More digits';
+
+  @override
+  String editorDigitsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count digits', one: '$count digit');
+    return '$_temp0';
+  }
+
+  @override
+  String editorDigitsExample(String example) {
+    return 'Example: $example';
+  }
 }
