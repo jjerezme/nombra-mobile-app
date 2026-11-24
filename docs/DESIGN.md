@@ -32,7 +32,7 @@ Color de superficie, asa del tema, margen `sheetGutter`, bloques con `sectionGap
 
 ## Lista de reglas
 - Siempre ordenada por nombre (sin distinguir mayúsculas), también en el selector de Descargar y de la hoja de compartir; no hay orden manual.
-- Cada tarjeta (`RuleCard`) tiene las mismas filas, en el mismo orden y alineadas al mismo borde: nombre con interruptor, tokens, ejemplo, opciones adicionales (etiquetas) y carpeta de destino. Tocar la tarjeta abre la regla.
+- Cada tarjeta (`RuleCard`) tiene las mismas filas, en el mismo orden y alineadas al mismo borde: nombre, tokens, ejemplo, opciones adicionales (etiquetas) y carpeta de destino. Las reglas siempre están activas (no se pueden apagar). Tocar la tarjeta abre la regla.
 
 ## Entradas de texto y selecciones
 Todo lo que el usuario escribe o elige (texto fijo, dígitos del número, carpeta) se pide en una hoja inferior con `showInputSheet` / `SheetScaffold` (título, contenido y `SheetActions`), que cubre toda la pantalla incluida la barra de navegación. Los diálogos centrados quedan solo para preguntas de sí o no (`showConfirmDialog`).
