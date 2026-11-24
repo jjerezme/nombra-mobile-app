@@ -491,6 +491,26 @@ void main() {
       expect(find.text('{n}'), findsOneWidget);
     });
 
+    testWidgets('text and number inputs open in a sheet at the bottom, not in a centered dialog', (tester) async {
+      await openQuick(tester);
+      final screenHeight = tester.view.physicalSize.height / tester.view.devicePixelRatio;
+
+      await tester.tap(find.text('Texto…'));
+      await tester.pumpAndSettle();
+      expect(find.byType(BottomSheet), findsOneWidget);
+      expect(find.byType(AlertDialog), findsNothing);
+      expect(tester.getBottomLeft(find.byType(BottomSheet)).dy, closeTo(screenHeight, 1));
+      await tester.tap(find.text('Cancelar'));
+      await tester.pumpAndSettle();
+      expect(find.byType(BottomSheet), findsNothing);
+
+      await tester.tap(find.text('{n}'));
+      await tester.pumpAndSettle();
+      expect(find.byType(BottomSheet), findsOneWidget);
+      expect(find.byType(AlertDialog), findsNothing);
+      expect(tester.getBottomLeft(find.byType(BottomSheet)).dy, closeTo(screenHeight, 1));
+    });
+
     testWidgets('a text token is changed by tapping it', (tester) async {
       final container = await openQuick(tester);
       await tester.tap(find.text('Texto…'));

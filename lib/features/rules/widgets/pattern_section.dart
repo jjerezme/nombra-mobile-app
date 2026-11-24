@@ -3,7 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/constants/tokens.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/validation.dart';
-import '../../../core/widgets/dialogs.dart';
+import '../../../core/widgets/input_sheets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/rename_rule.dart';
 
@@ -22,7 +22,7 @@ class PatternSection extends StatelessWidget {
 
   Future<String?> _askText(BuildContext context, {String initialText = ''}) {
     final l10n = AppLocalizations.of(context);
-    return showTextDialog(
+    return showTextSheet(
       context,
       title: l10n.editorTextDialogTitle,
       hint: l10n.editorTextDialogHint,
@@ -33,7 +33,7 @@ class PatternSection extends StatelessWidget {
 
   /// Asks how many digits the number has; null when cancelled.
   Future<String?> _askCounter(BuildContext context, {int digits = PatternTokens.defaultCounterDigits}) async {
-    final chosen = await showDigitsDialog(context, initial: digits);
+    final chosen = await showDigitsSheet(context, initial: digits);
     return chosen == null ? null : PatternTokens.counterWith(chosen);
   }
 
@@ -230,68 +230,66 @@ class _PaletteChip extends StatelessWidget {
   }
 }
 
-/// Asks how many digits the sequential number has (`{n:3}` writes `007`); null when cancelled.
-Future<int?> showDigitsDialog(BuildContext context, {required int initial}) {
-  return showDialog<int>(
+/// Asks, in a bottom sheet, how many digits the sequential number has (`{n:3}` writes `007`); null when cancelled.
+Future<int?> showDigitsSheet(BuildContext context, {required int initial}) {
+  return showInputSheet<int>(
     context: context,
-    builder: (context) => _DigitsDialog(initial: initial),
+    builder: (context) => _DigitsSheet(initial: initial),
   );
 }
 
-class _DigitsDialog extends StatefulWidget {
-  const _DigitsDialog({required this.initial});
+class _DigitsSheet extends StatefulWidget {
+  const _DigitsSheet({required this.initial});
 
   final int initial;
 
   @override
-  State<_DigitsDialog> createState() => _DigitsDialogState();
+  State<_DigitsSheet> createState() => _DigitsSheetState();
 }
 
-class _DigitsDialogState extends State<_DigitsDialog> {
+class _DigitsSheetState extends State<_DigitsSheet> {
   late int _digits = widget.initial.clamp(1, PatternTokens.maxCounterDigits);
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final colors = context.colors;
-    return AlertDialog(
-      title: Text(l10n.editorDigitsTitle),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: AppLayout.sectionGap,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: AppSpacing.sm,
-            children: [
-              IconButton.outlined(
-                onPressed: _digits > 1 ? () => setState(() => _digits--) : null,
-                tooltip: l10n.editorDigitsLess,
-                icon: const Icon(Icons.remove),
+    return SheetScaffold(
+      title: l10n.editorDigitsTitle,
+      actions: SheetActions(
+        onCancel: () => Navigator.of(context).pop(),
+        onAccept: () => Navigator.of(context).pop(_digits),
+      ),
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: AppLayout.sectionGap,
+          children: [
+            IconButton.outlined(
+              onPressed: _digits > 1 ? () => setState(() => _digits--) : null,
+              tooltip: l10n.editorDigitsLess,
+              icon: const Icon(Icons.remove),
+            ),
+            Flexible(
+              child: Text(
+                l10n.editorDigitsCount(_digits),
+                style: context.text.titleMedium,
+                textAlign: TextAlign.center,
               ),
-              Flexible(
-                child: Text(
-                  l10n.editorDigitsCount(_digits),
-                  style: context.text.titleMedium,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              IconButton.outlined(
-                onPressed: _digits < PatternTokens.maxCounterDigits ? () => setState(() => _digits++) : null,
-                tooltip: l10n.editorDigitsMore,
-                icon: const Icon(Icons.add),
-              ),
-            ],
-          ),
-          Text(
+            ),
+            IconButton.outlined(
+              onPressed: _digits < PatternTokens.maxCounterDigits ? () => setState(() => _digits++) : null,
+              tooltip: l10n.editorDigitsMore,
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+        Center(
+          child: Text(
             l10n.editorDigitsExample(PatternTokens.counterExample(_digits)),
             style: context.monoStyles.mono.copyWith(color: colors.primary),
           ),
-        ],
-      ),
-      actions: [
-        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.cancel)),
-        TextButton(onPressed: () => Navigator.of(context).pop(_digits), child: Text(l10n.accept)),
+        ),
       ],
     );
   }

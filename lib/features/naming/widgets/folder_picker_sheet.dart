@@ -4,15 +4,14 @@ import '../../../core/constants/tokens.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/validation.dart';
 import '../../../core/widgets/form_parts.dart';
+import '../../../core/widgets/input_sheets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../rules/domain/storage_root.dart';
 
 /// Lets the user pick a public folder (Download, Documents, ...) and an optional subfolder.
 Future<DestinationFolder?> showFolderPicker(BuildContext context, DestinationFolder initial) {
-  return showModalBottomSheet<DestinationFolder>(
+  return showInputSheet<DestinationFolder>(
     context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
     builder: (context) => _FolderPickerSheet(initial: initial),
   );
 }
@@ -43,57 +42,40 @@ class _FolderPickerSheetState extends State<_FolderPickerSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    // useSafeArea of the sheet leaves the bottom out, so the Android navigation bar is avoided here.
-    return SafeArea(
-      top: false,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          AppLayout.sheetGutter,
-          AppSpacing.sm,
-          AppLayout.sheetGutter,
-          AppSpacing.xl + MediaQuery.viewInsetsOf(context).bottom,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: AppLayout.sectionGap,
-          children: [
-            Text(l10n.folderPickerTitle, style: context.text.titleLarge),
-            LabeledField(
-              label: l10n.folderPickerRoot,
-              child: DropdownButtonFormField<StorageRoot>(
-                initialValue: _root,
-                isExpanded: true,
-                style: context.monoStyles.mono.copyWith(color: context.colors.onSurface),
-                decoration: const InputDecoration(constraints: BoxConstraints(minHeight: AppSize.control)),
-                items: [
-                  for (final root in StorageRoot.values) DropdownMenuItem(value: root, child: Text(root.dirName)),
-                ],
-                onChanged: (root) {
-                  if (root != null) setState(() => _root = root);
-                },
-              ),
-            ),
-            LabeledField(
-              label: l10n.folderPickerSubfolder,
-              hint: _folder.path,
-              child: TextField(
-                controller: _subfolder,
-                onChanged: (_) => setState(() {}),
-                style: context.monoStyles.mono,
-                decoration: InputDecoration(
-                  errorText: _error?.message(l10n, max: maxSubfolderLength),
-                  constraints: const BoxConstraints(minHeight: AppSize.control),
-                ),
-              ),
-            ),
-            FilledButton(
-              onPressed: _error == null ? () => Navigator.of(context).pop(_folder) : null,
-              child: Text(l10n.folderPickerUse),
-            ),
-          ],
-        ),
+    return SheetScaffold(
+      title: l10n.folderPickerTitle,
+      actions: FilledButton(
+        onPressed: _error == null ? () => Navigator.of(context).pop(_folder) : null,
+        child: Text(l10n.folderPickerUse),
       ),
+      children: [
+        LabeledField(
+          label: l10n.folderPickerRoot,
+          child: DropdownButtonFormField<StorageRoot>(
+            initialValue: _root,
+            isExpanded: true,
+            style: context.monoStyles.mono.copyWith(color: context.colors.onSurface),
+            decoration: const InputDecoration(constraints: BoxConstraints(minHeight: AppSize.control)),
+            items: [for (final root in StorageRoot.values) DropdownMenuItem(value: root, child: Text(root.dirName))],
+            onChanged: (root) {
+              if (root != null) setState(() => _root = root);
+            },
+          ),
+        ),
+        LabeledField(
+          label: l10n.folderPickerSubfolder,
+          hint: _folder.path,
+          child: TextField(
+            controller: _subfolder,
+            onChanged: (_) => setState(() {}),
+            style: context.monoStyles.mono,
+            decoration: InputDecoration(
+              errorText: _error?.message(l10n, max: maxSubfolderLength),
+              constraints: const BoxConstraints(minHeight: AppSize.control),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
