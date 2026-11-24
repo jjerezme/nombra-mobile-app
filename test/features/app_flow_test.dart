@@ -7,6 +7,7 @@ import 'package:nombra/app/app.dart';
 import 'package:nombra/app/router.dart';
 import 'package:nombra/core/constants/tokens.dart';
 import 'package:nombra/core/widgets/app_card.dart';
+import 'package:nombra/core/widgets/pill_choice.dart';
 import 'package:nombra/core/widgets/screen_header.dart';
 import 'package:nombra/core/widgets/segmented_toggle.dart';
 import 'package:nombra/features/rules/domain/rename_rule.dart';
@@ -182,10 +183,13 @@ void main() {
     await pumpApp(tester, env);
     await tester.tap(find.text('Guardada'));
     await tester.pumpAndSettle();
-    expect(find.byType(ActionChip), findsOneWidget);
+    expect(find.widgetWithText(PillChoice, 'Agregar'), findsOneWidget);
     expect(find.text('Editar reglas'), findsNothing);
+    // Same height as the rule chips, so it does not look smaller than them.
+    final addHeight = tester.getSize(find.widgetWithText(PillChoice, 'Agregar')).height;
+    expect(addHeight, tester.getSize(find.widgetWithText(PillChoice, 'Fecha + nombre')).height);
 
-    await tester.tap(find.widgetWithText(ActionChip, 'Agregar'));
+    await tester.tap(find.widgetWithText(PillChoice, 'Agregar'));
     await tester.pumpAndSettle();
     expect(find.text('Patrón'), findsOneWidget);
     expect(find.text('Guardar'), findsOneWidget);

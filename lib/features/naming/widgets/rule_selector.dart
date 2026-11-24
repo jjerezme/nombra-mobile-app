@@ -78,20 +78,8 @@ class RuleSelector extends ConsumerWidget {
                     onRuleSelected?.call(rule.id);
                   },
                 ),
-              // An action, not a rule: tinted and with a plus, so it is not read as one more rule to pick.
-              if (onAddRule != null)
-                ActionChip(
-                  onPressed: onAddRule,
-                  avatar: Icon(Icons.add, size: AppIconSize.sm, color: context.colors.onPrimaryContainer),
-                  label: Text(l10n.ruleAdd),
-                  labelStyle: context.text.labelMedium?.copyWith(
-                    color: context.colors.onPrimaryContainer,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  backgroundColor: context.colors.primaryContainer,
-                  side: BorderSide.none,
-                  shape: const StadiumBorder(),
-                ),
+              // An action, not a rule: same size as the rules, tinted and with a plus.
+              if (onAddRule != null) PillChoice.action(label: l10n.ruleAdd, icon: Icons.add, onTap: onAddRule!),
             ],
           )
         else
