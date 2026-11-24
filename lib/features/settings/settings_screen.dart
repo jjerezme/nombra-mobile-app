@@ -12,6 +12,7 @@ import '../../core/widgets/screen_header.dart';
 import '../../core/widgets/segmented_toggle.dart';
 import '../../l10n/app_localizations.dart';
 import '../download/data/downloads_notifier.dart';
+import '../naming/widgets/destination_card.dart';
 import '../naming/widgets/folder_picker_sheet.dart';
 import '../rules/data/rules_notifier.dart';
 import 'app_settings.dart';
@@ -82,7 +83,7 @@ class SettingsScreen extends ConsumerWidget {
                       LabeledField(
                         label: l10n.settingsDefaultFolder,
                         hint: l10n.settingsDefaultFolderHint,
-                        child: _FolderRow(
+                        child: DestinationCard(
                           path: settings.lastFolder.path,
                           onChange: () async {
                             final folder = await showFolderPicker(context, settings.lastFolder);
@@ -165,26 +166,6 @@ class SettingsScreen extends ConsumerWidget {
     messenger
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(done)));
-  }
-}
-
-class _FolderRow extends StatelessWidget {
-  const _FolderRow({required this.path, required this.onChange});
-
-  final String path;
-  final VoidCallback onChange;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return Row(
-      spacing: AppSpacing.md,
-      children: [
-        Icon(Icons.folder_outlined, size: AppIconSize.md, color: context.colors.primary),
-        Expanded(child: Text(path, style: context.monoStyles.mono)),
-        TextButton(onPressed: onChange, child: Text(l10n.change)),
-      ],
-    );
   }
 }
 

@@ -10,6 +10,8 @@ import 'package:nombra/core/widgets/app_card.dart';
 import 'package:nombra/core/widgets/app_logo.dart';
 import 'package:nombra/core/widgets/pill_choice.dart';
 import 'package:nombra/core/widgets/screen_header.dart';
+import 'package:nombra/features/naming/widgets/destination_card.dart';
+import 'package:nombra/features/rules/widgets/rule_card.dart';
 import 'package:nombra/core/widgets/segmented_toggle.dart';
 import 'package:nombra/features/rules/domain/rename_rule.dart';
 import 'package:nombra/features/download/data/downloads_notifier.dart';
@@ -249,6 +251,38 @@ void main() {
     expect(find.text('Predeterminada'), findsOneWidget);
     expect(find.text('Original'), findsOneWidget);
     expect(find.byType(Switch), findsNothing);
+  });
+
+  testWidgets('in a rule card each icon is centered on the first line of its text', (tester) async {
+    await pumpApp(tester, env);
+    await tester.tap(find.text('Reglas'));
+    await tester.pumpAndSettle();
+    final card = find.byType(RuleCard).first;
+    final rule = tester.widget<RuleCard>(card).rule;
+    final pattern = find.descendant(
+      of: card,
+      matching: find.byWidgetPredicate((widget) => widget is Text && widget.data == rule.pattern),
+    );
+    final icon = find.descendant(of: card, matching: find.byIcon(Icons.data_array));
+    expect(pattern, findsOneWidget);
+    expect(tester.getCenter(icon).dy, closeTo(tester.getCenter(pattern).dy, 0.5));
+    final folderIcon = find.descendant(of: card, matching: find.byIcon(Icons.folder_outlined));
+    final folderText = find.descendant(of: card, matching: find.textContaining('/'));
+    expect(tester.getCenter(folderIcon).dy, closeTo(tester.getCenter(folderText.first).dy, 0.5));
+  });
+
+  testWidgets('the folder is shown and changed with the same component on every screen', (tester) async {
+    await pumpApp(tester, env);
+    expect(find.byType(DestinationCard), findsOneWidget); // Download
+    await tester.tap(find.text('Ajustes'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DestinationCard), findsOneWidget);
+    await tester.tap(find.text('Reglas'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Nueva regla'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DestinationCard), findsOneWidget); // rule editor, with no folder yet
+    expect(find.text('Elegir carpeta…'), findsOneWidget);
   });
 
   testWidgets('a new rule can be created from the editor', (tester) async {
