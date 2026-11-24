@@ -49,15 +49,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ruleAdd => 'Agregar';
 
   @override
-  String get folderSourceLastUsed => 'Última usada';
-
-  @override
-  String get folderSourceChosen => 'Elegida';
-
-  @override
-  String get folderSourceRule => 'De la regla';
-
-  @override
   String get changeFolderTooltip => 'Cambiar carpeta de destino';
 
   @override
@@ -584,7 +575,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get modeNone => 'Ninguno';
+  String get modeNone => 'Ninguna';
 
   @override
   String get modeNoneHint => 'El archivo se guarda con su nombre original, sin aplicar ninguna regla.';

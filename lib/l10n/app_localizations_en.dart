@@ -49,15 +49,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ruleAdd => 'Add';
 
   @override
-  String get folderSourceLastUsed => 'Last used';
-
-  @override
-  String get folderSourceChosen => 'Chosen';
-
-  @override
-  String get folderSourceRule => 'From the rule';
-
-  @override
   String get changeFolderTooltip => 'Change destination folder';
 
   @override

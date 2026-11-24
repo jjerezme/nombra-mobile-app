@@ -222,11 +222,7 @@ class _Content extends ConsumerWidget {
       ] else ...[
         RuleSelector(selectedRuleId: target.rule?.id),
         if (items.length == 1) ShareNameField(fileName: target.fileName),
-        DestinationCard(
-          path: target.folder.path,
-          tag: folderSourceLabel(l10n, target.folderSource),
-          onChange: () => onChangeFolder(target.folder),
-        ),
+        DestinationCard(path: target.folder.path, onChange: () => onChangeFolder(target.folder)),
         if (settings.mode == NamingMode.saved)
           CheckboxListTile(
             value: remember,

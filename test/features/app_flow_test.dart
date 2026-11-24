@@ -115,12 +115,12 @@ void main() {
 
   testWidgets('the file can be saved without any rule, with a saved rule, or with a custom pattern', (tester) async {
     final container = await pumpApp(tester, env);
-    for (final mode in ['Ninguno', 'Personalizado', 'Fecha + nombre']) {
+    for (final mode in ['Ninguna', 'Personalizado', 'Fecha + nombre']) {
       expect(find.text(mode), findsOneWidget);
     }
 
     await tester.enterText(find.byType(TextField).first, _url);
-    await tester.tap(find.text('Ninguno'));
+    await tester.tap(find.text('Ninguna'));
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).mode, NamingMode.none);
     expect(find.text('El archivo se guarda con su nombre original, sin aplicar ninguna regla.'), findsOneWidget);
@@ -229,21 +229,16 @@ void main() {
     expect(find.textContaining('Factura_'), findsWidgets);
   });
 
-  testWidgets('the folder shows a tag with where it comes from, not the rule name and not "Guardar en"', (
-    tester,
-  ) async {
+  testWidgets('the folder shows only the icon and the path: no tag about where it comes from', (tester) async {
     await pumpApp(tester, env);
     await tester.enterText(find.byType(TextField).first, _url);
-    await tapChip(tester, 'Facturas'); // a rule with its own folder
+    await tapChip(tester, 'Facturas');
     await tester.pumpAndSettle();
-    expect(find.text('De la regla'), findsOneWidget);
-    expect(find.text('Facturas'), findsOneWidget); // only the chip of the rule: its name is not repeated
+    expect(find.text('/Documents/Facturas'), findsOneWidget);
+    for (final text in ['De la regla', 'Última usada', 'Elegida']) {
+      expect(find.text(text), findsNothing);
+    }
     expect(find.textContaining('Guardar en'), findsNothing);
-
-    await tapChip(tester, 'Ninguno'); // no rule: the last folder used
-    await tester.pumpAndSettle();
-    expect(find.text('Última usada'), findsOneWidget);
-    expect(find.text('De la regla'), findsNothing);
   });
 
   testWidgets('with nothing configured, Download starts with Ninguno selected', (tester) async {
@@ -251,7 +246,7 @@ void main() {
     final container = await pumpApp(tester, clean);
     expect(container.read(settingsProvider).mode, NamingMode.none);
     final none = tester.widget<Semantics>(
-      find.descendant(of: find.widgetWithText(PillChoice, 'Ninguno'), matching: find.byType(Semantics)).first,
+      find.descendant(of: find.widgetWithText(PillChoice, 'Ninguna'), matching: find.byType(Semantics)).first,
     );
     expect(none.properties.selected, isTrue);
     expect(
@@ -393,7 +388,7 @@ void main() {
 
     testWidgets('Home offers to create a rule and still names the file after the original', (tester) async {
       await pumpApp(tester, env);
-      expect(find.text('Ninguno'), findsOneWidget);
+      expect(find.text('Ninguna'), findsOneWidget);
       expect(find.widgetWithText(PillChoice, 'Agregar'), findsOneWidget);
       await tester.enterText(find.byType(TextField).first, _url);
       await tester.pumpAndSettle();

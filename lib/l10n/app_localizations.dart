@@ -170,24 +170,6 @@ abstract class AppLocalizations {
   /// **'Agregar'**
   String get ruleAdd;
 
-  /// No description provided for @folderSourceLastUsed.
-  ///
-  /// In es, this message translates to:
-  /// **'Última usada'**
-  String get folderSourceLastUsed;
-
-  /// No description provided for @folderSourceChosen.
-  ///
-  /// In es, this message translates to:
-  /// **'Elegida'**
-  String get folderSourceChosen;
-
-  /// No description provided for @folderSourceRule.
-  ///
-  /// In es, this message translates to:
-  /// **'De la regla'**
-  String get folderSourceRule;
-
   /// No description provided for @changeFolderTooltip.
   ///
   /// In es, this message translates to:
@@ -1133,7 +1115,7 @@ abstract class AppLocalizations {
   /// No description provided for @modeNone.
   ///
   /// In es, this message translates to:
-  /// **'Ninguno'**
+  /// **'Ninguna'**
   String get modeNone;
 
   /// No description provided for @modeNoneHint.

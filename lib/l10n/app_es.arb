@@ -13,9 +13,6 @@
   "ruleLabel": "Regla",
   "ruleRemembered": "Se recuerda la última usada",
   "ruleAdd": "Agregar",
-  "folderSourceLastUsed": "Última usada",
-  "folderSourceChosen": "Elegida",
-  "folderSourceRule": "De la regla",
   "changeFolderTooltip": "Cambiar carpeta de destino",
   "homeUrlLabel": "URL del archivo",
   "homePasteTooltip": "Pegar del portapapeles",
@@ -355,6 +352,6 @@
       }
     }
   },
-  "modeNone": "Ninguno",
+  "modeNone": "Ninguna",
   "modeNoneHint": "El archivo se guarda con su nombre original, sin aplicar ninguna regla."
 }

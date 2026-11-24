@@ -161,11 +161,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                     ),
                     RuleSelector(onAddRule: () => context.push(AppRoutes.newRule)),
-                    DestinationCard(
-                      path: target.folder.path,
-                      tag: folderSourceLabel(l10n, target.folderSource),
-                      onChange: () => _changeFolder(target.folder),
-                    ),
+                    DestinationCard(path: target.folder.path, onChange: () => _changeFolder(target.folder)),
                     InfoBox(
                       label: l10n.homeSavedAs,
                       value: isValid ? target.fileName : l10n.homePreviewEmpty,
