@@ -40,6 +40,15 @@ abstract final class PatternTokens {
   /// What a number token writes for the number 7, to show the effect of the digits.
   static String counterExample(int digits) => '7'.padLeft(digits, '0');
 
+  /// Whether the palette item [paletteToken] is already in [tokens] and cannot be added again. Each token (`{name}`,
+  /// `{date}`, the number...) can be used once; free text and separators (`_`, `-`, a blank space) any number of times.
+  static bool isUsed(String paletteToken, List<String> tokens) {
+    if (!isToken(paletteToken)) return false;
+    // The number counts whatever its digits are: `{n:3}` is used when the pattern has `{n:5}`.
+    if (isCounter(paletteToken)) return tokens.any(isCounter);
+    return tokens.contains(paletteToken);
+  }
+
   /// Free text the user can change by tapping it: not a token and not just blank space.
   static bool isEditable(String token) => !isToken(token) && token.trim().isNotEmpty;
 

@@ -452,6 +452,45 @@ void main() {
       expect(find.text('Máximo 5 elementos'), findsNothing);
     });
 
+    testWidgets('a token leaves the palette once it is used; separators and text stay', (tester) async {
+      final container = await openQuick(tester);
+      // {name} is already in the quick pattern, so it is not offered again.
+      expect(find.text('{name}'), findsOneWidget); // only the token inside the pattern
+      expect(find.text('{date}'), findsOneWidget); // only the palette item
+
+      await tester.tap(find.text('{date}'));
+      await tester.pumpAndSettle();
+      expect(find.text('{date}'), findsOneWidget); // now only the token inside the pattern
+      expect(quickTokens(container), ['{name}', '{date}']);
+
+      // Separators and free text can be used as many times as needed.
+      await tester.tap(find.text('_').last);
+      await tester.pumpAndSettle();
+      expect(find.text('_'), findsNWidgets(2));
+      expect(find.text('-'), findsOneWidget);
+      expect(find.text('Texto…'), findsOneWidget);
+      expect(find.bySemanticsLabel('Espacio'), findsOneWidget);
+
+      // Deleting the token puts it back in the palette.
+      for (var i = 0; i < 2; i++) {
+        await tester.tap(find.byIcon(Icons.backspace_outlined));
+        await tester.pumpAndSettle();
+      }
+      expect(quickTokens(container), ['{name}']);
+      expect(find.text('{date}'), findsOneWidget);
+    });
+
+    testWidgets('the number is offered once, whatever its digits', (tester) async {
+      await openQuick(tester);
+      await addCounter(tester);
+      expect(find.text('{n}'), findsNothing);
+      expect(find.text('{n:3}'), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.backspace_outlined));
+      await tester.pumpAndSettle();
+      expect(find.text('{n}'), findsOneWidget);
+    });
+
     testWidgets('a text token is changed by tapping it', (tester) async {
       final container = await openQuick(tester);
       await tester.tap(find.text('Texto…'));

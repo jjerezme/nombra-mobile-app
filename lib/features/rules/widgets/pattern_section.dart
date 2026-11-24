@@ -119,7 +119,8 @@ class PatternSection extends StatelessWidget {
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
           children: [
-            for (final token in PatternTokens.palette)
+            // A token already in the pattern leaves the palette; separators and free text stay.
+            for (final token in PatternTokens.palette.where((token) => !PatternTokens.isUsed(token, tokens)))
               _PaletteChip(
                 label: token == PatternTokens.counter ? '{n}' : _labelOf(token),
                 semanticLabel: token == PatternTokens.space ? l10n.editorSpaceToken : null,
