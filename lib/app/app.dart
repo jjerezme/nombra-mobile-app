@@ -48,6 +48,11 @@ class _NombraAppState extends ConsumerState<NombraApp> with WidgetsBindingObserv
   /// The share sheet runs in its own engine and writes to the same preferences: reload them on return.
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    // Leaving with the keyboard open: close it first. Otherwise Android hides it while the app is in the background and
+    // the app comes back with the space of the keyboard still reserved, and the screen drawn at half height.
+    if (state == AppLifecycleState.inactive || state == AppLifecycleState.hidden || state == AppLifecycleState.paused) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
     if (state != AppLifecycleState.resumed) return;
     await ref.read(sharedPreferencesProvider).reload();
     ref
