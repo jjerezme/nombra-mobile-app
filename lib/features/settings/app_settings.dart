@@ -46,7 +46,7 @@ List<String> legacyQuickTokens({
 /// time a file is saved in that mode.
 class AppSettings {
   AppSettings({
-    this.mode = NamingMode.saved,
+    this.mode = NamingMode.none,
     this.lastRuleId,
     DestinationFolder? lastFolder,
     this.defaultRuleByKind = const {},
@@ -59,7 +59,7 @@ class AppSettings {
   }) : lastFolder = lastFolder ?? DestinationFolder(StorageRoot.download);
 
   factory AppSettings.fromJson(Map<String, dynamic> json) => AppSettings(
-    mode: NamingMode.values.firstWhere((mode) => mode.name == json['mode'], orElse: () => NamingMode.saved),
+    mode: NamingMode.values.firstWhere((mode) => mode.name == json['mode'], orElse: () => NamingMode.none),
     lastRuleId: json['lastRuleId'] as String?,
     lastFolder: json['lastFolder'] == null
         ? null
@@ -202,6 +202,9 @@ class SettingsNotifier extends Notifier<AppSettings> {
   void setMode(NamingMode mode) => _update(state.copyWith(mode: mode));
 
   void setRule(String ruleId) => _update(state.copyWith(lastRuleId: ruleId));
+
+  /// Picks a saved rule: it becomes the one in use and the naming mode is "saved rule".
+  void chooseRule(String ruleId) => _update(state.copyWith(mode: NamingMode.saved, lastRuleId: ruleId));
 
   /// Changes the quick pattern. The sequence starts again at 1 because the pattern is no longer the same.
   void setQuickTokens(List<String> tokens) => _update(state.copyWith(quickTokens: List.unmodifiable(tokens)));

@@ -202,7 +202,6 @@ class _RuleEditorScreenState extends ConsumerState<RuleEditorScreen> {
                           folder: _draft.folder,
                           conflict: _draft.conflict,
                           onPickFolder: _pickFolder,
-                          onClearFolder: () => _update(_draft.copyWith(clearFolder: true)),
                           onConflictChanged: (policy) => _update(_draft.copyWith(conflict: policy)),
                         ),
                         if (!_isNew && !_draft.isDefault)

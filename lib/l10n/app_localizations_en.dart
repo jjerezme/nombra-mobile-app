@@ -37,10 +37,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accept => 'OK';
 
   @override
-  String get modeSaved => 'Saved';
-
-  @override
-  String get modeQuick => 'Quick';
+  String get modeQuick => 'Custom';
 
   @override
   String get ruleLabel => 'Rule';
@@ -50,9 +47,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ruleAdd => 'Add';
-
-  @override
-  String get noRules => 'No rules yet. Create one with Add.';
 
   @override
   String get folderSourceLastUsed => 'Last used';
@@ -313,9 +307,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorFolderAlways => 'Files with this rule are always saved here.';
-
-  @override
-  String get editorRemoveFolderTooltip => 'Remove folder';
 
   @override
   String get editorNoFolderTitle => 'No folder assigned';

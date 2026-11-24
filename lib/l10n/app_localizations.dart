@@ -146,16 +146,10 @@ abstract class AppLocalizations {
   /// **'Aceptar'**
   String get accept;
 
-  /// No description provided for @modeSaved.
-  ///
-  /// In es, this message translates to:
-  /// **'Guardada'**
-  String get modeSaved;
-
   /// No description provided for @modeQuick.
   ///
   /// In es, this message translates to:
-  /// **'Rápida'**
+  /// **'Personalizado'**
   String get modeQuick;
 
   /// No description provided for @ruleLabel.
@@ -175,12 +169,6 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Agregar'**
   String get ruleAdd;
-
-  /// No description provided for @noRules.
-  ///
-  /// In es, this message translates to:
-  /// **'No hay reglas. Crea una con Agregar.'**
-  String get noRules;
 
   /// No description provided for @folderSourceLastUsed.
   ///
@@ -643,12 +631,6 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Los archivos con esta regla se guardan siempre aquí.'**
   String get editorFolderAlways;
-
-  /// No description provided for @editorRemoveFolderTooltip.
-  ///
-  /// In es, this message translates to:
-  /// **'Quitar carpeta'**
-  String get editorRemoveFolderTooltip;
 
   /// No description provided for @editorNoFolderTitle.
   ///
@@ -1157,7 +1139,7 @@ abstract class AppLocalizations {
   /// No description provided for @modeNone.
   ///
   /// In es, this message translates to:
-  /// **'Ninguna'**
+  /// **'Ninguno'**
   String get modeNone;
 
   /// No description provided for @modeNoneHint.

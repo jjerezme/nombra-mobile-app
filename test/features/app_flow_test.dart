@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -23,6 +24,14 @@ import 'package:nombra/features/settings/app_settings.dart';
 import '../helpers/fakes.dart';
 
 const String _url = 'https://cdn.ejemplo.com/docs/Informe%20Q3%20FINAL%20(2).pdf';
+
+/// Taps a chip of the row of rules, scrolling the row until it is in view.
+Future<void> tapChip(WidgetTester tester, String label) async {
+  final chip = find.widgetWithText(PillChoice, label);
+  await tester.ensureVisible(chip);
+  await tester.pump();
+  await tester.tap(chip);
+}
 
 Future<ProviderContainer> pumpApp(WidgetTester tester, TestEnvironment env) async {
   tester.view
@@ -56,7 +65,15 @@ Future<void> tapDownload(WidgetTester tester) async {
 void main() {
   late TestEnvironment env;
 
-  setUp(() async => env = await TestEnvironment.create(preferences: storedRules(sampleRules())));
+  // Most tests start with a saved rule in use; the default (no rule) has its own test.
+  setUp(
+    () async => env = await TestEnvironment.create(
+      preferences: {
+        ...storedRules(sampleRules()),
+        'settings': jsonEncode(AppSettings(mode: NamingMode.saved).toJson()),
+      },
+    ),
+  );
 
   testWidgets('Home shows the logo next to the app name', (tester) async {
     await pumpApp(tester, env);
@@ -96,19 +113,18 @@ void main() {
     expect(env.engine.enqueued, isEmpty);
   });
 
-  testWidgets('the file can be saved without any rule, with a saved rule, or with the quick pattern', (tester) async {
+  testWidgets('the file can be saved without any rule, with a saved rule, or with a custom pattern', (tester) async {
     final container = await pumpApp(tester, env);
-    for (final mode in ['Ninguna', 'Guardada', 'Rápida']) {
+    for (final mode in ['Ninguno', 'Personalizado', 'Fecha + nombre']) {
       expect(find.text(mode), findsOneWidget);
     }
 
     await tester.enterText(find.byType(TextField).first, _url);
-    await tester.tap(find.text('Ninguna'));
+    await tester.tap(find.text('Ninguno'));
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).mode, NamingMode.none);
     expect(find.text('El archivo se guarda con su nombre original, sin aplicar ninguna regla.'), findsOneWidget);
     expect(find.text('Informe Q3 FINAL (2).pdf'), findsOneWidget);
-    expect(find.text('Fecha + nombre'), findsNothing); // the rules are not offered
     expect(find.text('/Download'), findsOneWidget);
 
     await tapDownload(tester);
@@ -117,17 +133,18 @@ void main() {
     expect(container.read(downloadsProvider).single.fileName, 'Informe Q3 FINAL (2).pdf');
 
     // A download in progress keeps an endless progress bar, so the page is pumped, not settled.
-    await tester.tap(find.text('Guardada'));
+    await tapChip(tester, 'Fecha + nombre');
     await tester.pump(const Duration(milliseconds: 300));
-    expect(find.text('Fecha + nombre'), findsOneWidget);
-    await tester.tap(find.text('Rápida'));
+    expect(container.read(settingsProvider).mode, NamingMode.saved);
+    expect(container.read(settingsProvider).lastRuleId, 'date-name');
+    await tapChip(tester, 'Personalizado');
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('Patrón'), findsOneWidget);
   });
 
   testWidgets('quick mode builds the name with tokens, like a rule', (tester) async {
     final container = await pumpApp(tester, env);
-    await tester.tap(find.text('Rápida'));
+    await tester.tap(find.text('Personalizado'));
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).mode, NamingMode.quick);
     expect(find.text('Patrón'), findsOneWidget);
@@ -144,7 +161,7 @@ void main() {
 
   testWidgets('the quick pattern is kept, it is not saved as a rule', (tester) async {
     final container = await pumpApp(tester, env);
-    await tester.tap(find.text('Rápida'));
+    await tester.tap(find.text('Personalizado'));
     await tester.pumpAndSettle();
     await addCounter(tester);
     await tester.pumpAndSettle();
@@ -154,7 +171,7 @@ void main() {
 
   testWidgets('the sequential number can be set by hand and starts again when the pattern changes', (tester) async {
     final container = await pumpApp(tester, env);
-    await tester.tap(find.text('Rápida'));
+    await tester.tap(find.text('Personalizado'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField).first, _url);
     await addCounter(tester);
@@ -182,7 +199,7 @@ void main() {
 
   testWidgets('a button starts the sequential number again at 1', (tester) async {
     final container = await pumpApp(tester, env);
-    await tester.tap(find.text('Rápida'));
+    await tester.tap(find.text('Personalizado'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField).first, _url);
     await addCounter(tester);
@@ -205,7 +222,7 @@ void main() {
   testWidgets('choosing a rule changes the folder and is remembered', (tester) async {
     final container = await pumpApp(tester, env);
     await tester.enterText(find.byType(TextField).first, _url);
-    await tester.tap(find.text('Facturas'));
+    await tapChip(tester, 'Facturas');
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).lastRuleId, 'invoices');
     expect(find.text('/Documents/Facturas'), findsOneWidget);
@@ -217,22 +234,41 @@ void main() {
   ) async {
     await pumpApp(tester, env);
     await tester.enterText(find.byType(TextField).first, _url);
-    await tester.tap(find.text('Facturas')); // a rule with its own folder
+    await tapChip(tester, 'Facturas'); // a rule with its own folder
     await tester.pumpAndSettle();
     expect(find.text('De la regla'), findsOneWidget);
     expect(find.text('Facturas'), findsOneWidget); // only the chip of the rule: its name is not repeated
     expect(find.textContaining('Guardar en'), findsNothing);
 
-    await tester.tap(find.text('Ninguna')); // no rule: the last folder used
+    await tapChip(tester, 'Ninguno'); // no rule: the last folder used
     await tester.pumpAndSettle();
     expect(find.text('Última usada'), findsOneWidget);
     expect(find.text('De la regla'), findsNothing);
   });
 
+  testWidgets('with nothing configured, Download starts with Ninguno selected', (tester) async {
+    final clean = await TestEnvironment.create(preferences: storedRules(sampleRules()));
+    final container = await pumpApp(tester, clean);
+    expect(container.read(settingsProvider).mode, NamingMode.none);
+    final none = tester.widget<Semantics>(
+      find.descendant(of: find.widgetWithText(PillChoice, 'Ninguno'), matching: find.byType(Semantics)).first,
+    );
+    expect(none.properties.selected, isTrue);
+    expect(
+      tester
+          .widget<Semantics>(
+            find
+                .descendant(of: find.widgetWithText(PillChoice, 'Personalizado'), matching: find.byType(Semantics))
+                .first,
+          )
+          .properties
+          .selected,
+      isFalse,
+    );
+  });
+
   testWidgets('Home has an "Agregar" chip, apart from the rules, that opens the new rule screen', (tester) async {
     await pumpApp(tester, env);
-    await tester.tap(find.text('Guardada'));
-    await tester.pumpAndSettle();
     expect(find.widgetWithText(PillChoice, 'Agregar'), findsOneWidget);
     expect(find.text('Editar reglas'), findsNothing);
     // Same height as the rule chips, so it does not look smaller than them.
@@ -317,6 +353,8 @@ void main() {
     await tester.tap(find.text('Nueva regla'));
     await tester.pumpAndSettle();
     expect(find.descendant(of: find.byType(DestinationCard), matching: find.text('/Download')), findsOneWidget);
+    expect(find.descendant(of: find.byType(DestinationCard), matching: find.text('Cambiar')), findsOneWidget);
+    expect(find.descendant(of: find.byType(DestinationCard), matching: find.byIcon(Icons.close)), findsNothing);
 
     await tester.tap(find.byIcon(Icons.arrow_back));
     await tester.pumpAndSettle();
@@ -355,7 +393,8 @@ void main() {
 
     testWidgets('Home offers to create a rule and still names the file after the original', (tester) async {
       await pumpApp(tester, env);
-      expect(find.text('No hay reglas. Crea una con Agregar.'), findsOneWidget);
+      expect(find.text('Ninguno'), findsOneWidget);
+      expect(find.widgetWithText(PillChoice, 'Agregar'), findsOneWidget);
       await tester.enterText(find.byType(TextField).first, _url);
       await tester.pumpAndSettle();
       expect(find.textContaining('Informe Q3 FINAL (2).pdf'), findsOneWidget);
@@ -553,7 +592,7 @@ void main() {
   group('pattern builder', () {
     Future<ProviderContainer> openQuick(WidgetTester tester) async {
       final container = await pumpApp(tester, env);
-      await tester.tap(find.text('Rápida'));
+      await tester.tap(find.text('Personalizado'));
       await tester.pumpAndSettle();
       return container;
     }
@@ -768,7 +807,7 @@ void main() {
 
     testWidgets('an empty quick pattern shows an error and blocks the download', (tester) async {
       await pumpApp(tester, env);
-      await tester.tap(find.text('Rápida'));
+      await tester.tap(find.text('Personalizado'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField).first, _url);
       await tester.tap(find.byTooltip('Borrar último elemento'));

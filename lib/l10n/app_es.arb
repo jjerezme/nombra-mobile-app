@@ -9,12 +9,10 @@
   "retry": "Reintentar",
   "delete": "Eliminar",
   "accept": "Aceptar",
-  "modeSaved": "Guardada",
-  "modeQuick": "Rápida",
+  "modeQuick": "Personalizado",
   "ruleLabel": "Regla",
   "ruleRemembered": "Se recuerda la última usada",
   "ruleAdd": "Agregar",
-  "noRules": "No hay reglas. Crea una con Agregar.",
   "folderSourceLastUsed": "Última usada",
   "folderSourceChosen": "Elegida",
   "folderSourceRule": "De la regla",
@@ -195,7 +193,6 @@
   "editorFolderTitle": "Carpeta de destino",
   "editorOptional": "(opcional)",
   "editorFolderAlways": "Los archivos con esta regla se guardan siempre aquí.",
-  "editorRemoveFolderTooltip": "Quitar carpeta",
   "editorNoFolderTitle": "Sin carpeta asignada",
   "editorNoFolderDesc": "Se usará la última carpeta en la que guardaste, y podrás cambiarla al descargar o compartir.",
   "editorPickFolder": "Elegir carpeta…",
@@ -366,6 +363,6 @@
       }
     }
   },
-  "modeNone": "Ninguna",
+  "modeNone": "Ninguno",
   "modeNoneHint": "El archivo se guarda con su nombre original, sin aplicar ninguna regla."
 }

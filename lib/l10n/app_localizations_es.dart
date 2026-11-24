@@ -37,10 +37,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accept => 'Aceptar';
 
   @override
-  String get modeSaved => 'Guardada';
-
-  @override
-  String get modeQuick => 'Rápida';
+  String get modeQuick => 'Personalizado';
 
   @override
   String get ruleLabel => 'Regla';
@@ -50,9 +47,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ruleAdd => 'Agregar';
-
-  @override
-  String get noRules => 'No hay reglas. Crea una con Agregar.';
 
   @override
   String get folderSourceLastUsed => 'Última usada';
@@ -314,9 +308,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get editorFolderAlways => 'Los archivos con esta regla se guardan siempre aquí.';
-
-  @override
-  String get editorRemoveFolderTooltip => 'Quitar carpeta';
 
   @override
   String get editorNoFolderTitle => 'Sin carpeta asignada';
@@ -598,7 +589,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get modeNone => 'Ninguna';
+  String get modeNone => 'Ninguno';
 
   @override
   String get modeNoneHint => 'El archivo se guarda con su nombre original, sin aplicar ninguna regla.';

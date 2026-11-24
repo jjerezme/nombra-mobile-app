@@ -61,7 +61,14 @@ const SharePayload _linkPayload = SharePayload(
 void main() {
   late TestEnvironment env;
 
-  setUp(() async => env = await TestEnvironment.create(preferences: storedRules(sampleRules())));
+  setUp(
+    () async => env = await TestEnvironment.create(
+      preferences: {
+        ...storedRules(sampleRules()),
+        'settings': jsonEncode(AppSettings(mode: NamingMode.saved).toJson()),
+      },
+    ),
+  );
 
   testWidgets('a shared link shows the sheet with the proposed name and saves it', (tester) async {
     final (container, channel) = await pumpShare(tester, env, _linkPayload);
@@ -188,7 +195,6 @@ void main() {
       },
     );
     final (container, _) = await pumpShare(tester, env, _linkPayload);
-    expect(find.text('Fecha + nombre'), findsNothing);
     expect(find.textContaining('Recordar como predeterminada'), findsNothing);
 
     await tester.tap(find.text('Guardar'));

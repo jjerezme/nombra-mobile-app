@@ -6,14 +6,13 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/validation.dart';
 import '../../../core/widgets/form_parts.dart';
 import '../../../core/widgets/pill_choice.dart';
-import '../../../core/widgets/segmented_toggle.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../rules/data/rules_notifier.dart';
 import '../../rules/domain/name_resolver.dart';
 import '../../rules/widgets/pattern_section.dart';
 import '../../settings/app_settings.dart';
 
-/// Saved rule or quick pattern: the naming choice shared by Home and the share sheet.
+/// How the file is named, as one row of chips: none, custom pattern, a saved rule. Shared by Home and the share sheet.
 class RuleSelector extends ConsumerWidget {
   const RuleSelector({super.key, this.selectedRuleId, this.onAddRule, this.onRuleSelected});
 
@@ -51,40 +50,39 @@ class RuleSelector extends ConsumerWidget {
             ),
           ],
         ),
-        SegmentedToggle<NamingMode>(
-          options: [
-            ToggleOption(NamingMode.none, l10n.modeNone),
-            ToggleOption(NamingMode.saved, l10n.modeSaved),
-            ToggleOption(NamingMode.quick, l10n.modeQuick),
-          ],
-          selected: settings.mode,
-          onChanged: notifier.setMode,
+        // One row of chips that scrolls sideways: no rule, a custom pattern, each saved rule and, at the end, "add".
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            spacing: AppSpacing.sm,
+            children: [
+              PillChoice(
+                label: l10n.modeNone,
+                isSelected: settings.mode == NamingMode.none,
+                onTap: () => notifier.setMode(NamingMode.none),
+              ),
+              PillChoice(
+                label: l10n.modeQuick,
+                isSelected: settings.mode == NamingMode.quick,
+                onTap: () => notifier.setMode(NamingMode.quick),
+              ),
+              for (final rule in rules)
+                PillChoice(
+                  label: rule.name,
+                  isSelected: settings.mode == NamingMode.saved && rule.id == activeId,
+                  onTap: () {
+                    notifier.chooseRule(rule.id);
+                    onRuleSelected?.call(rule.id);
+                  },
+                ),
+              // An action, not a rule: same size as the rules, tinted and with a plus.
+              if (onAddRule != null) PillChoice.action(label: l10n.ruleAdd, icon: Icons.add, onTap: onAddRule!),
+            ],
+          ),
         ),
         if (settings.mode == NamingMode.none)
           Text(l10n.modeNoneHint, style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant))
-        else if (settings.mode == NamingMode.saved)
-          // One row that scrolls sideways, like the folders: the rules do not pile up in several lines.
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              spacing: AppSpacing.sm,
-              children: [
-                if (rules.isEmpty) Text(l10n.noRules, style: context.text.bodySmall),
-                for (final rule in rules)
-                  PillChoice(
-                    label: rule.name,
-                    isSelected: rule.id == activeId,
-                    onTap: () {
-                      notifier.setRule(rule.id);
-                      onRuleSelected?.call(rule.id);
-                    },
-                  ),
-                // An action, not a rule: same size as the rules, tinted and with a plus.
-                if (onAddRule != null) PillChoice.action(label: l10n.ruleAdd, icon: Icons.add, onTap: onAddRule!),
-              ],
-            ),
-          )
-        else
+        else if (settings.mode == NamingMode.quick)
           _QuickOptions(settings: settings, notifier: notifier),
       ],
     );

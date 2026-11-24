@@ -15,7 +15,6 @@ class FolderSection extends StatelessWidget {
     required this.folder,
     required this.conflict,
     required this.onPickFolder,
-    required this.onClearFolder,
     required this.onConflictChanged,
     super.key,
   });
@@ -23,7 +22,6 @@ class FolderSection extends StatelessWidget {
   final DestinationFolder? folder;
   final ConflictPolicy conflict;
   final VoidCallback onPickFolder;
-  final VoidCallback onClearFolder;
   final ValueChanged<ConflictPolicy> onConflictChanged;
 
   @override
@@ -36,12 +34,7 @@ class FolderSection extends StatelessWidget {
         children: [
           LabeledField(
             hint: selected == null ? l10n.editorNoFolderDesc : l10n.editorFolderAlways,
-            child: DestinationCard(
-              path: selected?.path,
-              emptyLabel: l10n.editorNoFolderTitle,
-              onChange: onPickFolder,
-              onClear: onClearFolder,
-            ),
+            child: DestinationCard(path: selected?.path, emptyLabel: l10n.editorNoFolderTitle, onChange: onPickFolder),
           ),
           LabeledField(
             label: l10n.editorIfExists,

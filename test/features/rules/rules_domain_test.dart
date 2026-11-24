@@ -68,7 +68,12 @@ void main() {
 
   group('resolveTarget', () {
     test('saved mode: rule name and rule folder', () {
-      final target = resolveTarget(settings: AppSettings(), rules: [dated], source: source, now: now);
+      final target = resolveTarget(
+        settings: AppSettings(mode: NamingMode.saved),
+        rules: [dated],
+        source: source,
+        now: now,
+      );
       expect(target.fileName, '2026-11-23_a.pdf');
       expect(target.folder.path, '/Download/Nombra');
       expect(target.folderSource, FolderSource.rule);

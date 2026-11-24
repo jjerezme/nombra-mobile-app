@@ -19,7 +19,7 @@ Todas las pantallas se arman con las mismas piezas (`lib/core/widgets/`) y los v
 - `AppSection` / `SectionTitle`: título de un grupo (`titleMedium`) **encima** de su tarjeta; el título nunca va dentro de la tarjeta.
 - `AppCard` / `AppCard.stack`: superficie con radio y relleno únicos; `stack` apila los bloques con `sectionGap`.
 - `LabeledField`: etiqueta (`labelMedium`) + control + ayuda (`bodySmall`). Es la única forma de rotular un campo.
-- `DestinationCard`: la única forma de mostrar y cambiar una carpeta (Descargar, hoja de compartir, Ajustes, editor de reglas): ruta elegida (o mensaje si no hay) y botón que abre el selector; opcionalmente una etiqueta (`TagChip`) que dice de dónde viene (de la regla, última usada o elegida; nunca el nombre de la regla) y un botón para quitarla.
+- `DestinationCard`: la única forma de mostrar y cambiar una carpeta (Descargar, hoja de compartir, Ajustes, editor de reglas): ruta elegida (o mensaje si no hay) y botón que abre el selector; opcionalmente una etiqueta (`TagChip`) que dice de dónde viene (de la regla, última usada o elegida; nunca el nombre de la regla). La carpeta solo se cambia, no se quita.
 - `ToggleRow`, `ActionRow`: filas con interruptor y filas de acción.
 - `SegmentedToggle`, `PillChoice`: elecciones exclusivas.
 
@@ -33,6 +33,9 @@ El logo (`AppLogo`) va a la derecha del título de Descargar (el título no se m
 
 ## Hojas inferiores
 Color de superficie, asa del tema, margen `sheetGutter`, bloques con `sectionGap` y relleno inferior que respeta la barra de navegación de Android.
+
+## Cómo se nombra el archivo (Descargar y hoja de compartir)
+Una sola fila de chips con scroll lateral: **Ninguno** (por defecto), **Personalizado** (patrón propio que se mantiene), cada regla guardada y, al final, la acción **Agregar**. No hay pestañas. Elegir una regla activa el modo "regla guardada"; elegir Ninguno o Personalizado cambia el modo.
 
 ## Lista de reglas
 - Siempre ordenada por nombre (sin distinguir mayúsculas), también en el selector de Descargar y de la hoja de compartir; no hay orden manual.
