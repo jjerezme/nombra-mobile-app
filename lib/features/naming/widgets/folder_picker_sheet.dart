@@ -5,6 +5,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/validation.dart';
 import '../../../core/widgets/form_parts.dart';
 import '../../../core/widgets/input_sheets.dart';
+import '../../../core/widgets/pill_choice.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../rules/domain/storage_root.dart';
 
@@ -51,15 +52,16 @@ class _FolderPickerSheetState extends State<_FolderPickerSheet> {
       children: [
         LabeledField(
           label: l10n.folderPickerRoot,
-          child: DropdownButtonFormField<StorageRoot>(
-            initialValue: _root,
-            isExpanded: true,
-            style: context.monoStyles.mono.copyWith(color: context.colors.onSurface),
-            decoration: const InputDecoration(constraints: BoxConstraints(minHeight: AppSize.control)),
-            items: [for (final root in StorageRoot.values) DropdownMenuItem(value: root, child: Text(root.dirName))],
-            onChanged: (root) {
-              if (root != null) setState(() => _root = root);
-            },
+          // One row of chips that scrolls sideways: all the folders are one swipe away on a narrow screen.
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              spacing: AppSpacing.sm,
+              children: [
+                for (final root in StorageRoot.values)
+                  PillChoice(label: root.dirName, isSelected: root == _root, onTap: () => setState(() => _root = root)),
+              ],
+            ),
           ),
         ),
         LabeledField(

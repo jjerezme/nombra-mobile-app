@@ -193,9 +193,7 @@ class _FolderRow extends StatelessWidget {
       spacing: AppSpacing.md,
       children: [
         Icon(Icons.folder_outlined, size: AppIconSize.md, color: context.colors.primary),
-        Expanded(
-          child: Text(path, maxLines: 1, overflow: TextOverflow.ellipsis, style: context.monoStyles.mono),
-        ),
+        Expanded(child: Text(path, style: context.monoStyles.mono)),
         TextButton(onPressed: onChange, child: Text(l10n.change)),
       ],
     );

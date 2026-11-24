@@ -56,8 +56,6 @@ class FolderSection extends StatelessWidget {
                   Expanded(
                     child: Text(
                       selected?.path ?? l10n.editorNoFolderTitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                       style: selected == null
                           ? context.text.bodyMedium?.copyWith(color: colors.onSurfaceVariant)
                           : context.monoStyles.mono,

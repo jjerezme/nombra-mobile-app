@@ -137,7 +137,6 @@
     }
   },
   "shareFinalName": "Final name",
-  "shareExtensionKept": "The extension is kept. Tap the name to adjust it by hand.",
   "shareRememberDefault": "Remember as default for {kind}",
   "@shareRememberDefault": {
     "placeholders": {

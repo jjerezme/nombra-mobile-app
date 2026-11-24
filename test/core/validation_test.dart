@@ -20,14 +20,6 @@ void main() {
   });
 
   group('file names', () {
-    test('validateFileBase rejects empty, dots only and invalid characters', () {
-      expect(validateFileBase(''), InputError.required);
-      expect(validateFileBase('..'), InputError.required);
-      expect(validateFileBase('a/b'), InputError.invalidChars);
-      expect(validateFileBase('a:b'), InputError.invalidChars);
-      expect(validateFileBase('informe final'), isNull);
-    });
-
     test('validatePatternText has the same character rules', () {
       expect(validatePatternText(' '), InputError.required);
       expect(validatePatternText('a*b'), InputError.invalidChars);

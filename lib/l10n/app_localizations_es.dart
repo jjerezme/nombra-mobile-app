@@ -178,9 +178,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get shareFinalName => 'Nombre final';
 
   @override
-  String get shareExtensionKept => 'La extensión se mantiene. Toca el nombre para ajustarlo a mano.';
-
-  @override
   String shareRememberDefault(String kind) {
     return 'Recordar como predeterminada para $kind';
   }

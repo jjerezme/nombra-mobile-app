@@ -67,7 +67,7 @@ void main() {
     final (container, channel) = await pumpShare(tester, env, _linkPayload);
     expect(find.text('Guardar con Nombra'), findsOneWidget);
     expect(find.text('Nombre final'), findsOneWidget);
-    expect(find.text('.pdf'), findsOneWidget);
+    expect(find.textContaining('_Informe Q3.pdf'), findsOneWidget);
     expect(find.text('https://cdn.ejemplo.com/docs/Informe%20Q3.pdf'), findsOneWidget);
 
     await tester.tap(find.text('Guardar'));
@@ -87,14 +87,59 @@ void main() {
     expect(find.text('Guardar'), findsNothing);
   });
 
-  testWidgets('a name typed by hand is kept, with the extension', (tester) async {
+  testWidgets('the final name is read only: the rule decides it', (tester) async {
     final (container, _) = await pumpShare(tester, env, _linkPayload);
-    await tester.enterText(find.byType(TextFormField), 'mi-nombre');
-    await tester.pump();
+    expect(find.byType(TextFormField), findsNothing);
+    expect(find.byType(SelectableText), findsOneWidget);
+    // SelectableText is an EditableText that cannot be edited.
+    expect(tester.widget<EditableText>(find.byType(EditableText)).readOnly, isTrue);
+
     await tester.tap(find.text('Guardar'));
     await tester.pump(const Duration(milliseconds: 200));
-    final plan = container.read(downloadsProvider).single.plan;
-    expect(plan.fixedFileName, 'mi-nombre.pdf');
+    expect(container.read(downloadsProvider).single.plan.fixedFileName, isNull);
+  });
+
+  testWidgets('a long final name continues on the next line', (tester) async {
+    final longName = '${'a' * 90}.pdf';
+    await pumpShare(
+      tester,
+      env,
+      SharePayload(
+        files: [SharedFile(path: '/cache/$longName', name: longName, mimeType: 'application/pdf')],
+      ),
+    );
+    final text = find.byType(SelectableText);
+    expect(tester.getSize(text).height, greaterThan(40)); // more than one line
+    expect(
+      tester.getSize(text).width,
+      lessThanOrEqualTo(tester.view.physicalSize.width / tester.view.devicePixelRatio),
+    );
+  });
+
+  testWidgets('a shared image shows its thumbnail in the title; other files show an icon', (tester) async {
+    await pumpShare(
+      tester,
+      env,
+      const SharePayload(
+        files: [SharedFile(path: '/cache/foto.jpg', name: 'foto.jpg', mimeType: 'image/jpeg')],
+      ),
+    );
+    expect(find.byType(Image), findsOneWidget);
+    final image = tester.widget<Image>(find.byType(Image));
+    expect(image.image, isA<ResizeImage>());
+    expect(image.fit, BoxFit.cover);
+  });
+
+  testWidgets('a document has no thumbnail', (tester) async {
+    await pumpShare(
+      tester,
+      env,
+      const SharePayload(
+        files: [SharedFile(path: '/cache/a.pdf', name: 'a.pdf', mimeType: 'application/pdf')],
+      ),
+    );
+    expect(find.byType(Image), findsNothing);
+    expect(find.byIcon(Icons.description_outlined), findsOneWidget);
   });
 
   testWidgets('"remember as default" stores the rule for that kind of file', (tester) async {

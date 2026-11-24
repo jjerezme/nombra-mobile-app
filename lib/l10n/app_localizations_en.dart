@@ -178,9 +178,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareFinalName => 'Final name';
 
   @override
-  String get shareExtensionKept => 'The extension is kept. Tap the name to adjust it by hand.';
-
-  @override
   String shareRememberDefault(String kind) {
     return 'Remember as default for $kind';
   }

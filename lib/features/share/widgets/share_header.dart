@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:material_ui/material_ui.dart';
 
 import '../../../core/constants/tokens.dart';
@@ -34,21 +36,28 @@ class ShareHeader extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final colors = context.colors;
     final first = items.first;
+    final thumbnailPath = items.length == 1 && first.kind == FileKind.image ? first.path : null;
     return Row(
       spacing: AppSpacing.md,
       children: [
+        // A shared image shows its own thumbnail; anything else shows the icon of its kind.
         Container(
           width: AppSize.thumb,
           height: AppSize.thumb,
+          clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             color: colors.surfaceContainerHigh,
             borderRadius: BorderRadius.circular(AppLayout.controlRadius),
           ),
-          child: Icon(
-            first.isUrl ? Icons.link : iconForKind(first.kind),
-            size: AppIconSize.md,
-            color: colors.onSurfaceVariant,
-          ),
+          child: thumbnailPath == null
+              ? _KindIcon(item: first)
+              : Image.file(
+                  File(thumbnailPath),
+                  fit: BoxFit.cover,
+                  // Decoded at thumbnail size, not at the size of the photo.
+                  cacheWidth: AppSize.thumb.toInt() * 3,
+                  errorBuilder: (context, error, stackTrace) => _KindIcon(item: first),
+                ),
         ),
         Expanded(
           child: Column(
@@ -58,14 +67,27 @@ class ShareHeader extends StatelessWidget {
               Text(l10n.shareTitle, style: context.text.titleLarge?.copyWith(fontSize: AppFontSize.title)),
               Text(
                 _subtitle(l10n, Localizations.localeOf(context).toString()),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
                 style: context.monoStyles.monoSmall.copyWith(color: colors.onSurfaceVariant),
               ),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class _KindIcon extends StatelessWidget {
+  const _KindIcon({required this.item});
+
+  final ShareItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      item.isUrl ? Icons.link : iconForKind(item.kind),
+      size: AppIconSize.md,
+      color: context.colors.onSurfaceVariant,
     );
   }
 }

@@ -67,21 +67,11 @@ class RuleCard extends StatelessWidget {
           ),
           _DetailRow(
             icon: Icons.data_array,
-            child: Text(
-              _visible(rule.pattern),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: mono.copyWith(color: colors.primary),
-            ),
+            child: Text(_visible(rule.pattern), style: mono.copyWith(color: colors.primary)),
           ),
           _DetailRow(
             icon: Icons.arrow_forward,
-            child: Text(
-              example,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: mono.copyWith(color: colors.onSurfaceVariant),
-            ),
+            child: Text(example, style: mono.copyWith(color: colors.onSurfaceVariant)),
           ),
           _DetailRow(
             icon: Icons.tune,
@@ -93,12 +83,7 @@ class RuleCard extends StatelessWidget {
           ),
           _DetailRow(
             icon: Icons.folder_outlined,
-            child: Text(
-              rule.folder?.path ?? l10n.ruleNoFolder,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: mono,
-            ),
+            child: Text(rule.folder?.path ?? l10n.ruleNoFolder, style: mono),
           ),
         ],
       ),

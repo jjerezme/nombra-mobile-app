@@ -380,12 +380,6 @@ abstract class AppLocalizations {
   /// **'Nombre final'**
   String get shareFinalName;
 
-  /// No description provided for @shareExtensionKept.
-  ///
-  /// In es, this message translates to:
-  /// **'La extensión se mantiene. Toca el nombre para ajustarlo a mano.'**
-  String get shareExtensionKept;
-
   /// No description provided for @shareRememberDefault.
   ///
   /// In es, this message translates to:

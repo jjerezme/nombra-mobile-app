@@ -14,7 +14,6 @@ import '../naming/widgets/destination_card.dart';
 import '../naming/widgets/folder_picker_sheet.dart';
 import '../naming/widgets/rule_selector.dart';
 import '../rules/data/rules_notifier.dart';
-import '../rules/domain/filename_builder.dart';
 import '../rules/domain/name_resolver.dart';
 import '../rules/domain/storage_root.dart';
 import '../settings/app_settings.dart';
@@ -32,7 +31,6 @@ class ShareSheetScreen extends ConsumerStatefulWidget {
 }
 
 class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
-  String? _manualBase;
   DestinationFolder? _chosenFolder;
   bool _remember = true;
   List<String>? _savedIds;
@@ -58,15 +56,9 @@ class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
     final rule = target.rule;
     if (_remember && rule != null) settingsNotifier.rememberDefaultFor(first.kind, rule.id);
 
-    String? fixedName;
-    final manual = _manualBase;
-    if (manual != null && manual.trim().isNotEmpty && items.length == 1) {
-      final extension = first.source.extension;
-      fixedName = extension.isEmpty ? manual.trim() : '${manual.trim()}.$extension';
-    }
     DownloadPlan planFor(ShareItem item) => settings.mode == NamingMode.quick
-        ? DownloadPlan.quick(settings: settings, folder: target.folder, url: item.url, fixedFileName: fixedName)
-        : DownloadPlan(url: item.url, folder: target.folder, rule: rule, fixedFileName: fixedName);
+        ? DownloadPlan.quick(settings: settings, folder: target.folder, url: item.url)
+        : DownloadPlan(url: item.url, folder: target.folder, rule: rule);
 
     // The permission dialog needs this screen in front, so it is asked before the sheet goes to the background.
     await downloads.prepareNotifications();
@@ -74,7 +66,7 @@ class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
     final saves = [
       for (final item in items)
         item.path == null
-            ? downloads.start(planFor(item), displayName: fixedName ?? target.fileName)
+            ? downloads.start(planFor(item), displayName: target.fileName)
             : downloads.saveLocalFile(planFor(item), path: item.path!, fileName: item.name),
     ];
     // Saving goes on in the background, with its notification: the sheet does not stay on screen.
@@ -140,11 +132,8 @@ class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
                         : _Content(
                             items: items,
                             chosenFolder: _chosenFolder,
-                            manualBase: _manualBase,
                             remember: _remember,
                             savedIds: _savedIds,
-                            onManualChanged: (value) => setState(() => _manualBase = value),
-                            onRuleSelected: (_) => setState(() => _manualBase = null),
                             onRememberChanged: (value) => setState(() => _remember = value),
                             onChangeFolder: _changeFolder,
                             onSave: _save,
@@ -183,11 +172,8 @@ class _Content extends ConsumerWidget {
   const _Content({
     required this.items,
     required this.chosenFolder,
-    required this.manualBase,
     required this.remember,
     required this.savedIds,
-    required this.onManualChanged,
-    required this.onRuleSelected,
     required this.onRememberChanged,
     required this.onChangeFolder,
     required this.onSave,
@@ -196,11 +182,8 @@ class _Content extends ConsumerWidget {
 
   final List<ShareItem> items;
   final DestinationFolder? chosenFolder;
-  final String? manualBase;
   final bool remember;
   final List<String>? savedIds;
-  final ValueChanged<String> onManualChanged;
-  final ValueChanged<String> onRuleSelected;
   final ValueChanged<bool> onRememberChanged;
   final ValueChanged<DestinationFolder> onChangeFolder;
   final void Function(List<ShareItem> items, ResolvedTarget target) onSave;
@@ -221,10 +204,7 @@ class _Content extends ConsumerWidget {
       chosenFolder: chosenFolder,
       selected: settings.mode == NamingMode.saved ? selectRule(settings, rules, kind: first.kind) : null,
     );
-    final (autoBase, extension) = splitFileName(target.fileName);
-    final typed = manualBase;
-    final isQuickPatternValid = settings.mode != NamingMode.quick || patternHasContent(settings.quickTokens);
-    final isNameValid = isQuickPatternValid && (items.length != 1 || typed == null || validateFileBase(typed) == null);
+    final isNameValid = settings.mode != NamingMode.quick || patternHasContent(settings.quickTokens);
     final saved = savedIds;
     final tracked = saved == null
         ? const <DownloadItem>[]
@@ -252,14 +232,8 @@ class _Content extends ConsumerWidget {
             Text(l10n.shareLeaveHint, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
           FilledButton(onPressed: onClose, child: Text(l10n.shareClose)),
         ] else ...[
-          RuleSelector(selectedRuleId: target.rule?.id, onRuleSelected: onRuleSelected),
-          if (items.length == 1)
-            ShareNameField(
-              baseName: manualBase ?? autoBase,
-              extension: extension,
-              isManual: manualBase != null,
-              onChanged: onManualChanged,
-            ),
+          RuleSelector(selectedRuleId: target.rule?.id),
+          if (items.length == 1) ShareNameField(fileName: target.fileName),
           DestinationCard(
             path: target.folder.path,
             sourceLabel: folderSourceLabel(l10n, target.folderSource, target.rule),

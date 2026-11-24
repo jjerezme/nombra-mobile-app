@@ -31,15 +31,6 @@ InputError? validatePatternText(String value) {
   return null;
 }
 
-/// A name typed by hand (without extension): not empty, not only dots, no invalid characters.
-InputError? validateFileBase(String value) {
-  final name = value.trim();
-  if (name.isEmpty || RegExp(r'^\.+$').hasMatch(name)) return InputError.required;
-  if (_invalidFileChars.hasMatch(name)) return InputError.invalidChars;
-  if (name.length > maxFileBaseLength) return InputError.tooLong;
-  return null;
-}
-
 /// Subfolder under a public folder; may be empty. Rejects `..` and characters Android does not allow.
 InputError? validateSubfolder(String value) {
   if (_invalidFolderChars.hasMatch(value)) return InputError.invalidChars;

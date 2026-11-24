@@ -96,14 +96,34 @@ void main() {
 
     await tester.tap(find.text('Cambiar'));
     await tester.pumpAndSettle();
-    // The folder is picked from a select field, not from a row of chips.
-    await tester.tap(find.byType(DropdownButtonFormField<StorageRoot>));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Documents').last);
+    await tester.tap(find.text('Documents'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Usar esta carpeta'));
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).lastFolder, DestinationFolder(StorageRoot.documents));
+  });
+
+  testWidgets('the base folders are chips in one row that scrolls sideways', (tester) async {
+    final container = await pumpSettings(tester, env);
+    await tester.tap(find.text('Cambiar'));
+    await tester.pumpAndSettle();
+
+    final row = find.byWidgetPredicate(
+      (widget) => widget is SingleChildScrollView && widget.scrollDirection == Axis.horizontal,
+    );
+    expect(row, findsOneWidget);
+    final top = tester.getTopLeft(find.text('Download')).dy;
+    for (final folder in ['Documents', 'Pictures', 'Movies', 'Music']) {
+      await tester.ensureVisible(find.text(folder));
+      await tester.pumpAndSettle();
+      expect(tester.getTopLeft(find.text(folder)).dy, top, reason: '$folder is on the same row');
+    }
+
+    await tester.tap(find.text('Music'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Usar esta carpeta'));
+    await tester.pumpAndSettle();
+    expect(container.read(settingsProvider).lastFolder, DestinationFolder(StorageRoot.music));
   });
 
   testWidgets('the default folder starts blank, without a placeholder', (tester) async {
@@ -212,6 +232,29 @@ void main() {
       await tester.pumpAndSettle();
       await openDownload(tester);
       expect(find.text('a.pdf'), findsOneWidget);
+    });
+
+    testWidgets('a long file name continues on the next line instead of being cut', (tester) async {
+      final longName = '${'b' * 80}.pdf';
+      final finished = DownloadItem(
+        id: 'old',
+        fileName: longName,
+        status: DownloadStatus.done,
+        plan: DownloadPlan(folder: DestinationFolder(StorageRoot.download)),
+        createdAt: DateTime(2026),
+      );
+      env = await TestEnvironment.create(
+        preferences: {
+          ...storedRules(sampleRules()),
+          'downloads': jsonEncode([finished.toJson()]),
+        },
+      );
+      await pumpSettings(tester, env);
+      await openDownload(tester);
+
+      final name = find.text(longName);
+      expect(tester.widget<Text>(name).maxLines, isNull);
+      expect(tester.getSize(name).height, greaterThan(30));
     });
 
     testWidgets('downloads in progress are shown even when recents are hidden', (tester) async {

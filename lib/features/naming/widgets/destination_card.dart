@@ -40,7 +40,7 @@ class DestinationCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(l10n.saveIn(sourceLabel), style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
-                Text(path, maxLines: 1, overflow: TextOverflow.ellipsis, style: context.monoStyles.mono),
+                Text(path, style: context.monoStyles.mono),
               ],
             ),
           ),

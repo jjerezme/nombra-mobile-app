@@ -74,14 +74,7 @@ class _ProgressTile extends StatelessWidget {
           Row(
             spacing: AppSpacing.sm,
             children: [
-              Expanded(
-                child: Text(
-                  item.fileName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.monoStyles.mono,
-                ),
-              ),
+              Expanded(child: Text(item.fileName, style: context.monoStyles.mono)),
               if (!isIndeterminate)
                 Text(
                   '${(item.progress * 100).round()} %',
@@ -148,7 +141,7 @@ class _ResultTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(item.fileName, maxLines: 1, overflow: TextOverflow.ellipsis, style: context.monoStyles.mono),
+                Text(item.fileName, style: context.monoStyles.mono),
                 Text(
                   subtitle,
                   style: context.text.bodySmall?.copyWith(color: isError ? colors.error : colors.onSurfaceVariant),
