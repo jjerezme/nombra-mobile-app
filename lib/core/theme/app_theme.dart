@@ -206,17 +206,27 @@ abstract final class AppTheme {
           textStyle: textTheme.labelLarge?.copyWith(fontSize: AppFontSize.md),
         ),
       ),
+      // Off must not look disabled: the track keeps an outline and the thumb a solid dark color. On is the primary
+      // color with a light thumb.
       switchTheme: SwitchThemeData(
-        thumbColor: WidgetStatePropertyAll(scheme.onPrimary),
-        trackColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.selected) ? scheme.primary : scheme.outline,
+        thumbColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected) ? scheme.onPrimary : scheme.onSurfaceVariant,
         ),
-        trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
+        trackColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected) ? scheme.primary : scheme.surfaceContainerHigh,
+        ),
+        trackOutlineColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected) ? Colors.transparent : scheme.onSurfaceVariant,
+        ),
       ),
       checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith((states) {
           return states.contains(WidgetState.selected) ? scheme.primary : null;
         }),
+        side: WidgetStateBorderSide.resolveWith(
+          (states) =>
+              states.contains(WidgetState.selected) ? null : BorderSide(color: scheme.onSurfaceVariant, width: 2),
+        ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: scheme.primary,
