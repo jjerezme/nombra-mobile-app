@@ -618,24 +618,16 @@ void main() {
       expect(find.text('␣'), findsWidgets);
     });
 
-    testWidgets('a pattern takes at most 5 tokens', (tester) async {
+    testWidgets('a pattern has no limit of tokens', (tester) async {
       final container = await openQuick(tester);
-      for (var i = 0; i < 4; i++) {
+      for (var i = 0; i < 9; i++) {
         // The palette comes after the tokens already in the pattern.
         await tester.tap(find.text('_').last);
         await tester.pumpAndSettle();
       }
-      expect(quickTokens(container), hasLength(5));
-      expect(find.text('Máximo 5 elementos'), findsOneWidget);
-
-      await tester.tap(find.text('-'));
-      await tester.pumpAndSettle();
-      expect(quickTokens(container), hasLength(5));
-
-      // Deleting one makes room again.
-      await tester.tap(find.byIcon(Icons.backspace_outlined));
-      await tester.pumpAndSettle();
-      expect(find.text('Máximo 5 elementos'), findsNothing);
+      expect(quickTokens(container), hasLength(10)); // {name} + 9 separators, more than the old limit of 5
+      expect(find.textContaining('Máximo'), findsNothing);
+      expect(find.text('Toca para insertar'), findsOneWidget);
     });
 
     testWidgets('a token leaves the palette once it is used; separators and text stay', (tester) async {

@@ -545,11 +545,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Lista en Descargar los archivos guardados. Las descargas en curso siempre se ven.';
 
   @override
-  String editorMaxTokens(int max) {
-    return 'Máximo $max elementos';
-  }
-
-  @override
   String get editorSpaceToken => 'Espacio';
 
   @override

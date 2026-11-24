@@ -317,20 +317,12 @@
   "homeClearRecents": "Borrar",
   "settingsShowRecents": "Mostrar archivos recientes",
   "settingsShowRecentsHint": "Lista en Descargar los archivos guardados. Las descargas en curso siempre se ven.",
-  "editorMaxTokens": "Máximo {max} elementos",
   "editorSpaceToken": "Espacio",
   "editorDigitsTitle": "Dígitos del número",
   "editorDigitsLess": "Menos dígitos",
   "editorDigitsMore": "Más dígitos",
   "editorDigitsCount": "{count, plural, one{{count} dígito} other{{count} dígitos}}",
   "editorDigitsExample": "Ejemplo: {example}",
-  "@editorMaxTokens": {
-    "placeholders": {
-      "max": {
-        "type": "int"
-      }
-    }
-  },
   "@editorDigitsCount": {
     "placeholders": {
       "count": {

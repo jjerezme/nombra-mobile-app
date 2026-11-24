@@ -543,11 +543,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsShowRecentsHint => 'Lists the saved files in Download. Downloads in progress are always shown.';
 
   @override
-  String editorMaxTokens(int max) {
-    return 'At most $max items';
-  }
-
-  @override
   String get editorSpaceToken => 'Space';
 
   @override

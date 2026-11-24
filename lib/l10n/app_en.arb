@@ -317,20 +317,12 @@
   "homeClearRecents": "Clear",
   "settingsShowRecents": "Show recent files",
   "settingsShowRecentsHint": "Lists the saved files in Download. Downloads in progress are always shown.",
-  "editorMaxTokens": "At most {max} items",
   "editorSpaceToken": "Space",
   "editorDigitsTitle": "Digits of the number",
   "editorDigitsLess": "Fewer digits",
   "editorDigitsMore": "More digits",
   "editorDigitsCount": "{count, plural, one{{count} digit} other{{count} digits}}",
   "editorDigitsExample": "Example: {example}",
-  "@editorMaxTokens": {
-    "placeholders": {
-      "max": {
-        "type": "int"
-      }
-    }
-  },
   "@editorDigitsCount": {
     "placeholders": {
       "count": {

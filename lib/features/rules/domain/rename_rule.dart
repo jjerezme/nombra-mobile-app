@@ -22,9 +22,6 @@ abstract final class PatternTokens {
   /// Stands for "write some text" in the palette; never stored in a pattern.
   static const String textPlaceholder = '\u0000text';
 
-  /// A pattern holds at most this many tokens.
-  static const int maxCount = 5;
-
   static const int defaultCounterDigits = 3;
   static const int maxCounterDigits = 8;
 

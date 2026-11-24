@@ -1070,12 +1070,6 @@ abstract class AppLocalizations {
   /// **'Lista en Descargar los archivos guardados. Las descargas en curso siempre se ven.'**
   String get settingsShowRecentsHint;
 
-  /// No description provided for @editorMaxTokens.
-  ///
-  /// In es, this message translates to:
-  /// **'Máximo {max} elementos'**
-  String editorMaxTokens(int max);
-
   /// No description provided for @editorSpaceToken.
   ///
   /// In es, this message translates to:

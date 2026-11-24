@@ -7,8 +7,8 @@ import '../../../core/widgets/input_sheets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/rename_rule.dart';
 
-/// The pattern as a row of tokens, and the palette to add more. At most [PatternTokens.maxCount] tokens fit; a text
-/// token is edited by tapping it, and so are the digits of a number token.
+/// The pattern as a row of tokens, and the palette to add more. There is no limit of tokens; a text token is edited by
+/// tapping it, and so are the digits of a number token.
 class PatternSection extends StatelessWidget {
   const PatternSection({required this.tokens, required this.onChanged, this.errorText, super.key});
 
@@ -17,8 +17,6 @@ class PatternSection extends StatelessWidget {
 
   /// Shown under the pattern when it cannot be saved.
   final String? errorText;
-
-  bool get _isFull => tokens.length >= PatternTokens.maxCount;
 
   Future<String?> _askText(BuildContext context, {String initialText = ''}) {
     final l10n = AppLocalizations.of(context);
@@ -38,7 +36,6 @@ class PatternSection extends StatelessWidget {
   }
 
   Future<void> _add(BuildContext context, String token) async {
-    if (_isFull) return;
     var next = token;
     if (token == PatternTokens.counter) {
       final counter = await _askCounter(context);
@@ -111,10 +108,7 @@ class PatternSection extends StatelessWidget {
           ),
         ),
         if (errorText != null) Text(errorText!, style: context.text.bodySmall?.copyWith(color: colors.error)),
-        Text(
-          _isFull ? l10n.editorMaxTokens(PatternTokens.maxCount) : l10n.editorTapToInsert,
-          style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant),
-        ),
+        Text(l10n.editorTapToInsert, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
         Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
@@ -124,12 +118,9 @@ class PatternSection extends StatelessWidget {
               _PaletteChip(
                 label: token == PatternTokens.counter ? '{n}' : _labelOf(token),
                 semanticLabel: token == PatternTokens.space ? l10n.editorSpaceToken : null,
-                onTap: _isFull ? null : () => _add(context, token),
+                onTap: () => _add(context, token),
               ),
-            _PaletteChip(
-              label: l10n.editorAddText,
-              onTap: _isFull ? null : () => _add(context, PatternTokens.textPlaceholder),
-            ),
+            _PaletteChip(label: l10n.editorAddText, onTap: () => _add(context, PatternTokens.textPlaceholder)),
           ],
         ),
       ],

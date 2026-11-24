@@ -23,7 +23,7 @@ La regla rápida (prefijo + nombre original + sufijo) no podía numerar archivos
 - El modo rápido no tiene transformaciones (mayúsculas, espacios, limpieza); para eso se usa una regla guardada.
 
 ## Constructor de patrón (reglas y modo rápido)
-- Un patrón admite como máximo 5 elementos (`PatternTokens.maxCount`); al llegar al límite la paleta se atenúa y se muestra el aviso.
+- Un patrón no tiene límite de elementos (antes eran 5, se quitó); los elementos se acomodan en varias líneas.
 - Elemento de espacio en blanco: texto `' '` guardado como cualquier otro texto; en la caja se dibuja como `␣`.
 - Los textos fijos se editan tocándolos. Al agregar un número se pregunta cuántos dígitos tiene (1 a 8, `{n:5}` escribe `00007`) y se cambian tocando el elemento.
 - Los elementos y el botón de borrar comparten línea central, también con el patrón vacío.
