@@ -30,6 +30,11 @@ android {
         versionName = flutter.versionName
     }
 
+    // AGP 9 turns resValues off by default; the flavors below set app_name through resValue.
+    buildFeatures {
+        resValues = true
+    }
+
     // Two builds of the same app, each with its own Firebase project (see lib/core/environment.dart):
     //   dev  -> com.jujeme.nombra.dev, android/app/src/dev/google-services.json
     //   prod -> com.jujeme.nombra,     android/app/src/prod/google-services.json
