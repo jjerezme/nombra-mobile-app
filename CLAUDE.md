@@ -46,7 +46,7 @@ Ejecuta analyze y test antes de dar una tarea por terminada.
 - Flavors `dev`/`prod`, Firebase nativo, una config por flavor: [004](docs/decisions/004-flavors-firebase.md).
 - Textos con `gen-l10n` (es y en): [005](docs/decisions/005-l10n.md). Builds locales con `scripts/build.dart`: [006](docs/decisions/006-local-build.md).
 - Datos en `shared_preferences` (JSON): [007](docs/decisions/007-persistence.md). Descarga con `background_downloader` y guardado por MediaStore, `minSdk` 29: [008](docs/decisions/008-download-and-save.md).
-- Compartir con `ShareActivity` translúcida y `shareMain`: [009](docs/decisions/009-share-intent.md). Fuentes empaquetadas, sin `google_fonts`: [010](docs/decisions/010-fonts.md).
+- Compartir con `ShareActivity` translúcida y `shareMain`: [009](docs/decisions/009-share-intent.md). Fuentes empaquetadas, sin `google_fonts`: [010](docs/decisions/010-fonts.md). Icono y logo: [012](docs/decisions/012-app-icon.md).
 
 ## Qué no hacer
 

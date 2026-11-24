@@ -7,6 +7,7 @@ import 'package:nombra/app/app.dart';
 import 'package:nombra/app/router.dart';
 import 'package:nombra/core/constants/tokens.dart';
 import 'package:nombra/core/widgets/app_card.dart';
+import 'package:nombra/core/widgets/app_logo.dart';
 import 'package:nombra/core/widgets/pill_choice.dart';
 import 'package:nombra/core/widgets/screen_header.dart';
 import 'package:nombra/core/widgets/segmented_toggle.dart';
@@ -52,6 +53,12 @@ void main() {
   late TestEnvironment env;
 
   setUp(() async => env = await TestEnvironment.create(preferences: storedRules(sampleRules())));
+
+  testWidgets('Home shows the logo next to the app name', (tester) async {
+    await pumpApp(tester, env);
+    expect(find.byType(AppLogo), findsOneWidget);
+    expect(find.text('Nombra'), findsWidgets);
+  });
 
   testWidgets('Home shows the empty state and the saved rules', (tester) async {
     await pumpApp(tester, env);

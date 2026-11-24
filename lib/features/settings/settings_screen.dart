@@ -5,6 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import '../../core/constants/tokens.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/app_card.dart';
+import '../../core/widgets/app_logo.dart';
 import '../../core/widgets/dialogs.dart';
 import '../../core/widgets/form_parts.dart';
 import '../../core/widgets/screen_header.dart';
@@ -212,6 +213,7 @@ class _About extends StatelessWidget {
     return Column(
       spacing: AppSpacing.xs,
       children: [
+        const AppLogo(size: AppSize.thumb),
         Text(l10n.appName, style: context.text.titleMedium),
         if (packageInfo != null)
           Text(

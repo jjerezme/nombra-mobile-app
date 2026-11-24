@@ -26,10 +26,21 @@ abstract final class AppPage {
 /// Title of a screen: the same size, position and spacing everywhere. A detail screen adds a back button on the left
 /// and an action on the right, in a row above the title.
 class ScreenHeader extends StatelessWidget {
-  const ScreenHeader({required this.title, super.key, this.subtitle, this.onBack, this.backTooltip, this.action});
+  const ScreenHeader({
+    required this.title,
+    super.key,
+    this.subtitle,
+    this.trailing,
+    this.onBack,
+    this.backTooltip,
+    this.action,
+  });
 
   final String title;
   final String? subtitle;
+
+  /// A mark on the right of the title (the logo, on the first screen). The title stays where it is on every screen.
+  final Widget? trailing;
 
   /// Shows the back button when set; [backTooltip] is its label.
   final VoidCallback? onBack;
@@ -68,7 +79,17 @@ class ScreenHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: AppSpacing.xs,
             children: [
-              Text(title, style: context.text.headlineSmall),
+              if (trailing == null)
+                Text(title, style: context.text.headlineSmall)
+              else
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: AppSpacing.md,
+                  children: [
+                    Expanded(child: Text(title, style: context.text.headlineSmall)),
+                    ?trailing,
+                  ],
+                ),
               if (subtitleText != null)
                 Text(subtitleText, style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
             ],

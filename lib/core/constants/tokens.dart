@@ -54,6 +54,9 @@ abstract final class AppSize {
   static const double navBar = 72;
   static const double tile = 36;
   static const double thumb = 52;
+
+  /// The app logo next to a title.
+  static const double logo = 32;
   static const double progress = 6;
   static const double handleWidth = 36;
   static const double handleHeight = 4;

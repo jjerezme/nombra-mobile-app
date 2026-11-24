@@ -7,6 +7,7 @@ import '../../core/constants/tokens.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/validation.dart';
 import '../../core/widgets/app_card.dart';
+import '../../core/widgets/app_logo.dart';
 import '../../core/widgets/dialogs.dart';
 import '../../core/widgets/form_parts.dart';
 import '../../core/widgets/info_box.dart';
@@ -119,7 +120,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: ListView(
           padding: AppPage.padding,
           children: [
-            ScreenHeader(title: l10n.appName),
+            ScreenHeader(title: l10n.appName, trailing: const AppLogo()),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               spacing: AppLayout.sectionGap,

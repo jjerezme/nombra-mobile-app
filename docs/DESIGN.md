@@ -22,6 +22,9 @@ Todas las pantallas se arman con las mismas piezas (`lib/core/widgets/`) y los v
 - `ToggleRow`, `ActionRow`: filas con interruptor y filas de acción.
 - `SegmentedToggle`, `PillChoice`: elecciones exclusivas.
 
+## Marca
+El logo (`AppLogo`) va a la derecha del título de Descargar (el título no se mueve de sitio) y en el bloque "acerca de" de Ajustes; no se repite en otras pantallas. Detalle en la decisión [012](decisions/012-app-icon.md).
+
 ## Botones
 - Acción principal: un `FilledButton` de ancho completo, alto `AppSize.button`, solo con texto.
 - Secundaria: `OutlinedButton` con la misma forma; terciaria y en diálogos: `TextButton`.
