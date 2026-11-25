@@ -36,6 +36,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   final TextEditingController _url = TextEditingController();
   DestinationFolder? _chosenFolder;
+  String? _chosenRuleId;
   bool _showUrlError = false;
 
   @override
@@ -93,6 +94,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     setState(() {
       _url.clear();
       _chosenFolder = null;
+      _chosenRuleId = null;
       _showUrlError = false;
     });
     await ref.read(downloadsProvider.notifier).start(plan, displayName: target.fileName);
@@ -121,6 +123,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       source: source,
       now: DateTime.now(),
       chosenFolder: _chosenFolder,
+      // A rule tapped here wins over the rule remembered for the file type.
+      selected: settings.mode == NamingMode.saved ? rules.where((rule) => rule.id == _chosenRuleId).firstOrNull : null,
     );
     return Scaffold(
       body: SafeArea(
@@ -167,7 +171,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ],
                       ),
                     ),
-                    RuleSelector(onAddRule: () => context.push(AppRoutes.newRule)),
+                    RuleSelector(
+                      selectedRuleId: target.rule?.id,
+                      onAddRule: () => context.push(AppRoutes.newRule),
+                      onRuleSelected: (id) => setState(() => _chosenRuleId = id),
+                    ),
                     DestinationCard(path: target.folder.path, onChange: () => _changeFolder(target.folder)),
                     InfoBox(
                       label: l10n.homeSavedAs,

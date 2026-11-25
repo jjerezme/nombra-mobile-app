@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:nombra/core/widgets/pill_choice.dart';
 import 'package:nombra/features/download/data/downloads_notifier.dart';
 import 'package:nombra/features/download/domain/download_models.dart';
 import 'package:nombra/features/settings/app_settings.dart';
@@ -164,6 +165,27 @@ void main() {
     await tester.tap(find.text('Guardar'));
     await tester.pump(const Duration(milliseconds: 200));
     expect(container.read(settingsProvider).defaultRuleByKind['document'], 'date-name');
+  });
+
+  testWidgets('a rule tapped on the sheet wins over the one remembered for that kind of file', (tester) async {
+    final remembered = await TestEnvironment.create(
+      preferences: {
+        ...storedRules(sampleRules()),
+        'settings': jsonEncode(
+          AppSettings(mode: NamingMode.saved, defaultRuleByKind: {'document': 'date-name'}).toJson(),
+        ),
+      },
+    );
+    final (container, _) = await pumpShare(tester, remembered, _linkPayload);
+    await tester.ensureVisible(find.widgetWithText(PillChoice, 'Original'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(PillChoice, 'Original'));
+    await tester.pumpAndSettle();
+    expect(tester.widget<PillChoice>(find.widgetWithText(PillChoice, 'Original')).isSelected, isTrue);
+    expect(tester.widget<PillChoice>(find.widgetWithText(PillChoice, 'Fecha + nombre')).isSelected, isFalse);
+    await tester.tap(find.text('Guardar'));
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(container.read(settingsProvider).defaultRuleByKind['document'], 'original');
   });
 
   testWidgets('saving sends the sheet to the background while the download goes on', (tester) async {
