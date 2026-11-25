@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "nombra-dev",
+    "dev": "nombra-dev",
+    "prod": "nombra-prod"
+  }
+}

@@ -30,6 +30,8 @@ flutter run --flavor dev
 
 Para activar Firebase, descarga el `google-services.json` de cada proyecto y guárdalo en `android/app/src/dev/` y `android/app/src/prod/`. No se versionan.
 
+Para iniciar sesión con Google (Ajustes › Cuenta) cada proyecto de Firebase necesita, además: el proveedor Google activo en Authentication, las huellas SHA-1 de la app (la de debug y la de la llave de subida) registradas en su app de Android, y las reglas de `firestore.rules` desplegadas (`firebase deploy --only firestore:rules --project dev`). Descarga el `google-services.json` después de registrar las huellas.
+
 ## Entornos
 
 | | Desarrollo (`dev`) | Producción (`prod`) |

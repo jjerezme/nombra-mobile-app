@@ -583,4 +583,53 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get homeOpenFailed => 'No se pudo abrir el archivo. Puede que lo hayan movido o borrado.';
+
+  @override
+  String get settingsAccount => 'Cuenta';
+
+  @override
+  String get accountBody => 'Inicia sesión con Google para respaldar tus reglas y recuperarlas en otro teléfono.';
+
+  @override
+  String get accountSignIn => 'Continuar con Google';
+
+  @override
+  String get accountSignInFailed => 'No se pudo iniciar sesión. Inténtalo de nuevo.';
+
+  @override
+  String get accountUnavailable => 'El respaldo no está disponible en esta compilación.';
+
+  @override
+  String get accountSyncing => 'Respaldando tus reglas…';
+
+  @override
+  String get accountUpToDate => 'Reglas respaldadas';
+
+  @override
+  String get accountError => 'No se pudo respaldar tus reglas. Revisa tu conexión.';
+
+  @override
+  String get accountRetry => 'Reintentar';
+
+  @override
+  String get accountSignOut => 'Cerrar sesión';
+
+  @override
+  String get accountSignOutHint => 'Tus reglas se quedan en este teléfono y en la nube.';
+
+  @override
+  String get accountDeleteBackup => 'Borrar respaldo y cerrar sesión';
+
+  @override
+  String get accountDeleteBackupHint => 'Elimina tus reglas de la nube. Las de este teléfono no se tocan.';
+
+  @override
+  String get accountConfirmDeleteTitle => '¿Borrar el respaldo?';
+
+  @override
+  String get accountConfirmDeleteBody =>
+      'Se eliminarán tus reglas de la nube y se cerrará la sesión. Las reglas de este teléfono se conservan.';
+
+  @override
+  String get accountDeleteFailed => 'No se pudo borrar el respaldo. Revisa tu conexión.';
 }

@@ -11,6 +11,7 @@ import '../../core/widgets/form_parts.dart';
 import '../../core/widgets/screen_header.dart';
 import '../../core/widgets/segmented_toggle.dart';
 import '../../l10n/app_localizations.dart';
+import '../account/widgets/account_section.dart';
 import '../download/data/downloads_notifier.dart';
 import '../naming/widgets/destination_card.dart';
 import '../naming/widgets/folder_picker_sheet.dart';
@@ -39,6 +40,7 @@ class SettingsScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               spacing: AppLayout.sectionGap,
               children: [
+                const AccountSection(),
                 AppSection(
                   title: l10n.settingsAppearance,
                   child: AppCard.stack(

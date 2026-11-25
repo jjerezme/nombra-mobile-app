@@ -348,5 +348,21 @@
   "homeActions": "Más acciones",
   "homeOpen": "Abrir",
   "homeRemove": "Quitar de la lista",
-  "homeOpenFailed": "No se pudo abrir el archivo. Puede que lo hayan movido o borrado."
+  "homeOpenFailed": "No se pudo abrir el archivo. Puede que lo hayan movido o borrado.",
+  "settingsAccount": "Cuenta",
+  "accountBody": "Inicia sesión con Google para respaldar tus reglas y recuperarlas en otro teléfono.",
+  "accountSignIn": "Continuar con Google",
+  "accountSignInFailed": "No se pudo iniciar sesión. Inténtalo de nuevo.",
+  "accountUnavailable": "El respaldo no está disponible en esta compilación.",
+  "accountSyncing": "Respaldando tus reglas…",
+  "accountUpToDate": "Reglas respaldadas",
+  "accountError": "No se pudo respaldar tus reglas. Revisa tu conexión.",
+  "accountRetry": "Reintentar",
+  "accountSignOut": "Cerrar sesión",
+  "accountSignOutHint": "Tus reglas se quedan en este teléfono y en la nube.",
+  "accountDeleteBackup": "Borrar respaldo y cerrar sesión",
+  "accountDeleteBackupHint": "Elimina tus reglas de la nube. Las de este teléfono no se tocan.",
+  "accountConfirmDeleteTitle": "¿Borrar el respaldo?",
+  "accountConfirmDeleteBody": "Se eliminarán tus reglas de la nube y se cerrará la sesión. Las reglas de este teléfono se conservan.",
+  "accountDeleteFailed": "No se pudo borrar el respaldo. Revisa tu conexión."
 }

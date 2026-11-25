@@ -8,8 +8,8 @@ import 'crash_reporting.dart';
 /// flavor) and routes uncaught errors to Crashlytics, without any link they carry.
 ///
 /// If the config file is missing (a fresh checkout) the app still starts, and
-/// the reason is logged, so UI work does not depend on Firebase.
-Future<void> initFirebase() async {
+/// the reason is logged, so UI work does not depend on Firebase. Returns whether Firebase started.
+Future<bool> initFirebase() async {
   try {
     await Firebase.initializeApp();
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
@@ -23,7 +23,9 @@ Future<void> initFirebase() async {
       FirebaseCrashlytics.instance.recordError(RedactedError(error), stack, fatal: true);
       return true;
     };
+    return true;
   } on Object catch (error) {
     debugPrint('Firebase is not available: $error');
+    return false;
   }
 }

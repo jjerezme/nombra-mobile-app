@@ -48,6 +48,9 @@ class RulesNotifier extends Notifier<List<RenameRule>> {
     }
   }
 
+  /// Replaces all the rules, used when the cloud backup brings a newer list.
+  void replaceAll(List<RenameRule> rules) => _update(rules);
+
   /// Deletes every rule, including the default one.
   void clear() => _update(const []);
 

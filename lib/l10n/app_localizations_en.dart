@@ -581,4 +581,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeOpenFailed => 'The file could not be opened. It may have been moved or deleted.';
+
+  @override
+  String get settingsAccount => 'Account';
+
+  @override
+  String get accountBody => 'Sign in with Google to back up your rules and get them back on another phone.';
+
+  @override
+  String get accountSignIn => 'Continue with Google';
+
+  @override
+  String get accountSignInFailed => 'Could not sign in. Try again.';
+
+  @override
+  String get accountUnavailable => 'Backup is not available in this build.';
+
+  @override
+  String get accountSyncing => 'Backing up your rules…';
+
+  @override
+  String get accountUpToDate => 'Rules backed up';
+
+  @override
+  String get accountError => 'Your rules could not be backed up. Check your connection.';
+
+  @override
+  String get accountRetry => 'Retry';
+
+  @override
+  String get accountSignOut => 'Sign out';
+
+  @override
+  String get accountSignOutHint => 'Your rules stay on this phone and in the cloud.';
+
+  @override
+  String get accountDeleteBackup => 'Delete backup and sign out';
+
+  @override
+  String get accountDeleteBackupHint => 'Removes your rules from the cloud. The ones on this phone are not touched.';
+
+  @override
+  String get accountConfirmDeleteTitle => 'Delete the backup?';
+
+  @override
+  String get accountConfirmDeleteBody =>
+      'Your rules will be removed from the cloud and you will be signed out. The rules on this phone are kept.';
+
+  @override
+  String get accountDeleteFailed => 'The backup could not be deleted. Check your connection.';
 }

@@ -3,7 +3,7 @@
 @AGENTS.md
 
 ## Resumen
-Nombra: app móvil Android hecha con Flutter, Riverpod, go_router y Firebase (Firestore y Crashlytics). Parte de la plantilla `mobile-base`.
+Nombra: app móvil Android hecha con Flutter, Riverpod, go_router y Firebase (Firestore, Auth con Google y Crashlytics). Parte de la plantilla `mobile-base`.
 
 ## Comandos de verificación
 ```bash
@@ -38,7 +38,7 @@ Ejecuta analyze y test antes de dar una tarea por terminada.
 ## Mapa de arquitectura
 - `lib/main.dart`: arranque (`main` y `shareMain`, la hoja de compartir). `lib/app/`: `NombraApp`, rutas y navegación.
 - `lib/core/`: `environment.dart` (flavors), `bootstrap.dart`, `constants/tokens.dart`, `theme/`, `widgets/` comunes.
-- `lib/features/`: `rules/` (reglas, editor), `download/` (inicio, descargas, guardado), `share/` (hoja de compartir), `naming/` (selector de regla y carpeta compartido), `settings/`.
+- `lib/features/`: `rules/` (reglas, editor), `download/` (inicio, descargas, guardado), `share/` (hoja de compartir), `naming/` (selector de regla y carpeta compartido), `account/` (cuenta de Google y respaldo de reglas), `settings/`.
 - `lib/l10n/`: `.arb` (es, en). `android/`: flavors, firma, Firebase y `ShareActivity`. Detalle en `docs/ARCHITECTURE.md`.
 
 ## Reglas vigentes
@@ -48,11 +48,12 @@ Ejecuta analyze y test antes de dar una tarea por terminada.
 - Datos en `shared_preferences` (JSON): [007](docs/decisions/007-persistence.md). Descarga con `background_downloader` y guardado por MediaStore, `minSdk` 29: [008](docs/decisions/008-download-and-save.md).
 - Compartir con `ShareActivity` translúcida y `shareMain`: [009](docs/decisions/009-share-intent.md). Fuentes empaquetadas, sin `google_fonts`: [010](docs/decisions/010-fonts.md). Icono y logo: [012](docs/decisions/012-app-icon.md).
 - Seguridad: solo enlaces `https`, nombres con `safeFileName`, errores sin enlaces (`RedactedError`), sin copias de Android, release `prod` solo con llave de subida: [013](docs/decisions/013-security-hardening.md).
+- Cuenta de Google y respaldo automático de las reglas en Firestore (`users/{uid}`, `firestore.rules`): [014](docs/decisions/014-account-and-backup.md).
 
 ## Qué no hacer
 
 - No uses CLAUDE.md como diario ni dupliques el README.
-- No agregues el SDK web de Firebase ni plugins de Firebase fuera de `firebase_core`, `cloud_firestore` y `firebase_crashlytics` sin preguntar.
+- No agregues el SDK web de Firebase ni plugins de Firebase fuera de `firebase_core`, `cloud_firestore`, `firebase_crashlytics` y `firebase_auth` (con `google_sign_in`) sin preguntar.
 - No versiones `google-services*.json`, `.env`, keystores ni llaves.
 - No dejes reglas de Firestore con escritura libre.
 - No pongas números de estilo, colores ni textos sueltos en las pantallas.

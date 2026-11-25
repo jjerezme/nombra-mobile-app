@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import '../core/environment.dart';
 import '../core/providers.dart';
 import '../core/theme/app_theme.dart';
+import '../features/account/data/backup_sync.dart';
 import '../features/download/data/downloads_notifier.dart';
 import '../features/rules/data/rules_notifier.dart';
 import '../features/settings/app_settings.dart';
@@ -65,6 +66,8 @@ class _NombraAppState extends ConsumerState<NombraApp> with WidgetsBindingObserv
   Widget build(BuildContext context) {
     // Keeps the downloads listener alive so finished downloads are saved wherever the user is.
     ref.listen(downloadsProvider, (previous, next) {});
+    // Keeps the cloud backup of the rules running while someone is signed in.
+    ref.listen(backupSyncProvider, (previous, next) {});
     final settings = ref.watch(settingsProvider);
     return MaterialApp.router(
       onGenerateTitle: (context) => AppEnvironment.current.name,

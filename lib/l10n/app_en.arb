@@ -348,5 +348,21 @@
   "homeActions": "More actions",
   "homeOpen": "Open",
   "homeRemove": "Remove from list",
-  "homeOpenFailed": "The file could not be opened. It may have been moved or deleted."
+  "homeOpenFailed": "The file could not be opened. It may have been moved or deleted.",
+  "settingsAccount": "Account",
+  "accountBody": "Sign in with Google to back up your rules and get them back on another phone.",
+  "accountSignIn": "Continue with Google",
+  "accountSignInFailed": "Could not sign in. Try again.",
+  "accountUnavailable": "Backup is not available in this build.",
+  "accountSyncing": "Backing up your rules…",
+  "accountUpToDate": "Rules backed up",
+  "accountError": "Your rules could not be backed up. Check your connection.",
+  "accountRetry": "Retry",
+  "accountSignOut": "Sign out",
+  "accountSignOutHint": "Your rules stay on this phone and in the cloud.",
+  "accountDeleteBackup": "Delete backup and sign out",
+  "accountDeleteBackupHint": "Removes your rules from the cloud. The ones on this phone are not touched.",
+  "accountConfirmDeleteTitle": "Delete the backup?",
+  "accountConfirmDeleteBody": "Your rules will be removed from the cloud and you will be signed out. The rules on this phone are kept.",
+  "accountDeleteFailed": "The backup could not be deleted. Check your connection."
 }

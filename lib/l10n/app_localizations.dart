@@ -1135,6 +1135,102 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'No se pudo abrir el archivo. Puede que lo hayan movido o borrado.'**
   String get homeOpenFailed;
+
+  /// No description provided for @settingsAccount.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuenta'**
+  String get settingsAccount;
+
+  /// No description provided for @accountBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Inicia sesión con Google para respaldar tus reglas y recuperarlas en otro teléfono.'**
+  String get accountBody;
+
+  /// No description provided for @accountSignIn.
+  ///
+  /// In es, this message translates to:
+  /// **'Continuar con Google'**
+  String get accountSignIn;
+
+  /// No description provided for @accountSignInFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo iniciar sesión. Inténtalo de nuevo.'**
+  String get accountSignInFailed;
+
+  /// No description provided for @accountUnavailable.
+  ///
+  /// In es, this message translates to:
+  /// **'El respaldo no está disponible en esta compilación.'**
+  String get accountUnavailable;
+
+  /// No description provided for @accountSyncing.
+  ///
+  /// In es, this message translates to:
+  /// **'Respaldando tus reglas…'**
+  String get accountSyncing;
+
+  /// No description provided for @accountUpToDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Reglas respaldadas'**
+  String get accountUpToDate;
+
+  /// No description provided for @accountError.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo respaldar tus reglas. Revisa tu conexión.'**
+  String get accountError;
+
+  /// No description provided for @accountRetry.
+  ///
+  /// In es, this message translates to:
+  /// **'Reintentar'**
+  String get accountRetry;
+
+  /// No description provided for @accountSignOut.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrar sesión'**
+  String get accountSignOut;
+
+  /// No description provided for @accountSignOutHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus reglas se quedan en este teléfono y en la nube.'**
+  String get accountSignOutHint;
+
+  /// No description provided for @accountDeleteBackup.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar respaldo y cerrar sesión'**
+  String get accountDeleteBackup;
+
+  /// No description provided for @accountDeleteBackupHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Elimina tus reglas de la nube. Las de este teléfono no se tocan.'**
+  String get accountDeleteBackupHint;
+
+  /// No description provided for @accountConfirmDeleteTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar el respaldo?'**
+  String get accountConfirmDeleteTitle;
+
+  /// No description provided for @accountConfirmDeleteBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se eliminarán tus reglas de la nube y se cerrará la sesión. Las reglas de este teléfono se conservan.'**
+  String get accountConfirmDeleteBody;
+
+  /// No description provided for @accountDeleteFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo borrar el respaldo. Revisa tu conexión.'**
+  String get accountDeleteFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

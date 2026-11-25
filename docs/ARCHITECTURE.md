@@ -15,6 +15,7 @@ Si falta el `google-services.json` del flavor, el arranque sigue sin Firebase y 
 - `naming/`: widgets que comparten Inicio y la hoja de compartir: `RuleSelector`, `DestinationCard`, selector de carpeta.
 - `download/`: Inicio (URL, vista previa del nombre, recientes), `DownloadsNotifier` (cola, progreso, historial; la persistencia está en `DownloadsRepository`; abrir el archivo guardado y quitarlo de la lista), `DownloadEngine` (plugin `background_downloader`) y `FileFinalizer` (renombra y mueve a MediaStore).
 - `share/`: `ShareChannel` (canal con Kotlin), `ShareSheetScreen` y su carga útil (`SharePayload`).
+- `account/`: Ajustes › Cuenta. `AuthGateway` (Google + Firebase Auth), `BackupGateway` (Firestore, `users/{uid}`) y `BackupSync`, que mezcla las reglas al iniciar sesión y después las mantiene respaldadas de forma automática (gana la última escritura). Ver [014](decisions/014-account-and-backup.md).
 
 ## Flujo de una descarga
 1. Inicio o la hoja de compartir arman un `DownloadPlan`: URL (o archivo local), copia de la regla y carpeta de destino.
