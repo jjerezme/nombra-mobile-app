@@ -51,8 +51,10 @@ class RuleSelector extends ConsumerWidget {
           },
           contentPadding: EdgeInsets.zero,
           title: Text(l10n.ruleApply, style: context.text.bodyLarge),
-          subtitle: isApplying ? null : Text(l10n.modeNoneHint),
         ),
+        // Off: a plain note says what happens; on, the chips take its place.
+        if (!isApplying)
+          Text(l10n.modeNoneHint, style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
         // One row of chips that scrolls sideways: a custom pattern, each saved rule and, at the end, "add".
         if (isApplying)
           SingleChildScrollView(

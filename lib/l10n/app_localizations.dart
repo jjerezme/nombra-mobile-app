@@ -188,12 +188,6 @@ abstract class AppLocalizations {
   /// **'Se guardará como'**
   String get homeSavedAs;
 
-  /// No description provided for @homePreviewEmpty.
-  ///
-  /// In es, this message translates to:
-  /// **'Pega una URL para ver el nombre'**
-  String get homePreviewEmpty;
-
   /// No description provided for @homeDownload.
   ///
   /// In es, this message translates to:

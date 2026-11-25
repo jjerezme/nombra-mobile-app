@@ -169,11 +169,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                     RuleSelector(selectedRuleId: target.rule?.id, onAddRule: () => context.push(AppRoutes.newRule)),
                     DestinationCard(path: target.folder.path, onChange: () => _changeFolder(target.folder)),
-                    InfoBox(
-                      label: l10n.homeSavedAs,
-                      value: isValid ? target.fileName : l10n.homePreviewEmpty,
-                      isPlaceholder: !isValid,
-                    ),
+                    // The name is only known once the URL is valid.
+                    if (isValid) InfoBox(label: l10n.homeSavedAs, value: target.fileName),
                     FilledButton(onPressed: () => _download(target), child: Text(l10n.homeDownload)),
                   ],
                 ),

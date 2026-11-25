@@ -87,7 +87,7 @@ void main() {
     expect(find.text('URL del archivo'), findsOneWidget);
     expect(find.text('Fecha + nombre'), findsOneWidget);
     expect(find.text('Aún no hay descargas', skipOffstage: false), findsOneWidget);
-    expect(find.text('Pega una URL para ver el nombre'), findsOneWidget);
+    expect(find.byType(InfoBox), findsNothing);
   });
 
   group('a saved download in the list', () {
@@ -311,6 +311,8 @@ void main() {
     await tester.tap(find.text('Aplicar una regla'));
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).mode, NamingMode.quick);
+    // The note is replaced by the rule chips.
+    expect(find.text('El archivo se guarda con su nombre original, sin aplicar ninguna regla.'), findsNothing);
     expect(find.widgetWithText(PillChoice, 'Personalizado'), findsOneWidget);
     expect(find.widgetWithText(PillChoice, 'Fecha + nombre'), findsOneWidget);
   });
@@ -387,8 +389,15 @@ void main() {
     expect(find.byType(DestinationCard), findsOneWidget); // rule editor
   });
 
-  testWidgets('Home shows the name preview below the folder', (tester) async {
+  testWidgets('the name preview is hidden until the URL is valid, then shows below the folder', (tester) async {
     await pumpApp(tester, env);
+    expect(find.byType(InfoBox), findsNothing);
+    await tester.enterText(find.byType(TextField).first, 'esto no es una url');
+    await tester.pump();
+    expect(find.byType(InfoBox), findsNothing);
+
+    await tester.enterText(find.byType(TextField).first, _url);
+    await tester.pump();
     final folder = tester.getTopLeft(find.byType(DestinationCard)).dy;
     final preview = tester.getTopLeft(find.byType(InfoBox)).dy;
     expect(preview, greaterThan(folder));

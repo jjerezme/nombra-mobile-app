@@ -58,9 +58,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeSavedAs => 'Se guardará como';
 
   @override
-  String get homePreviewEmpty => 'Pega una URL para ver el nombre';
-
-  @override
   String get homeDownload => 'Descargar';
 
   @override
