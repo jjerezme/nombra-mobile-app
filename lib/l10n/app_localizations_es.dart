@@ -644,4 +644,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get accountBusyDeleting => 'Borrando el respaldo…';
+
+  @override
+  String get editorExtensionLocked => 'La extensión original del archivo se conserva y no se puede editar.';
 }

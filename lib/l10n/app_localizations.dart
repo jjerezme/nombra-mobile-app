@@ -1255,6 +1255,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Borrando el respaldo…'**
   String get accountBusyDeleting;
+
+  /// No description provided for @editorExtensionLocked.
+  ///
+  /// In es, this message translates to:
+  /// **'La extensión original del archivo se conserva y no se puede editar.'**
+  String get editorExtensionLocked;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

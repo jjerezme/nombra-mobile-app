@@ -688,6 +688,23 @@ void main() {
 
     List<String> quickTokens(ProviderContainer container) => container.read(settingsProvider).quickTokens;
 
+    testWidgets('the .ext is a locked token: it says so, cannot be edited and has its own color', (tester) async {
+      await openQuick(tester);
+      final locked = find.ancestor(of: find.text('.ext'), matching: find.byType(Container)).first;
+      final decoration = tester.widget<Container>(locked).decoration! as BoxDecoration;
+      final scheme = Theme.of(tester.element(find.text('.ext'))).colorScheme;
+      expect(decoration.color, scheme.surfaceContainerHighest);
+      expect(find.descendant(of: locked, matching: find.byIcon(Icons.lock_outline)), findsOneWidget);
+      expect(find.byTooltip('La extensión original del archivo se conserva y no se puede editar.'), findsOneWidget);
+
+      // Tapping it changes nothing: the pattern stays the same and no editor opens.
+      final before = tester.element(find.byType(Scaffold).first);
+      await tester.tap(find.text('.ext'));
+      await tester.pumpAndSettle();
+      expect(find.byType(BottomSheet), findsNothing);
+      expect(before.mounted, isTrue);
+    });
+
     testWidgets('the tokens, the .ext and the delete button share one center line', (tester) async {
       await openQuick(tester);
       final backspace = find.byIcon(Icons.backspace_outlined);
@@ -837,6 +854,18 @@ void main() {
       expect(find.text('- guion'), findsOneWidget);
       expect(find.byType(SegmentedToggle<String>), findsOneWidget);
       expect(find.byType(SegmentedToggle<CaseMode>), findsOneWidget);
+    });
+
+    testWidgets('the case options stay on one line on a narrow screen', (tester) async {
+      await pumpApp(tester, env);
+      await openEditor(tester);
+      // Narrower than a phone, so the three options do not fit at their natural size.
+      tester.view.physicalSize = const Size(840, 4000);
+      await tester.pumpAndSettle();
+      final upper = tester.getSize(find.text('MAYÚSCULAS')).height;
+      final lower = tester.getSize(find.text('minúsculas')).height;
+      expect(upper, lessThan(AppFontSize.lg * 1.8), reason: 'MAYÚSCULAS wraps to a second line');
+      expect(upper, closeTo(lower, 1));
     });
   });
 

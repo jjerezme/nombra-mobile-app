@@ -56,3 +56,7 @@ Primera sección de Ajustes. Sin sesión: una frase que explica el respaldo y el
 - El estado del respaldo es una región viva: el lector de pantalla anuncia el cambio. La inicial del avatar es decorativa y se excluye.
 - Un botón solo con icono lleva `tooltip` o `Semantics`; las áreas táctiles son de 48 dp.
 - Mientras corre una acción de la cuenta (iniciar sesión, cerrar sesión, borrar el respaldo) arriba de la tarjeta aparece una barra de progreso con el nombre de la acción («Iniciando sesión…»), el resto se atenúa (`AppOpacity.disabled`) y no recibe toques. La barra es una región viva para el lector de pantalla.
+
+## Patrón de una regla
+- La extensión `.ext` va al final del patrón como un token bloqueado: misma forma que un token, pero en gris neutro (`surfaceContainerHighest`), con un candado, y no se edita ni se borra. Al tocarla un tooltip explica que la extensión original se conserva.
+- `SegmentedToggle`: cada opción queda en una sola línea; si no cabe, el texto se reduce un poco en vez de partirse en dos.

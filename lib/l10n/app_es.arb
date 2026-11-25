@@ -368,5 +368,6 @@
   "ruleChoicesLabel": "Reglas de nombrado",
   "accountBusySigningIn": "Iniciando sesión…",
   "accountBusySigningOut": "Cerrando sesión…",
-  "accountBusyDeleting": "Borrando el respaldo…"
+  "accountBusyDeleting": "Borrando el respaldo…",
+  "editorExtensionLocked": "La extensión original del archivo se conserva y no se puede editar."
 }

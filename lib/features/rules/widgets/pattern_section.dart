@@ -95,7 +95,7 @@ class PatternSection extends StatelessWidget {
                             ? () => _edit(context, i)
                             : null,
                       ),
-                    Text('.ext', style: context.monoStyles.mono.copyWith(color: colors.onSurfaceVariant)),
+                    const _LockedTokenChip(label: '.ext'),
                   ],
                 ),
               ),
@@ -282,6 +282,44 @@ class _DigitsSheetState extends State<_DigitsSheet> {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// A token that cannot be edited or removed (the file extension, which is always kept): same shape as a token, in the
+/// neutral color of a disabled one, with a lock.
+class _LockedTokenChip extends StatelessWidget {
+  const _LockedTokenChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final message = AppLocalizations.of(context).editorExtensionLocked;
+    return Tooltip(
+      message: message,
+      triggerMode: TooltipTriggerMode.tap,
+      child: Semantics(
+        label: '$label. $message',
+        excludeSemantics: true,
+        child: Container(
+          constraints: const BoxConstraints(minWidth: AppIconSize.md),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+          decoration: BoxDecoration(
+            color: colors.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(AppRadius.md),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            spacing: AppSpacing.xs,
+            children: [
+              Text(label, style: context.monoStyles.mono.copyWith(color: colors.onSurfaceVariant)),
+              Icon(Icons.lock_outline, size: AppIconSize.sm, color: colors.onSurfaceVariant),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

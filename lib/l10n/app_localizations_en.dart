@@ -642,4 +642,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountBusyDeleting => 'Deleting the backup…';
+
+  @override
+  String get editorExtensionLocked => 'The original file extension is kept and cannot be edited.';
 }
