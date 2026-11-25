@@ -96,3 +96,8 @@ abstract final class AppLayout {
   /// Space between buttons in a row.
   static const double buttonGap = AppSpacing.md;
 }
+
+abstract final class AppOpacity {
+  /// Content that cannot be used for now (an action is running).
+  static const double disabled = 0.5;
+}

@@ -139,21 +139,33 @@ class BackupSync extends Notifier<SyncState> {
     await _start(uid);
   }
 
+  /// Runs [body] while the screen shows [action] as in progress.
+  Future<void> _perform(AccountAction action, Future<void> Function() body) async {
+    state = state.copyWith(action: action);
+    try {
+      await body();
+    } finally {
+      if (ref.mounted) state = state.copyWith(clearAction: true);
+    }
+  }
+
   /// Opens the Google account picker. Throws [SignInException] when it is cancelled or fails.
-  Future<void> signIn() => ref.read(authGatewayProvider).signInWithGoogle();
+  Future<void> signIn() => _perform(AccountAction.signIn, () async {
+    await ref.read(authGatewayProvider).signInWithGoogle();
+  });
 
   /// Leaves the account; the backup stays in the cloud and the local rules stay on the device.
-  Future<void> signOut() => ref.read(authGatewayProvider).signOut();
+  Future<void> signOut() => _perform(AccountAction.signOut, () => ref.read(authGatewayProvider).signOut());
 
   /// Deletes the backup from the cloud and leaves the account; the local rules stay on the device.
-  Future<void> deleteBackupAndSignOut() async {
+  Future<void> deleteBackupAndSignOut() => _perform(AccountAction.deleteBackup, () async {
     final uid = _uid;
     if (uid != null) {
       _stop();
       await _gateway.delete(uid);
     }
     await ref.read(authGatewayProvider).signOut();
-  }
+  });
 }
 
 final backupSyncProvider = NotifierProvider<BackupSync, SyncState>(BackupSync.new);

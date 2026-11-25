@@ -1237,6 +1237,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Reglas de nombrado'**
   String get ruleChoicesLabel;
+
+  /// No description provided for @accountBusySigningIn.
+  ///
+  /// In es, this message translates to:
+  /// **'Iniciando sesión…'**
+  String get accountBusySigningIn;
+
+  /// No description provided for @accountBusySigningOut.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrando sesión…'**
+  String get accountBusySigningOut;
+
+  /// No description provided for @accountBusyDeleting.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrando el respaldo…'**
+  String get accountBusyDeleting;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

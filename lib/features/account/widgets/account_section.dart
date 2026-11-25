@@ -14,6 +14,9 @@ import '../data/backup_sync.dart';
 import '../domain/account_models.dart';
 
 /// Settings › Account: sign in with Google and see the state of the automatic backup of the rules.
+///
+/// While an action runs (signing in, signing out, deleting the backup) a progress bar with the name of the action
+/// shows at the top of the card and the buttons are disabled, so nothing is pressed twice.
 class AccountSection extends ConsumerWidget {
   const AccountSection({super.key});
 
@@ -22,56 +25,93 @@ class AccountSection extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final isAvailable = ref.watch(authGatewayProvider).isAvailable;
     final user = ref.watch(accountUserProvider).value;
+    final action = ref.watch(backupSyncProvider.select((sync) => sync.action));
     return AppSection(
       title: l10n.settingsAccount,
       child: AppCard.stack(
         children: [
+          if (action != null) _Progress(action: action),
           if (!isAvailable)
             InfoBox.note(l10n.accountUnavailable)
-          else if (user == null)
-            const _SignedOut()
           else
-            _SignedIn(user: user),
+            // Disabled and dimmed while an action runs.
+            AbsorbPointer(
+              absorbing: action != null,
+              child: Opacity(
+                opacity: action != null ? AppOpacity.disabled : 1,
+                child: user == null ? const _SignedOut() : _SignedIn(user: user),
+              ),
+            ),
         ],
       ),
     );
   }
 }
 
-class _SignedOut extends ConsumerStatefulWidget {
-  const _SignedOut();
+/// A bar and the name of what is running.
+class _Progress extends StatelessWidget {
+  const _Progress({required this.action});
+
+  final AccountAction action;
 
   @override
-  ConsumerState<_SignedOut> createState() => _SignedOutState();
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final text = switch (action) {
+      AccountAction.signIn => l10n.accountBusySigningIn,
+      AccountAction.signOut => l10n.accountBusySigningOut,
+      AccountAction.deleteBackup => l10n.accountBusyDeleting,
+    };
+    return Semantics(
+      liveRegion: true,
+      label: text,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: AppSpacing.sm,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(AppRadius.sm),
+            child: const LinearProgressIndicator(minHeight: AppSize.progress),
+          ),
+          ExcludeSemantics(
+            child: Text(text, style: context.text.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant)),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-class _SignedOutState extends ConsumerState<_SignedOut> {
-  bool _isSigningIn = false;
+class _SignedOut extends ConsumerWidget {
+  const _SignedOut();
 
-  Future<void> _signIn() async {
+  Future<void> _signIn(BuildContext context, WidgetRef ref) async {
     final messenger = ScaffoldMessenger.of(context);
     final failed = AppLocalizations.of(context).accountSignInFailed;
-    setState(() => _isSigningIn = true);
     try {
       await ref.read(backupSyncProvider.notifier).signIn();
     } on SignInException catch (error) {
       if (error.failure == SignInFailure.failed) messenger.showSnackBar(SnackBar(content: Text(failed)));
-    } finally {
-      if (mounted) setState(() => _isSigningIn = false);
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: AppLayout.sectionGap,
       children: [
         Text(l10n.accountBody, style: context.text.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant)),
-        FilledButton.icon(
-          onPressed: _isSigningIn ? null : _signIn,
-          icon: const Icon(Icons.login, size: AppIconSize.base),
+        // The Google "G" keeps its own colors, so the button is neutral (outlined), not filled.
+        OutlinedButton.icon(
+          onPressed: () => _signIn(context, ref),
+          icon: Image.asset(
+            'assets/images/google_g.png',
+            width: AppIconSize.md,
+            height: AppIconSize.md,
+            excludeFromSemantics: true,
+          ),
           label: Text(l10n.accountSignIn),
         ),
       ],

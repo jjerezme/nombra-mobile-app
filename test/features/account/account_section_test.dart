@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
@@ -145,5 +147,66 @@ void main() {
     await tester.pumpAndSettle();
     expect(backup.deleted, [testUser.uid]);
     expect(find.text('Continuar con Google'), findsOneWidget);
+  });
+
+  group('while an action runs', () {
+    testWidgets('signing in shows progress with its name and disables the button until it ends', (tester) async {
+      final auth = FakeAuthGateway()..gate = Completer<void>();
+      await pumpSettings(tester, env, auth: auth, backup: backup);
+      await tester.tap(find.text('Continuar con Google'));
+      await tester.pump();
+      expect(find.byType(LinearProgressIndicator), findsOneWidget);
+      expect(find.text('Iniciando sesión…'), findsOneWidget);
+      expect(tester.widget<AbsorbPointer>(find.byType(AbsorbPointer).last).absorbing, isTrue);
+
+      auth.gate!.complete();
+      await tester.pumpAndSettle();
+      expect(find.byType(LinearProgressIndicator), findsNothing);
+      expect(find.text('Iniciando sesión…'), findsNothing);
+      expect(find.text('Ana Pérez'), findsOneWidget);
+    });
+
+    testWidgets('signing out shows progress and then the signed-out view', (tester) async {
+      final auth = FakeAuthGateway(signedIn: testUser)..gate = Completer<void>();
+      await pumpSettings(tester, env, auth: auth, backup: backup);
+      await tester.tap(find.text('Cerrar sesión'));
+      await tester.pump();
+      expect(find.text('Cerrando sesión…'), findsOneWidget);
+      expect(find.byType(LinearProgressIndicator), findsOneWidget);
+
+      auth.gate!.complete();
+      await tester.pumpAndSettle();
+      expect(find.byType(LinearProgressIndicator), findsNothing);
+      expect(find.text('Continuar con Google'), findsOneWidget);
+    });
+
+    testWidgets('deleting the backup shows progress, and a failure ends it with a message', (tester) async {
+      backup
+        ..deleteGate = Completer<void>()
+        ..failDelete = true;
+      await pumpSettings(
+        tester,
+        env,
+        auth: FakeAuthGateway(signedIn: testUser),
+        backup: backup,
+      );
+      await tester.tap(find.text('Borrar respaldo y cerrar sesión'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Eliminar'));
+      await tester.pump();
+      expect(find.text('Borrando el respaldo…'), findsOneWidget);
+      expect(find.byType(LinearProgressIndicator), findsOneWidget);
+
+      backup.deleteGate!.complete();
+      await tester.pumpAndSettle();
+      expect(find.byType(LinearProgressIndicator), findsNothing);
+      expect(find.text('No se pudo borrar el respaldo. Revisa tu conexión.'), findsOneWidget);
+    });
+  });
+
+  testWidgets('the Google button carries the Google G logo', (tester) async {
+    await pumpSettings(tester, env, auth: FakeAuthGateway(), backup: backup);
+    final image = tester.widget<Image>(find.descendant(of: find.byType(OutlinedButton), matching: find.byType(Image)));
+    expect((image.image as AssetImage).assetName, 'assets/images/google_g.png');
   });
 }

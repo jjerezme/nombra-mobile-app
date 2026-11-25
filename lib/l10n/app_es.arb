@@ -365,5 +365,8 @@
   "accountConfirmDeleteTitle": "¿Borrar el respaldo?",
   "accountConfirmDeleteBody": "Se eliminarán tus reglas de la nube y se cerrará la sesión. Las reglas de este teléfono se conservan.",
   "accountDeleteFailed": "No se pudo borrar el respaldo. Revisa tu conexión.",
-  "ruleChoicesLabel": "Reglas de nombrado"
+  "ruleChoicesLabel": "Reglas de nombrado",
+  "accountBusySigningIn": "Iniciando sesión…",
+  "accountBusySigningOut": "Cerrando sesión…",
+  "accountBusyDeleting": "Borrando el respaldo…"
 }

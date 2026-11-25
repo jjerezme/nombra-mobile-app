@@ -635,4 +635,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ruleChoicesLabel => 'Reglas de nombrado';
+
+  @override
+  String get accountBusySigningIn => 'Iniciando sesión…';
+
+  @override
+  String get accountBusySigningOut => 'Cerrando sesión…';
+
+  @override
+  String get accountBusyDeleting => 'Borrando el respaldo…';
 }

@@ -633,4 +633,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ruleChoicesLabel => 'Naming rules';
+
+  @override
+  String get accountBusySigningIn => 'Signing in…';
+
+  @override
+  String get accountBusySigningOut => 'Signing out…';
+
+  @override
+  String get accountBusyDeleting => 'Deleting the backup…';
 }

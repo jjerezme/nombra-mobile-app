@@ -20,6 +20,9 @@ class FakeAuthGateway implements AuthGateway {
   /// What the next [signInWithGoogle] does when it should not succeed.
   SignInFailure? failWith;
 
+  /// When set, sign-in and sign-out wait for it, so a test can look at the screen while they run.
+  Completer<void>? gate;
+
   @override
   AccountUser? get currentUser => _current;
 
@@ -33,6 +36,7 @@ class FakeAuthGateway implements AuthGateway {
 
   @override
   Future<AccountUser> signInWithGoogle() async {
+    await gate?.future;
     final failure = failWith;
     if (failure != null) throw SignInException(failure);
     emit(testUser);
@@ -40,7 +44,10 @@ class FakeAuthGateway implements AuthGateway {
   }
 
   @override
-  Future<void> signOut() async => emit(null);
+  Future<void> signOut() async {
+    await gate?.future;
+    emit(null);
+  }
 }
 
 class FakeBackupGateway implements BackupGateway {
@@ -51,6 +58,9 @@ class FakeBackupGateway implements BackupGateway {
   bool failSave = false;
   bool failFetch = false;
   bool failDelete = false;
+
+  /// When set, deleting waits for it.
+  Completer<void>? deleteGate;
 
   /// A write made from another device: it is stored and reported to the listeners.
   void remoteWrite(String uid, String rulesJson, {String writer = 'other-device'}) {
@@ -77,6 +87,7 @@ class FakeBackupGateway implements BackupGateway {
 
   @override
   Future<void> delete(String uid) async {
+    await deleteGate?.future;
     if (failDelete) throw StateError('offline');
     deleted.add(uid);
     stored.remove(uid);

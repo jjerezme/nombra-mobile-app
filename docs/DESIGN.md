@@ -49,9 +49,10 @@ Cada descarga terminada o fallida tiene un menú de tres puntos (`Más acciones`
 Todo lo que el usuario escribe o elige (texto fijo, dígitos del número, carpeta) se pide en una hoja inferior con `showInputSheet` / `SheetScaffold` (título, contenido y `SheetActions`), que cubre toda la pantalla incluida la barra de navegación. Los diálogos centrados quedan solo para preguntas de sí o no (`showConfirmDialog`).
 
 ## Cuenta (Ajustes)
-Primera sección de Ajustes. Sin sesión: una frase que explica el respaldo y el botón **Continuar con Google**. Con sesión: inicial, nombre y correo, el estado del respaldo (**Respaldando tus reglas…**, **Reglas respaldadas** o el error con **Reintentar**), **Cerrar sesión** y **Borrar respaldo y cerrar sesión** (destructiva, con confirmación). Si la compilación no tiene Firebase, un `InfoBox.note` lo explica y no hay botón.
+Primera sección de Ajustes. Sin sesión: una frase que explica el respaldo y el botón **Continuar con Google** (contorno, con la «G» de Google en sus colores; `assets/images/google_g.png`). Con sesión: inicial, nombre y correo, el estado del respaldo (**Respaldando tus reglas…**, **Reglas respaldadas** o el error con **Reintentar**), **Cerrar sesión** y **Borrar respaldo y cerrar sesión** (destructiva, con confirmación). Si la compilación no tiene Firebase, un `InfoBox.note` lo explica y no hay botón.
 
 ## Accesibilidad
 - Los chips de reglas forman un grupo con etiqueta (**Reglas de nombrado**); cada chip dice que es un botón y si está seleccionado.
 - El estado del respaldo es una región viva: el lector de pantalla anuncia el cambio. La inicial del avatar es decorativa y se excluye.
 - Un botón solo con icono lleva `tooltip` o `Semantics`; las áreas táctiles son de 48 dp.
+- Mientras corre una acción de la cuenta (iniciar sesión, cerrar sesión, borrar el respaldo) arriba de la tarjeta aparece una barra de progreso con el nombre de la acción («Iniciando sesión…»), el resto se atenúa (`AppOpacity.disabled`) y no recibe toques. La barra es una región viva para el lector de pantalla.

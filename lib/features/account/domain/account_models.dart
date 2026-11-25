@@ -25,12 +25,24 @@ class RulesBackup {
 /// Where the automatic backup stands.
 enum SyncPhase { off, syncing, upToDate, error }
 
+/// What the person asked for and is still running; the account screen shows it with a progress indicator.
+enum AccountAction { signIn, signOut, deleteBackup }
+
 class SyncState {
-  const SyncState({this.phase = SyncPhase.off, this.lastSyncedAt});
+  const SyncState({this.phase = SyncPhase.off, this.lastSyncedAt, this.action});
 
   final SyncPhase phase;
   final DateTime? lastSyncedAt;
 
-  SyncState copyWith({SyncPhase? phase, DateTime? lastSyncedAt}) =>
-      SyncState(phase: phase ?? this.phase, lastSyncedAt: lastSyncedAt ?? this.lastSyncedAt);
+  /// Null when nothing is running.
+  final AccountAction? action;
+
+  bool get isBusy => action != null;
+
+  SyncState copyWith({SyncPhase? phase, DateTime? lastSyncedAt, AccountAction? action, bool clearAction = false}) =>
+      SyncState(
+        phase: phase ?? this.phase,
+        lastSyncedAt: lastSyncedAt ?? this.lastSyncedAt,
+        action: clearAction ? null : action ?? this.action,
+      );
 }

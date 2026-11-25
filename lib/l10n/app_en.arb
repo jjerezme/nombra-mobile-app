@@ -365,5 +365,8 @@
   "accountConfirmDeleteTitle": "Delete the backup?",
   "accountConfirmDeleteBody": "Your rules will be removed from the cloud and you will be signed out. The rules on this phone are kept.",
   "accountDeleteFailed": "The backup could not be deleted. Check your connection.",
-  "ruleChoicesLabel": "Naming rules"
+  "ruleChoicesLabel": "Naming rules",
+  "accountBusySigningIn": "Signing in…",
+  "accountBusySigningOut": "Signing out…",
+  "accountBusyDeleting": "Deleting the backup…"
 }
