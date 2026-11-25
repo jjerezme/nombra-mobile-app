@@ -645,4 +645,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorExtensionLocked => 'The original file extension is kept and cannot be edited.';
+
+  @override
+  String get settingsLegal => 'Legal';
+
+  @override
+  String get legalTerms => 'Terms and conditions';
+
+  @override
+  String get legalPrivacy => 'Privacy policy';
+
+  @override
+  String get accountLegalNote => 'By continuing you accept the terms and the privacy policy.';
+
+  @override
+  String get backTooltip => 'Back';
 }

@@ -38,7 +38,7 @@ Ejecuta analyze y test antes de dar una tarea por terminada.
 ## Mapa de arquitectura
 - `lib/main.dart`: arranque (`main` y `shareMain`, la hoja de compartir). `lib/app/`: `NombraApp`, rutas y navegación.
 - `lib/core/`: `environment.dart` (flavors), `bootstrap.dart`, `constants/tokens.dart`, `theme/`, `widgets/` comunes.
-- `lib/features/`: `rules/` (reglas, editor), `download/` (inicio, descargas, guardado), `share/` (hoja de compartir), `naming/` (selector de regla y carpeta compartido), `account/` (cuenta de Google y respaldo de reglas), `settings/`.
+- `lib/features/`: `rules/` (reglas, editor), `download/` (inicio, descargas, guardado), `share/` (hoja de compartir), `naming/` (selector de regla y carpeta compartido), `account/` (cuenta de Google y respaldo de reglas), `legal/` (términos y privacidad), `settings/`.
 - `lib/l10n/`: `.arb` (es, en). `android/`: flavors, firma, Firebase y `ShareActivity`. Detalle en `docs/ARCHITECTURE.md`.
 
 ## Reglas vigentes
@@ -50,6 +50,7 @@ Ejecuta analyze y test antes de dar una tarea por terminada.
 - Seguridad: solo enlaces `https`, nombres con `safeFileName`, errores sin enlaces (`RedactedError`), sin copias de Android, release `prod` solo con llave de subida: [013](docs/decisions/013-security-hardening.md).
 - Cuenta de Google y respaldo automático de las reglas en Firestore (`users/{uid}`, `firestore.rules`): [014](docs/decisions/014-account-and-backup.md).
 - Material 3 primero: componente estándar con el estilo en el tema; los de `core/widgets/` son envoltorios finos: [015](docs/decisions/015-material-3-first.md).
+- Términos y política de privacidad: un solo texto en `lib/features/legal/domain/` para la app y la web (`dart run scripts/build_legal.dart` → `web/`): [016](docs/decisions/016-legal-texts.md).
 
 ## Qué no hacer
 

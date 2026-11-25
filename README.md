@@ -67,3 +67,13 @@ docs/          gitflow, arquitectura, build y decisiones
 - [`STANDARD.md`](STANDARD.md): estándar del proyecto.
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · [`docs/BUILD.md`](docs/BUILD.md) · [`docs/GITFLOW.md`](docs/GITFLOW.md)
 - [`CLAUDE.md`](CLAUDE.md) y [`AGENTS.md`](AGENTS.md): instrucciones para agentes de IA.
+
+## Web (términos y política de privacidad)
+El texto legal está en `lib/features/legal/domain/` y se muestra en la app (Ajustes › Legal). La web de `web/` se genera desde ese mismo texto:
+
+```bash
+dart run scripts/build_legal.dart
+firebase deploy --only hosting --project nombra-prod
+```
+
+Queda en `https://nombra-prod.web.app/terms` y `/privacy` (en inglés, `/en/terms` y `/en/privacy`).

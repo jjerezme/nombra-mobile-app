@@ -369,5 +369,10 @@
   "accountBusySigningIn": "Iniciando sesión…",
   "accountBusySigningOut": "Cerrando sesión…",
   "accountBusyDeleting": "Borrando el respaldo…",
-  "editorExtensionLocked": "La extensión original del archivo se conserva y no se puede editar."
+  "editorExtensionLocked": "La extensión original del archivo se conserva y no se puede editar.",
+  "settingsLegal": "Legal",
+  "legalTerms": "Términos y condiciones",
+  "legalPrivacy": "Política de privacidad",
+  "accountLegalNote": "Al continuar aceptas los términos y la política de privacidad.",
+  "backTooltip": "Volver"
 }

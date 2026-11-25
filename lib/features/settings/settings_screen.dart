@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../../app/router.dart';
 import '../../core/constants/tokens.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/app_card.dart';
@@ -140,6 +142,23 @@ class SettingsScreen extends ConsumerWidget {
                             notifier.forgetRememberedRules();
                           },
                         ),
+                      ),
+                    ],
+                  ),
+                ),
+                AppSection(
+                  title: l10n.settingsLegal,
+                  child: AppCard.stack(
+                    children: [
+                      ActionRow(
+                        icon: Icons.description_outlined,
+                        title: l10n.legalTerms,
+                        onTap: () => context.push(AppRoutes.terms),
+                      ),
+                      ActionRow(
+                        icon: Icons.privacy_tip_outlined,
+                        title: l10n.legalPrivacy,
+                        onTap: () => context.push(AppRoutes.privacy),
                       ),
                     ],
                   ),

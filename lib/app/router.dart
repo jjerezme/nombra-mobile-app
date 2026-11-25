@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../core/conflict_prompt.dart';
 import '../features/download/home_screen.dart';
+import '../features/legal/domain/legal_models.dart';
+import '../features/legal/legal_screen.dart';
 import '../features/rules/rule_editor_screen.dart';
 import '../features/rules/rules_screen.dart';
 import '../features/settings/settings_screen.dart';
@@ -14,6 +16,8 @@ abstract final class AppRoutes {
   static const String settings = '/settings';
   static const String newRule = '/rules/new';
   static const String editRule = '/rules/:id';
+  static const String terms = '/legal/terms';
+  static const String privacy = '/legal/privacy';
 
   /// Location of the editor for the rule with [id].
   static String rule(String id) => '/rules/${Uri.encodeComponent(id)}';
@@ -48,6 +52,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.editRule,
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state) => RuleEditorScreen(ruleId: state.pathParameters['id']),
+      ),
+      GoRoute(
+        path: AppRoutes.terms,
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => const LegalScreen(kind: LegalKind.terms),
+      ),
+      GoRoute(
+        path: AppRoutes.privacy,
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => const LegalScreen(kind: LegalKind.privacy),
       ),
     ],
   );

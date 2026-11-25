@@ -1,0 +1,100 @@
+/* Static styles of the legal pages. Colors follow the app theme (lib/core/theme/app_theme.dart). */
+:root {
+  --primary: #0b6e5f;
+  --on-surface: #15171a;
+  --on-surface-variant: #4a5058;
+  --surface: #ffffff;
+  --page: #f5f6f4;
+  --outline: #d5d9d6;
+  --primary-container: #e1efeb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #5fd0bc;
+    --on-surface: #e6e9e7;
+    --on-surface-variant: #b3bab6;
+    --surface: #1a1d1f;
+    --page: #121415;
+    --outline: #3b4140;
+    --primary-container: #0b4a40;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--on-surface);
+  font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+header, main, footer {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+
+nav a {
+  color: var(--on-surface-variant);
+  text-decoration: none;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+nav a[aria-current="page"] {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  font-weight: 600;
+}
+
+main {
+  background: var(--surface);
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  padding: 1.5rem 1.25rem 2rem;
+  margin-top: 0.5rem;
+}
+
+h1 { font-size: 1.75rem; line-height: 1.25; margin: 0 0 0.25rem; }
+h2 { font-size: 1.125rem; margin: 1.75rem 0 0.5rem; }
+
+.updated { color: var(--on-surface-variant); margin: 0 0 1.25rem; font-size: 0.9rem; }
+.intro { margin-top: 0; }
+
+p, li { margin: 0.5rem 0; }
+ul { padding-left: 1.25rem; }
+
+a { color: var(--primary); }
+a:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+
+footer { color: var(--on-surface-variant); font-size: 0.9rem; }
+
+@media (min-width: 40rem) {
+  main { padding: 2rem 2.25rem 2.5rem; }
+}

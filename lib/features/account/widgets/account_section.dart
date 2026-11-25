@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../app/router.dart';
 import '../../../core/constants/tokens.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/app_card.dart';
@@ -113,6 +115,15 @@ class _SignedOut extends ConsumerWidget {
             excludeFromSemantics: true,
           ),
           label: Text(l10n.accountSignIn),
+        ),
+        // Signing in means accepting the terms and the privacy policy: both are one tap away.
+        Text(l10n.accountLegalNote, style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
+        Wrap(
+          alignment: WrapAlignment.center,
+          children: [
+            TextButton(onPressed: () => context.push(AppRoutes.terms), child: Text(l10n.legalTerms)),
+            TextButton(onPressed: () => context.push(AppRoutes.privacy), child: Text(l10n.legalPrivacy)),
+          ],
         ),
       ],
     );

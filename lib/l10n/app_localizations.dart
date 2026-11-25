@@ -1261,6 +1261,36 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'La extensión original del archivo se conserva y no se puede editar.'**
   String get editorExtensionLocked;
+
+  /// No description provided for @settingsLegal.
+  ///
+  /// In es, this message translates to:
+  /// **'Legal'**
+  String get settingsLegal;
+
+  /// No description provided for @legalTerms.
+  ///
+  /// In es, this message translates to:
+  /// **'Términos y condiciones'**
+  String get legalTerms;
+
+  /// No description provided for @legalPrivacy.
+  ///
+  /// In es, this message translates to:
+  /// **'Política de privacidad'**
+  String get legalPrivacy;
+
+  /// No description provided for @accountLegalNote.
+  ///
+  /// In es, this message translates to:
+  /// **'Al continuar aceptas los términos y la política de privacidad.'**
+  String get accountLegalNote;
+
+  /// No description provided for @backTooltip.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver'**
+  String get backTooltip;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

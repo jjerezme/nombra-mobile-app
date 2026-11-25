@@ -369,5 +369,10 @@
   "accountBusySigningIn": "Signing in…",
   "accountBusySigningOut": "Signing out…",
   "accountBusyDeleting": "Deleting the backup…",
-  "editorExtensionLocked": "The original file extension is kept and cannot be edited."
+  "editorExtensionLocked": "The original file extension is kept and cannot be edited.",
+  "settingsLegal": "Legal",
+  "legalTerms": "Terms and conditions",
+  "legalPrivacy": "Privacy policy",
+  "accountLegalNote": "By continuing you accept the terms and the privacy policy.",
+  "backTooltip": "Back"
 }
