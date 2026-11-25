@@ -303,7 +303,7 @@ void main() {
     final clean = await TestEnvironment.create(preferences: storedRules(sampleRules()));
     final container = await pumpApp(tester, clean);
     expect(container.read(settingsProvider).mode, NamingMode.none);
-    expect(tester.widget<CheckboxListTile>(find.byType(CheckboxListTile)).value, isFalse);
+    expect(tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value, isFalse);
     expect(find.byType(PillChoice), findsNothing);
     expect(find.text('El archivo se guarda con su nombre original, sin aplicar ninguna regla.'), findsOneWidget);
 

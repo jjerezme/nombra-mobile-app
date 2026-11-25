@@ -12,7 +12,7 @@ import '../../rules/domain/name_resolver.dart';
 import '../../rules/widgets/pattern_section.dart';
 import '../../settings/app_settings.dart';
 
-/// How the file is named: a checkbox to apply a rule or keep the original name and, when on, one row of chips (custom
+/// How the file is named: a switch to apply a rule or keep the original name and, when on, one row of chips (custom
 /// pattern, saved rules, add). Shared by Home and the share sheet.
 class RuleSelector extends ConsumerWidget {
   const RuleSelector({super.key, this.selectedRuleId, this.onAddRule, this.onRuleSelected});
@@ -39,10 +39,10 @@ class RuleSelector extends ConsumerWidget {
       spacing: AppLayout.sectionGap,
       children: [
         // Off: the file keeps its original name. On: it is named by a custom pattern or by one of the saved rules.
-        CheckboxListTile(
+        SwitchListTile(
           value: isApplying,
           onChanged: (value) {
-            if (value ?? false) {
+            if (value) {
               final lastRule = rules.where((rule) => rule.id == settings.lastRuleId).firstOrNull;
               lastRule == null ? notifier.setMode(NamingMode.quick) : notifier.chooseRule(lastRule.id);
             } else {
@@ -50,7 +50,6 @@ class RuleSelector extends ConsumerWidget {
             }
           },
           contentPadding: EdgeInsets.zero,
-          controlAffinity: ListTileControlAffinity.leading,
           title: Text(l10n.ruleApply, style: context.text.bodyLarge),
           subtitle: isApplying ? null : Text(l10n.modeNoneHint),
         ),
