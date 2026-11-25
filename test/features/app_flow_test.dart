@@ -334,6 +334,18 @@ void main() {
     expect(find.widgetWithText(PillChoice, 'Fecha + nombre'), findsOneWidget);
   });
 
+  testWidgets('the rule chips are one labeled group and the chosen rule is announced as selected', (tester) async {
+    final container = await pumpApp(tester, env);
+    container.read(settingsProvider.notifier).chooseRule('date-name');
+    await tester.pumpAndSettle();
+    final handle = tester.ensureSemantics();
+    expect(find.bySemanticsLabel('Reglas de nombrado'), findsOneWidget);
+    final chosen = tester.getSemantics(find.widgetWithText(PillChoice, 'Fecha + nombre'));
+    expect(chosen.flagsCollection.isSelected.name, 'isTrue');
+    expect(chosen.flagsCollection.isButton, isTrue);
+    handle.dispose();
+  });
+
   testWidgets('Home has an "Agregar" chip, apart from the rules, that opens the new rule screen', (tester) async {
     await pumpApp(tester, env);
     expect(find.widgetWithText(PillChoice, 'Agregar'), findsOneWidget);

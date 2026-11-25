@@ -119,14 +119,16 @@ class _SignedIn extends ConsumerWidget {
         Row(
           spacing: AppSpacing.md,
           children: [
-            Container(
-              width: AppSize.thumb,
-              height: AppSize.thumb,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(color: colors.primaryContainer, shape: BoxShape.circle),
-              child: Text(
-                user.label.isEmpty ? '?' : user.label.characters.first.toUpperCase(),
-                style: context.text.titleMedium?.copyWith(color: colors.onPrimaryContainer),
+            ExcludeSemantics(
+              child: Container(
+                width: AppSize.thumb,
+                height: AppSize.thumb,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(color: colors.primaryContainer, shape: BoxShape.circle),
+                child: Text(
+                  user.label.isEmpty ? '?' : user.label.characters.first.toUpperCase(),
+                  style: context.text.titleMedium?.copyWith(color: colors.onPrimaryContainer),
+                ),
               ),
             ),
             Expanded(
@@ -150,7 +152,11 @@ class _SignedIn extends ConsumerWidget {
           children: [
             Icon(statusIcon, size: AppIconSize.base, color: statusColor),
             Expanded(
-              child: Text(statusText, style: context.text.bodyMedium?.copyWith(color: statusColor)),
+              // A live region: a screen reader announces the new state when the backup changes.
+              child: Semantics(
+                liveRegion: true,
+                child: Text(statusText, style: context.text.bodyMedium?.copyWith(color: statusColor)),
+              ),
             ),
             if (sync.phase == SyncPhase.error) TextButton(onPressed: notifier.retry, child: Text(l10n.accountRetry)),
           ],

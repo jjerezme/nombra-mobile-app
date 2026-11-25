@@ -632,4 +632,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get accountDeleteFailed => 'No se pudo borrar el respaldo. Revisa tu conexión.';
+
+  @override
+  String get ruleChoicesLabel => 'Reglas de nombrado';
 }

@@ -1231,6 +1231,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'No se pudo borrar el respaldo. Revisa tu conexión.'**
   String get accountDeleteFailed;
+
+  /// No description provided for @ruleChoicesLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Reglas de nombrado'**
+  String get ruleChoicesLabel;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

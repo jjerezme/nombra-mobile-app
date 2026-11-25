@@ -364,5 +364,6 @@
   "accountDeleteBackupHint": "Elimina tus reglas de la nube. Las de este teléfono no se tocan.",
   "accountConfirmDeleteTitle": "¿Borrar el respaldo?",
   "accountConfirmDeleteBody": "Se eliminarán tus reglas de la nube y se cerrará la sesión. Las reglas de este teléfono se conservan.",
-  "accountDeleteFailed": "No se pudo borrar el respaldo. Revisa tu conexión."
+  "accountDeleteFailed": "No se pudo borrar el respaldo. Revisa tu conexión.",
+  "ruleChoicesLabel": "Reglas de nombrado"
 }

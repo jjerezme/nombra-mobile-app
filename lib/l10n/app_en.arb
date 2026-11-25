@@ -364,5 +364,6 @@
   "accountDeleteBackupHint": "Removes your rules from the cloud. The ones on this phone are not touched.",
   "accountConfirmDeleteTitle": "Delete the backup?",
   "accountConfirmDeleteBody": "Your rules will be removed from the cloud and you will be signed out. The rules on this phone are kept.",
-  "accountDeleteFailed": "The backup could not be deleted. Check your connection."
+  "accountDeleteFailed": "The backup could not be deleted. Check your connection.",
+  "ruleChoicesLabel": "Naming rules"
 }

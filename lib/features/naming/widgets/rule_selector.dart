@@ -57,28 +57,32 @@ class RuleSelector extends ConsumerWidget {
         if (!isApplying) InfoBox.note(l10n.modeNoneHint),
         // One row of chips that scrolls sideways: a custom pattern, each saved rule and, at the end, "add".
         if (isApplying)
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              spacing: AppSpacing.sm,
-              children: [
-                PillChoice(
-                  label: l10n.modeQuick,
-                  isSelected: settings.mode == NamingMode.quick,
-                  onTap: () => notifier.setMode(NamingMode.quick),
-                ),
-                for (final rule in rules)
+          Semantics(
+            container: true,
+            label: l10n.ruleChoicesLabel,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                spacing: AppSpacing.sm,
+                children: [
                   PillChoice(
-                    label: rule.name,
-                    isSelected: settings.mode == NamingMode.saved && rule.id == activeId,
-                    onTap: () {
-                      notifier.chooseRule(rule.id);
-                      onRuleSelected?.call(rule.id);
-                    },
+                    label: l10n.modeQuick,
+                    isSelected: settings.mode == NamingMode.quick,
+                    onTap: () => notifier.setMode(NamingMode.quick),
                   ),
-                // An action, not a rule: same size as the rules, tinted and with a plus.
-                if (onAddRule != null) PillChoice.action(label: l10n.ruleAdd, icon: Icons.add, onTap: onAddRule!),
-              ],
+                  for (final rule in rules)
+                    PillChoice(
+                      label: rule.name,
+                      isSelected: settings.mode == NamingMode.saved && rule.id == activeId,
+                      onTap: () {
+                        notifier.chooseRule(rule.id);
+                        onRuleSelected?.call(rule.id);
+                      },
+                    ),
+                  // An action, not a rule: same size as the rules, tinted and with a plus.
+                  if (onAddRule != null) PillChoice.action(label: l10n.ruleAdd, icon: Icons.add, onTap: onAddRule!),
+                ],
+              ),
             ),
           ),
         if (settings.mode == NamingMode.quick) _QuickOptions(settings: settings, notifier: notifier),

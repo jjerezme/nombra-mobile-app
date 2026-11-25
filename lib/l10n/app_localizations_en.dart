@@ -630,4 +630,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountDeleteFailed => 'The backup could not be deleted. Check your connection.';
+
+  @override
+  String get ruleChoicesLabel => 'Naming rules';
 }
