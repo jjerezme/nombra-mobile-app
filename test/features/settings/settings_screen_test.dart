@@ -152,6 +152,8 @@ void main() {
 
   testWidgets('deleting all rules asks first and then empties the list', (tester) async {
     final container = await pumpSettings(tester, env);
+    await tester.ensureVisible(find.text('Borrar todas las reglas'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Borrar todas las reglas'));
     await tester.pumpAndSettle();
     expect(find.text('Se eliminan 4 reglas. No se puede deshacer.'), findsOneWidget);
@@ -160,6 +162,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(container.read(rulesProvider), hasLength(4));
 
+    await tester.ensureVisible(find.text('Borrar todas las reglas'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Borrar todas las reglas'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Eliminar'));

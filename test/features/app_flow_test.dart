@@ -601,7 +601,7 @@ void main() {
       final tag = find
           .ancestor(
             of: find.descendant(of: card, matching: find.text('Nombre limpio')),
-            matching: find.byType(Container),
+            matching: find.byType(Chip),
           )
           .first;
       expect(tester.getTopLeft(tag).dx, edge);
@@ -636,7 +636,7 @@ void main() {
       final card = tester.widget<Material>(
         find.descendant(of: find.byType(AppCard), matching: find.byType(Material)).first,
       );
-      expect(card.borderRadius, BorderRadius.circular(AppLayout.cardRadius));
+      expect(card.shape, RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppLayout.cardRadius)));
 
       final button = tester.getSize(find.widgetWithText(FilledButton, 'Descargar'));
       expect(button.height, AppSize.button);

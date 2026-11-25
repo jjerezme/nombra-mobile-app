@@ -1,9 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../constants/tokens.dart';
-import '../theme/app_theme.dart';
 
-/// Rounded surface that groups related content. Every card in the app has the same radius and padding.
+/// The Material 3 [Card] with the app's padding (the card shape and color come from the theme). It groups related
+/// content; with [onTap] the whole card is tappable.
 class AppCard extends StatelessWidget {
   const AppCard({
     required this.child,
@@ -32,9 +32,8 @@ class AppCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = Padding(padding: padding, child: child);
-    return Material(
-      color: color ?? context.colors.surface,
-      borderRadius: BorderRadius.circular(AppLayout.cardRadius),
+    return Card(
+      color: color,
       clipBehavior: Clip.antiAlias,
       child: onTap == null ? content : InkWell(onTap: onTap, child: content),
     );

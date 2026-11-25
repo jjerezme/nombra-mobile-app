@@ -167,6 +167,13 @@ abstract final class AppTheme {
         dragHandleColor: scheme.outline,
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.sheet))),
       ),
+      cardTheme: CardThemeData(
+        color: scheme.surface,
+        surfaceTintColor: Colors.transparent, // style-ok
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppLayout.cardRadius)),
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: scheme.surfaceContainerLow,
         surfaceTintColor: scheme.surfaceContainerLow,
@@ -233,21 +240,6 @@ abstract final class AppTheme {
         foregroundColor: scheme.onPrimary,
         extendedTextStyle: textTheme.labelLarge,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppLayout.controlRadius)),
-      ),
-      navigationBarTheme: NavigationBarThemeData(
-        height: AppSize.navBar,
-        backgroundColor: scheme.surface,
-        indicatorColor: Colors.transparent,
-        labelTextStyle: WidgetStateProperty.resolveWith((states) {
-          final isSelected = states.contains(WidgetState.selected);
-          return textTheme.labelSmall?.copyWith(
-            color: isSelected ? scheme.primary : scheme.onSurfaceVariant,
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-          );
-        }),
-        iconTheme: WidgetStateProperty.resolveWith((states) {
-          return IconThemeData(color: states.contains(WidgetState.selected) ? scheme.primary : scheme.onSurfaceVariant);
-        }),
       ),
     );
   }

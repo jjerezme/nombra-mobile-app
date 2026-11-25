@@ -29,7 +29,7 @@ class LabeledField extends StatelessWidget {
   }
 }
 
-/// A row with a switch: label, optional description and the switch on the right. The whole row is tappable.
+/// A row with a switch: the Material [SwitchListTile] (label, optional description, the switch on the right).
 class ToggleRow extends StatelessWidget {
   const ToggleRow({required this.label, required this.value, required this.onChanged, super.key, this.description});
 
@@ -41,36 +41,18 @@ class ToggleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final detail = description;
-    return MergeSemantics(
-      child: InkWell(
-        onTap: () => onChanged(!value),
-        borderRadius: BorderRadius.circular(AppLayout.controlRadius),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: minTouchTarget),
-          child: Row(
-            spacing: AppSpacing.md,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: AppSpacing.xxs,
-                  children: [
-                    Text(label, style: context.text.bodyMedium),
-                    if (detail != null)
-                      Text(detail, style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
-                  ],
-                ),
-              ),
-              Switch(value: value, onChanged: onChanged),
-            ],
-          ),
-        ),
-      ),
+    return SwitchListTile(
+      value: value,
+      onChanged: onChanged,
+      contentPadding: EdgeInsets.zero,
+      title: Text(label),
+      subtitle: detail == null ? null : Text(detail),
     );
   }
 }
 
-/// A row with an icon, a title and a hint that does something when tapped (settings actions).
+/// An action in a list: the Material [ListTile] with a leading icon, a title and an optional hint. A destructive one
+/// is drawn in the error color.
 class ActionRow extends StatelessWidget {
   const ActionRow({
     required this.icon,
@@ -90,30 +72,15 @@ class ActionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final color = isDestructive ? colors.error : colors.onSurface;
     final hintText = hint;
-    return InkWell(
+    return ListTile(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(AppLayout.controlRadius),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: minTouchTarget),
-        child: Row(
-          spacing: AppSpacing.md,
-          children: [
-            Icon(icon, size: AppIconSize.md, color: color),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: context.text.bodyLarge?.copyWith(color: color)),
-                  if (hintText != null)
-                    Text(hintText, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      contentPadding: EdgeInsets.zero,
+      iconColor: isDestructive ? colors.error : colors.onSurface,
+      textColor: isDestructive ? colors.error : colors.onSurface,
+      leading: Icon(icon),
+      title: Text(title),
+      subtitle: hintText == null ? null : Text(hintText),
     );
   }
 }

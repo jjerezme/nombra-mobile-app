@@ -49,6 +49,7 @@ Ejecuta analyze y test antes de dar una tarea por terminada.
 - Compartir con `ShareActivity` translúcida y `shareMain`: [009](docs/decisions/009-share-intent.md). Fuentes empaquetadas, sin `google_fonts`: [010](docs/decisions/010-fonts.md). Icono y logo: [012](docs/decisions/012-app-icon.md).
 - Seguridad: solo enlaces `https`, nombres con `safeFileName`, errores sin enlaces (`RedactedError`), sin copias de Android, release `prod` solo con llave de subida: [013](docs/decisions/013-security-hardening.md).
 - Cuenta de Google y respaldo automático de las reglas en Firestore (`users/{uid}`, `firestore.rules`): [014](docs/decisions/014-account-and-backup.md).
+- Material 3 primero: componente estándar con el estilo en el tema; los de `core/widgets/` son envoltorios finos: [015](docs/decisions/015-material-3-first.md).
 
 ## Qué no hacer
 

@@ -17,11 +17,11 @@ Todas las pantallas se arman con las mismas piezas (`lib/core/widgets/`) y los v
 ## Piezas
 - `ScreenHeader`: título de cada pantalla (`headlineSmall`, 4 de sangría sobre el margen, subtítulo opcional). Las pantallas de detalle llevan atrás (pegado al margen izquierdo) con el título a su lado, en la misma fila; la acción principal (por ejemplo "Guardar" en el editor) va abajo, fija y visible, como `FilledButton` de ancho completo. Se coloca como primer elemento de la lista, con `AppPage.padding` (o `AppPage.paddingWithBack` si lleva fila de atrás).
 - `AppSection` / `SectionTitle`: título de un grupo (`titleMedium`) **encima** de su tarjeta; el título nunca va dentro de la tarjeta.
-- `AppCard` / `AppCard.stack`: superficie con radio y relleno únicos; `stack` apila los bloques con `sectionGap`.
+- `AppCard` / `AppCard.stack`: el `Card` de Material 3 (forma y color vienen del tema) con el relleno único; `stack` apila los bloques con `sectionGap`.
 - `LabeledField`: etiqueta (`labelMedium`) + control + ayuda (`bodySmall`). Es la única forma de rotular un campo.
 - `DestinationCard`: la única forma de mostrar y cambiar una carpeta (Descargar, hoja de compartir, Ajustes, editor de reglas): icono de carpeta, ruta elegida (o mensaje si no hay) y botón que abre el selector. Sin etiquetas ni textos sobre el origen de la carpeta. La carpeta solo se cambia, no se quita.
-- `ToggleRow`, `ActionRow`: filas con interruptor y filas de acción.
-- `SegmentedToggle`, `PillChoice`: elecciones exclusivas.
+- `ToggleRow`, `ActionRow`: `SwitchListTile` y `ListTile` de Material con el relleno de la app.
+- `SegmentedToggle` (`SegmentedButton`), `PillChoice` (`ChoiceChip`; la variante `.action` es un `ActionChip`) y `TagChip` (`Chip` compacto): elecciones y etiquetas. Son envoltorios finos para fijar el uso; la forma y el color los pone el tema de Material 3.
 
 ## Marca
 El logo (`AppLogo`) va a la derecha del título de Descargar (el título no se mueve de sitio) y en el bloque "acerca de" de Ajustes; no se repite en otras pantallas. Detalle en la decisión [012](decisions/012-app-icon.md).
