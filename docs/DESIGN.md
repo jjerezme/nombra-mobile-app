@@ -35,7 +35,7 @@ El logo (`AppLogo`) va a la derecha del título de Descargar (el título no se m
 Color de superficie, asa del tema, margen `sheetGutter`, bloques con `sectionGap` y relleno inferior que respeta la barra de navegación de Android.
 
 ## Cómo se nombra el archivo (Descargar y hoja de compartir)
-Un interruptor **Aplicar una regla**, justo debajo de la URL. Apagada (por defecto): no se aplica ninguna regla, el archivo conserva su nombre original y una nota informativa bajo el interruptor lo explica (no va en la etiqueta); la carpeta de destino sí se puede elegir. Encendida: la nota se reemplaza por una sola fila de chips con scroll lateral: **Personalizado** (patrón propio que se mantiene), cada regla guardada y, al final, la acción **Agregar** (solo en Descargar). No hay chip "Ninguna". Al encender el interruptor se vuelve a la última regla usada, o a Personalizado si no hay. El recuadro "Se guardará como" no se muestra hasta que la URL es válida.
+Un interruptor **Aplicar una regla**, justo debajo de la URL. Apagada (por defecto): no se aplica ninguna regla, el archivo conserva su nombre original y un cuadro informativo (`InfoBox.note`) bajo el interruptor lo explica (no va en la etiqueta); la carpeta de destino sí se puede elegir. Encendida: la nota se reemplaza por una sola fila de chips con scroll lateral: **Personalizado** (patrón propio que se mantiene), cada regla guardada y, al final, la acción **Agregar** (solo en Descargar). No hay chip "Ninguna". Al encender el interruptor se vuelve a la última regla usada, o a Personalizado si no hay. El recuadro "Se guardará como" no se muestra hasta que la URL es válida.
 
 
 ## Lista de descargas

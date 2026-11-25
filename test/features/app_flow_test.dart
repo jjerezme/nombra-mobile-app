@@ -305,7 +305,14 @@ void main() {
     expect(container.read(settingsProvider).mode, NamingMode.none);
     expect(tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value, isFalse);
     expect(find.byType(PillChoice), findsNothing);
-    expect(find.text('El archivo se guarda con su nombre original, sin aplicar ninguna regla.'), findsOneWidget);
+    // The explanation is an info box, not part of the switch label.
+    expect(
+      find.descendant(
+        of: find.byType(InfoBox),
+        matching: find.text('El archivo se guarda con su nombre original, sin aplicar ninguna regla.'),
+      ),
+      findsOneWidget,
+    );
 
     // With no rule used before, applying one starts with the custom pattern.
     await tester.tap(find.text('Aplicar una regla'));

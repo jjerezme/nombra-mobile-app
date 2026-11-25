@@ -5,6 +5,7 @@ import '../../../core/constants/tokens.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/validation.dart';
 import '../../../core/widgets/form_parts.dart';
+import '../../../core/widgets/info_box.dart';
 import '../../../core/widgets/pill_choice.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../rules/data/rules_notifier.dart';
@@ -52,9 +53,8 @@ class RuleSelector extends ConsumerWidget {
           contentPadding: EdgeInsets.zero,
           title: Text(l10n.ruleApply, style: context.text.bodyLarge),
         ),
-        // Off: a plain note says what happens; on, the chips take its place.
-        if (!isApplying)
-          Text(l10n.modeNoneHint, style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
+        // Off: an info box says what happens; on, the chips take its place.
+        if (!isApplying) InfoBox.note(l10n.modeNoneHint),
         // One row of chips that scrolls sideways: a custom pattern, each saved rule and, at the end, "add".
         if (isApplying)
           SingleChildScrollView(
