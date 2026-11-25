@@ -98,7 +98,7 @@ gradle.taskGraph.whenReady {
             task.name.endsWith("ProdRelease") &&
             listOf("assemble", "bundle", "package").any { task.name.startsWith(it) }
     }
-    if (isProdRelease && !hasUploadKey) {
+    if (isProdRelease && !project.hasProperty("UPLOAD_STORE_FILE")) {
         throw GradleException(
             "A prod release needs the upload key (UPLOAD_STORE_FILE, UPLOAD_STORE_PASSWORD, UPLOAD_KEY_ALIAS, " +
                 "UPLOAD_KEY_PASSWORD). Use scripts/build.dart with the key configured; see docs/BUILD.md.",
