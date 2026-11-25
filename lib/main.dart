@@ -6,6 +6,7 @@ import 'app/app.dart';
 import 'core/bootstrap.dart';
 import 'core/conflict_prompt.dart';
 import 'core/providers.dart';
+import 'core/storage_schema.dart';
 import 'features/download/data/downloads_notifier.dart';
 import 'features/share/share_app.dart';
 
@@ -13,6 +14,7 @@ Future<ProviderScope> _scopeFor(Widget app) async {
   WidgetsFlutterBinding.ensureInitialized();
   await initFirebase();
   final preferences = await SharedPreferences.getInstance();
+  await migrateStorage(preferences);
   return ProviderScope(
     overrides: [
       sharedPreferencesProvider.overrideWithValue(preferences),

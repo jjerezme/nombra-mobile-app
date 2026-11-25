@@ -174,7 +174,7 @@ void main() {
         fileName: 'a.pdf',
         status: DownloadStatus.done,
         plan: DownloadPlan(folder: DestinationFolder(StorageRoot.download)),
-        createdAt: DateTime(2026),
+        createdAt: DateTime.now(),
       );
       env = await TestEnvironment.create(
         preferences: {
@@ -240,7 +240,7 @@ void main() {
         fileName: longName,
         status: DownloadStatus.done,
         plan: DownloadPlan(folder: DestinationFolder(StorageRoot.download)),
-        createdAt: DateTime(2026),
+        createdAt: DateTime.now(),
       );
       env = await TestEnvironment.create(
         preferences: {
@@ -279,7 +279,7 @@ void main() {
       fileName: 'a.pdf',
       status: DownloadStatus.done,
       plan: DownloadPlan(folder: DestinationFolder(StorageRoot.download)),
-      createdAt: DateTime(2026),
+      createdAt: DateTime.now(),
     );
     env = await TestEnvironment.create(
       preferences: {

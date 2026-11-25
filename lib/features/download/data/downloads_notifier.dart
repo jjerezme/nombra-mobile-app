@@ -1,21 +1,17 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:background_downloader/background_downloader.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/current_l10n.dart';
-import '../../../core/providers.dart';
 import '../../rules/data/rules_notifier.dart';
 import '../../settings/app_settings.dart';
 import '../../rules/domain/filename_builder.dart';
 import '../domain/download_models.dart';
 import 'download_engine.dart';
+import 'downloads_repository.dart';
 import 'file_finalizer.dart';
 import 'notification_gateway.dart';
-
-const String _downloadsKey = 'downloads';
-const int _historyLimit = 50;
 
 final downloadEngineProvider = Provider<DownloadEngine>((ref) => const PluginDownloadEngine());
 
@@ -36,28 +32,14 @@ class DownloadsNotifier extends Notifier<List<DownloadItem>> {
     final subscription = engine.updates.listen(_onUpdate);
     ref.onDispose(subscription.cancel);
     Future.microtask(() => _restore(engine));
-    return _load();
-  }
-
-  List<DownloadItem> _load() {
-    final raw = ref.read(sharedPreferencesProvider).getString(_downloadsKey);
-    if (raw == null) return const [];
-    try {
-      return (jsonDecode(raw) as List<dynamic>)
-          .map((json) => DownloadItem.fromJson(json as Map<String, dynamic>))
-          .toList();
-    } on Object {
-      return const [];
-    }
+    return ref.read(downloadsRepositoryProvider).load();
   }
 
   void _set(List<DownloadItem> next) {
     // Work that outlives the provider (a download finishing after dispose) has nowhere to write.
     if (!ref.mounted) return;
-    state = next.take(_historyLimit).toList();
-    ref
-        .read(sharedPreferencesProvider)
-        .setString(_downloadsKey, jsonEncode(state.map((item) => item.toJson()).toList()));
+    state = trimHistory(next, DateTime.now());
+    ref.read(downloadsRepositoryProvider).save(state);
   }
 
   DownloadItem? _find(String id) => ref.mounted ? state.where((item) => item.id == id).firstOrNull : null;

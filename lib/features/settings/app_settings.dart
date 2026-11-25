@@ -111,6 +111,7 @@ class AppSettings {
   AppSettings copyWith({
     NamingMode? mode,
     String? lastRuleId,
+    bool clearLastRuleId = false,
     DestinationFolder? lastFolder,
     String? languageCode,
     bool clearLanguage = false,
@@ -121,7 +122,7 @@ class AppSettings {
     bool? showRecents,
   }) => AppSettings(
     mode: mode ?? this.mode,
-    lastRuleId: lastRuleId ?? this.lastRuleId,
+    lastRuleId: clearLastRuleId ? null : lastRuleId ?? this.lastRuleId,
     lastFolder: lastFolder ?? this.lastFolder,
     languageCode: clearLanguage ? null : languageCode ?? this.languageCode,
     themeMode: themeMode ?? this.themeMode,
@@ -175,18 +176,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
   void setThemeMode(AppThemeMode mode) => _update(state.copyWith(themeMode: mode));
 
   /// Forgets the last rule used, so the rule is picked automatically again.
-  void forgetRememberedRules() => _update(
-    AppSettings(
-      mode: state.mode,
-      lastFolder: state.lastFolder,
-      languageCode: state.languageCode,
-      themeMode: state.themeMode,
-      quickTokens: state.quickTokens,
-      quickNext: state.quickNext,
-      quickNextKey: state.quickNextKey,
-      showRecents: state.showRecents,
-    ),
-  );
+  void forgetRememberedRules() => _update(state.copyWith(clearLastRuleId: true));
 
   void setShowRecents({required bool isShown}) => _update(state.copyWith(showRecents: isShown));
 

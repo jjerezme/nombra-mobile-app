@@ -139,6 +139,22 @@ void main() {
     expect(settings.copyWith(quickTokens: ['b', '{n:3}']).nextQuickNumber, 1);
   });
 
+  test('forgetting the remembered rule clears only the last rule used', () {
+    final settings = AppSettings(
+      mode: NamingMode.quick,
+      lastRuleId: 'r',
+      quickTokens: ['p_', '{n:3}'],
+      quickNext: 4,
+      showRecents: false,
+    );
+    final forgotten = settings.copyWith(clearLastRuleId: true);
+    expect(forgotten.lastRuleId, isNull);
+    expect(forgotten.mode, NamingMode.quick);
+    expect(forgotten.quickTokens, ['p_', '{n:3}']);
+    expect(forgotten.quickNext, 4);
+    expect(forgotten.showRecents, isFalse);
+  });
+
   test('AppSettings survives a JSON round trip', () {
     final settings = AppSettings(
       mode: NamingMode.quick,

@@ -96,9 +96,9 @@ void main() {
       fileName: 'factura_0231.pdf',
       status: DownloadStatus.done,
       plan: DownloadPlan(folder: DestinationFolder(StorageRoot.documents, 'Facturas')),
-      createdAt: DateTime(2026, 11, 24, 12),
+      createdAt: DateTime.now(),
       folderPath: '/Documents/Facturas',
-      finishedAt: DateTime(2026, 11, 24, 12),
+      finishedAt: DateTime.now(),
     );
 
     setUp(
