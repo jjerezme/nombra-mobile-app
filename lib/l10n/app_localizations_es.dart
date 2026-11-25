@@ -40,12 +40,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get modeQuick => 'Personalizado';
 
   @override
-  String get ruleLabel => 'Regla';
-
-  @override
-  String get ruleRemembered => 'Se recuerda la última usada';
-
-  @override
   String get ruleAdd => 'Agregar';
 
   @override
@@ -157,7 +151,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String shareRememberDefault(String kind) {
-    return 'Recordar como predeterminada para $kind';
+    return 'Usar esta regla siempre para $kind';
   }
 
   @override
@@ -575,8 +569,23 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get modeNone => 'Ninguna';
+  String get modeNoneHint => 'El archivo se guarda con su nombre original, sin aplicar ninguna regla.';
 
   @override
-  String get modeNoneHint => 'El archivo se guarda con su nombre original, sin aplicar ninguna regla.';
+  String get ruleApply => 'Aplicar una regla';
+
+  @override
+  String get homeActions => 'Más acciones';
+
+  @override
+  String get homeOpen => 'Abrir';
+
+  @override
+  String get homeRemove => 'Quitar de la lista';
+
+  @override
+  String get homeOpenFailed => 'No se pudo abrir el archivo. Puede que lo hayan movido o borrado.';
+
+  @override
+  String get shareRememberHint => 'Puedes quitarlo en Ajustes, con «Olvidar reglas recordadas».';
 }

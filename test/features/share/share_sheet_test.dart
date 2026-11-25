@@ -159,7 +159,8 @@ void main() {
 
   testWidgets('"remember as default" stores the rule for that kind of file', (tester) async {
     final (container, _) = await pumpShare(tester, env, _linkPayload);
-    expect(find.text('Recordar como predeterminada para documentos'), findsOneWidget);
+    expect(find.text('Usar esta regla siempre para documentos'), findsOneWidget);
+    expect(find.textContaining('Olvidar reglas recordadas'), findsOneWidget);
     await tester.tap(find.text('Guardar'));
     await tester.pump(const Duration(milliseconds: 200));
     expect(container.read(settingsProvider).defaultRuleByKind['document'], 'date-name');
@@ -195,7 +196,7 @@ void main() {
       },
     );
     final (container, _) = await pumpShare(tester, env, _linkPayload);
-    expect(find.textContaining('Recordar como predeterminada'), findsNothing);
+    expect(find.textContaining('Usar esta regla siempre'), findsNothing);
 
     await tester.tap(find.text('Guardar'));
     await tester.pump(const Duration(milliseconds: 200));
@@ -217,7 +218,7 @@ void main() {
     );
     expect(find.text('2 archivos'), findsOneWidget);
     expect(find.text('Nombre final'), findsNothing);
-    expect(find.text('Recordar como predeterminada para imágenes'), findsOneWidget);
+    expect(find.text('Usar esta regla siempre para imágenes'), findsOneWidget);
   });
 
   testWidgets('cancel closes the sheet without downloading', (tester) async {

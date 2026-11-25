@@ -223,4 +223,48 @@ void main() {
     final second = env.container();
     expect(second.read(downloadsProvider).single.fileName, 'a.pdf');
   });
+
+  group('actions on a finished download', () {
+    Future<(ProviderContainer, String)> savedItem() async {
+      final container = env.container();
+      container.read(rulesProvider.notifier).upsert(rule);
+      final id = await container.read(downloadsProvider.notifier).start(planFor(rule), displayName: 'x.pdf');
+      final downloaded = await File('${tempDir.path}/Informe Q3.pdf').writeAsString('data');
+      env.engine.controller.add(TaskStatusUpdate(finishedTask(id, downloaded), TaskStatus.complete));
+      await settle();
+      return (container, id);
+    }
+
+    test('the saved path is the shared storage root plus the folder and the final name', () async {
+      final (container, _) = await savedItem();
+      expect(
+        container.read(downloadsProvider).single.savedPath,
+        '/storage/emulated/0/Documents/Facturas/Factura_014.pdf',
+      );
+    });
+
+    test('open asks the system to open the saved file', () async {
+      final (container, id) = await savedItem();
+      expect(await container.read(downloadsProvider.notifier).open(id), isTrue);
+      expect(env.gateway.opened, ['/storage/emulated/0/Documents/Facturas/Factura_014.pdf']);
+    });
+
+    test('open reports false when the file cannot be opened, or the item is not saved yet', () async {
+      final (container, id) = await savedItem();
+      final notifier = container.read(downloadsProvider.notifier);
+      env.gateway.failOpen = true;
+      expect(await notifier.open(id), isFalse);
+      final pending = await notifier.start(planFor(null), displayName: 'b.pdf');
+      env.gateway.failOpen = false;
+      expect(await notifier.open(pending), isFalse);
+      expect(await notifier.open('missing'), isFalse);
+    });
+
+    test('dismiss takes the item off the list and leaves the file alone', () async {
+      final (container, id) = await savedItem();
+      container.read(downloadsProvider.notifier).dismiss(id);
+      expect(container.read(downloadsProvider), isEmpty);
+      expect(env.gateway.existing, contains('Facturas/Factura_014.pdf'));
+    });
+  });
 }

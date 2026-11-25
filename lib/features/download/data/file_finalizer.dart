@@ -18,6 +18,9 @@ abstract interface class SharedStorageGateway {
 
   /// Moves [filePath] into [destination]/[directory]; null when it failed.
   Future<String?> move(String filePath, SharedStorage destination, String directory);
+
+  /// Opens the file at [filePath] with the app the system picks for its type; false when it could not be opened.
+  Future<bool> open(String filePath);
 }
 
 class PluginStorageGateway implements SharedStorageGateway {
@@ -30,6 +33,9 @@ class PluginStorageGateway implements SharedStorageGateway {
   @override
   Future<String?> move(String filePath, SharedStorage destination, String directory) =>
       FileDownloader().moveFileToSharedStorage(filePath, destination, directory: directory);
+
+  @override
+  Future<bool> open(String filePath) => FileDownloader().openFile(filePath: filePath);
 }
 
 class SaveFailure implements Exception {

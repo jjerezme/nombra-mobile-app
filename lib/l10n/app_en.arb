@@ -10,8 +10,6 @@
   "delete": "Delete",
   "accept": "OK",
   "modeQuick": "Custom",
-  "ruleLabel": "Rule",
-  "ruleRemembered": "The last one used is remembered",
   "ruleAdd": "Add",
   "changeFolderTooltip": "Change destination folder",
   "homeUrlLabel": "File URL",
@@ -117,7 +115,7 @@
     }
   },
   "shareFinalName": "Final name",
-  "shareRememberDefault": "Remember as default for {kind}",
+  "shareRememberDefault": "Always use this rule for {kind}",
   "@shareRememberDefault": {
     "placeholders": {
       "kind": {
@@ -352,6 +350,11 @@
       }
     }
   },
-  "modeNone": "None",
-  "modeNoneHint": "The file is saved with its original name, without applying any rule."
+  "modeNoneHint": "The file is saved with its original name, without applying any rule.",
+  "ruleApply": "Apply a rule",
+  "homeActions": "More actions",
+  "homeOpen": "Open",
+  "homeRemove": "Remove from list",
+  "homeOpenFailed": "The file could not be opened. It may have been moved or deleted.",
+  "shareRememberHint": "You can undo this in Settings, with “Forget remembered rules”."
 }

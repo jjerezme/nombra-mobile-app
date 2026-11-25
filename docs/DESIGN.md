@@ -35,7 +35,12 @@ El logo (`AppLogo`) va a la derecha del título de Descargar (el título no se m
 Color de superficie, asa del tema, margen `sheetGutter`, bloques con `sectionGap` y relleno inferior que respeta la barra de navegación de Android.
 
 ## Cómo se nombra el archivo (Descargar y hoja de compartir)
-Una sola fila de chips con scroll lateral: **Ninguna** (por defecto), **Personalizado** (patrón propio que se mantiene), cada regla guardada y, al final, la acción **Agregar**. No hay pestañas. Elegir una regla activa el modo "regla guardada"; elegir Ninguna o Personalizado cambia el modo.
+Una casilla **Aplicar una regla**, justo debajo de la URL. Apagada (por defecto): no se aplica ninguna regla, el archivo conserva su nombre original y se explica con un texto bajo la casilla; la carpeta de destino sí se puede elegir. Encendida: aparece una sola fila de chips con scroll lateral: **Personalizado** (patrón propio que se mantiene), cada regla guardada y, al final, la acción **Agregar** (solo en Descargar). No hay chip "Ninguna". Al encender la casilla se vuelve a la última regla usada, o a Personalizado si no hay.
+
+La casilla de la hoja de compartir dice **Usar esta regla siempre para {tipo}** y explica debajo dónde se deshace (Ajustes › Olvidar reglas recordadas).
+
+## Lista de descargas
+Cada descarga terminada o fallida tiene un menú de tres puntos (`Más acciones`, 48 dp): **Abrir** (solo las guardadas; abre el archivo con la app del sistema y avisa si no se pudo) y **Quitar de la lista** (no borra el archivo). Las descargas en curso no tienen menú.
 
 ## Lista de reglas
 - Siempre ordenada por nombre (sin distinguir mayúsculas), también en el selector de Descargar y de la hoja de compartir; no hay orden manual.

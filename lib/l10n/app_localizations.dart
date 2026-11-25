@@ -152,18 +152,6 @@ abstract class AppLocalizations {
   /// **'Personalizado'**
   String get modeQuick;
 
-  /// No description provided for @ruleLabel.
-  ///
-  /// In es, this message translates to:
-  /// **'Regla'**
-  String get ruleLabel;
-
-  /// No description provided for @ruleRemembered.
-  ///
-  /// In es, this message translates to:
-  /// **'Se recuerda la última usada'**
-  String get ruleRemembered;
-
   /// No description provided for @ruleAdd.
   ///
   /// In es, this message translates to:
@@ -347,7 +335,7 @@ abstract class AppLocalizations {
   /// No description provided for @shareRememberDefault.
   ///
   /// In es, this message translates to:
-  /// **'Recordar como predeterminada para {kind}'**
+  /// **'Usar esta regla siempre para {kind}'**
   String shareRememberDefault(String kind);
 
   /// No description provided for @kindImage.
@@ -1112,17 +1100,47 @@ abstract class AppLocalizations {
   /// **'Si existe: {policy}'**
   String ruleOptConflict(String policy);
 
-  /// No description provided for @modeNone.
-  ///
-  /// In es, this message translates to:
-  /// **'Ninguna'**
-  String get modeNone;
-
   /// No description provided for @modeNoneHint.
   ///
   /// In es, this message translates to:
   /// **'El archivo se guarda con su nombre original, sin aplicar ninguna regla.'**
   String get modeNoneHint;
+
+  /// No description provided for @ruleApply.
+  ///
+  /// In es, this message translates to:
+  /// **'Aplicar una regla'**
+  String get ruleApply;
+
+  /// No description provided for @homeActions.
+  ///
+  /// In es, this message translates to:
+  /// **'Más acciones'**
+  String get homeActions;
+
+  /// No description provided for @homeOpen.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrir'**
+  String get homeOpen;
+
+  /// No description provided for @homeRemove.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar de la lista'**
+  String get homeRemove;
+
+  /// No description provided for @homeOpenFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo abrir el archivo. Puede que lo hayan movido o borrado.'**
+  String get homeOpenFailed;
+
+  /// No description provided for @shareRememberHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Puedes quitarlo en Ajustes, con «Olvidar reglas recordadas».'**
+  String get shareRememberHint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

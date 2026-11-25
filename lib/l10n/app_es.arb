@@ -10,8 +10,6 @@
   "delete": "Eliminar",
   "accept": "Aceptar",
   "modeQuick": "Personalizado",
-  "ruleLabel": "Regla",
-  "ruleRemembered": "Se recuerda la última usada",
   "ruleAdd": "Agregar",
   "changeFolderTooltip": "Cambiar carpeta de destino",
   "homeUrlLabel": "URL del archivo",
@@ -117,7 +115,7 @@
     }
   },
   "shareFinalName": "Nombre final",
-  "shareRememberDefault": "Recordar como predeterminada para {kind}",
+  "shareRememberDefault": "Usar esta regla siempre para {kind}",
   "@shareRememberDefault": {
     "placeholders": {
       "kind": {
@@ -352,6 +350,11 @@
       }
     }
   },
-  "modeNone": "Ninguna",
-  "modeNoneHint": "El archivo se guarda con su nombre original, sin aplicar ninguna regla."
+  "modeNoneHint": "El archivo se guarda con su nombre original, sin aplicar ninguna regla.",
+  "ruleApply": "Aplicar una regla",
+  "homeActions": "Más acciones",
+  "homeOpen": "Abrir",
+  "homeRemove": "Quitar de la lista",
+  "homeOpenFailed": "No se pudo abrir el archivo. Puede que lo hayan movido o borrado.",
+  "shareRememberHint": "Puedes quitarlo en Ajustes, con «Olvidar reglas recordadas»."
 }

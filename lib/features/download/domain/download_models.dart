@@ -88,6 +88,9 @@ class DownloadPlan {
   };
 }
 
+/// Root of the device's main shared storage; the folders of [DownloadItem.folderPath] hang from it.
+const String primaryStorageRoot = '/storage/emulated/0';
+
 enum DownloadStatus { queued, running, finalizing, done, failed }
 
 enum DownloadError { http, notFound, failed, save }
@@ -141,6 +144,9 @@ class DownloadItem {
 
   /// Set when the file could not go in the chosen folder and was saved in Download.
   final FileKind? fallbackKind;
+
+  /// Where the saved file is on the device (`/storage/emulated/0/Download/Nombra/file.pdf`); only meaningful once saved.
+  String get savedPath => '$primaryStorageRoot$folderPath/$fileName';
 
   bool get isActive =>
       status == DownloadStatus.queued || status == DownloadStatus.running || status == DownloadStatus.finalizing;

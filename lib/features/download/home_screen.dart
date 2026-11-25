@@ -65,6 +65,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (isConfirmed && mounted) ref.read(downloadsProvider.notifier).clearFinished();
   }
 
+  Future<void> _open(DownloadItem item) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final message = AppLocalizations.of(context).homeOpenFailed;
+    final isOpened = await ref.read(downloadsProvider.notifier).open(item.id);
+    if (!isOpened) messenger.showSnackBar(SnackBar(content: Text(message)));
+  }
+
   Future<void> _changeFolder(DestinationFolder current) async {
     final folder = await showFolderPicker(context, current);
     if (folder != null) setState(() => _chosenFolder = folder);
@@ -191,6 +198,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 DownloadTile(
                                   item: item,
                                   onRetry: () => ref.read(downloadsProvider.notifier).retry(item.id),
+                                  onOpen: () => _open(item),
+                                  onRemove: () => ref.read(downloadsProvider.notifier).dismiss(item.id),
                                 ),
                             ],
                           ),

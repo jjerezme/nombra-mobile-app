@@ -13,6 +13,8 @@ Se descarga un archivo, se le pone el nombre que dicta la regla y se guarda en u
 - `minSdk` 29: en Android 10+ MediaStore no necesita permisos.
 - Permiso de notificaciones (Android 13+) se pide al primer intento de descarga; sin él se descarga igual, sin aviso.
 
+- Abrir un archivo guardado usa `FileDownloader().openFile` con la ruta `/storage/emulated/0` + carpeta + nombre (`DownloadItem.savedPath`); no hay paquete nuevo. Quitar una descarga de la lista no borra el archivo.
+
 ## Consecuencias
 - **Limitación conocida:** mover el archivo a su carpeta final es código Dart y necesita un isolate vivo (la app o la hoja de compartir). Si el usuario cierra Nombra antes de que termine una descarga, el archivo queda en la carpeta temporal y se guarda la próxima vez que abra la app (el historial lo restaura con `trackTasks`). El plugin no permite usar MediaStore desde su callback en segundo plano.
 - La hoja de compartir mantiene la progresión visible hasta que se guarda (ADR 009).

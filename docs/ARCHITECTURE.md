@@ -13,7 +13,7 @@ Si falta el `google-services.json` del flavor, el arranque sigue sin Firebase y 
 - `rules/`: modelo de regla (`RenameRule`: patrón de elementos, transformaciones, carpeta opcional, conflicto), lógica pura de nombres (`filename_builder.dart`, `name_resolver.dart`), pantalla de reglas (lista ordenada por nombre) y editor.
 - `settings/`: lo último que eligió el usuario (modo Guardada/Rápida, regla, prefijo, sufijo, carpeta, regla por tipo de archivo).
 - `naming/`: widgets que comparten Inicio y la hoja de compartir: `RuleSelector`, `DestinationCard`, selector de carpeta.
-- `download/`: Inicio (URL, vista previa del nombre, recientes), `DownloadsNotifier` (cola, progreso, historial), `DownloadEngine` (plugin `background_downloader`) y `FileFinalizer` (renombra y mueve a MediaStore).
+- `download/`: Inicio (URL, vista previa del nombre, recientes), `DownloadsNotifier` (cola, progreso, historial, abrir el archivo guardado y quitarlo de la lista), `DownloadEngine` (plugin `background_downloader`) y `FileFinalizer` (renombra y mueve a MediaStore).
 - `share/`: `ShareChannel` (canal con Kotlin), `ShareSheetScreen` y su carga útil (`SharePayload`).
 
 ## Flujo de una descarga

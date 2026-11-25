@@ -26,16 +26,28 @@ String errorMessage(AppLocalizations l10n, DownloadItem item) => switch (item.er
 
 /// One row of the recent downloads: progress, saved, or failed.
 class DownloadTile extends StatelessWidget {
-  const DownloadTile({required this.item, required this.onRetry, super.key});
+  const DownloadTile({required this.item, required this.onRetry, this.onOpen, this.onRemove, super.key});
 
   final DownloadItem item;
   final VoidCallback onRetry;
 
+  /// Opens the saved file; the "open" action is hidden when null.
+  final VoidCallback? onOpen;
+
+  /// Takes the item off the list (the file stays); the "remove" action is hidden when null.
+  final VoidCallback? onRemove;
+
   @override
   Widget build(BuildContext context) {
     return switch (item.status) {
-      DownloadStatus.done => _ResultTile(item: item, isError: false, onRetry: onRetry),
-      DownloadStatus.failed => _ResultTile(item: item, isError: true, onRetry: onRetry),
+      DownloadStatus.done => _ResultTile(
+        item: item,
+        isError: false,
+        onRetry: onRetry,
+        onOpen: onOpen,
+        onRemove: onRemove,
+      ),
+      DownloadStatus.failed => _ResultTile(item: item, isError: true, onRetry: onRetry, onRemove: onRemove),
       _ => _ProgressTile(item: item),
     };
   }
@@ -102,11 +114,13 @@ class _ProgressTile extends StatelessWidget {
 }
 
 class _ResultTile extends StatelessWidget {
-  const _ResultTile({required this.item, required this.isError, required this.onRetry});
+  const _ResultTile({required this.item, required this.isError, required this.onRetry, this.onOpen, this.onRemove});
 
   final DownloadItem item;
   final bool isError;
   final VoidCallback onRetry;
+  final VoidCallback? onOpen;
+  final VoidCallback? onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -150,8 +164,54 @@ class _ResultTile extends StatelessWidget {
             ),
           ),
           if (isError && item.plan.url != null) TextButton(onPressed: onRetry, child: Text(l10n.retry)),
+          if (onOpen != null || onRemove != null) _TileMenu(onOpen: onOpen, onRemove: onRemove),
         ],
       ),
+    );
+  }
+}
+
+enum _TileAction { open, remove }
+
+/// The "more actions" menu of a finished download: open the file, or take it off the list.
+class _TileMenu extends StatelessWidget {
+  const _TileMenu({this.onOpen, this.onRemove});
+
+  final VoidCallback? onOpen;
+  final VoidCallback? onRemove;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return PopupMenuButton<_TileAction>(
+      tooltip: l10n.homeActions,
+      icon: const Icon(Icons.more_vert, size: AppIconSize.md),
+      constraints: const BoxConstraints(minHeight: AppSize.control),
+      style: IconButton.styleFrom(minimumSize: const Size.square(AppSize.control)),
+      onSelected: (action) => switch (action) {
+        _TileAction.open => onOpen?.call(),
+        _TileAction.remove => onRemove?.call(),
+      },
+      itemBuilder: (context) => [
+        if (onOpen != null)
+          PopupMenuItem(
+            value: _TileAction.open,
+            child: ListTile(
+              leading: const Icon(Icons.open_in_new),
+              title: Text(l10n.homeOpen),
+              contentPadding: EdgeInsets.zero,
+            ),
+          ),
+        if (onRemove != null)
+          PopupMenuItem(
+            value: _TileAction.remove,
+            child: ListTile(
+              leading: const Icon(Icons.playlist_remove),
+              title: Text(l10n.homeRemove),
+              contentPadding: EdgeInsets.zero,
+            ),
+          ),
+      ],
     );
   }
 }

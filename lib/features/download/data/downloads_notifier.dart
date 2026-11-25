@@ -266,6 +266,14 @@ class DownloadsNotifier extends Notifier<List<DownloadItem>> {
     if (!await engine.enqueue(_taskFor(item))) _fail(id, DownloadError.failed);
   }
 
+  /// Opens the saved file of [id] with another app; false when the item is not saved or the file cannot be opened.
+  Future<bool> open(String id) async {
+    final item = _find(id);
+    if (item == null || item.status != DownloadStatus.done) return false;
+    return ref.read(storageGatewayProvider).open(item.savedPath);
+  }
+
+  /// Takes the item off the list; the saved file stays where it is.
   void dismiss(String id) => _set(state.where((item) => item.id != id).toList());
 
   /// Clears the history: finished and failed items go, downloads still in flight stay.

@@ -12,7 +12,8 @@ import '../../rules/domain/name_resolver.dart';
 import '../../rules/widgets/pattern_section.dart';
 import '../../settings/app_settings.dart';
 
-/// How the file is named, as one row of chips: none, custom pattern, a saved rule. Shared by Home and the share sheet.
+/// How the file is named: a checkbox to apply a rule or keep the original name and, when on, one row of chips (custom
+/// pattern, saved rules, add). Shared by Home and the share sheet.
 class RuleSelector extends ConsumerWidget {
   const RuleSelector({super.key, this.selectedRuleId, this.onAddRule, this.onRuleSelected});
 
@@ -32,58 +33,54 @@ class RuleSelector extends ConsumerWidget {
     final rules = ref.watch(rulesProvider);
     final notifier = ref.read(settingsProvider.notifier);
     final activeId = selectedRuleId ?? selectRule(settings, rules)?.id;
+    final isApplying = settings.mode != NamingMode.none;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: AppLayout.sectionGap,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(l10n.ruleLabel, style: context.text.labelMedium?.copyWith(color: context.colors.onSurfaceVariant)),
-            const SizedBox(width: AppSpacing.sm),
-            Flexible(
-              child: Text(
-                l10n.ruleRemembered,
-                textAlign: TextAlign.end,
-                style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant),
-              ),
-            ),
-          ],
+        // Off: the file keeps its original name. On: it is named by a custom pattern or by one of the saved rules.
+        CheckboxListTile(
+          value: isApplying,
+          onChanged: (value) {
+            if (value ?? false) {
+              final lastRule = rules.where((rule) => rule.id == settings.lastRuleId).firstOrNull;
+              lastRule == null ? notifier.setMode(NamingMode.quick) : notifier.chooseRule(lastRule.id);
+            } else {
+              notifier.setMode(NamingMode.none);
+            }
+          },
+          contentPadding: EdgeInsets.zero,
+          controlAffinity: ListTileControlAffinity.leading,
+          title: Text(l10n.ruleApply, style: context.text.bodyLarge),
+          subtitle: isApplying ? null : Text(l10n.modeNoneHint),
         ),
-        // One row of chips that scrolls sideways: no rule, a custom pattern, each saved rule and, at the end, "add".
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            spacing: AppSpacing.sm,
-            children: [
-              PillChoice(
-                label: l10n.modeNone,
-                isSelected: settings.mode == NamingMode.none,
-                onTap: () => notifier.setMode(NamingMode.none),
-              ),
-              PillChoice(
-                label: l10n.modeQuick,
-                isSelected: settings.mode == NamingMode.quick,
-                onTap: () => notifier.setMode(NamingMode.quick),
-              ),
-              for (final rule in rules)
+        // One row of chips that scrolls sideways: a custom pattern, each saved rule and, at the end, "add".
+        if (isApplying)
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              spacing: AppSpacing.sm,
+              children: [
                 PillChoice(
-                  label: rule.name,
-                  isSelected: settings.mode == NamingMode.saved && rule.id == activeId,
-                  onTap: () {
-                    notifier.chooseRule(rule.id);
-                    onRuleSelected?.call(rule.id);
-                  },
+                  label: l10n.modeQuick,
+                  isSelected: settings.mode == NamingMode.quick,
+                  onTap: () => notifier.setMode(NamingMode.quick),
                 ),
-              // An action, not a rule: same size as the rules, tinted and with a plus.
-              if (onAddRule != null) PillChoice.action(label: l10n.ruleAdd, icon: Icons.add, onTap: onAddRule!),
-            ],
+                for (final rule in rules)
+                  PillChoice(
+                    label: rule.name,
+                    isSelected: settings.mode == NamingMode.saved && rule.id == activeId,
+                    onTap: () {
+                      notifier.chooseRule(rule.id);
+                      onRuleSelected?.call(rule.id);
+                    },
+                  ),
+                // An action, not a rule: same size as the rules, tinted and with a plus.
+                if (onAddRule != null) PillChoice.action(label: l10n.ruleAdd, icon: Icons.add, onTap: onAddRule!),
+              ],
+            ),
           ),
-        ),
-        if (settings.mode == NamingMode.none)
-          Text(l10n.modeNoneHint, style: context.text.bodySmall?.copyWith(color: context.colors.onSurfaceVariant))
-        else if (settings.mode == NamingMode.quick)
-          _QuickOptions(settings: settings, notifier: notifier),
+        if (settings.mode == NamingMode.quick) _QuickOptions(settings: settings, notifier: notifier),
       ],
     );
   }

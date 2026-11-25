@@ -66,6 +66,15 @@ class FakeStorageGateway implements SharedStorageGateway {
   final Set<String> existing = {};
   final List<StoredCall> moved = [];
   bool failMove = false;
+  bool failOpen = false;
+  final List<String> opened = [];
+
+  @override
+  Future<bool> open(String filePath) async {
+    if (failOpen) return false;
+    opened.add(filePath);
+    return true;
+  }
 
   String _name(String path) => path.split('/').last;
 

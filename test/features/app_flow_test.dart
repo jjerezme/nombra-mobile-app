@@ -18,6 +18,7 @@ import 'package:nombra/core/widgets/segmented_toggle.dart';
 import 'package:nombra/features/rules/domain/rename_rule.dart';
 import 'package:nombra/features/rules/domain/storage_root.dart';
 import 'package:nombra/features/download/data/downloads_notifier.dart';
+import 'package:nombra/features/download/domain/download_models.dart';
 import 'package:nombra/features/rules/data/rules_notifier.dart';
 import 'package:nombra/features/settings/app_settings.dart';
 
@@ -89,6 +90,57 @@ void main() {
     expect(find.text('Pega una URL para ver el nombre'), findsOneWidget);
   });
 
+  group('a saved download in the list', () {
+    final saved = DownloadItem(
+      id: 'd1',
+      fileName: 'factura_0231.pdf',
+      status: DownloadStatus.done,
+      plan: DownloadPlan(folder: DestinationFolder(StorageRoot.documents, 'Facturas')),
+      createdAt: DateTime(2026, 11, 24, 12),
+      folderPath: '/Documents/Facturas',
+      finishedAt: DateTime(2026, 11, 24, 12),
+    );
+
+    setUp(
+      () async => env = await TestEnvironment.create(
+        preferences: {
+          ...storedRules(sampleRules()),
+          'downloads': jsonEncode([saved.toJson()]),
+        },
+      ),
+    );
+
+    testWidgets('can be opened from its menu', (tester) async {
+      await pumpApp(tester, env);
+      await tester.tap(find.byTooltip('Más acciones'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Abrir'));
+      await tester.pumpAndSettle();
+      expect(env.gateway.opened, ['/storage/emulated/0/Documents/Facturas/factura_0231.pdf']);
+    });
+
+    testWidgets('says so when the file cannot be opened', (tester) async {
+      env.gateway.failOpen = true;
+      await pumpApp(tester, env);
+      await tester.tap(find.byTooltip('Más acciones'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Abrir'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('No se pudo abrir el archivo'), findsOneWidget);
+    });
+
+    testWidgets('can be removed from the list, and the file stays', (tester) async {
+      final container = await pumpApp(tester, env);
+      await tester.tap(find.byTooltip('Más acciones'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Quitar de la lista'));
+      await tester.pumpAndSettle();
+      expect(container.read(downloadsProvider), isEmpty);
+      expect(find.text('factura_0231.pdf'), findsNothing);
+      expect(env.gateway.opened, isEmpty);
+    });
+  });
+
   testWidgets('typing a URL previews the final name and downloading enqueues it', (tester) async {
     final container = await pumpApp(tester, env);
     await tester.enterText(find.byType(TextField).first, _url);
@@ -115,14 +167,19 @@ void main() {
 
   testWidgets('the file can be saved without any rule, with a saved rule, or with a custom pattern', (tester) async {
     final container = await pumpApp(tester, env);
-    for (final mode in ['Ninguna', 'Personalizado', 'Fecha + nombre']) {
+    // With a rule applied the chips are the custom pattern and the saved rules: there is no "none" chip.
+    for (final mode in ['Personalizado', 'Fecha + nombre']) {
       expect(find.text(mode), findsOneWidget);
     }
+    expect(find.text('Ninguna'), findsNothing);
+    await tapChip(tester, 'Fecha + nombre');
+    await tester.pumpAndSettle();
 
     await tester.enterText(find.byType(TextField).first, _url);
-    await tester.tap(find.text('Ninguna'));
+    await tester.tap(find.text('Aplicar una regla'));
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).mode, NamingMode.none);
+    expect(find.widgetWithText(PillChoice, 'Fecha + nombre'), findsNothing); // the chips go away
     expect(find.text('El archivo se guarda con su nombre original, sin aplicar ninguna regla.'), findsOneWidget);
     expect(find.text('Informe Q3 FINAL (2).pdf'), findsOneWidget);
     expect(find.text('/Download'), findsOneWidget);
@@ -133,7 +190,8 @@ void main() {
     expect(container.read(downloadsProvider).single.fileName, 'Informe Q3 FINAL (2).pdf');
 
     // A download in progress keeps an endless progress bar, so the page is pumped, not settled.
-    await tapChip(tester, 'Fecha + nombre');
+    // Applying a rule again brings back the last one used.
+    await tester.tap(find.text('Aplicar una regla'));
     await tester.pump(const Duration(milliseconds: 300));
     expect(container.read(settingsProvider).mode, NamingMode.saved);
     expect(container.read(settingsProvider).lastRuleId, 'date-name');
@@ -241,25 +299,20 @@ void main() {
     expect(find.textContaining('Guardar en'), findsNothing);
   });
 
-  testWidgets('with nothing configured, Download starts with Ninguno selected', (tester) async {
+  testWidgets('with nothing configured, no rule is applied and the chips are hidden', (tester) async {
     final clean = await TestEnvironment.create(preferences: storedRules(sampleRules()));
     final container = await pumpApp(tester, clean);
     expect(container.read(settingsProvider).mode, NamingMode.none);
-    final none = tester.widget<Semantics>(
-      find.descendant(of: find.widgetWithText(PillChoice, 'Ninguna'), matching: find.byType(Semantics)).first,
-    );
-    expect(none.properties.selected, isTrue);
-    expect(
-      tester
-          .widget<Semantics>(
-            find
-                .descendant(of: find.widgetWithText(PillChoice, 'Personalizado'), matching: find.byType(Semantics))
-                .first,
-          )
-          .properties
-          .selected,
-      isFalse,
-    );
+    expect(tester.widget<CheckboxListTile>(find.byType(CheckboxListTile)).value, isFalse);
+    expect(find.byType(PillChoice), findsNothing);
+    expect(find.text('El archivo se guarda con su nombre original, sin aplicar ninguna regla.'), findsOneWidget);
+
+    // With no rule used before, applying one starts with the custom pattern.
+    await tester.tap(find.text('Aplicar una regla'));
+    await tester.pumpAndSettle();
+    expect(container.read(settingsProvider).mode, NamingMode.quick);
+    expect(find.widgetWithText(PillChoice, 'Personalizado'), findsOneWidget);
+    expect(find.widgetWithText(PillChoice, 'Fecha + nombre'), findsOneWidget);
   });
 
   testWidgets('Home has an "Agregar" chip, apart from the rules, that opens the new rule screen', (tester) async {
@@ -388,8 +441,11 @@ void main() {
 
     testWidgets('Home offers to create a rule and still names the file after the original', (tester) async {
       await pumpApp(tester, env);
-      expect(find.text('Ninguna'), findsOneWidget);
+      await tester.tap(find.text('Aplicar una regla'));
+      await tester.pumpAndSettle();
       expect(find.widgetWithText(PillChoice, 'Agregar'), findsOneWidget);
+      await tester.tap(find.text('Aplicar una regla'));
+      await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField).first, _url);
       await tester.pumpAndSettle();
       expect(find.textContaining('Informe Q3 FINAL (2).pdf'), findsOneWidget);

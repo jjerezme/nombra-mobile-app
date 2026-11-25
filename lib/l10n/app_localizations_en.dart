@@ -40,12 +40,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modeQuick => 'Custom';
 
   @override
-  String get ruleLabel => 'Rule';
-
-  @override
-  String get ruleRemembered => 'The last one used is remembered';
-
-  @override
   String get ruleAdd => 'Add';
 
   @override
@@ -157,7 +151,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String shareRememberDefault(String kind) {
-    return 'Remember as default for $kind';
+    return 'Always use this rule for $kind';
   }
 
   @override
@@ -573,8 +567,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get modeNone => 'None';
+  String get modeNoneHint => 'The file is saved with its original name, without applying any rule.';
 
   @override
-  String get modeNoneHint => 'The file is saved with its original name, without applying any rule.';
+  String get ruleApply => 'Apply a rule';
+
+  @override
+  String get homeActions => 'More actions';
+
+  @override
+  String get homeOpen => 'Open';
+
+  @override
+  String get homeRemove => 'Remove from list';
+
+  @override
+  String get homeOpenFailed => 'The file could not be opened. It may have been moved or deleted.';
+
+  @override
+  String get shareRememberHint => 'You can undo this in Settings, with “Forget remembered rules”.';
 }

@@ -230,6 +230,7 @@ class _Content extends ConsumerWidget {
             contentPadding: EdgeInsets.zero,
             controlAffinity: ListTileControlAffinity.leading,
             title: Text(l10n.shareRememberDefault(kindLabel(l10n, first.kind)), style: context.text.bodyMedium),
+            subtitle: Text(l10n.shareRememberHint),
           ),
       ],
     ];
