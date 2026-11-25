@@ -332,12 +332,6 @@ abstract class AppLocalizations {
   /// **'Nombre final'**
   String get shareFinalName;
 
-  /// No description provided for @shareRememberDefault.
-  ///
-  /// In es, this message translates to:
-  /// **'Usar esta regla siempre para {kind}'**
-  String shareRememberDefault(String kind);
-
   /// No description provided for @kindImage.
   ///
   /// In es, this message translates to:
@@ -893,13 +887,13 @@ abstract class AppLocalizations {
   /// No description provided for @settingsForgetRemembered.
   ///
   /// In es, this message translates to:
-  /// **'Olvidar reglas recordadas'**
+  /// **'Olvidar la última regla usada'**
   String get settingsForgetRemembered;
 
   /// No description provided for @settingsForgetRememberedHint.
   ///
   /// In es, this message translates to:
-  /// **'Quita la regla predeterminada por tipo de archivo y la última usada.'**
+  /// **'Quita la última regla usada y se vuelve a elegir automáticamente.'**
   String get settingsForgetRememberedHint;
 
   /// No description provided for @settingsClearHistory.
@@ -929,7 +923,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsConfirmForgetTitle.
   ///
   /// In es, this message translates to:
-  /// **'¿Olvidar reglas recordadas?'**
+  /// **'¿Olvidar la última regla usada?'**
   String get settingsConfirmForgetTitle;
 
   /// No description provided for @settingsConfirmForgetBody.
@@ -1135,12 +1129,6 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'No se pudo abrir el archivo. Puede que lo hayan movido o borrado.'**
   String get homeOpenFailed;
-
-  /// No description provided for @shareRememberHint.
-  ///
-  /// In es, this message translates to:
-  /// **'Puedes quitarlo en Ajustes, con «Olvidar reglas recordadas».'**
-  String get shareRememberHint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

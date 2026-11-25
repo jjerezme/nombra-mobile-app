@@ -32,8 +32,6 @@ class ShareSheetScreen extends ConsumerStatefulWidget {
 
 class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
   DestinationFolder? _chosenFolder;
-  String? _chosenRuleId;
-  bool _remember = true;
   List<String>? _savedIds;
   bool _isClosing = false;
 
@@ -52,10 +50,8 @@ class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
     final settings = ref.read(settingsProvider);
     final settingsNotifier = ref.read(settingsProvider.notifier);
     final downloads = ref.read(downloadsProvider.notifier);
-    final first = items.first;
     settingsNotifier.setLastFolder(target.folder);
     final rule = target.rule;
-    if (_remember && rule != null) settingsNotifier.rememberDefaultFor(first.kind, rule.id);
 
     DownloadPlan planFor(ShareItem item) => settings.mode == NamingMode.quick
         ? DownloadPlan.quick(settings: settings, folder: target.folder, url: item.url)
@@ -133,11 +129,7 @@ class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
                         : _Content(
                             items: items,
                             chosenFolder: _chosenFolder,
-                            chosenRuleId: _chosenRuleId,
-                            remember: _remember,
                             savedIds: _savedIds,
-                            onRuleChosen: (id) => setState(() => _chosenRuleId = id),
-                            onRememberChanged: (value) => setState(() => _remember = value),
                             onChangeFolder: _changeFolder,
                             onSave: _save,
                             onClose: _close,
@@ -175,11 +167,7 @@ class _Content extends ConsumerWidget {
   const _Content({
     required this.items,
     required this.chosenFolder,
-    required this.chosenRuleId,
-    required this.remember,
     required this.savedIds,
-    required this.onRuleChosen,
-    required this.onRememberChanged,
     required this.onChangeFolder,
     required this.onSave,
     required this.onClose,
@@ -187,13 +175,7 @@ class _Content extends ConsumerWidget {
 
   final List<ShareItem> items;
   final DestinationFolder? chosenFolder;
-
-  /// A rule tapped on this sheet: it wins over the rule remembered for the file type.
-  final String? chosenRuleId;
-  final bool remember;
   final List<String>? savedIds;
-  final ValueChanged<String> onRuleChosen;
-  final ValueChanged<bool> onRememberChanged;
   final ValueChanged<DestinationFolder> onChangeFolder;
   final void Function(List<ShareItem> items, ResolvedTarget target) onSave;
   final VoidCallback onClose;
@@ -211,9 +193,6 @@ class _Content extends ConsumerWidget {
       source: first.source,
       now: DateTime.now(),
       chosenFolder: chosenFolder,
-      selected: settings.mode == NamingMode.saved
-          ? rules.where((rule) => rule.id == chosenRuleId).firstOrNull ?? selectRule(settings, rules, kind: first.kind)
-          : null,
     );
     final isNameValid = settings.mode != NamingMode.quick || patternHasContent(settings.quickTokens);
     final saved = savedIds;
@@ -231,18 +210,9 @@ class _Content extends ConsumerWidget {
         ))
           Text(l10n.shareLeaveHint, style: context.text.bodySmall?.copyWith(color: colors.onSurfaceVariant)),
       ] else ...[
-        RuleSelector(selectedRuleId: target.rule?.id, onRuleSelected: onRuleChosen),
+        RuleSelector(selectedRuleId: target.rule?.id),
         if (items.length == 1) ShareNameField(fileName: target.fileName),
         DestinationCard(path: target.folder.path, onChange: () => onChangeFolder(target.folder)),
-        if (settings.mode == NamingMode.saved)
-          CheckboxListTile(
-            value: remember,
-            onChanged: (value) => onRememberChanged(value ?? false),
-            contentPadding: EdgeInsets.zero,
-            controlAffinity: ListTileControlAffinity.leading,
-            title: Text(l10n.shareRememberDefault(kindLabel(l10n, first.kind)), style: context.text.bodyMedium),
-            subtitle: Text(l10n.shareRememberHint),
-          ),
       ],
     ];
     // The buttons are pinned at the bottom: only the content above them scrolls.

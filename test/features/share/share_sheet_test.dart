@@ -158,25 +158,9 @@ void main() {
     expect(find.byIcon(Icons.description_outlined), findsOneWidget);
   });
 
-  testWidgets('"remember as default" stores the rule for that kind of file', (tester) async {
+  testWidgets('a rule tapped on the sheet is used and becomes the last one used', (tester) async {
     final (container, _) = await pumpShare(tester, env, _linkPayload);
-    expect(find.text('Usar esta regla siempre para documentos'), findsOneWidget);
-    expect(find.textContaining('Olvidar reglas recordadas'), findsOneWidget);
-    await tester.tap(find.text('Guardar'));
-    await tester.pump(const Duration(milliseconds: 200));
-    expect(container.read(settingsProvider).defaultRuleByKind['document'], 'date-name');
-  });
-
-  testWidgets('a rule tapped on the sheet wins over the one remembered for that kind of file', (tester) async {
-    final remembered = await TestEnvironment.create(
-      preferences: {
-        ...storedRules(sampleRules()),
-        'settings': jsonEncode(
-          AppSettings(mode: NamingMode.saved, defaultRuleByKind: {'document': 'date-name'}).toJson(),
-        ),
-      },
-    );
-    final (container, _) = await pumpShare(tester, remembered, _linkPayload);
+    expect(find.textContaining('Usar esta regla siempre'), findsNothing);
     await tester.ensureVisible(find.widgetWithText(PillChoice, 'Original'));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(PillChoice, 'Original'));
@@ -185,7 +169,8 @@ void main() {
     expect(tester.widget<PillChoice>(find.widgetWithText(PillChoice, 'Fecha + nombre')).isSelected, isFalse);
     await tester.tap(find.text('Guardar'));
     await tester.pump(const Duration(milliseconds: 200));
-    expect(container.read(settingsProvider).defaultRuleByKind['document'], 'original');
+    expect(container.read(downloadsProvider).single.plan.rule?.id, 'original');
+    expect(container.read(settingsProvider).lastRuleId, 'original');
   });
 
   testWidgets('saving sends the sheet to the background while the download goes on', (tester) async {
@@ -224,7 +209,6 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
     final item = container.read(downloadsProvider).single;
     expect(item.plan.rule, isNull);
-    expect(container.read(settingsProvider).defaultRuleByKind, isEmpty);
   });
 
   testWidgets('several files show a count instead of a name field', (tester) async {
@@ -240,7 +224,6 @@ void main() {
     );
     expect(find.text('2 archivos'), findsOneWidget);
     expect(find.text('Nombre final'), findsNothing);
-    expect(find.text('Usar esta regla siempre para imágenes'), findsOneWidget);
   });
 
   testWidgets('cancel closes the sheet without downloading', (tester) async {

@@ -50,12 +50,6 @@ void main() {
       expect(selectRule(AppSettings(), rules)?.id, 'dated');
     });
 
-    test('prefers the default of the file kind', () {
-      final settings = AppSettings(lastRuleId: 'plain', defaultRuleByKind: const {'image': 'dated'});
-      expect(selectRule(settings, rules, kind: FileKind.image)?.id, 'dated');
-      expect(selectRule(settings, rules, kind: FileKind.video)?.id, 'plain');
-    });
-
     test('no rules: nothing is selected', () {
       expect(selectRule(AppSettings(), const []), isNull);
     });
@@ -153,7 +147,6 @@ void main() {
       quickNext: 4,
       quickNextKey: 'k',
       lastFolder: DestinationFolder(StorageRoot.movies, 'a'),
-      defaultRuleByKind: const {'image': 'r'},
     );
     expect(AppSettings.fromJson(settings.toJson()).toJson(), settings.toJson());
   });

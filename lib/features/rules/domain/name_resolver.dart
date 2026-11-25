@@ -1,5 +1,4 @@
 import '../../settings/app_settings.dart';
-import 'file_kind.dart';
 import 'filename_builder.dart';
 import 'rename_rule.dart';
 import 'storage_root.dart';
@@ -18,12 +17,11 @@ class ResolvedTarget {
   final RenameRule? rule;
 }
 
-/// The rule to use: the default of the file's kind, then the last one used, then the default rule, then the first.
-RenameRule? selectRule(AppSettings settings, List<RenameRule> rules, {FileKind? kind}) {
+/// The rule to use: the last one used, then the default rule, then the first.
+RenameRule? selectRule(AppSettings settings, List<RenameRule> rules) {
   if (rules.isEmpty) return null;
   RenameRule? byId(String? id) => rules.where((rule) => rule.id == id).firstOrNull;
-  final kindDefault = kind == null ? null : byId(settings.defaultRuleByKind[kind.name]);
-  return kindDefault ?? byId(settings.lastRuleId) ?? rules.where((rule) => rule.isDefault).firstOrNull ?? rules.first;
+  return byId(settings.lastRuleId) ?? rules.where((rule) => rule.isDefault).firstOrNull ?? rules.first;
 }
 
 ResolvedTarget resolveTarget({
@@ -42,9 +40,7 @@ ResolvedTarget resolveTarget({
     );
   }
   // No rule: the file keeps its original name.
-  final rule = settings.mode == NamingMode.none
-      ? null
-      : selected ?? selectRule(settings, rules, kind: fileKindOf(extension: source.extension));
+  final rule = settings.mode == NamingMode.none ? null : selected ?? selectRule(settings, rules);
   if (rule == null) {
     return ResolvedTarget(
       fileName: source.name,

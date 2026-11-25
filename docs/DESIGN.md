@@ -37,7 +37,6 @@ Color de superficie, asa del tema, margen `sheetGutter`, bloques con `sectionGap
 ## Cómo se nombra el archivo (Descargar y hoja de compartir)
 Un interruptor **Aplicar una regla**, justo debajo de la URL. Apagada (por defecto): no se aplica ninguna regla, el archivo conserva su nombre original y se explica con un texto bajo el interruptor; la carpeta de destino sí se puede elegir. Encendida: aparece una sola fila de chips con scroll lateral: **Personalizado** (patrón propio que se mantiene), cada regla guardada y, al final, la acción **Agregar** (solo en Descargar). No hay chip "Ninguna". Al encender la casilla se vuelve a la última regla usada, o a Personalizado si no hay.
 
-La casilla de la hoja de compartir dice **Usar esta regla siempre para {tipo}** y explica debajo dónde se deshace (Ajustes › Olvidar reglas recordadas).
 
 ## Lista de descargas
 Cada descarga terminada o fallida tiene un menú de tres puntos (`Más acciones`, 48 dp): **Abrir** (solo las guardadas; abre el archivo con la app del sistema y avisa si no se pudo) y **Quitar de la lista** (no borra el archivo). Las descargas en curso no tienen menú.

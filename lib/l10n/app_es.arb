@@ -115,14 +115,6 @@
     }
   },
   "shareFinalName": "Nombre final",
-  "shareRememberDefault": "Usar esta regla siempre para {kind}",
-  "@shareRememberDefault": {
-    "placeholders": {
-      "kind": {
-        "type": "String"
-      }
-    }
-  },
   "kindImage": "imágenes",
   "kindVideo": "videos",
   "kindAudio": "audios",
@@ -260,13 +252,13 @@
   "settingsDefaultFolder": "Carpeta predeterminada",
   "settingsDefaultFolderHint": "Se usa cuando la regla no define una carpeta.",
   "settingsData": "Datos",
-  "settingsForgetRemembered": "Olvidar reglas recordadas",
-  "settingsForgetRememberedHint": "Quita la regla predeterminada por tipo de archivo y la última usada.",
+  "settingsForgetRemembered": "Olvidar la última regla usada",
+  "settingsForgetRememberedHint": "Quita la última regla usada y se vuelve a elegir automáticamente.",
   "settingsClearHistory": "Borrar historial de descargas",
   "settingsClearHistoryHint": "No borra los archivos ya guardados.",
   "settingsClearRules": "Borrar todas las reglas",
   "settingsClearRulesHint": "Empiezas de nuevo, sin reglas.",
-  "settingsConfirmForgetTitle": "¿Olvidar reglas recordadas?",
+  "settingsConfirmForgetTitle": "¿Olvidar la última regla usada?",
   "settingsConfirmForgetBody": "La regla se volverá a elegir automáticamente.",
   "settingsConfirmHistoryTitle": "¿Borrar el historial?",
   "settingsConfirmHistoryBody": "Se quitan de la lista las descargas terminadas y con error. Los archivos guardados no se borran.",
@@ -355,6 +347,5 @@
   "homeActions": "Más acciones",
   "homeOpen": "Abrir",
   "homeRemove": "Quitar de la lista",
-  "homeOpenFailed": "No se pudo abrir el archivo. Puede que lo hayan movido o borrado.",
-  "shareRememberHint": "Puedes quitarlo en Ajustes, con «Olvidar reglas recordadas»."
+  "homeOpenFailed": "No se pudo abrir el archivo. Puede que lo hayan movido o borrado."
 }

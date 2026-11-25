@@ -150,11 +150,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareFinalName => 'Final name';
 
   @override
-  String shareRememberDefault(String kind) {
-    return 'Always use this rule for $kind';
-  }
-
-  @override
   String get kindImage => 'images';
 
   @override
@@ -445,10 +440,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsData => 'Data';
 
   @override
-  String get settingsForgetRemembered => 'Forget remembered rules';
+  String get settingsForgetRemembered => 'Forget last rule used';
 
   @override
-  String get settingsForgetRememberedHint => 'Removes the default rule per file type and the last one used.';
+  String get settingsForgetRememberedHint => 'Removes the last rule used; the rule is picked automatically again.';
 
   @override
   String get settingsClearHistory => 'Clear download history';
@@ -463,7 +458,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsClearRulesHint => 'Start over with no rules.';
 
   @override
-  String get settingsConfirmForgetTitle => 'Forget remembered rules?';
+  String get settingsConfirmForgetTitle => 'Forget last rule used?';
 
   @override
   String get settingsConfirmForgetBody => 'The rule will be picked automatically again.';
@@ -583,7 +578,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeOpenFailed => 'The file could not be opened. It may have been moved or deleted.';
-
-  @override
-  String get shareRememberHint => 'You can undo this in Settings, with “Forget remembered rules”.';
 }

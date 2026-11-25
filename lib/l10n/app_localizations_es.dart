@@ -150,11 +150,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get shareFinalName => 'Nombre final';
 
   @override
-  String shareRememberDefault(String kind) {
-    return 'Usar esta regla siempre para $kind';
-  }
-
-  @override
   String get kindImage => 'imágenes';
 
   @override
@@ -446,10 +441,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsData => 'Datos';
 
   @override
-  String get settingsForgetRemembered => 'Olvidar reglas recordadas';
+  String get settingsForgetRemembered => 'Olvidar la última regla usada';
 
   @override
-  String get settingsForgetRememberedHint => 'Quita la regla predeterminada por tipo de archivo y la última usada.';
+  String get settingsForgetRememberedHint => 'Quita la última regla usada y se vuelve a elegir automáticamente.';
 
   @override
   String get settingsClearHistory => 'Borrar historial de descargas';
@@ -464,7 +459,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsClearRulesHint => 'Empiezas de nuevo, sin reglas.';
 
   @override
-  String get settingsConfirmForgetTitle => '¿Olvidar reglas recordadas?';
+  String get settingsConfirmForgetTitle => '¿Olvidar la última regla usada?';
 
   @override
   String get settingsConfirmForgetBody => 'La regla se volverá a elegir automáticamente.';
@@ -585,7 +580,4 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get homeOpenFailed => 'No se pudo abrir el archivo. Puede que lo hayan movido o borrado.';
-
-  @override
-  String get shareRememberHint => 'Puedes quitarlo en Ajustes, con «Olvidar reglas recordadas».';
 }

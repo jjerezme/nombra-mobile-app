@@ -4,7 +4,7 @@
 - Fecha: 2026-11-23
 
 ## Contexto
-Nombra guarda las reglas de renombrado, lo último que eligió el usuario (modo, regla, prefijo, sufijo, carpeta, regla predeterminada por tipo de archivo) y el historial de descargas. Son pocos datos y no hay cuentas ni sincronización.
+Nombra guarda las reglas de renombrado, lo último que eligió el usuario (modo, regla, prefijo, sufijo, carpeta) y el historial de descargas. Son pocos datos y no hay cuentas ni sincronización.
 
 ## Decisión
 - `shared_preferences`, un valor JSON por clave: `rules`, `settings` y `downloads` (historial, máximo 50).

@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/l10n/current_l10n.dart';
 import '../../core/providers.dart';
 import '../../core/validation.dart';
-import '../rules/domain/file_kind.dart';
 import '../rules/domain/rename_rule.dart';
 import '../rules/domain/storage_root.dart';
 
@@ -49,7 +48,6 @@ class AppSettings {
     this.mode = NamingMode.none,
     this.lastRuleId,
     DestinationFolder? lastFolder,
-    this.defaultRuleByKind = const {},
     this.languageCode,
     this.themeMode = AppThemeMode.system,
     this.quickTokens = defaultQuickTokens,
@@ -64,7 +62,6 @@ class AppSettings {
     lastFolder: json['lastFolder'] == null
         ? null
         : DestinationFolder.fromJson(json['lastFolder'] as Map<String, dynamic>),
-    defaultRuleByKind: (json['defaultRuleByKind'] as Map<String, dynamic>? ?? {}).cast<String, String>(),
     languageCode: supportedLanguageCodes.contains(json['languageCode']) ? json['languageCode'] as String : null,
     themeMode: AppThemeMode.values.firstWhere(
       (mode) => mode.name == json['themeMode'],
@@ -87,9 +84,6 @@ class AppSettings {
   final NamingMode mode;
   final String? lastRuleId;
   final DestinationFolder lastFolder;
-
-  /// `FileKind.name` -> rule id, set with "remember as default for images".
-  final Map<String, String> defaultRuleByKind;
 
   /// `es` or `en`; null follows the system language.
   final String? languageCode;
@@ -118,7 +112,6 @@ class AppSettings {
     NamingMode? mode,
     String? lastRuleId,
     DestinationFolder? lastFolder,
-    Map<String, String>? defaultRuleByKind,
     String? languageCode,
     bool clearLanguage = false,
     AppThemeMode? themeMode,
@@ -130,7 +123,6 @@ class AppSettings {
     mode: mode ?? this.mode,
     lastRuleId: lastRuleId ?? this.lastRuleId,
     lastFolder: lastFolder ?? this.lastFolder,
-    defaultRuleByKind: defaultRuleByKind ?? this.defaultRuleByKind,
     languageCode: clearLanguage ? null : languageCode ?? this.languageCode,
     themeMode: themeMode ?? this.themeMode,
     quickTokens: quickTokens ?? this.quickTokens,
@@ -143,7 +135,6 @@ class AppSettings {
     'mode': mode.name,
     'lastRuleId': lastRuleId,
     'lastFolder': lastFolder.toJson(),
-    'defaultRuleByKind': defaultRuleByKind,
     'languageCode': languageCode,
     'themeMode': themeMode.name,
     'quickTokens': quickTokens,
@@ -183,7 +174,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
 
   void setThemeMode(AppThemeMode mode) => _update(state.copyWith(themeMode: mode));
 
-  /// Forgets the rules remembered per kind of file and the last one used.
+  /// Forgets the last rule used, so the rule is picked automatically again.
   void forgetRememberedRules() => _update(
     AppSettings(
       mode: state.mode,
@@ -222,9 +213,6 @@ class SettingsNotifier extends Notifier<AppSettings> {
   }
 
   void setLastFolder(DestinationFolder folder) => _update(state.copyWith(lastFolder: folder));
-
-  void rememberDefaultFor(FileKind kind, String ruleId) =>
-      _update(state.copyWith(defaultRuleByKind: {...state.defaultRuleByKind, kind.name: ruleId}));
 }
 
 final settingsProvider = NotifierProvider<SettingsNotifier, AppSettings>(SettingsNotifier.new);

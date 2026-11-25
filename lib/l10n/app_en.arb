@@ -115,14 +115,6 @@
     }
   },
   "shareFinalName": "Final name",
-  "shareRememberDefault": "Always use this rule for {kind}",
-  "@shareRememberDefault": {
-    "placeholders": {
-      "kind": {
-        "type": "String"
-      }
-    }
-  },
   "kindImage": "images",
   "kindVideo": "videos",
   "kindAudio": "audio files",
@@ -260,13 +252,13 @@
   "settingsDefaultFolder": "Default folder",
   "settingsDefaultFolderHint": "Used when the rule does not set a folder.",
   "settingsData": "Data",
-  "settingsForgetRemembered": "Forget remembered rules",
-  "settingsForgetRememberedHint": "Removes the default rule per file type and the last one used.",
+  "settingsForgetRemembered": "Forget last rule used",
+  "settingsForgetRememberedHint": "Removes the last rule used; the rule is picked automatically again.",
   "settingsClearHistory": "Clear download history",
   "settingsClearHistoryHint": "Files already saved are not deleted.",
   "settingsClearRules": "Delete all rules",
   "settingsClearRulesHint": "Start over with no rules.",
-  "settingsConfirmForgetTitle": "Forget remembered rules?",
+  "settingsConfirmForgetTitle": "Forget last rule used?",
   "settingsConfirmForgetBody": "The rule will be picked automatically again.",
   "settingsConfirmHistoryTitle": "Clear the history?",
   "settingsConfirmHistoryBody": "Finished and failed downloads are removed from the list. Saved files are not deleted.",
@@ -355,6 +347,5 @@
   "homeActions": "More actions",
   "homeOpen": "Open",
   "homeRemove": "Remove from list",
-  "homeOpenFailed": "The file could not be opened. It may have been moved or deleted.",
-  "shareRememberHint": "You can undo this in Settings, with “Forget remembered rules”."
+  "homeOpenFailed": "The file could not be opened. It may have been moved or deleted."
 }
