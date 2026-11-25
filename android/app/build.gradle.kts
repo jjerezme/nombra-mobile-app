@@ -53,7 +53,8 @@ android {
 
     // The upload key is given as Gradle properties (UPLOAD_STORE_FILE, UPLOAD_STORE_PASSWORD, UPLOAD_KEY_ALIAS,
     // UPLOAD_KEY_PASSWORD) by scripts/build.dart, as ORG_GRADLE_PROJECT_* variables, so passwords never appear in a
-    // command line. Without them the release keeps the debug signing (fine for local preview builds).
+    // command line. Without them the dev release keeps the debug signing (fine for local preview builds); the prod release
+    // fails (see the end of this file).
     val hasUploadKey = project.hasProperty("UPLOAD_STORE_FILE")
     signingConfigs {
         if (hasUploadKey) {
@@ -88,4 +89,19 @@ flutter {
 if (listOf("dev", "prod").any { file("src/$it/google-services.json").exists() }) {
     apply(plugin = "com.google.gms.google-services")
     apply(plugin = "com.google.firebase.crashlytics")
+}
+
+// A production release (apk or bundle) must be signed with the upload key: it never falls back to the debug key.
+gradle.taskGraph.whenReady {
+    val isProdRelease = allTasks.any { task ->
+        task.project == project &&
+            task.name.endsWith("ProdRelease") &&
+            listOf("assemble", "bundle", "package").any { task.name.startsWith(it) }
+    }
+    if (isProdRelease && !hasUploadKey) {
+        throw GradleException(
+            "A prod release needs the upload key (UPLOAD_STORE_FILE, UPLOAD_STORE_PASSWORD, UPLOAD_KEY_ALIAS, " +
+                "UPLOAD_KEY_PASSWORD). Use scripts/build.dart with the key configured; see docs/BUILD.md.",
+        )
+    }
 }

@@ -34,6 +34,9 @@ class SharePayload {
 
   String? get url => text == null ? null : firstUrlIn(text!);
 
+  /// The text has a plain http link, which is refused: it tells the user why there is nothing to save.
+  bool get hasInsecureUrl => url == null && text != null && hasInsecureLink(text!);
+
   /// Something Nombra can save: files, or a link.
   bool get isEmpty => files.isEmpty && url == null;
 }

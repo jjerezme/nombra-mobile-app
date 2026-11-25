@@ -95,6 +95,12 @@ void main() {
     expect(find.text('Guardar'), findsNothing);
   });
 
+  testWidgets('a shared plain http link says only https links can be saved', (tester) async {
+    await pumpShare(tester, env, const SharePayload(text: 'mira http://cdn.ejemplo.com/a.pdf'));
+    expect(find.text('Solo se pueden guardar enlaces https (cifrados).'), findsOneWidget);
+    expect(find.text('Guardar'), findsNothing);
+  });
+
   testWidgets('the final name is read only: the rule decides it', (tester) async {
     final (container, _) = await pumpShare(tester, env, _linkPayload);
     expect(find.byType(TextFormField), findsNothing);

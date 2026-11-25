@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:background_downloader/background_downloader.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nombra/features/download/data/file_finalizer.dart';
+import 'package:nombra/features/rules/domain/filename_builder.dart';
 import 'package:nombra/features/rules/domain/rename_rule.dart';
 import 'package:nombra/features/rules/domain/storage_root.dart';
 
@@ -41,6 +42,19 @@ void main() {
     expect(gateway.moved.single.destination, SharedStorage.files);
     expect(gateway.moved.single.directory, 'Facturas');
     expect(File(path).existsSync(), isFalse);
+  });
+
+  test('a name made of dots or separators never leaves the work folder: it is replaced', () async {
+    for (final name in ['..', '.', '../..']) {
+      final path = await makeFile('tmp_${name.length}');
+      final saved = await finalizer.save(
+        sourcePath: path,
+        fileName: name,
+        folder: DestinationFolder(StorageRoot.download),
+        policy: ConflictPolicy.suffix,
+      );
+      expect(saved.fileName, startsWith(fallbackBaseName));
+    }
   });
 
   test('suffix policy numbers the name until it is free', () async {

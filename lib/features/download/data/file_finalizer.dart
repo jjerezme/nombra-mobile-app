@@ -85,13 +85,14 @@ class FileFinalizer {
     required ConflictPolicy policy,
     ConflictPrompt? onConflict,
   }) async {
-    final kind = fileKindOf(extension: splitFileName(fileName).$2);
+    final safeName = safeFileName(fileName);
+    final kind = fileKindOf(extension: splitFileName(safeName).$2);
     final (destination, didFallBack) = storageFor(folder.root, kind);
     final directory = folder.subfolder;
     final work = await Directory.systemTemp.createTemp('nombra_');
     try {
       var current = sourcePath;
-      var candidate = fileName;
+      var candidate = safeName;
       var number = 0;
       var effective = policy;
       while (true) {
@@ -108,7 +109,7 @@ class FileFinalizer {
         if (effective == ConflictPolicy.replace && await _tryDelete(existing)) break;
         effective = ConflictPolicy.suffix;
         number++;
-        candidate = withNumberSuffix(fileName, number);
+        candidate = withNumberSuffix(safeName, number);
       }
       final stored = await _storage.move(current, destination, directory);
       if (stored == null) throw SaveFailure('Could not move $candidate to ${folder.path}');

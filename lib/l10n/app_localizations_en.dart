@@ -52,7 +52,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homePasteTooltip => 'Paste from clipboard';
 
   @override
-  String get homeUrlInvalid => 'Enter a valid http or https URL';
+  String get homeUrlInvalid => 'Enter a valid https URL';
+
+  @override
+  String get homeUrlInsecure => 'Only https (encrypted) links are supported';
 
   @override
   String get homeSavedAs => 'It will be saved as';
@@ -163,6 +166,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shareNothing => 'There is no link or file to save.';
+
+  @override
+  String get shareInsecure => 'Only https (encrypted) links can be saved.';
 
   @override
   String get shareClose => 'Close';

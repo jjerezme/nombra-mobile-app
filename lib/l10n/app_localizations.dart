@@ -179,8 +179,14 @@ abstract class AppLocalizations {
   /// No description provided for @homeUrlInvalid.
   ///
   /// In es, this message translates to:
-  /// **'Introduce una URL http o https válida'**
+  /// **'Introduce una URL https válida'**
   String get homeUrlInvalid;
+
+  /// No description provided for @homeUrlInsecure.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo se admiten enlaces https (cifrados)'**
+  String get homeUrlInsecure;
 
   /// No description provided for @homeSavedAs.
   ///
@@ -361,6 +367,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'No hay un enlace ni archivos para guardar.'**
   String get shareNothing;
+
+  /// No description provided for @shareInsecure.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo se pueden guardar enlaces https (cifrados).'**
+  String get shareInsecure;
 
   /// No description provided for @shareClose.
   ///

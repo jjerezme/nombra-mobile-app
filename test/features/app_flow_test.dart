@@ -161,8 +161,18 @@ void main() {
     await tester.enterText(find.byType(TextField).first, 'esto no es una url');
     await tapDownload(tester);
     await tester.pumpAndSettle();
-    expect(find.text('Introduce una URL http o https válida'), findsOneWidget);
+    expect(find.text('Introduce una URL https válida'), findsOneWidget);
     expect(env.engine.enqueued, isEmpty);
+  });
+
+  testWidgets('a plain http link is refused with its own message', (tester) async {
+    await pumpApp(tester, env);
+    await tester.enterText(find.byType(TextField).first, 'http://cdn.ejemplo.com/a.pdf');
+    await tapDownload(tester);
+    await tester.pumpAndSettle();
+    expect(find.text('Solo se admiten enlaces https (cifrados)'), findsOneWidget);
+    expect(env.engine.enqueued, isEmpty);
+    expect(find.byType(InfoBox), findsNothing);
   });
 
   testWidgets('the file can be saved without any rule, with a saved rule, or with a custom pattern', (tester) async {

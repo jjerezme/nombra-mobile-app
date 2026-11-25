@@ -10,6 +10,8 @@ import io.flutter.embedding.android.FlutterActivityLaunchConfigs.BackgroundMode
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
 import java.util.UUID
 
 /**
@@ -19,6 +21,9 @@ import java.util.UUID
  * Shared files are copied to the app's cache so Dart can read them by path.
  */
 class ShareActivity : FlutterActivity() {
+    /** The folder with this share's copies; removed when the activity ends, saved or not. */
+    private var shareDir: File? = null
+
     override fun getDartEntrypointFunctionName(): String = "shareMain"
 
     override fun getBackgroundMode(): BackgroundMode = BackgroundMode.transparent
@@ -61,7 +66,8 @@ class ShareActivity : FlutterActivity() {
         val text = shareIntent.getStringExtra(Intent.EXTRA_TEXT)
         val uris = streamUris(shareIntent)
         val dir = File(shareRoot, UUID.randomUUID().toString()).apply { mkdirs() }
-        val files = uris.mapNotNull { copyToCache(it, dir) }
+        shareDir = dir
+        val files = uris.take(MAX_FILES).mapNotNull { copyToCache(it, dir) }
         return mapOf("text" to text, "files" to files)
     }
 
@@ -98,13 +104,18 @@ class ShareActivity : FlutterActivity() {
             }
         }
         val mimeType = contentResolver.getType(uri)
-        val cleanName = (displayName ?: uri.lastPathSegment ?: "file").replace(Regex("[\\\\/:*?\"<>|]"), "_")
+        val cleanName = safeName(displayName ?: uri.lastPathSegment)
         val fileName = withExtensionFor(cleanName, mimeType)
         val target = File(dir, fileName)
         try {
             val input = contentResolver.openInputStream(uri) ?: return null
-            input.use { source -> target.outputStream().use { sink -> source.copyTo(sink) } }
+            val isComplete = input.use { source -> target.outputStream().use { sink -> copyWithLimit(source, sink) } }
+            if (!isComplete) {
+                target.delete()
+                return null
+            }
         } catch (e: Exception) {
+            target.delete()
             return null
         }
         return mapOf(
@@ -113,6 +124,25 @@ class ShareActivity : FlutterActivity() {
             "mimeType" to mimeType,
             "size" to target.length(),
         )
+    }
+
+    /** A name that cannot point outside the folder: no separators or reserved characters, never empty or only dots. */
+    private fun safeName(raw: String?): String {
+        val clean = (raw ?: "").replace(Regex("[\\\\/:*?\"<>|\\u0000-\\u001F]"), "_").trim().take(MAX_NAME_LENGTH)
+        return if (clean.isEmpty() || clean.all { it == '.' }) "file" else clean
+    }
+
+    /** Copies [source] to [sink]; returns false (and stops) when the file is larger than [MAX_FILE_BYTES]. */
+    private fun copyWithLimit(source: InputStream, sink: OutputStream): Boolean {
+        val buffer = ByteArray(BUFFER_SIZE)
+        var total = 0L
+        while (true) {
+            val read = source.read(buffer)
+            if (read < 0) return true
+            total += read
+            if (total > MAX_FILE_BYTES) return false
+            sink.write(buffer, 0, read)
+        }
     }
 
     /**
@@ -132,8 +162,17 @@ class ShareActivity : FlutterActivity() {
         shareRoot.listFiles()?.filter { it.lastModified() < limit }?.forEach { it.deleteRecursively() }
     }
 
+    override fun onDestroy() {
+        if (isFinishing) shareDir?.deleteRecursively()
+        super.onDestroy()
+    }
+
     private companion object {
         const val CHANNEL = "com.jujeme.nombra/share"
         const val ONE_DAY_MS = 24L * 60 * 60 * 1000
+        const val MAX_FILES = 50
+        const val MAX_FILE_BYTES = 2L * 1024 * 1024 * 1024
+        const val MAX_NAME_LENGTH = 200
+        const val BUFFER_SIZE = 64 * 1024
     }
 }

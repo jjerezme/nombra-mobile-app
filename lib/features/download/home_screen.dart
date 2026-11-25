@@ -82,7 +82,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final url = _url.text.trim();
     final isQuickInvalid = settings.mode == NamingMode.quick && !patternHasContent(settings.quickTokens);
     if (isQuickInvalid) return;
-    if (!isHttpUrl(url)) {
+    if (!isHttpsUrl(url)) {
       setState(() => _showUrlError = true);
       return;
     }
@@ -109,7 +109,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final recents = settings.showRecents ? downloads : downloads.where((item) => item.isActive).toList();
     final hasHistory = downloads.any((item) => !item.isActive);
     final url = _url.text.trim();
-    final isValid = isHttpUrl(url);
+    final isValid = isHttpsUrl(url);
     final fromUrl = isValid ? sourceFromUrl(url) : null;
     final source = SourceFile(
       name: (fromUrl == null || fromUrl.name.isEmpty) ? fallbackBaseName : fromUrl.name,
@@ -147,7 +147,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               onChanged: (_) => setState(() => _showUrlError = false),
                               style: context.monoStyles.mono,
                               decoration: InputDecoration(
-                                errorText: _showUrlError ? l10n.homeUrlInvalid : null,
+                                errorText: _showUrlError
+                                    ? (isInsecureUrl(_url.text) ? l10n.homeUrlInsecure : l10n.homeUrlInvalid)
+                                    : null,
                                 constraints: const BoxConstraints(minHeight: AppSize.control),
                               ),
                             ),

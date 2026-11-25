@@ -52,7 +52,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homePasteTooltip => 'Pegar del portapapeles';
 
   @override
-  String get homeUrlInvalid => 'Introduce una URL http o https válida';
+  String get homeUrlInvalid => 'Introduce una URL https válida';
+
+  @override
+  String get homeUrlInsecure => 'Solo se admiten enlaces https (cifrados)';
 
   @override
   String get homeSavedAs => 'Se guardará como';
@@ -163,6 +166,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get shareNothing => 'No hay un enlace ni archivos para guardar.';
+
+  @override
+  String get shareInsecure => 'Solo se pueden guardar enlaces https (cifrados).';
 
   @override
   String get shareClose => 'Cerrar';

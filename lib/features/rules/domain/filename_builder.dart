@@ -153,8 +153,7 @@ String renderPattern(
 }
 
 String _joinExtension(String base, String extension) {
-  final cleaned = stripInvalidFileChars(base).trim();
-  final name = cleaned.isEmpty ? fallbackBaseName : cleaned;
+  final name = safeFileName(base);
   return extension.isEmpty ? name : '$name.$extension';
 }
 
@@ -209,15 +208,28 @@ SourceFile sourceFromUrl(String url) {
   return SourceFile(name: stripInvalidFileChars(name).trim(), domain: uri.host.replaceFirst(RegExp(r'^www\.'), ''));
 }
 
-/// The first http(s) link in shared text, or null.
+/// The first https link in shared text, or null. Plain http is not accepted: Android blocks it and it is not safe.
 String? firstUrlIn(String text) {
-  final match = RegExp(r'https?://[^\s<>"]+', caseSensitive: false).firstMatch(text);
+  final match = RegExp(r'https://[^\s<>"]+', caseSensitive: false).firstMatch(text);
   if (match == null) return null;
   return match.group(0)!.replaceFirst(RegExp(r'[.,;:!?)\]]+$'), '');
 }
 
-/// Whether [text] is a single valid http(s) URL.
-bool isHttpUrl(String text) {
+/// Whether [text] is a single valid https URL.
+bool isHttpsUrl(String text) {
   final uri = Uri.tryParse(text.trim());
-  return uri != null && (uri.scheme == 'http' || uri.scheme == 'https') && uri.host.isNotEmpty;
+  return uri != null && uri.scheme == 'https' && uri.host.isNotEmpty;
+}
+
+/// Whether [text] starts like a plain http link, which is refused so the user gets a clear message.
+bool isInsecureUrl(String text) => RegExp(r'^\s*http://', caseSensitive: false).hasMatch(text);
+
+/// Whether [text] has a plain http link inside, used to tell the user why a shared link cannot be saved.
+bool hasInsecureLink(String text) => RegExp(r'http://[^\s<>"]+', caseSensitive: false).hasMatch(text);
+
+/// A name that is safe to use as a file name: invalid characters removed and never empty or made only of dots (`.`,
+/// `..`), which would point to a folder.
+String safeFileName(String name) {
+  final cleaned = stripInvalidFileChars(name).trim();
+  return cleaned.isEmpty || RegExp(r'^\.+$').hasMatch(cleaned) ? fallbackBaseName : cleaned;
 }

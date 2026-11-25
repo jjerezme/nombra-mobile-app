@@ -125,7 +125,10 @@ class _ShareSheetScreenState extends ConsumerState<ShareSheetScreen> {
                             child: Center(child: CircularProgressIndicator()),
                           )
                         : items.isEmpty
-                        ? _Message(text: l10n.shareNothing, onClose: _close)
+                        ? _Message(
+                            text: (payload.value?.hasInsecureUrl ?? false) ? l10n.shareInsecure : l10n.shareNothing,
+                            onClose: _close,
+                          )
                         : _Content(
                             items: items,
                             chosenFolder: _chosenFolder,

@@ -136,10 +136,28 @@ void main() {
       expect(firstUrlIn('sin enlace'), isNull);
     });
 
-    test('isHttpUrl accepts only http and https', () {
-      expect(isHttpUrl('https://a.com/b'), isTrue);
-      expect(isHttpUrl('ftp://a.com/b'), isFalse);
-      expect(isHttpUrl('a.com'), isFalse);
+    test('isHttpsUrl accepts only https', () {
+      expect(isHttpsUrl('https://a.com/b'), isTrue);
+      expect(isHttpsUrl('ftp://a.com/b'), isFalse);
+      expect(isHttpsUrl('a.com'), isFalse);
+    });
+
+    test('http is refused, with a way to tell it apart from a bad URL', () {
+      expect(isHttpsUrl('http://a.com/b'), isFalse);
+      expect(isInsecureUrl('http://a.com/b'), isTrue);
+      expect(isInsecureUrl('https://a.com/b'), isFalse);
+      expect(firstUrlIn('mira http://a.com/x.pdf'), isNull);
+      expect(hasInsecureLink('mira http://a.com/x.pdf'), isTrue);
+      expect(hasInsecureLink('mira https://a.com/x.pdf'), isFalse);
+    });
+
+    test('safeFileName never returns an empty name or one made only of dots', () {
+      expect(safeFileName('informe.pdf'), 'informe.pdf');
+      expect(safeFileName('..'), fallbackBaseName);
+      expect(safeFileName('.'), fallbackBaseName);
+      expect(safeFileName('   '), fallbackBaseName);
+      expect(safeFileName(r'a/b\c.pdf'), 'abc.pdf');
+      expect(safeFileName('../..'), fallbackBaseName);
     });
   });
 }
