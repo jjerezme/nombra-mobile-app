@@ -25,7 +25,9 @@ abstract final class PatternTokens {
   static const int defaultCounterDigits = 3;
   static const int maxCounterDigits = 8;
 
-  static const List<String> palette = [name, date, time, counter, domain, type, '_', '-', space];
+  /// The order the palette shows them: about the file or link (name, type, domain), general (date, time), numeric, and
+  /// the separators.
+  static const List<String> palette = [name, type, domain, date, time, counter, '_', '-', space];
 
   /// `{n:5}`: the sequential number padded to [digits] digits.
   static String counterWith(int digits) => '{n:$digits}';

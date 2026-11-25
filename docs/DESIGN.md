@@ -60,3 +60,4 @@ Primera sección de Ajustes. Sin sesión: una frase que explica el respaldo y el
 ## Patrón de una regla
 - La extensión `.ext` va al final del patrón como un token bloqueado: misma forma que un token, pero en gris neutro (`surfaceContainerHighest`), sin icono, y no se edita ni se borra. Al tocarla un tooltip explica que la extensión original se conserva.
 - `SegmentedToggle`: cada opción queda en una sola línea; si no cabe, el texto se reduce un poco en vez de partirse en dos.
+- La paleta de tokens se ordena por afinidad: primero los del archivo o enlace (`{name}`, `{type}`, `{domain}`), luego los generales (`{date}`, `{time}`), el numérico (`{n}`), los separadores (`_`, `-`, espacio) y al final «Texto».

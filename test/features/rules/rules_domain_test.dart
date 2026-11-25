@@ -42,6 +42,20 @@ void main() {
     expect(fileKindOf(extension: 'zip'), FileKind.other);
   });
 
+  test('the palette lists the tokens about the file or link first, then general, numeric and separators', () {
+    expect(PatternTokens.palette, [
+      PatternTokens.name,
+      PatternTokens.type,
+      PatternTokens.domain,
+      PatternTokens.date,
+      PatternTokens.time,
+      PatternTokens.counter,
+      '_',
+      '-',
+      PatternTokens.space,
+    ]);
+  });
+
   group('selectRule', () {
     final rules = [plain, dated];
 
