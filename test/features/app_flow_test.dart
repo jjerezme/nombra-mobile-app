@@ -688,13 +688,14 @@ void main() {
 
     List<String> quickTokens(ProviderContainer container) => container.read(settingsProvider).quickTokens;
 
-    testWidgets('the .ext is a locked token: it says so, cannot be edited and has its own color', (tester) async {
+    testWidgets('the .ext is a locked token: it has its own neutral color, says so and cannot be edited', (
+      tester,
+    ) async {
       await openQuick(tester);
       final locked = find.ancestor(of: find.text('.ext'), matching: find.byType(Container)).first;
       final decoration = tester.widget<Container>(locked).decoration! as BoxDecoration;
       final scheme = Theme.of(tester.element(find.text('.ext'))).colorScheme;
       expect(decoration.color, scheme.surfaceContainerHighest);
-      expect(find.descendant(of: locked, matching: find.byIcon(Icons.lock_outline)), findsOneWidget);
       expect(find.byTooltip('La extensión original del archivo se conserva y no se puede editar.'), findsOneWidget);
 
       // Tapping it changes nothing: the pattern stays the same and no editor opens.

@@ -287,7 +287,7 @@ class _DigitsSheetState extends State<_DigitsSheet> {
 }
 
 /// A token that cannot be edited or removed (the file extension, which is always kept): same shape as a token, in the
-/// neutral color of a disabled one, with a lock.
+/// neutral color of a disabled one.
 class _LockedTokenChip extends StatelessWidget {
   const _LockedTokenChip({required this.label});
 
@@ -310,13 +310,10 @@ class _LockedTokenChip extends StatelessWidget {
             color: colors.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            spacing: AppSpacing.xs,
-            children: [
-              Text(label, style: context.monoStyles.mono.copyWith(color: colors.onSurfaceVariant)),
-              Icon(Icons.lock_outline, size: AppIconSize.sm, color: colors.onSurfaceVariant),
-            ],
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: context.monoStyles.mono.copyWith(color: colors.onSurfaceVariant),
           ),
         ),
       ),
