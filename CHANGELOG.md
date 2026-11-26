@@ -1,6 +1,6 @@
 # Changelog
 
-Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión indica su `versionCode` de Android (el número después de `+` en `pubspec.yaml`).
+Todos los cambios relevantes de Nombra se anotan aquí, con el formato de [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión se titula `[X.Y.Z] - versionCode N (AAAA-MM-DD)`; lo que ya está en `develop` y todavía no tiene versión va en «Sin publicar».
 
 ## [Sin publicar]
 

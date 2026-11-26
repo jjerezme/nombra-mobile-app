@@ -68,6 +68,7 @@ Gitflow: `feature/*` y `bugfix/*` → `develop`; `release/*` y `hotfix/*` → `m
 
 ## Documentación
 - `README.md` (<120 líneas), `CLAUDE.md` (<200 líneas) y `CHANGELOG.md` (Keep a Changelog: «Sin publicar» sin versión mientras los cambios entran a `develop`).
+- **Formato del `CHANGELOG.md`** (igual en todos los proyectos): título `# Changelog`; `## [Sin publicar]` y `## [X.Y.Z] - versionCode N (AAAA-MM-DD)`, sin enlaces; secciones en este orden: Agregado, Cambiado, Corregido, Eliminado, Actualizado, Seguridad y, si hace falta, Versiones internas (una línea por `versionCode` que no se tituló).
 - `docs/`: `GITFLOW.md`, `ARCHITECTURE.md`, `BUILD.md`, `decisions/NNN-titulo.md`.
 - Toda decisión técnica va en un ADR; si restringe código futuro, una línea en "Reglas vigentes" de `CLAUDE.md`.
 - Español neutro (tuteo) en docs e i18n.
