@@ -51,7 +51,7 @@ Para iniciar sesión con Google (Ajustes › Cuenta) cada proyecto de Firebase n
 | `flutter analyze` · `flutter test` | Verificaciones antes de commitear (63 tests) |
 | `dart run scripts/check_styles.dart` | Revisa los tokens de estilo |
 | `flutter gen-l10n` | Regenera los textos tras editar `lib/l10n/*.arb` |
-| `dart run scripts/export_legal.dart` · `npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.3.0 build-web` | Genera el sitio en `web/public/` |
+| `dart run scripts/export_legal.dart` · `npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-web` | Genera el sitio en `web/public/` |
 
 ## Estructura
 
@@ -78,7 +78,7 @@ Landing, privacidad, términos y eliminación de la cuenta, en inglés y españo
 
 ```bash
 dart run scripts/export_legal.dart
-npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.3.0 build-web
+npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-web
 firebase deploy --only hosting --project nombra-prod
 ```
 

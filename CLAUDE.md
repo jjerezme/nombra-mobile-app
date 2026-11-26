@@ -10,7 +10,7 @@ Nombra: app móvil Android hecha con Flutter, Riverpod, go_router y Firebase (Fi
 flutter analyze
 flutter test
 dart run scripts/check_styles.dart
-dart run scripts/export_legal.dart && npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.3.0 build-web   # solo si cambian los textos legales o web/
+dart run scripts/export_legal.dart && npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-web   # solo si cambian los textos legales o web/
 ```
 Ejecuta analyze y test antes de dar una tarea por terminada.
 
