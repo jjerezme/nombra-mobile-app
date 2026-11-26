@@ -60,7 +60,8 @@ Landing, `/privacy`, `/terms` y `/delete-account` en inglés (por defecto) y esp
 
 ## Calidad
 - Función pura nueva = test. Ningún archivo supera 500 líneas.
-- CI por PR: analyze, test, check_styles. Dependabot activo.
+- CI por PR: analyze, test, check_styles.
+- Dependabot activo (`.github/dependabot.yml` común: semanal contra `develop`, menores y parches agrupados, mayores a mano) y alertas y actualizaciones de seguridad activas en GitHub.
 
 ## Git
 Gitflow: `feature/*` y `bugfix/*` → `develop`; `release/*` y `hotfix/*` → `master`. Ver `docs/GITFLOW.md`.
