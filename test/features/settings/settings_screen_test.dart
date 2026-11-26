@@ -1,10 +1,15 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:nombra/app/app.dart';
+import 'package:nombra/core/environment.dart';
 import 'package:nombra/core/l10n/current_l10n.dart';
+import 'package:nombra/core/providers.dart';
+import 'package:nombra/features/developer/developer_screen.dart';
+import 'package:nombra/features/developer/domain/dev_info.dart';
 import 'package:nombra/features/download/data/downloads_notifier.dart';
 import 'package:nombra/features/download/domain/download_models.dart';
 import 'package:nombra/features/rules/data/rules_notifier.dart';
@@ -15,7 +20,11 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../helpers/fakes.dart';
 
-Future<ProviderContainer> pumpSettings(WidgetTester tester, TestEnvironment env) async {
+Future<ProviderContainer> pumpSettings(
+  WidgetTester tester,
+  TestEnvironment env, {
+  AppEnvironment environment = AppEnvironment.development,
+}) async {
   tester.view
     ..physicalSize = const Size(1170, 4000)
     ..devicePixelRatio = 3;
@@ -30,6 +39,12 @@ Future<ProviderContainer> pumpSettings(WidgetTester tester, TestEnvironment env)
     ProviderScope(
       overrides: [
         ...env.overrides,
+        appEnvironmentProvider.overrideWithValue(environment),
+        developerInfoProvider.overrideWith(
+          (ref, facts) async => const [
+            InfoSection('app', [InfoRow('Version', '9.9')]),
+          ],
+        ),
         packageInfoProvider.overrideWith(
           (ref) async => PackageInfo(appName: 'Nombra', packageName: 'x', version: '1.2.3', buildNumber: '45'),
         ),
@@ -49,6 +64,33 @@ void main() {
   late TestEnvironment env;
 
   setUp(() async => env = await TestEnvironment.create(preferences: storedRules(sampleRules())));
+
+  testWidgets('the developer mode opens in development, with its tools and sections', (tester) async {
+    await pumpSettings(tester, env);
+    await tester.ensureVisible(find.text('Modo desarrollador'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Modo desarrollador'));
+    await tester.pumpAndSettle();
+    expect(find.text('Copiar informe'), findsOneWidget);
+    await tester.tap(find.text('Aplicación'));
+    await tester.pumpAndSettle();
+    expect(find.text('9.9'), findsOneWidget);
+    final copied = <String>[];
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
+      if (call.method == 'Clipboard.setData') copied.add((call.arguments as Map)['text'] as String);
+      return null;
+    });
+    addTearDown(() => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, null));
+    await tester.tap(find.text('Copiar informe'));
+    await tester.pumpAndSettle();
+    expect(copied.single, contains('Version: 9.9'));
+    expect(find.text('Informe copiado'), findsOneWidget);
+  });
+
+  testWidgets('production has no developer mode', (tester) async {
+    await pumpSettings(tester, env, environment: AppEnvironment.production);
+    expect(find.text('Modo desarrollador'), findsNothing);
+  });
 
   testWidgets('shows the sections and the app version', (tester) async {
     await pumpSettings(tester, env);

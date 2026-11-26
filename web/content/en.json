@@ -1,0 +1,123 @@
+{
+  "lang": "en",
+  "locale": "en-US",
+  "languageName": "English",
+  "owner": "Jujeme",
+  "email": "jjerezme@gmail.com",
+  "updated": "Last updated: November 26, 2026",
+  "home": {
+    "back": "Back"
+  },
+  "pages": {
+    "privacy": {
+      "slug": "privacy",
+      "title": "Privacy policy",
+      "summary": "What data the app handles, why, and what control you have."
+    },
+    "terms": {
+      "slug": "terms",
+      "title": "Terms and conditions",
+      "summary": "The rules for using the app."
+    },
+    "delete": {
+      "slug": "delete-account",
+      "title": "Delete your account and data",
+      "summary": "How to erase your account and the backup of your rules."
+    }
+  },
+  "landing": {
+    "title": "Nombra: download and rename files",
+    "headline": "Every file, with the right name.",
+    "lead": "Nombra downloads a file from a link, or takes one you share from another app, and saves it with the name your rules produce.",
+    "download": "Get it on Google Play",
+    "downloadNote": "Free for Android.",
+    "comingSoon": "Coming soon to Google Play. Free for Android.",
+    "featuresTitle": "Name once, save every time",
+    "showcase": [
+      {
+        "title": "Rename rules",
+        "text": "Decide how your files are called.",
+        "bullets": [
+          "A pattern with the original name, date, time, number, domain and type.",
+          "Letter case, spaces and name cleanup.",
+          "A destination folder and what to do if the file already exists."
+        ]
+      },
+      {
+        "title": "Downloads",
+        "text": "Paste a link and keep using your phone.",
+        "bullets": [
+          "Background download with progress and retries.",
+          "Only https links.",
+          "Saved to Download, Documents, Pictures, Movies or Music."
+        ]
+      },
+      {
+        "title": "Share to Nombra",
+        "text": "Save files straight from other apps.",
+        "bullets": [
+          "“Save with Nombra” appears when you share a file or a link.",
+          "Pick the rule and the folder without leaving what you were doing."
+        ]
+      }
+    ],
+    "moreTitle": "And more",
+    "more": [
+      {
+        "title": "Quick mode",
+        "text": "Just a prefix and a suffix, no rule needed."
+      },
+      {
+        "title": "Optional backup",
+        "text": "Sign in with Google and your rules stay up to date across devices."
+      },
+      {
+        "title": "No account needed",
+        "text": "Everything works without signing in."
+      },
+      {
+        "title": "Private",
+        "text": "No ads and no usage analytics."
+      },
+      {
+        "title": "Light and dark",
+        "text": "Follows your phone or your choice."
+      },
+      {
+        "title": "Two languages",
+        "text": "English and Spanish."
+      }
+    ],
+    "ctaTitle": "Put your files in order",
+    "legalTitle": "Legal"
+  },
+  "delete": {
+    "intro": "You can delete your Nombra account and the data tied to it at any time. App: Nombra. Developer: {{owner}}.",
+    "sections": [
+      {
+        "title": "Option 1: from the app",
+        "body": "1. Open Nombra and go to Settings.\n2. In the account section choose “Delete account”.\n3. Confirm and pick your Google account again.\nYour account and the backup of your rules are erased right away."
+      },
+      {
+        "title": "Option 2: by email",
+        "body": "If you cannot open the app, or you no longer have the phone, write to {{email}} from the email address of your account with the subject “Delete my Nombra account”. We may ask you to confirm that the account is yours.\nWe will delete your account and data and answer you within 30 days."
+      },
+      {
+        "title": "What is deleted",
+        "body": "- Your sign-in record (identifier, name and email) in Firebase Authentication.\n- The backup of your rules in the cloud."
+      },
+      {
+        "title": "What is kept, and for how long",
+        "body": "- The rules, settings, history and files on your phone stay there: delete them from Settings or uninstall the app. Downloaded files are in public folders and are not removed by uninstalling.\n- Technical copies of Google Firebase can take a limited time to disappear.\n- Crash reports have no links and no account data, and Firebase Crashlytics keeps them under its own policy."
+      },
+      {
+        "title": "If you use Nombra without an account",
+        "body": "There is no account to delete: your data is only on your phone. Clear it from Settings or uninstall the app."
+      },
+      {
+        "title": "Delete only some data",
+        "body": "Without deleting your account you can use “Delete backup and sign out”, or clear the history and the rules from Settings."
+      }
+    ]
+  }
+}

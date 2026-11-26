@@ -166,6 +166,23 @@ class BackupSync extends Notifier<SyncState> {
     }
     await ref.read(authGatewayProvider).signOut();
   });
+
+  /// Deletes the cloud backup and the account itself; the local rules stay on the device. The person proves who they
+  /// are first, so cancelling there deletes nothing. If it fails half way, the backup starts again.
+  Future<void> deleteAccount() => _perform(AccountAction.deleteAccount, () async {
+    final uid = _uid;
+    if (uid == null) return;
+    final auth = ref.read(authGatewayProvider);
+    await auth.reauthenticate();
+    _stop();
+    try {
+      await _gateway.delete(uid);
+      await auth.deleteAccount();
+    } on Object {
+      if (ref.mounted) unawaited(_start(uid));
+      rethrow;
+    }
+  });
 }
 
 final backupSyncProvider = NotifierProvider<BackupSync, SyncState>(BackupSync.new);

@@ -26,7 +26,7 @@ class RulesBackup {
 enum SyncPhase { off, syncing, upToDate, error }
 
 /// What the person asked for and is still running; the account screen shows it with a progress indicator.
-enum AccountAction { signIn, signOut, deleteBackup }
+enum AccountAction { signIn, signOut, deleteBackup, deleteAccount }
 
 class SyncState {
   const SyncState({this.phase = SyncPhase.off, this.lastSyncedAt, this.action});

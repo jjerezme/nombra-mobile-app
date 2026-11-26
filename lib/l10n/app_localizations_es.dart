@@ -662,4 +662,83 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get backTooltip => 'Volver';
+
+  @override
+  String get accountDeleteAccount => 'Eliminar cuenta';
+
+  @override
+  String get accountDeleteAccountHint => 'Borra tu cuenta y el respaldo. Las reglas de este teléfono se quedan.';
+
+  @override
+  String get accountConfirmDeleteAccountTitle => '¿Eliminar tu cuenta?';
+
+  @override
+  String get accountConfirmDeleteAccountBody =>
+      'Se borran tu cuenta de Nombra y el respaldo en la nube. Antes debes elegir de nuevo tu cuenta de Google. Las reglas de este teléfono se quedan. No se puede deshacer.';
+
+  @override
+  String get accountBusyDeletingAccount => 'Eliminando la cuenta…';
+
+  @override
+  String get accountDeleted => 'Tu cuenta se eliminó.';
+
+  @override
+  String get accountDeleteAccountFailed => 'No se pudo eliminar la cuenta. Revisa tu conexión.';
+
+  @override
+  String get settingsDeveloper => 'Modo desarrollador';
+
+  @override
+  String get developerCommonTools => 'Herramientas';
+
+  @override
+  String get developerCopyReport => 'Copiar informe';
+
+  @override
+  String get developerReportCopied => 'Informe copiado';
+
+  @override
+  String get developerTestError => 'Enviar error de prueba';
+
+  @override
+  String get developerTestErrorSent => 'Error de prueba enviado';
+
+  @override
+  String get developerInformation => 'Información';
+
+  @override
+  String get developerLoading => 'Cargando…';
+
+  @override
+  String get developerSectionApp => 'Aplicación';
+
+  @override
+  String get developerSectionDevice => 'Teléfono';
+
+  @override
+  String get developerSectionDisplay => 'Pantalla';
+
+  @override
+  String get developerSectionLocale => 'Idioma y región';
+
+  @override
+  String get developerSectionNetwork => 'Red';
+
+  @override
+  String get developerSectionBattery => 'Batería';
+
+  @override
+  String get developerSectionStorage => 'Almacenamiento';
+
+  @override
+  String get developerSectionFirebase => 'Firebase';
+
+  @override
+  String get developerSectionAccount => 'Cuenta y datos';
+
+  @override
+  String get developerSectionNotifications => 'Notificaciones';
+
+  @override
+  String get developerSectionDependencies => 'Dependencias';
 }

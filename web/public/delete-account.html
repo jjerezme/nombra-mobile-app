@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delete your account and data · Nombra</title>
+<meta name="description" content="How to erase your account and the backup of your rules.">
+<meta name="title-data" data-title-en="Delete your account and data · Nombra" data-title-es="Eliminar tu cuenta y tus datos · Nombra">
+<link rel="icon" href="/logo.png" type="image/png">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/"><img src="/logo.png" alt="" width="40" height="40"><span>Nombra</span></a>
+  <div class="langs" role="group" aria-label="Language / Idioma"><button type="button" data-pick="en" aria-pressed="true" lang="en">English</button><button type="button" data-pick="es" aria-pressed="false" lang="es">Español</button></div>
+</header>
+<main>
+<div data-lang="en" lang="en">
+<p class="back"><a href="/">← Back</a></p>
+<h1>Delete your account and data</h1>
+<p class="updated">Last updated: November 26, 2026</p>
+<p class="lead">You can delete your Nombra account and the data tied to it at any time. App: Nombra. Developer: Jujeme.</p>
+<section><h2>Option 1: from the app</h2>
+<ol><li>Open Nombra and go to Settings.</li><li>In the account section choose “Delete account”.</li><li>Confirm and pick your Google account again.</li></ol>
+<p>Your account and the backup of your rules are erased right away.</p></section>
+<section><h2>Option 2: by email</h2>
+<p>If you cannot open the app, or you no longer have the phone, write to <a href="mailto:jjerezme@gmail.com">jjerezme@gmail.com</a> from the email address of your account with the subject “Delete my Nombra account”. We may ask you to confirm that the account is yours.</p>
+<p>We will delete your account and data and answer you within 30 days.</p></section>
+<section><h2>What is deleted</h2>
+<ul><li>Your sign-in record (identifier, name and email) in Firebase Authentication.</li><li>The backup of your rules in the cloud.</li></ul></section>
+<section><h2>What is kept, and for how long</h2>
+<ul><li>The rules, settings, history and files on your phone stay there: delete them from Settings or uninstall the app. Downloaded files are in public folders and are not removed by uninstalling.</li><li>Technical copies of Google Firebase can take a limited time to disappear.</li><li>Crash reports have no links and no account data, and Firebase Crashlytics keeps them under its own policy.</li></ul></section>
+<section><h2>If you use Nombra without an account</h2>
+<p>There is no account to delete: your data is only on your phone. Clear it from Settings or uninstall the app.</p></section>
+<section><h2>Delete only some data</h2>
+<p>Without deleting your account you can use “Delete backup and sign out”, or clear the history and the rules from Settings.</p></section>
+</div>
+<div data-lang="es" lang="es" hidden>
+<p class="back"><a href="/">← Volver</a></p>
+<h1>Eliminar tu cuenta y tus datos</h1>
+<p class="updated">Última actualización: 26 de noviembre de 2026</p>
+<p class="lead">Puedes eliminar tu cuenta de Nombra y los datos asociados cuando quieras. App: Nombra. Desarrollador: Jujeme.</p>
+<section><h2>Opción 1: desde la app</h2>
+<ol><li>Abre Nombra y entra en Ajustes.</li><li>En la sección de cuenta elige «Eliminar cuenta».</li><li>Confirma y elige de nuevo tu cuenta de Google.</li></ol>
+<p>Tu cuenta y el respaldo de tus reglas se borran de inmediato.</p></section>
+<section><h2>Opción 2: por correo</h2>
+<p>Si no puedes abrir la app o ya no tienes el teléfono, escribe a <a href="mailto:jjerezme@gmail.com">jjerezme@gmail.com</a> desde el correo de tu cuenta con el asunto «Eliminar mi cuenta de Nombra». Podemos pedirte que confirmes que la cuenta es tuya.</p>
+<p>Eliminaremos tu cuenta y tus datos y te responderemos en un máximo de 30 días.</p></section>
+<section><h2>Qué se borra</h2>
+<ul><li>Tu registro de inicio de sesión (identificador, nombre y correo) en Firebase Authentication.</li><li>El respaldo de tus reglas en la nube.</li></ul></section>
+<section><h2>Qué se conserva y por cuánto tiempo</h2>
+<ul><li>Las reglas, ajustes, historial y archivos de tu teléfono se quedan allí: bórralos desde Ajustes o desinstala la app. Los archivos descargados están en carpetas públicas y no se borran al desinstalar.</li><li>Las copias técnicas de Google Firebase pueden tardar un tiempo limitado en desaparecer.</li><li>Los informes de fallos no llevan enlaces ni datos de la cuenta, y Firebase Crashlytics los conserva según su propia política.</li></ul></section>
+<section><h2>Si usas Nombra sin cuenta</h2>
+<p>No hay cuenta que eliminar: tus datos solo están en tu teléfono. Bórralos desde Ajustes o desinstala la app.</p></section>
+<section><h2>Borrar solo una parte</h2>
+<p>Sin eliminar la cuenta puedes usar «Borrar respaldo y cerrar sesión», o borrar el historial y las reglas desde Ajustes.</p></section>
+</div>
+</main>
+<footer>
+<div data-lang="en" lang="en">
+<p>Nombra · Jujeme · <a href="mailto:jjerezme@gmail.com">jjerezme@gmail.com</a></p>
+<nav><a href="/privacy">Privacy policy</a> · <a href="/terms">Terms and conditions</a> · <a href="/delete-account">Delete your account and data</a></nav>
+</div>
+<div data-lang="es" lang="es" hidden>
+<p>Nombra · Jujeme · <a href="mailto:jjerezme@gmail.com">jjerezme@gmail.com</a></p>
+<nav><a href="/privacy">Política de privacidad</a> · <a href="/terms">Términos y condiciones</a> · <a href="/delete-account">Eliminar tu cuenta y tus datos</a></nav>
+</div>
+</footer>
+<script>
+(function () {
+  var langs = ["en","es"];
+  var current = langs[0];
+  try {
+    var wanted = new URLSearchParams(location.search).get('lang') || localStorage.getItem('lang');
+    if (langs.indexOf(wanted) >= 0) current = wanted;
+  } catch (e) {}
+  function apply(lang) {
+    current = lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-lang]').forEach(function (el) { el.hidden = el.getAttribute('data-lang') !== lang; });
+    document.querySelectorAll('[data-pick]').forEach(function (el) { el.setAttribute('aria-pressed', String(el.getAttribute('data-pick') === lang)); });
+    var title = document.querySelector('[data-title-' + lang + ']');
+    if (title) document.title = title.getAttribute('data-title-' + lang);
+  }
+  document.querySelectorAll('[data-pick]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      try { localStorage.setItem('lang', el.getAttribute('data-pick')); } catch (e) {}
+      apply(el.getAttribute('data-pick'));
+    });
+  });
+  apply(current);
+})();
+</script>
+</body>
+</html>

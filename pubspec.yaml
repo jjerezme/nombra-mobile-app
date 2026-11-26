@@ -48,6 +48,10 @@ dependencies:
   package_info_plus: ^10.2.2
   firebase_auth: ^7.1.0
   google_sign_in: ^7.2.0
+  firebase_app_check: ^0.5.2
+  device_info_plus: ^13.3.0
+  connectivity_plus: ^7.3.1
+  battery_plus: ^7.1.2
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +82,8 @@ flutter:
   assets:
     - assets/images/logo.png
     - assets/images/google_g.png
+    # Read by the developer mode to list the dependencies.
+    - pubspec.yaml
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

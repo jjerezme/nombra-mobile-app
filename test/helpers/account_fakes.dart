@@ -48,6 +48,23 @@ class FakeAuthGateway implements AuthGateway {
     await gate?.future;
     emit(null);
   }
+
+  bool failDeleteAccount = false;
+  bool isDeleted = false;
+
+  @override
+  Future<void> reauthenticate() async {
+    await gate?.future;
+    final failure = failWith;
+    if (failure != null) throw SignInException(failure);
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    if (failDeleteAccount) throw StateError('offline');
+    isDeleted = true;
+    emit(null);
+  }
 }
 
 class FakeBackupGateway implements BackupGateway {
