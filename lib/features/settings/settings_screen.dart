@@ -5,6 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../app/router.dart';
 import '../../core/constants/tokens.dart';
+import '../../core/providers.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/app_card.dart';
 import '../../core/widgets/app_logo.dart';
@@ -163,6 +164,17 @@ class SettingsScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
+                // Development flavor only: production has neither the row nor the route.
+                if (!ref.watch(appEnvironmentProvider).isProduction)
+                  AppCard.stack(
+                    children: [
+                      ActionRow(
+                        icon: Icons.code,
+                        title: l10n.settingsDeveloper,
+                        onTap: () => context.push(AppRoutes.developer),
+                      ),
+                    ],
+                  ),
                 _About(info: ref.watch(packageInfoProvider).asData?.value),
               ],
             ),
