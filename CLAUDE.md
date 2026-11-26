@@ -10,7 +10,7 @@ Nombra: app móvil Android hecha con Flutter, Riverpod, go_router y Firebase (Fi
 flutter analyze
 flutter test
 dart run scripts/check_styles.dart
-dart run scripts/export_legal.dart && node scripts/build-web.mjs   # solo si cambian los textos legales o web/
+dart run scripts/export_legal.dart && npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.3.0 build-web   # solo si cambian los textos legales o web/
 ```
 Ejecuta analyze y test antes de dar una tarea por terminada.
 
@@ -54,7 +54,7 @@ Ejecuta analyze y test antes de dar una tarea por terminada.
 - Seguridad: solo enlaces `https`, nombres con `safeFileName`, errores sin enlaces (`RedactedError`), sin copias de Android, release `prod` solo con llave de subida: [013](docs/decisions/013-security-hardening.md).
 - Cuenta de Google y respaldo automático de las reglas en Firestore (`users/{uid}`, `firestore.rules`): [014](docs/decisions/014-account-and-backup.md).
 - Material 3 primero: componente estándar con el estilo en el tema; los de `core/widgets/` son envoltorios finos: [015](docs/decisions/015-material-3-first.md).
-- Términos y política de privacidad: un solo texto en `lib/features/legal/domain/` para la app y la web (`scripts/export_legal.dart` y `scripts/build-web.mjs` → `web/public/`; este último y `web/style.css` son idénticos en todos los proyectos): [016](docs/decisions/016-legal-texts.md).
+- Términos y política de privacidad: un solo texto en `lib/features/legal/domain/` para la app y la web (`scripts/export_legal.dart` y el comando `build-web` de `mobile-tools` → `web/public/`): [016](docs/decisions/016-legal-texts.md).
 - App Check; modo desarrollador solo en `dev`, con las secciones comunes; la cuenta se elimina desde la app: [017](docs/decisions/017-developer-mode-and-account-deletion.md).
 
 ## Qué no hacer

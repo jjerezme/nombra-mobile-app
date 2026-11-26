@@ -53,7 +53,7 @@ Se leen sin conexión desde Ajustes › Legal (dos filas), con el mismo texto qu
 Solo en el flavor `dev`: en `prod` no existe. Herramientas comunes (copiar informe, error de prueba, con aviso flotante) e información en este orden: app · teléfono · pantalla · idioma y región · red · batería · almacenamiento · Firebase · cuenta y datos · notificaciones · dependencias.
 
 ## Sitio web
-Landing, `/privacy`, `/terms` y `/delete-account` en inglés (por defecto) y español, generadas con `scripts/build-web.mjs` y `web/style.css`. Sin `playUrl` la landing dice «Próximamente».
+Landing, `/privacy`, `/terms` y `/delete-account` en inglés (por defecto) y español, generadas con el comando `build-web` de `mobile-tools`. Sin `playUrl` la landing dice «Próximamente».
 
 ## Fichas de Google Play (`store/`)
 `listing/<idioma>.md` (`en-US` y `es-419`), `graphics/icon-512.png`, `graphics/feature-graphic-<idioma>.png` y `screenshots/<idioma>/`. Límites: título 30, corta 80, completa 4000, novedades 500.

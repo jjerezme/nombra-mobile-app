@@ -69,7 +69,7 @@ void main() {
           file.readAsStringSync().replaceAll('\r\n', '\n'),
           exportLegalJson(code),
           reason:
-              'web/legal/$code.json is out of date: run dart run scripts/export_legal.dart and node scripts/build-web.mjs',
+              'web/legal/$code.json is out of date: run dart run scripts/export_legal.dart and build-web (see README)',
         );
       }
     });

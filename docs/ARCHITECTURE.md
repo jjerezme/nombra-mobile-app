@@ -16,7 +16,7 @@ Si falta el `google-services.json` del flavor, el arranque sigue sin Firebase y 
 - `download/`: Inicio (URL, vista previa del nombre, recientes), `DownloadsNotifier` (cola, progreso, historial; la persistencia está en `DownloadsRepository`; abrir el archivo guardado y quitarlo de la lista), `DownloadEngine` (plugin `background_downloader`) y `FileFinalizer` (renombra y mueve a MediaStore).
 - `share/`: `ShareChannel` (canal con Kotlin), `ShareSheetScreen` y su carga útil (`SharePayload`).
 - `account/`: Ajustes › Cuenta. `AuthGateway` (Google + Firebase Auth), `BackupGateway` (Firestore, `users/{uid}`) y `BackupSync`, que mezcla las reglas al iniciar sesión y después las mantiene respaldadas de forma automática (gana la última escritura). Ver [014](decisions/014-account-and-backup.md).
-- `legal/`: términos y política de privacidad (`LegalScreen`), con el texto en Dart (`domain/`, es y en). `scripts/export_legal.dart` lo pasa a JSON y `scripts/build-web.mjs` genera la web de `web/public/`. Ver [016](decisions/016-legal-texts.md).
+- `legal/`: términos y política de privacidad (`LegalScreen`), con el texto en Dart (`domain/`, es y en). `scripts/export_legal.dart` lo pasa a JSON y el comando `build-web` de `mobile-tools` genera la web de `web/public/`. Ver [016](decisions/016-legal-texts.md).
 - `developer/`: modo desarrollador, solo en `dev`. Ver [017](decisions/017-developer-mode-and-account-deletion.md).
 
 ## Flujo de una descarga

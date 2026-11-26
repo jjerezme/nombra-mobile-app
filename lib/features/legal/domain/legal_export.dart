@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'legal_content.dart';
 import 'legal_models.dart';
 
-/// A section body in the format the website generator reads (scripts/build-web.mjs): one line per paragraph and "- " for
+/// A section body in the format the website generator reads (build-web, mobile-tools): one line per paragraph and "- " for
 /// each item of a list. The bare address of Google's policy becomes a link.
 String _body(LegalSection section) => [...section.paragraphs, for (final item in section.items) '- $item']
     .join('\n')
