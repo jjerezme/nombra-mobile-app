@@ -4,7 +4,7 @@ const LegalDocument termsEs = LegalDocument(
   kind: LegalKind.terms,
   languageCode: 'es',
   title: 'Términos y condiciones',
-  updatedLabel: 'Última actualización: 25 de noviembre de 2026',
+  updatedLabel: 'Última actualización: 26 de noviembre de 2026',
   intro:
       'Estos términos regulan el uso de Nombra, una aplicación para Android que descarga archivos desde un enlace y '
       'los guarda con un nombre que defines con reglas. Al usar la aplicación aceptas estos términos. Si no estás de '
@@ -42,8 +42,8 @@ const LegalDocument termsEs = LegalDocument(
       title: '4. Cuenta y respaldo',
       paragraphs: [
         'La cuenta de Google es opcional. Si inicias sesión, tus reglas se guardan en la nube y se mantienen al día '
-            'automáticamente entre tus dispositivos. Puedes cerrar sesión cuando quieras, y borrar el respaldo desde '
-            'Ajustes › Cuenta. Cuidar el acceso a tu cuenta de Google es tu responsabilidad.',
+            'automáticamente entre tus dispositivos. Puedes cerrar sesión, borrar el respaldo o eliminar tu cuenta '
+            'desde Ajustes › Cuenta. Cuidar el acceso a tu cuenta de Google es tu responsabilidad.',
         'El respaldo es una comodidad, no una garantía: conserva tus propias copias de lo que sea importante.',
       ],
     ),
@@ -99,7 +99,7 @@ const LegalDocument privacyEs = LegalDocument(
   kind: LegalKind.privacy,
   languageCode: 'es',
   title: 'Política de privacidad',
-  updatedLabel: 'Última actualización: 25 de noviembre de 2026',
+  updatedLabel: 'Última actualización: 26 de noviembre de 2026',
   intro:
       'Esta política explica qué datos trata Nombra, para qué y qué control tienes sobre ellos. En resumen: la '
       'aplicación funciona sin cuenta y guarda tus datos en tu teléfono; si decides iniciar sesión con Google, solo '
@@ -138,8 +138,8 @@ const LegalDocument privacyEs = LegalDocument(
             'de numeración), un identificador aleatorio del dispositivo que escribió por última vez y la fecha de '
             'actualización. No incluye tu historial ni tus archivos.',
         'Cierras sesión en Ajustes › Cuenta y las reglas siguen en tu teléfono y en la nube. «Borrar respaldo y cerrar '
-            'sesión» elimina el documento de la nube. Tu registro de inicio de sesión (identificador y correo) '
-            'permanece en Firebase Authentication hasta que nos pidas eliminarlo.',
+            'sesión» elimina el documento de la nube. «Eliminar cuenta» borra ese documento y tu registro de inicio de '
+            'sesión (identificador y correo) en Firebase Authentication.',
       ],
     ),
     LegalSection(
@@ -179,8 +179,8 @@ const LegalDocument privacyEs = LegalDocument(
     LegalSection(
       title: '9. Tus derechos',
       paragraphs: [
-        'Puedes cerrar sesión, borrar tu respaldo desde la aplicación y borrar el historial desde Ajustes. Para '
-            'acceder a tus datos, corregirlos o pedir que se elimine tu cuenta y todo lo asociado, escribe a '
+        'Puedes cerrar sesión, borrar tu respaldo o tu cuenta desde la aplicación y borrar el historial desde Ajustes. '
+            'Para acceder a tus datos, corregirlos o pedir que eliminemos tu cuenta si no puedes usar la app, escribe a '
             '$legalContactEmail. Si desinstalas la aplicación se borran los datos locales.',
       ],
     ),

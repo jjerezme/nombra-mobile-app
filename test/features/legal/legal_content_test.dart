@@ -1,8 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nombra/features/legal/domain/legal_content.dart';
-import 'package:nombra/features/legal/domain/legal_html.dart';
+import 'package:nombra/features/legal/domain/legal_export.dart';
 import 'package:nombra/features/legal/domain/legal_models.dart';
 
 void main() {
@@ -49,46 +50,26 @@ void main() {
     });
   });
 
-  group('legal web pages', () {
-    test('escapeHtml escapes the characters that matter', () {
-      expect(escapeHtml('<a href="x">&\'</a>'), '&lt;a href=&quot;x&quot;&gt;&amp;&#39;&lt;/a&gt;');
+  group('legal export for the website', () {
+    test('has both texts with a body per section, and Google\'s policy as a link', () {
+      final json = jsonDecode(exportLegalJson('es')) as Map<String, dynamic>;
+      for (final kind in LegalKind.values) {
+        final document = json[kind.name] as Map<String, dynamic>;
+        final sections = (document['sections'] as List).cast<Map<String, dynamic>>();
+        expect(sections.length, legalDocument(kind, 'es').sections.length);
+        expect(sections.every((section) => (section['body'] as String).isNotEmpty), isTrue);
+      }
+      expect(exportLegalJson('es'), contains('](https://policies.google.com/privacy)'));
     });
 
-    test('a page has its title, one heading per section and marks the current page', () {
-      final document = legalDocument(LegalKind.privacy, 'es');
-      final html = renderLegalPage(document);
-      expect(html, contains('<html lang="es">'));
-      expect(html, contains('<h1>Política de privacidad</h1>'));
-      expect('<h2>'.allMatches(html).length, document.sections.length);
-      expect(html, contains('<a href="/privacy" aria-current="page">'));
-      expect(html, contains('<a href="/terms">'));
-      expect(html, contains('href="/en/privacy" hreflang="en"'));
-      expect(html, contains('<a href="mailto:$legalContactEmail">'));
-    });
-
-    test('English pages live under /en and link back to Spanish', () {
-      final html = renderLegalPage(legalDocument(LegalKind.terms, 'en'));
-      expect(html, contains('<html lang="en">'));
-      expect(html, contains('<a href="/en/terms" aria-current="page">'));
-      expect(html, contains('href="/terms" hreflang="es"'));
-    });
-
-    test('the site has the front page and the four texts', () {
-      expect(
-        renderLegalSite().keys,
-        unorderedEquals(['index.html', 'terms.html', 'privacy.html', 'en/terms.html', 'en/privacy.html']),
-      );
-      expect(renderLegalIndex(), contains('href="/en/privacy"'));
-    });
-
-    test('the pages in web/ are up to date with the text of the app', () {
-      for (final entry in renderLegalSite().entries) {
-        final file = File('web/${entry.key}');
-        expect(file.existsSync(), isTrue, reason: 'web/${entry.key} is missing: run dart run scripts/build_legal.dart');
+    test('the files in web/legal are up to date with the text of the app', () {
+      for (final code in ['en', 'es']) {
+        final file = File('web/legal/$code.json');
         expect(
           file.readAsStringSync().replaceAll('\r\n', '\n'),
-          entry.value,
-          reason: 'web/${entry.key} is out of date: run dart run scripts/build_legal.dart',
+          exportLegalJson(code),
+          reason:
+              'web/legal/$code.json is out of date: run dart run scripts/export_legal.dart and node scripts/build-web.mjs',
         );
       }
     });

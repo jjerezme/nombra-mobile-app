@@ -10,7 +10,7 @@ class LegalSection {
   final List<String> items;
 }
 
-/// A legal text in one language. The app shows it on a screen and `scripts/build_legal.dart` turns the same data into the
+/// A legal text in one language. The app shows it on a screen and `scripts/export_legal.dart` feeds the same data to the
 /// web page, so the two cannot say different things.
 class LegalDocument {
   const LegalDocument({

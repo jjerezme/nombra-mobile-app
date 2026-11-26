@@ -4,7 +4,7 @@ const LegalDocument termsEn = LegalDocument(
   kind: LegalKind.terms,
   languageCode: 'en',
   title: 'Terms and conditions',
-  updatedLabel: 'Last updated: November 25, 2026',
+  updatedLabel: 'Last updated: November 26, 2026',
   intro:
       'These terms govern the use of Nombra, an Android app that downloads files from a link and saves them with a '
       'name you define with rules. By using the app you accept these terms. If you do not agree, do not use it.',
@@ -41,8 +41,8 @@ const LegalDocument termsEn = LegalDocument(
       title: '4. Account and backup',
       paragraphs: [
         'The Google account is optional. If you sign in, your rules are stored in the cloud and kept up to date '
-            'automatically across your devices. You can sign out at any time and delete the backup from '
-            'Settings › Account. Keeping your Google account secure is your responsibility.',
+            'automatically across your devices. You can sign out at any time, delete the backup or delete your account '
+            'from Settings › Account. Keeping your Google account secure is your responsibility.',
         'The backup is a convenience, not a guarantee: keep your own copies of anything important.',
       ],
     ),
@@ -92,7 +92,7 @@ const LegalDocument privacyEn = LegalDocument(
   kind: LegalKind.privacy,
   languageCode: 'en',
   title: 'Privacy policy',
-  updatedLabel: 'Last updated: November 25, 2026',
+  updatedLabel: 'Last updated: November 26, 2026',
   intro:
       'This policy explains what data Nombra handles, what for and what control you have over it. In short: the app '
       'works without an account and keeps your data on your phone; if you choose to sign in with Google, it only '
@@ -131,8 +131,8 @@ const LegalDocument privacyEn = LegalDocument(
             'numbering counter), a random identifier of the device that wrote last and the update date. It does not '
             'include your history or your files.',
         'You sign out in Settings › Account and the rules stay on your phone and in the cloud. "Delete backup and sign '
-            'out" removes the document from the cloud. Your sign-in record (identifier and e-mail) stays in Firebase '
-            'Authentication until you ask us to delete it.',
+            'out" removes the document from the cloud. "Delete account" removes the document and your sign-in record '
+            '(identifier and e-mail) from Firebase Authentication.',
       ],
     ),
     LegalSection(
@@ -171,8 +171,8 @@ const LegalDocument privacyEn = LegalDocument(
     LegalSection(
       title: '9. Your rights',
       paragraphs: [
-        'You can sign out, delete your backup from the app and clear the history from Settings. To access your data, '
-            'correct it or ask for your account and everything linked to it to be deleted, write to '
+        'You can sign out, delete your backup or your account from the app and clear the history from Settings. To '
+            'access your data, correct it or ask us to delete your account if you cannot use the app, write to '
             '$legalContactEmail. If you uninstall the app, the local data is deleted.',
       ],
     ),

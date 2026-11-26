@@ -1,0 +1,104 @@
+{
+  "terms": {
+    "title": "Términos y condiciones",
+    "updated": "Última actualización: 26 de noviembre de 2026",
+    "intro": "Estos términos regulan el uso de Nombra, una aplicación para Android que descarga archivos desde un enlace y los guarda con un nombre que defines con reglas. Al usar la aplicación aceptas estos términos. Si no estás de acuerdo, no la uses.",
+    "sections": [
+      {
+        "title": "1. Qué hace Nombra",
+        "body": "Nombra descarga un archivo desde un enlace https que tú indicas, o recibe un archivo o enlace que compartes desde otra aplicación, y lo guarda en una carpeta pública de tu teléfono con el nombre que resulta de tus reglas. Puedes iniciar sesión con tu cuenta de Google para respaldar tus reglas en la nube."
+      },
+      {
+        "title": "2. Licencia de uso",
+        "body": "Te damos una licencia personal, no exclusiva, intransferible y revocable para usar Nombra en tus dispositivos. La aplicación, su diseño y su código siguen siendo del desarrollador."
+      },
+      {
+        "title": "3. Tu responsabilidad sobre lo que descargas",
+        "body": "Nombra no revisa, no aloja ni controla los archivos que descargas: se obtienen directamente del sitio que indicas. Tú eres responsable de:\n- tener derecho a descargar, copiar y usar cada archivo, respetando los derechos de autor y las condiciones del sitio de origen;\n- no usar la aplicación para obtener o distribuir contenido ilegal, malicioso o que vulnere derechos de terceros;\n- comprobar que un archivo es seguro antes de abrirlo."
+      },
+      {
+        "title": "4. Cuenta y respaldo",
+        "body": "La cuenta de Google es opcional. Si inicias sesión, tus reglas se guardan en la nube y se mantienen al día automáticamente entre tus dispositivos. Puedes cerrar sesión, borrar el respaldo o eliminar tu cuenta desde Ajustes › Cuenta. Cuidar el acceso a tu cuenta de Google es tu responsabilidad.\nEl respaldo es una comodidad, no una garantía: conserva tus propias copias de lo que sea importante."
+      },
+      {
+        "title": "5. Uso aceptable",
+        "body": "No puedes:\n- intentar acceder sin permiso a los sistemas o a los datos de otras personas;\n- sobrecargar o interferir con el servicio en la nube de la aplicación;\n- descompilar, copiar o redistribuir la aplicación fuera de los casos que permita la ley."
+      },
+      {
+        "title": "6. Sin garantías",
+        "body": "Nombra se ofrece «tal cual» y «según disponibilidad». No garantizamos que funcione sin interrupciones ni errores, que un archivo se guarde siempre con el nombre esperado, ni que el respaldo esté disponible en todo momento."
+      },
+      {
+        "title": "7. Límite de responsabilidad",
+        "body": "En la medida que la ley lo permita, el desarrollador no responde por daños indirectos ni por la pérdida de archivos o datos derivada del uso de la aplicación, de los archivos que descargas o de fallos de servicios de terceros (como Google o Firebase). Nada en estos términos limita los derechos que la ley te reconoce como consumidor."
+      },
+      {
+        "title": "8. Cambios y terminación",
+        "body": "Podemos actualizar la aplicación y estos términos. La fecha de arriba indica la última versión; si un cambio es importante, lo avisaremos en la aplicación. Seguir usándola después del cambio significa que lo aceptas. Puedes dejar de usar Nombra en cualquier momento, y podemos suspender una cuenta que incumpla estos términos."
+      },
+      {
+        "title": "9. Privacidad",
+        "body": "El tratamiento de tus datos se explica en la Política de privacidad, que forma parte de estos términos."
+      },
+      {
+        "title": "10. Contacto",
+        "body": "Para cualquier duda sobre estos términos escribe a jjerezme@gmail.com."
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Política de privacidad",
+    "updated": "Última actualización: 26 de noviembre de 2026",
+    "intro": "Esta política explica qué datos trata Nombra, para qué y qué control tienes sobre ellos. En resumen: la aplicación funciona sin cuenta y guarda tus datos en tu teléfono; si decides iniciar sesión con Google, solo respalda tus reglas de renombrado. No hay publicidad ni analítica de uso.",
+    "sections": [
+      {
+        "title": "1. Datos que se quedan en tu teléfono",
+        "body": "Nombra guarda en tu dispositivo, sin enviarlos a nadie:\n- tus reglas de renombrado y tus ajustes (tema, idioma, carpeta predeterminada);\n- el historial de descargas: nombre del archivo, carpeta y el enlace de origen, hasta 50 elementos y 90 días;\n- los archivos descargados, que se guardan en carpetas públicas de tu teléfono (Descargas, Documentos, Imágenes, Películas o Música) y no en un lugar privado de la aplicación."
+      },
+      {
+        "title": "2. Las descargas",
+        "body": "Cuando descargas un enlace, tu teléfono se conecta directamente al sitio de origen. Ese sitio puede ver tu dirección IP y los datos técnicos habituales de una conexión. Nombra no usa un servidor intermedio y no recibe ni almacena el contenido que descargas ni tus enlaces."
+      },
+      {
+        "title": "3. Cuenta de Google (opcional)",
+        "body": "Si inicias sesión, Google y Firebase Authentication nos entregan un identificador único de usuario, tu correo y tu nombre. Los usamos solo para identificar tu respaldo y mostrar tu cuenta en Ajustes."
+      },
+      {
+        "title": "4. Respaldo de reglas en la nube",
+        "body": "Con sesión iniciada, la lista de tus reglas se guarda en Cloud Firestore, en un documento que solo tu cuenta puede leer, escribir o borrar. Contiene tus reglas (nombre, patrón, carpeta, opciones y el contador de numeración), un identificador aleatorio del dispositivo que escribió por última vez y la fecha de actualización. No incluye tu historial ni tus archivos.\nCierras sesión en Ajustes › Cuenta y las reglas siguen en tu teléfono y en la nube. «Borrar respaldo y cerrar sesión» elimina el documento de la nube. «Eliminar cuenta» borra ese documento y tu registro de inicio de sesión (identificador y correo) en Firebase Authentication."
+      },
+      {
+        "title": "5. Informes de fallos",
+        "body": "En las versiones publicadas, Firebase Crashlytics recibe informes cuando la aplicación se cierra por un error: modelo del dispositivo, versión de Android y de la aplicación, el detalle técnico del error y un identificador de instalación. Antes de enviarlos, Nombra reemplaza cualquier enlace que aparezca en el error. Se usan solo para corregir fallos y Firebase los conserva por el plazo que establece en su documentación."
+      },
+      {
+        "title": "6. Permisos",
+        "body": "- Internet: descargar archivos y usar la cuenta y el respaldo.\n- Notificaciones (Android 13 o superior): avisar del progreso y del resultado de una descarga. Son locales; no se envían a un servidor."
+      },
+      {
+        "title": "7. Lo que no hacemos",
+        "body": "- No mostramos publicidad ni vendemos tus datos.\n- No usamos analítica de uso ni seguimiento entre aplicaciones.\n- No leemos tus archivos ni tus contactos, ubicación, micrófono o cámara.\n- La aplicación no entra en las copias de seguridad automáticas de Android."
+      },
+      {
+        "title": "8. Proveedores",
+        "body": "Para la cuenta, el respaldo y los informes de fallos usamos servicios de Google (Firebase y Google Sign-In). Ellos tratan los datos según su propia política de privacidad: [policies.google.com/privacy](https://policies.google.com/privacy)."
+      },
+      {
+        "title": "9. Tus derechos",
+        "body": "Puedes cerrar sesión, borrar tu respaldo o tu cuenta desde la aplicación y borrar el historial desde Ajustes. Para acceder a tus datos, corregirlos o pedir que eliminemos tu cuenta si no puedes usar la app, escribe a jjerezme@gmail.com. Si desinstalas la aplicación se borran los datos locales."
+      },
+      {
+        "title": "10. Menores de edad",
+        "body": "Nombra no está dirigida a menores de 13 años y no recoge a sabiendas datos de ellos. Si crees que un menor inició sesión, escríbenos y eliminaremos sus datos."
+      },
+      {
+        "title": "11. Cambios",
+        "body": "Si esta política cambia, actualizaremos la fecha de arriba y, si el cambio es importante, lo avisaremos en la aplicación."
+      },
+      {
+        "title": "12. Contacto",
+        "body": "Para cualquier consulta sobre privacidad escribe a jjerezme@gmail.com."
+      }
+    ]
+  }
+}

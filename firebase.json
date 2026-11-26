@@ -3,7 +3,7 @@
     "rules": "firestore.rules"
   },
   "hosting": {
-    "public": "web",
+    "public": "web/public",
     "cleanUrls": true,
     "trailingSlash": false,
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
@@ -16,12 +16,12 @@
           { "key": "X-Frame-Options", "value": "DENY" },
           {
             "key": "Content-Security-Policy",
-            "value": "default-src 'none'; img-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+            "value": "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'sha256-0M0ThHVEyabpMGn9Vybr2VTffIHg3nqjrfsXULeTTgY='; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
           }
         ]
       },
       {
-        "source": "**/*.@(css|png)",
+        "source": "**/*.@(css|png|jpg)",
         "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
       }
     ]
