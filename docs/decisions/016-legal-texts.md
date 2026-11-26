@@ -7,15 +7,16 @@
 Para publicar la app y para el inicio de sesión con Google hacen falta unos términos y una política de privacidad, visibles dentro de la app y en una dirección web pública (Hosting de `nombra-prod`).
 
 ## Decisión
-- El texto vive una sola vez, en Dart puro, en `lib/features/legal/domain/` (`legal_content_es.dart` y `legal_content_en.dart`, con `LegalDocument`/`LegalSection`). La app lo muestra en `LegalScreen` según su idioma y la web se genera desde ese mismo dato con `dart run scripts/build_legal.dart` (`legal_html.dart` produce el HTML).
-- La web está en `web/` (versionada): `index.html`, `terms.html`, `privacy.html` y `en/terms.html`, `en/privacy.html`, con `style.css` y `logo.png` escritos a mano. Con `cleanUrls` quedan en `/terms`, `/privacy`, `/en/terms` y `/en/privacy`. `firebase.json` define el hosting (carpeta `web`, cabeceras de seguridad y una CSP que no permite scripts).
+- El texto vive una sola vez, en Dart puro, en `lib/features/legal/domain/` (`legal_content_es.dart` y `legal_content_en.dart`, con `LegalDocument`/`LegalSection`). La app lo muestra en `LegalScreen` según su idioma y la web se genera desde ese mismo dato (ver abajo).
+- La web usa el mismo generador que las demás apps (`scripts/build-web.mjs` y `web/style.css`, idénticos en todos los proyectos; requiere Node): landing, `/privacy`, `/terms` y `/delete-account`, cada una con los dos idiomas (inglés por defecto, `?lang=es`). `dart run scripts/export_legal.dart` pasa el texto de la app a `web/legal/{en,es}.json`; la landing y la eliminación de la cuenta se escriben en `web/content/` y la configuración en `web/site.config.json`. El resultado, versionado, queda en `web/public/`.
+- `firebase.json` publica `web/public` con cabeceras de seguridad. La CSP solo permite el script del selector de idioma, por su hash: si cambia el generador, hay que actualizar el hash.
 - Dentro de la app: Ajustes › Legal (dos filas) y, bajo «Continuar con Google», una nota con enlaces a ambos textos.
-- Un test falla si `web/` no coincide con lo que genera el script, para que la web no quede atrás del texto de la app.
+- Un test falla si `web/legal/` no coincide con el texto de la app. Después de exportar hay que ejecutar `node scripts/build-web.mjs`.
 - El correo de contacto es `jjerezme@gmail.com` (`legalContactEmail`, público). La web se publica en `https://nombra-prod.web.app`.
 - El texto describe lo que la app hace de verdad (datos locales, cuenta opcional, respaldo de reglas, Crashlytics sin enlaces, sin publicidad ni analítica). Si cambia lo que se recoge, hay que cambiar el texto y la fecha en el mismo cambio.
 
 ## Consecuencias
 - Pendiente a propósito: el nombre del responsable y la ley aplicable no se indican todavía (el usuario pidió dejarlo vacío); los términos no tienen cláusula de jurisdicción. Está en `TODO.md`.
 - El texto no es asesoría legal: conviene que lo revise una persona con conocimiento legal antes de publicar en una tienda.
-- «Borrar respaldo y cerrar sesión» no elimina el registro de Firebase Authentication; la política lo dice y pide escribir al contacto. Eliminar la cuenta desde la app queda en `TODO.md`.
-- Cambiar el texto obliga a ejecutar el script y a publicar de nuevo en Hosting (`firebase deploy --only hosting --project nombra-prod`), a pedido del usuario.
+- La cuenta se elimina desde la app ([017](017-developer-mode-and-account-deletion.md)); el correo de contacto queda para quien no pueda usarla.
+- Cambiar el texto obliga a ejecutar los dos scripts y a publicar de nuevo en Hosting (`firebase deploy --only hosting --project nombra-prod`), a pedido del usuario.
