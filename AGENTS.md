@@ -29,7 +29,7 @@ Run `flutter analyze`, `flutter test` and `dart run scripts/check_styles.dart` b
 
 ## Builds
 
-Builds are local: `npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-apk [--preview|--production|--aab] [--upload]`, configured in `build.config.json`. Details in `docs/BUILD.md`. Do not add Codemagic, Fastlane or other hosted build services.
+Builds are local: `npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.5.0 build-apk [--preview|--production|--aab] [--upload]`, configured in `build.config.json`. Details in `docs/BUILD.md`. Do not add Codemagic, Fastlane or other hosted build services.
 
 ## Rules
 

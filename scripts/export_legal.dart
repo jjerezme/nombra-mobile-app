@@ -2,7 +2,7 @@
 // where the website generator reads them. After changing a legal text run both:
 //
 //   dart run scripts/export_legal.dart
-//   npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-web
+//   npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.5.0 build-web
 //
 // Then publish with `firebase deploy --only hosting --project nombra-prod`, only when asked.
 import 'dart:io';
