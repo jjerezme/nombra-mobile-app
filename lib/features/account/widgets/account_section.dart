@@ -63,6 +63,7 @@ class _Progress extends StatelessWidget {
       AccountAction.signIn => l10n.accountBusySigningIn,
       AccountAction.signOut => l10n.accountBusySigningOut,
       AccountAction.deleteBackup => l10n.accountBusyDeleting,
+      AccountAction.deleteAccount => l10n.accountBusyDeletingAccount,
     };
     return Semantics(
       liveRegion: true,
@@ -152,6 +153,28 @@ class _SignedIn extends ConsumerWidget {
     }
   }
 
+  Future<void> _deleteAccount(BuildContext context, WidgetRef ref) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context);
+    final isConfirmed = await showConfirmDialog(
+      context,
+      title: l10n.accountConfirmDeleteAccountTitle,
+      message: l10n.accountConfirmDeleteAccountBody,
+      confirmLabel: l10n.delete,
+    );
+    if (!isConfirmed) return;
+    try {
+      await ref.read(backupSyncProvider.notifier).deleteAccount();
+      messenger.showSnackBar(SnackBar(content: Text(l10n.accountDeleted)));
+    } on SignInException catch (error) {
+      if (error.failure == SignInFailure.failed) {
+        messenger.showSnackBar(SnackBar(content: Text(l10n.accountDeleteAccountFailed)));
+      }
+    } on Object {
+      messenger.showSnackBar(SnackBar(content: Text(l10n.accountDeleteAccountFailed)));
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -224,6 +247,13 @@ class _SignedIn extends ConsumerWidget {
           hint: l10n.accountDeleteBackupHint,
           isDestructive: true,
           onTap: () => _deleteBackup(context, ref),
+        ),
+        ActionRow(
+          icon: Icons.person_remove_outlined,
+          title: l10n.accountDeleteAccount,
+          hint: l10n.accountDeleteAccountHint,
+          isDestructive: true,
+          onTap: () => _deleteAccount(context, ref),
         ),
       ],
     );

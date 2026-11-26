@@ -1291,6 +1291,162 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Volver'**
   String get backTooltip;
+
+  /// No description provided for @accountDeleteAccount.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar cuenta'**
+  String get accountDeleteAccount;
+
+  /// No description provided for @accountDeleteAccountHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Borra tu cuenta y el respaldo. Las reglas de este teléfono se quedan.'**
+  String get accountDeleteAccountHint;
+
+  /// No description provided for @accountConfirmDeleteAccountTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Eliminar tu cuenta?'**
+  String get accountConfirmDeleteAccountTitle;
+
+  /// No description provided for @accountConfirmDeleteAccountBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se borran tu cuenta de Nombra y el respaldo en la nube. Antes debes elegir de nuevo tu cuenta de Google. Las reglas de este teléfono se quedan. No se puede deshacer.'**
+  String get accountConfirmDeleteAccountBody;
+
+  /// No description provided for @accountBusyDeletingAccount.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminando la cuenta…'**
+  String get accountBusyDeletingAccount;
+
+  /// No description provided for @accountDeleted.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu cuenta se eliminó.'**
+  String get accountDeleted;
+
+  /// No description provided for @accountDeleteAccountFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo eliminar la cuenta. Revisa tu conexión.'**
+  String get accountDeleteAccountFailed;
+
+  /// No description provided for @settingsDeveloper.
+  ///
+  /// In es, this message translates to:
+  /// **'Modo desarrollador'**
+  String get settingsDeveloper;
+
+  /// No description provided for @developerCommonTools.
+  ///
+  /// In es, this message translates to:
+  /// **'Herramientas'**
+  String get developerCommonTools;
+
+  /// No description provided for @developerCopyReport.
+  ///
+  /// In es, this message translates to:
+  /// **'Copiar informe'**
+  String get developerCopyReport;
+
+  /// No description provided for @developerReportCopied.
+  ///
+  /// In es, this message translates to:
+  /// **'Informe copiado'**
+  String get developerReportCopied;
+
+  /// No description provided for @developerTestError.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar error de prueba'**
+  String get developerTestError;
+
+  /// No description provided for @developerTestErrorSent.
+  ///
+  /// In es, this message translates to:
+  /// **'Error de prueba enviado'**
+  String get developerTestErrorSent;
+
+  /// No description provided for @developerInformation.
+  ///
+  /// In es, this message translates to:
+  /// **'Información'**
+  String get developerInformation;
+
+  /// No description provided for @developerLoading.
+  ///
+  /// In es, this message translates to:
+  /// **'Cargando…'**
+  String get developerLoading;
+
+  /// No description provided for @developerSectionApp.
+  ///
+  /// In es, this message translates to:
+  /// **'Aplicación'**
+  String get developerSectionApp;
+
+  /// No description provided for @developerSectionDevice.
+  ///
+  /// In es, this message translates to:
+  /// **'Teléfono'**
+  String get developerSectionDevice;
+
+  /// No description provided for @developerSectionDisplay.
+  ///
+  /// In es, this message translates to:
+  /// **'Pantalla'**
+  String get developerSectionDisplay;
+
+  /// No description provided for @developerSectionLocale.
+  ///
+  /// In es, this message translates to:
+  /// **'Idioma y región'**
+  String get developerSectionLocale;
+
+  /// No description provided for @developerSectionNetwork.
+  ///
+  /// In es, this message translates to:
+  /// **'Red'**
+  String get developerSectionNetwork;
+
+  /// No description provided for @developerSectionBattery.
+  ///
+  /// In es, this message translates to:
+  /// **'Batería'**
+  String get developerSectionBattery;
+
+  /// No description provided for @developerSectionStorage.
+  ///
+  /// In es, this message translates to:
+  /// **'Almacenamiento'**
+  String get developerSectionStorage;
+
+  /// No description provided for @developerSectionFirebase.
+  ///
+  /// In es, this message translates to:
+  /// **'Firebase'**
+  String get developerSectionFirebase;
+
+  /// No description provided for @developerSectionAccount.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuenta y datos'**
+  String get developerSectionAccount;
+
+  /// No description provided for @developerSectionNotifications.
+  ///
+  /// In es, this message translates to:
+  /// **'Notificaciones'**
+  String get developerSectionNotifications;
+
+  /// No description provided for @developerSectionDependencies.
+  ///
+  /// In es, this message translates to:
+  /// **'Dependencias'**
+  String get developerSectionDependencies;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

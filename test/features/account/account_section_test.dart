@@ -204,6 +204,42 @@ void main() {
     });
   });
 
+  group('deleting the account', () {
+    Future<void> confirmDelete(WidgetTester tester) async {
+      await tester.tap(find.text('Eliminar cuenta'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Eliminar'));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('removes the backup and the account', (tester) async {
+      final auth = FakeAuthGateway(signedIn: testUser);
+      await pumpSettings(tester, env, auth: auth, backup: backup);
+      await confirmDelete(tester);
+      expect(auth.isDeleted, isTrue);
+      expect(backup.deleted, [testUser.uid]);
+      expect(find.text('Continuar con Google'), findsOneWidget);
+      expect(find.text('Tu cuenta se eliminó.'), findsOneWidget);
+    });
+
+    testWidgets('deletes nothing when the Google picker is cancelled', (tester) async {
+      final auth = FakeAuthGateway(signedIn: testUser)..failWith = SignInFailure.cancelled;
+      await pumpSettings(tester, env, auth: auth, backup: backup);
+      await confirmDelete(tester);
+      expect(auth.isDeleted, isFalse);
+      expect(backup.deleted, isEmpty);
+      expect(find.text('No se pudo eliminar la cuenta. Revisa tu conexión.'), findsNothing);
+    });
+
+    testWidgets('says so when it fails', (tester) async {
+      final auth = FakeAuthGateway(signedIn: testUser)..failDeleteAccount = true;
+      await pumpSettings(tester, env, auth: auth, backup: backup);
+      await confirmDelete(tester);
+      expect(auth.isDeleted, isFalse);
+      expect(find.text('No se pudo eliminar la cuenta. Revisa tu conexión.'), findsOneWidget);
+    });
+  });
+
   testWidgets('the Google button carries the Google G logo', (tester) async {
     await pumpSettings(tester, env, auth: FakeAuthGateway(), backup: backup);
     final image = tester.widget<Image>(find.descendant(of: find.byType(OutlinedButton), matching: find.byType(Image)));
