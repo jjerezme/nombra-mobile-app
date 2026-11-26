@@ -56,7 +56,7 @@ Solo en el flavor `dev`: en `prod` no existe. Herramientas comunes (copiar infor
 Landing, `/privacy`, `/terms` y `/delete-account` en inglés (por defecto) y español, generadas con el comando `build-web` de `mobile-tools`. Sin `playUrl` la landing dice «Próximamente».
 
 ## Fichas de Google Play (`store/`)
-`listing/<idioma>.md` (`en-US` y `es-419`), `graphics/icon-512.png`, `graphics/feature-graphic-<idioma>.png` y `screenshots/<idioma>/`. Límites: título 30, corta 80, completa 4000, novedades 500.
+`listing/<idioma>.md` (`en` y `es`: en Play Console son `en-US` y `es-419`), `graphics/icon-512.png`, `graphics/feature-graphic-<idioma>.png` y `screenshots/<idioma>/`. Límites: título 30, corta 80, completa 4000, novedades 500.
 - **Capturas:** `screenshots/<idioma>/` guarda **todas** las que se tomen (se pueden subir cuantas se quiera, con cualquier nombre); `store/screenshots/<idioma>/` tiene **solo las elegidas** para la ficha de Play y la web, numeradas `NN-nombre.jpg` en el orden de la ficha. Para elegir una, se copia de `screenshots/` a `store/screenshots/`. Los dos usan los códigos de idioma de la ficha. Antes de subir una captura, comprueba que no muestre datos personales.
 
 ## Calidad
