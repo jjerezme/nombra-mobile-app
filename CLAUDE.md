@@ -36,7 +36,7 @@ Ejecuta analyze y test antes de dar una tarea por terminada.
 - **Nombres:** archivos `snake_case.dart`; clases `PascalCase`; pantallas `XScreen`, widgets reutilizables `XWidget` solo si hace falta distinguirlos; providers `xProvider`; booleanos `isX`/`hasX`; constantes `lowerCamelCase` (estilo Dart).
 - **Widgets:** revisa `lib/core/widgets/` antes de crear uno; si ninguno sirve, pregunta antes de crear uno nuevo. Un widget público por archivo. Los widgets no acceden a Firestore: usan providers/repositorios. Toda lista cubre carga, error con "Reintentar" y vacío.
 - Un botón solo con icono lleva `tooltip`/`Semantics`; áreas táctiles de 48 dp (`minTouchTarget`).
-- Estándar completo: `STANDARD.md`. Builds: `dart run scripts/build.dart` (ver `docs/BUILD.md`).
+- Estándar completo: `STANDARD.md`. Builds: `build-apk` de `mobile-tools` con `npx` (comandos en `docs/BUILD.md`).
 
 ## Mapa de arquitectura
 - `lib/main.dart`: arranque (`main` y `shareMain`, la hoja de compartir). `lib/app/`: `NombraApp`, rutas y navegación.
@@ -48,7 +48,7 @@ Ejecuta analyze y test antes de dar una tarea por terminada.
 ## Reglas vigentes
 - Flutter como plataforma: [001](docs/decisions/001-flutter.md). Estado con Riverpod: [002](docs/decisions/002-riverpod.md). Rutas con go_router: [003](docs/decisions/003-go-router.md).
 - Flavors `dev`/`prod`, Firebase nativo, una config por flavor: [004](docs/decisions/004-flavors-firebase.md).
-- Textos con `gen-l10n` (es y en): [005](docs/decisions/005-l10n.md). Builds locales con `scripts/build.dart`: [006](docs/decisions/006-local-build.md).
+- Textos con `gen-l10n` (es y en): [005](docs/decisions/005-l10n.md). Builds locales con `build-apk`: [006](docs/decisions/006-local-build.md).
 - Datos en `shared_preferences` (JSON): [007](docs/decisions/007-persistence.md). Descarga con `background_downloader` y guardado por MediaStore, `minSdk` 29: [008](docs/decisions/008-download-and-save.md).
 - Compartir con `ShareActivity` translúcida y `shareMain`: [009](docs/decisions/009-share-intent.md). Fuentes empaquetadas, sin `google_fonts`: [010](docs/decisions/010-fonts.md). Icono y logo: [012](docs/decisions/012-app-icon.md).
 - Seguridad: solo enlaces `https`, nombres con `safeFileName`, errores sin enlaces (`RedactedError`), sin copias de Android, release `prod` solo con llave de subida: [013](docs/decisions/013-security-hardening.md).

@@ -33,7 +33,7 @@ Detalles de builds y firma: [`docs/BUILD.md`](docs/BUILD.md).
 
 | Comando | Qué hace |
 |---|---|
-| `dart run scripts/build.dart [--flavor dev\|prod] [--aab] [--upload]` | Compila APK o AAB y lo copia a Drive |
+| `npx … build-apk [--preview] [--upload]` | Compila APK o AAB y lo copia a Drive |
 | `flutter analyze` · `flutter test` | Verificaciones antes de commitear |
 | `dart run scripts/check_styles.dart` | Revisa los tokens de estilo |
 
@@ -44,7 +44,7 @@ lib/app/       app y rutas (go_router)
 lib/           core/, features/, l10n/
 android/       flavors, firma y Firebase (google-services.json ignorados)
 docs/          arquitectura, decisiones, builds, gitflow
-scripts/       build.dart y check_styles.dart
+scripts/       check_styles.dart
 ```
 
 ## Documentación

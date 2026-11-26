@@ -1,20 +1,25 @@
 # Builds
 
-Todos los builds son locales. Requisitos: Flutter, Java 17 y el SDK de Android configurado (`flutter doctor`).
+Todos los builds son locales, con el script compartido `build-apk` de [`mobile-tools`](https://github.com/jjerezme/mobile-tools). Requisitos: Flutter, Java 17, el SDK de Android configurado (`flutter doctor`) y Node (para ejecutar el script con `npx`).
 
 ```bash
-dart run scripts/build.dart                       # APK dev
-dart run scripts/build.dart --flavor prod         # APK prod (firmado con la llave de subida)
-dart run scripts/build.dart --flavor prod --aab   # App Bundle para Google Play
-dart run scripts/build.dart --flavor prod --aab --upload   # y copia a Drive
+npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-apk                      # debug (flavor dev)
+npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-apk --preview            # release del flavor dev
+npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-apk --production         # APK del flavor prod (firmado con la llave de subida)
+npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-apk --aab --no-serve     # App Bundle para Google Play
+npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-apk --preview --upload   # además lo copia a Drive
 ```
 
-El resultado queda en `builds/<prefijo>-<flavor>-v<versión>-<código>-<fecha>.apk|aab`. La versión sale de `version:` en `pubspec.yaml` (`x.y.z+código`).
+El resultado queda en `builds/<prefijo>-<tipo>-v<versión>-<código>-<fecha>-<hora>.apk|aab`. La versión sale de `version:` en `pubspec.yaml` (`x.y.z+código`). Sin `--no-serve`, los APK se ofrecen además por Wi-Fi para instalarlos desde el teléfono.
+
+Con `--upload` el archivo se copia a `<apkDrive>/<name>/` y allí solo queda el último build de cada tipo (debug, preview, APK de producción y AAB); los anteriores del mismo tipo se borran (en Google Drive van a la papelera).
 
 ## Configuración (`build.config.json`)
+- `name`: nombre de la carpeta en Drive.
 - `filePrefix`: prefijo de los archivos.
-- `driveDir`: carpeta de Drive donde copia `--upload`.
-- `uploadKeyPropertiesFile`: archivo fuera del repo con `storeFile`, `storePassword`, `keyAlias` y `keyPassword`. Solo lo lee el flavor `prod`; las claves pasan a Gradle por variables de entorno y nunca aparecen en la línea de comandos.
+- `apkDrive`: carpeta de Drive donde copia `--upload`.
+- `tempDir`: carpeta temporal corta que usa Gradle en Windows.
+- `signing.propertiesFile`: archivo fuera del repo con `storeFile`, `storePassword`, `keyAlias` y `keyPassword`. Solo se lee en producción; las claves pasan a Gradle por variables de entorno y nunca aparecen en la línea de comandos.
 
 ## Firebase
 Cada flavor necesita su `google-services.json` en `android/app/src/<flavor>/` (no versionado). Sin él, el build funciona y la app arranca sin Firebase.

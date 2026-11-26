@@ -1,13 +1,13 @@
-# 006. Builds locales con scripts/build.dart
+# 006. Builds locales con build-apk
 
 - Estado: aceptada
-- Fecha: 2026-11-23
+- Fecha: 2026-11-23 (actualizada el 2026-11-26)
 
 ## Contexto
-Los builds son locales (Windows), sin servicios alojados. Antes los hacía `build-apk` de `@jujeme/mobile-tools` (Node), que ya no aplica.
+Los builds son locales (Windows), sin servicios alojados. Hubo un script propio (`scripts/build.dart`) mientras `build-apk` no sabía compilar Flutter; desde `mobile-tools` 0.2.0 sí sabe.
 
 ## Decisión
-`dart run scripts/build.dart [--flavor dev|prod] [--aab] [--upload]` envuelve `flutter build apk|appbundle --release --flavor <f>`, firma el flavor `prod` con la llave de subida (archivo de propiedades fuera del repo, pasado a Gradle por variables `ORG_GRADLE_PROJECT_*`), nombra el archivo `<prefijo>-<flavor>-v<versión>-<código>-<fecha>` en `builds/` y con `--upload` lo copia a Drive. Se configura en `build.config.json`.
+Se compila con `build-apk` de `mobile-tools`, ejecutado con `npx` y fijado por etiqueta (v0.4.0), configurado en `build.config.json`. Envuelve `flutter build` con los flavors, firma producción con la llave de subida (archivo fuera del repo), nombra los archivos en `builds/` y con `--upload` los copia a Drive, donde solo deja el último de cada tipo. `scripts/build.dart` se eliminó.
 
 ## Consecuencias
-`prod` no se compila sin la llave de subida. El flavor `dev` usa la firma de debug.
+Hace falta Node para compilar. `prod` en App Bundle no se compila sin la llave de subida. Subir de versión del script es cambiar la etiqueta en los documentos.

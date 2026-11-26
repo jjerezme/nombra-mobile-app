@@ -12,7 +12,7 @@ App móvil Android para descargar un archivo y renombrarlo según reglas configu
 - i18n (es y en), tema claro y oscuro y tokens de estilo.
 - Modo desarrollador en la versión de desarrollo.
 - Dos flavors de Android: `dev` y `prod`, cada uno con su paquete y su proyecto de Firebase.
-- `scripts/build.dart`: APK y AAB locales, firma de subida y copia a Drive.
+- Builds locales con `build-apk` de `mobile-tools`: APK y AAB, firma de subida y copia a Drive.
 - `scripts/check_styles.dart`: verifica que los estilos salgan de los tokens.
 - `.github/`: CI, Dependabot y plantilla de PR.
 - `docs/`: Gitflow, arquitectura, build y decisiones (ADR).
@@ -47,7 +47,7 @@ Para iniciar sesión con Google (Ajustes › Cuenta) cada proyecto de Firebase n
 
 | Comando | Qué hace |
 |---|---|
-| `dart run scripts/build.dart [--flavor dev\|prod] [--aab] [--upload]` | Compila APK o AAB en `builds/` |
+| `npx --yes -p git+https://github.com/jjerezme/mobile-tools.git#v0.4.0 build-apk [--preview] [--upload]` | Compila APK o AAB en `builds/` ([BUILD.md](docs/BUILD.md)) |
 | `flutter analyze` · `flutter test` | Verificaciones antes de commitear (63 tests) |
 | `dart run scripts/check_styles.dart` | Revisa los tokens de estilo |
 | `flutter gen-l10n` | Regenera los textos tras editar `lib/l10n/*.arb` |
@@ -61,7 +61,7 @@ lib/core/      entorno, arranque, tokens y tema
 lib/features/  rules, download, share, naming, account, legal, developer y settings
 lib/l10n/      textos (es y en)
 android/       flavors, firma, Firebase y ShareActivity (compartir)
-scripts/       build.dart, check_styles.dart y export_legal.dart
+scripts/       check_styles.dart y export_legal.dart
 web/ · store/  sitio público y ficha de Google Play
 docs/          gitflow, arquitectura, build y decisiones
 ```

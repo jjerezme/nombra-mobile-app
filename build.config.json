@@ -1,10 +1,9 @@
 {
   "filePrefix": "nombra",
-  "driveDir": "G:/Mi unidad/APK",
-  "uploadKeyPropertiesFile": "~/keys/nombra-upload.properties",
   "name": "Nombra",
   "apkDrive": "G:/Mi unidad/APK",
   "signing": {
     "propertiesFile": "~/keys/nombra-upload.properties"
-  }
+  },
+  "tempDir": "C:/gtmp"
 }

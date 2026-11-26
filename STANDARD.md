@@ -34,7 +34,7 @@ Reglas técnicas, de documentación y de publicación de Nombra, hecha en Flutte
 - Accesibilidad: botones solo con icono con `tooltip` o `Semantics`; áreas táctiles de al menos 48 dp; el estado no depende solo del color.
 
 ## Comandos obligatorios
-`flutter analyze`, `flutter test`, `dart run scripts/check_styles.dart`, `dart run scripts/build.dart`.
+`flutter analyze`, `flutter test`, `dart run scripts/check_styles.dart` y `build-apk` (ver `docs/BUILD.md`).
 
 ## Entornos y Firebase
 - 2 proyectos Firebase: dev y prod.
