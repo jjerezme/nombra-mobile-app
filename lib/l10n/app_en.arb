@@ -1,6 +1,404 @@
 {
   "@@locale": "en",
   "appName": "Nombra",
-  "homeTitle": "Hello",
-  "homeSubtitle": "This is the Nombra app"
+  "navDownload": "Download",
+  "navRules": "Rules",
+  "cancel": "Cancel",
+  "save": "Save",
+  "change": "Change",
+  "retry": "Retry",
+  "delete": "Delete",
+  "accept": "OK",
+  "modeQuick": "Custom",
+  "ruleAdd": "Add",
+  "changeFolderTooltip": "Change destination folder",
+  "homeUrlLabel": "File URL",
+  "homePasteTooltip": "Paste from clipboard",
+  "homeUrlInvalid": "Enter a valid https URL",
+  "homeUrlInsecure": "Only https (encrypted) links are supported",
+  "homeSavedAs": "It will be saved as",
+  "homeDownload": "Download",
+  "homeRecents": "Recent",
+  "homeRecentsEmpty": "No downloads yet",
+  "homeProgress": "{received} of {total} · {speed}",
+  "@homeProgress": {
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
+  "homeProgressNoTotal": "{received} · {speed}",
+  "@homeProgressNoTotal": {
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
+  "homeWaiting": "Waiting…",
+  "homeFinishing": "Saving…",
+  "homeSavedIn": "Saved to {folder} · {when}",
+  "@homeSavedIn": {
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "homeFailedHttp": "Error {code} · could not download",
+  "@homeFailedHttp": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+  "homeFailed": "Could not download",
+  "homeFailedSave": "Could not save the file",
+  "homeNotFound": "Error 404 · file not found",
+  "homeFallbackDownload": "Saved to Download: {kind} cannot go in this folder",
+  "@homeFallbackDownload": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNotificationsRationale": "Turn on notifications to see download progress.",
+  "relativeNow": "now",
+  "relativeMinutes": "{minutes} min ago",
+  "@relativeMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "relativeHours": "{hours} h ago",
+  "@relativeHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "relativeDays": "{days} d ago",
+  "@relativeDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "downloadNotificationRunning": "Downloading {filename}",
+  "downloadNotificationError": "Could not download",
+  "shareTitle": "Save with Nombra",
+  "shareFileCount": "{count} files",
+  "@shareFileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "shareFinalName": "Final name",
+  "kindImage": "images",
+  "kindVideo": "videos",
+  "kindAudio": "audio files",
+  "kindDocument": "documents",
+  "kindOther": "files",
+  "shareNothing": "There is no link or file to save.",
+  "shareInsecure": "Only https (encrypted) links can be saved.",
+  "shareClose": "Close",
+  "shareDownloading": "Downloading…",
+  "shareDone": "Done, saved to {folder}",
+  "@shareDone": {
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "shareLeaveHint": "You can close this sheet: the file will finish saving the next time you open Nombra.",
+  "rulesTitle": "Rules",
+  "rulesSubtitle": "Active rules are offered when downloading or sharing, sorted by name.",
+  "ruleDefaultBadge": "Default",
+  "ruleNoFolder": "No folder · last used",
+  "newRule": "New rule",
+  "editorTitleEdit": "Edit rule",
+  "editorTitleNew": "New rule",
+  "editorBackTooltip": "Back to Rules",
+  "editorRuleName": "Rule name",
+  "editorNameRequired": "Enter a name",
+  "editorPattern": "Pattern",
+  "editorBackspaceTooltip": "Delete last item",
+  "editorTapToInsert": "Tap to insert",
+  "editorAddText": "Text…",
+  "editorTextDialogTitle": "Fixed text",
+  "editorTextDialogHint": "e.g. Invoice_",
+  "editorExample": "Example · {name}",
+  "@editorExample": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorTransformTitle": "Transform name",
+  "editorCase": "Upper / lower case",
+  "editorCaseKeep": "Default",
+  "editorCaseUpper": "UPPERCASE",
+  "editorCaseLower": "lowercase",
+  "editorStripCopy": "Remove copy suffixes “(2)”",
+  "editorReplaceSpaces": "Replace spaces",
+  "editorReplaceWith": "Replace with",
+  "editorSpaceDash": "hyphen",
+  "editorSpaceUnderscore": "underscore",
+  "editorSpaceDot": "dot",
+  "editorReplaceWithChar": "Replace with {name}",
+  "@editorReplaceWithChar": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSanitize": "Sanitize name",
+  "editorSanitizeDesc": "Removes accents (á → a), emojis and characters not valid in file names ( / \\ : * ? \" < > | ), keeping only letters, digits, - _ and dots.",
+  "editorFolderTitle": "Destination folder",
+  "editorOptional": "(optional)",
+  "editorFolderAlways": "Files with this rule are always saved here.",
+  "editorNoFolderTitle": "No folder assigned",
+  "editorNoFolderDesc": "The last folder you saved to will be used, and you can change it when you download or share.",
+  "editorPickFolder": "Choose folder…",
+  "editorIfExists": "If the name already exists",
+  "editorConflictSuffix": "Add (1)",
+  "editorConflictReplace": "Replace",
+  "editorConflictAsk": "Ask",
+  "editorDeleteRule": "Delete rule",
+  "editorDeleteTitle": "Delete the rule?",
+  "editorDeleteBody": "“{name}” will be deleted. This cannot be undone.",
+  "@editorDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "folderPickerTitle": "Choose folder",
+  "folderPickerRoot": "Location",
+  "folderPickerSubfolder": "Subfolder (optional)",
+  "folderPickerUse": "Use this folder",
+  "folderPickerSavedIn": "It will be saved in",
+  "conflictTitle": "The file already exists",
+  "conflictBody": "“{name}” is already in {folder}.",
+  "@conflictBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "conflictReplace": "Replace",
+  "conflictKeepBoth": "Keep both",
+  "errRequired": "This field is required",
+  "errTooLong": "At most {max} characters",
+  "@errTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "errInvalidChars": "Do not use /  : * ? \" < > |",
+  "errDuplicateName": "A rule with that name already exists",
+  "errPatternEmpty": "Add at least one item to the pattern",
+  "errSubfolderInvalid": "Invalid subfolder: do not use .. or : * ? \" < > |",
+  "editorDiscardTitle": "Discard changes?",
+  "editorDiscardBody": "You have unsaved changes in this rule.",
+  "discard": "Discard",
+  "editorKeepEditing": "Keep editing",
+  "ruleNotFound": "This rule no longer exists",
+  "rulesEmptyTitle": "You have no rules yet",
+  "rulesEmptyBody": "Create a rule to rename your downloads with a pattern.",
+  "navSettings": "Settings",
+  "settingsTitle": "Settings",
+  "settingsSubtitle": "Appearance, language, downloads and data.",
+  "settingsAppearance": "Appearance",
+  "settingsTheme": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "settingsLanguage": "Language",
+  "languageSystem": "System",
+  "languageEs": "Español",
+  "languageEn": "English",
+  "settingsDownloads": "Downloads",
+  "settingsDefaultFolder": "Default folder",
+  "settingsDefaultFolderHint": "Used when the rule does not set a folder.",
+  "settingsData": "Data",
+  "settingsForgetRemembered": "Forget last rule used",
+  "settingsForgetRememberedHint": "Removes the last rule used; the rule is picked automatically again.",
+  "settingsClearHistory": "Clear download history",
+  "settingsClearHistoryHint": "Files already saved are not deleted.",
+  "settingsClearRules": "Delete all rules",
+  "settingsClearRulesHint": "Start over with no rules.",
+  "settingsConfirmForgetTitle": "Forget last rule used?",
+  "settingsConfirmForgetBody": "The rule will be picked automatically again.",
+  "settingsConfirmHistoryTitle": "Clear the history?",
+  "settingsConfirmHistoryBody": "Finished and failed downloads are removed from the list. Saved files are not deleted.",
+  "settingsConfirmRulesTitle": "Delete all rules?",
+  "settingsConfirmRulesBody": "{count} rules will be deleted. This cannot be undone.",
+  "@settingsConfirmRulesBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsDone": "Done",
+  "settingsVersion": "Version {version} ({build})",
+  "@settingsVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "build": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationChannelName": "Saved files",
+  "notificationSavedTitle": "Saved",
+  "notificationSavedBody": "{name} · {folder}",
+  "notificationSaveFailedTitle": "Could not save",
+  "@notificationSavedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "quickNext": "Next number",
+  "quickNextReset": "Reset to 1",
+  "errInvalidNumber": "Enter a whole number greater than 0",
+  "quickNextHint": "With the number item in the pattern, the number goes on as long as you do not change the pattern; if you do, it starts again at 1.",
+  "homeClearRecents": "Clear",
+  "settingsShowRecents": "Show recent files",
+  "settingsShowRecentsHint": "Lists the saved files in Download. Downloads in progress are always shown.",
+  "editorSpaceToken": "Space",
+  "editorDigitsTitle": "Digits of the number",
+  "editorDigitsLess": "Fewer digits",
+  "editorDigitsMore": "More digits",
+  "editorDigitsCount": "{count, plural, one{{count} digit} other{{count} digits}}",
+  "editorDigitsExample": "Example: {example}",
+  "@editorDigitsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@editorDigitsExample": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "ruleOptCopySuffix": "No (2) suffix",
+  "ruleOptSpaces": "Spaces → {char}",
+  "ruleOptSanitize": "Clean name",
+  "ruleOptConflict": "If it exists: {policy}",
+  "@ruleOptSpaces": {
+    "placeholders": {
+      "char": {
+        "type": "String"
+      }
+    }
+  },
+  "@ruleOptConflict": {
+    "placeholders": {
+      "policy": {
+        "type": "String"
+      }
+    }
+  },
+  "modeNoneHint": "The file is saved with its original name, without applying any rule.",
+  "ruleApply": "Apply a rule",
+  "homeActions": "More actions",
+  "homeOpen": "Open",
+  "homeRemove": "Remove from list",
+  "homeOpenFailed": "The file could not be opened. It may have been moved or deleted.",
+  "settingsAccount": "Account",
+  "accountBody": "Sign in with Google to back up your rules and get them back on another phone.",
+  "accountSignIn": "Continue with Google",
+  "accountSignInFailed": "Could not sign in. Try again.",
+  "accountUnavailable": "Backup is not available in this build.",
+  "accountSyncing": "Backing up your rules…",
+  "accountUpToDate": "Rules backed up",
+  "accountError": "Your rules could not be backed up. Check your connection.",
+  "accountRetry": "Retry",
+  "accountSignOut": "Sign out",
+  "accountSignOutHint": "Your rules stay on this phone and in the cloud.",
+  "accountDeleteBackup": "Delete backup and sign out",
+  "accountDeleteBackupHint": "Removes your rules from the cloud. The ones on this phone are not touched.",
+  "accountConfirmDeleteTitle": "Delete the backup?",
+  "accountConfirmDeleteBody": "Your rules will be removed from the cloud and you will be signed out. The rules on this phone are kept.",
+  "accountDeleteFailed": "The backup could not be deleted. Check your connection.",
+  "ruleChoicesLabel": "Naming rules",
+  "accountBusySigningIn": "Signing in…",
+  "accountBusySigningOut": "Signing out…",
+  "accountBusyDeleting": "Deleting the backup…",
+  "editorExtensionLocked": "The original file extension is kept and cannot be edited.",
+  "settingsLegal": "Legal",
+  "legalTerms": "Terms and conditions",
+  "legalPrivacy": "Privacy policy",
+  "accountLegalNote": "By continuing you accept the terms and the privacy policy.",
+  "backTooltip": "Back",
+  "accountDeleteAccount": "Delete account",
+  "accountDeleteAccountHint": "Deletes your account and the backup. The rules on this phone stay.",
+  "accountConfirmDeleteAccountTitle": "Delete your account?",
+  "accountConfirmDeleteAccountBody": "Your Nombra account and the cloud backup are deleted. First you pick your Google account again. The rules on this phone stay. This cannot be undone.",
+  "accountBusyDeletingAccount": "Deleting the account…",
+  "accountDeleted": "Your account was deleted.",
+  "accountDeleteAccountFailed": "The account could not be deleted. Check your connection.",
+  "settingsDeveloper": "Developer mode",
+  "developerCommonTools": "Tools",
+  "developerCopyReport": "Copy report",
+  "developerReportCopied": "Report copied",
+  "developerTestError": "Send test error",
+  "developerTestErrorSent": "Test error sent",
+  "developerInformation": "Information",
+  "developerLoading": "Loading…",
+  "developerSectionApp": "App",
+  "developerSectionDevice": "Phone",
+  "developerSectionDisplay": "Display",
+  "developerSectionLocale": "Language and region",
+  "developerSectionNetwork": "Network",
+  "developerSectionBattery": "Battery",
+  "developerSectionStorage": "Storage",
+  "developerSectionFirebase": "Firebase",
+  "developerSectionAccount": "Account and data",
+  "developerSectionNotifications": "Notifications",
+  "developerSectionDependencies": "Dependencies"
 }

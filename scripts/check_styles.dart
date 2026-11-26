@@ -6,30 +6,12 @@ import 'dart:io';
 const _roots = ['lib/app', 'lib/features'];
 
 final _rules = <(RegExp, String)>[
-  (
-    RegExp(r'\bfontSize:\s*\d'),
-    'fontSize literal: use AppFontSize.* or a textTheme style',
-  ),
-  (
-    RegExp(r'EdgeInsets\.[A-Za-z]+\([^)]*\b[1-9]\d*(\.\d+)?\b'),
-    'padding literal: use AppSpacing.*',
-  ),
-  (
-    RegExp(r'\bSizedBox\((width|height):\s*[1-9]'),
-    'size literal: use AppSpacing.*',
-  ),
-  (
-    RegExp(r'\bBorderRadius\.circular\(\s*[1-9]'),
-    'radius literal: use AppRadius.*',
-  ),
-  (
-    RegExp(r'\bIcon\([^)]*\bsize:\s*[1-9]'),
-    'icon size literal: use AppIconSize.*',
-  ),
-  (
-    RegExp(r'\bColor\(\s*0x|\bColors\.'),
-    'color literal: use Theme.of(context).colorScheme',
-  ),
+  (RegExp(r'\bfontSize:\s*\d'), 'fontSize literal: use AppFontSize.* or a textTheme style'),
+  (RegExp(r'EdgeInsets\.[A-Za-z]+\([^)]*\b[1-9]\d*(\.\d+)?\b'), 'padding literal: use AppSpacing.*'),
+  (RegExp(r'\bSizedBox\((width|height):\s*[1-9]'), 'size literal: use AppSpacing.*'),
+  (RegExp(r'\bBorderRadius\.circular\(\s*[1-9]'), 'radius literal: use AppRadius.*'),
+  (RegExp(r'\bIcon\([^)]*\bsize:\s*[1-9]'), 'icon size literal: use AppIconSize.*'),
+  (RegExp(r'\bColor\(\s*0x|\bColors\.'), 'color literal: use Theme.of(context).colorScheme'),
 ];
 
 void main() {
@@ -45,9 +27,7 @@ void main() {
         if (line.trimRight().endsWith('// style-ok')) continue;
         for (final (pattern, message) in _rules) {
           if (pattern.hasMatch(line)) {
-            findings.add(
-              '${entity.path.replaceAll(r'\', '/')}:${i + 1}  $message\n    ${line.trim()}',
-            );
+            findings.add('${entity.path.replaceAll(r'\', '/')}:${i + 1}  $message\n    ${line.trim()}');
           }
         }
       }
@@ -56,9 +36,7 @@ void main() {
   if (findings.isNotEmpty) {
     stderr
       ..writeln(findings.join('\n'))
-      ..writeln(
-        '\n${findings.length} style value(s) outside the design tokens. Use lib/core/constants/tokens.dart.',
-      );
+      ..writeln('\n${findings.length} style value(s) outside the design tokens. Use lib/core/constants/tokens.dart.');
     exit(1);
   }
   stdout.writeln('check_styles: all style values come from the design tokens.');

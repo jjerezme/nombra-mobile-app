@@ -15,7 +15,7 @@ jobs:
         run: |
           head="${{ github.head_ref }}"; base="${{ github.base_ref }}"
           case "$base" in
-            develop) re='^(feature|bugfix)/.+|^(release|hotfix)/.+|^master$' ;;
+            develop) re='^(feature|bugfix|dependabot)/.+|^(release|hotfix)/.+|^master$' ;;
             master)  re='^(release|hotfix)/.+|^develop$' ;;
           esac
           echo "$head" | grep -Eq "$re" || { echo "Branch '$head' not allowed into '$base'"; exit 1; }

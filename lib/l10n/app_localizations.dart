@@ -62,8 +62,7 @@ import 'app_localizations_es.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -71,8 +70,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -84,19 +82,15 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('en'),
-    Locale('es'),
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('es')];
 
   /// No description provided for @appName.
   ///
@@ -104,21 +98,1358 @@ abstract class AppLocalizations {
   /// **'Nombra'**
   String get appName;
 
-  /// No description provided for @homeTitle.
+  /// No description provided for @navDownload.
   ///
   /// In es, this message translates to:
-  /// **'Hola'**
-  String get homeTitle;
+  /// **'Descargar'**
+  String get navDownload;
 
-  /// No description provided for @homeSubtitle.
+  /// No description provided for @navRules.
   ///
   /// In es, this message translates to:
-  /// **'Esta es la app Nombra'**
-  String get homeSubtitle;
+  /// **'Reglas'**
+  String get navRules;
+
+  /// No description provided for @cancel.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar'**
+  String get cancel;
+
+  /// No description provided for @save.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar'**
+  String get save;
+
+  /// No description provided for @change.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiar'**
+  String get change;
+
+  /// No description provided for @retry.
+  ///
+  /// In es, this message translates to:
+  /// **'Reintentar'**
+  String get retry;
+
+  /// No description provided for @delete.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar'**
+  String get delete;
+
+  /// No description provided for @accept.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptar'**
+  String get accept;
+
+  /// No description provided for @modeQuick.
+  ///
+  /// In es, this message translates to:
+  /// **'Personalizado'**
+  String get modeQuick;
+
+  /// No description provided for @ruleAdd.
+  ///
+  /// In es, this message translates to:
+  /// **'Agregar'**
+  String get ruleAdd;
+
+  /// No description provided for @changeFolderTooltip.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiar carpeta de destino'**
+  String get changeFolderTooltip;
+
+  /// No description provided for @homeUrlLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'URL del archivo'**
+  String get homeUrlLabel;
+
+  /// No description provided for @homePasteTooltip.
+  ///
+  /// In es, this message translates to:
+  /// **'Pegar del portapapeles'**
+  String get homePasteTooltip;
+
+  /// No description provided for @homeUrlInvalid.
+  ///
+  /// In es, this message translates to:
+  /// **'Introduce una URL https válida'**
+  String get homeUrlInvalid;
+
+  /// No description provided for @homeUrlInsecure.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo se admiten enlaces https (cifrados)'**
+  String get homeUrlInsecure;
+
+  /// No description provided for @homeSavedAs.
+  ///
+  /// In es, this message translates to:
+  /// **'Se guardará como'**
+  String get homeSavedAs;
+
+  /// No description provided for @homeDownload.
+  ///
+  /// In es, this message translates to:
+  /// **'Descargar'**
+  String get homeDownload;
+
+  /// No description provided for @homeRecents.
+  ///
+  /// In es, this message translates to:
+  /// **'Recientes'**
+  String get homeRecents;
+
+  /// No description provided for @homeRecentsEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Aún no hay descargas'**
+  String get homeRecentsEmpty;
+
+  /// No description provided for @homeProgress.
+  ///
+  /// In es, this message translates to:
+  /// **'{received} de {total} · {speed}'**
+  String homeProgress(String received, String total, String speed);
+
+  /// No description provided for @homeProgressNoTotal.
+  ///
+  /// In es, this message translates to:
+  /// **'{received} · {speed}'**
+  String homeProgressNoTotal(String received, String speed);
+
+  /// No description provided for @homeWaiting.
+  ///
+  /// In es, this message translates to:
+  /// **'En espera…'**
+  String get homeWaiting;
+
+  /// No description provided for @homeFinishing.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardando…'**
+  String get homeFinishing;
+
+  /// No description provided for @homeSavedIn.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardado en {folder} · {when}'**
+  String homeSavedIn(String folder, String when);
+
+  /// No description provided for @homeFailedHttp.
+  ///
+  /// In es, this message translates to:
+  /// **'Error {code} · no se pudo descargar'**
+  String homeFailedHttp(int code);
+
+  /// No description provided for @homeFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo descargar'**
+  String get homeFailed;
+
+  /// No description provided for @homeFailedSave.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo guardar el archivo'**
+  String get homeFailedSave;
+
+  /// No description provided for @homeNotFound.
+  ///
+  /// In es, this message translates to:
+  /// **'Error 404 · no se encontró el archivo'**
+  String get homeNotFound;
+
+  /// No description provided for @homeFallbackDownload.
+  ///
+  /// In es, this message translates to:
+  /// **'Se guardó en Download: {kind} no admite esta carpeta'**
+  String homeFallbackDownload(String kind);
+
+  /// No description provided for @homeNotificationsRationale.
+  ///
+  /// In es, this message translates to:
+  /// **'Activa las notificaciones para ver el progreso de las descargas.'**
+  String get homeNotificationsRationale;
+
+  /// No description provided for @relativeNow.
+  ///
+  /// In es, this message translates to:
+  /// **'ahora'**
+  String get relativeNow;
+
+  /// No description provided for @relativeMinutes.
+  ///
+  /// In es, this message translates to:
+  /// **'hace {minutes} min'**
+  String relativeMinutes(int minutes);
+
+  /// No description provided for @relativeHours.
+  ///
+  /// In es, this message translates to:
+  /// **'hace {hours} h'**
+  String relativeHours(int hours);
+
+  /// No description provided for @relativeDays.
+  ///
+  /// In es, this message translates to:
+  /// **'hace {days} d'**
+  String relativeDays(int days);
+
+  /// No description provided for @downloadNotificationRunning.
+  ///
+  /// In es, this message translates to:
+  /// **'Descargando {filename}'**
+  String downloadNotificationRunning(Object filename);
+
+  /// No description provided for @downloadNotificationError.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo descargar'**
+  String get downloadNotificationError;
+
+  /// No description provided for @shareTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar con Nombra'**
+  String get shareTitle;
+
+  /// No description provided for @shareFileCount.
+  ///
+  /// In es, this message translates to:
+  /// **'{count} archivos'**
+  String shareFileCount(int count);
+
+  /// No description provided for @shareFinalName.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre final'**
+  String get shareFinalName;
+
+  /// No description provided for @kindImage.
+  ///
+  /// In es, this message translates to:
+  /// **'imágenes'**
+  String get kindImage;
+
+  /// No description provided for @kindVideo.
+  ///
+  /// In es, this message translates to:
+  /// **'videos'**
+  String get kindVideo;
+
+  /// No description provided for @kindAudio.
+  ///
+  /// In es, this message translates to:
+  /// **'audios'**
+  String get kindAudio;
+
+  /// No description provided for @kindDocument.
+  ///
+  /// In es, this message translates to:
+  /// **'documentos'**
+  String get kindDocument;
+
+  /// No description provided for @kindOther.
+  ///
+  /// In es, this message translates to:
+  /// **'archivos'**
+  String get kindOther;
+
+  /// No description provided for @shareNothing.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay un enlace ni archivos para guardar.'**
+  String get shareNothing;
+
+  /// No description provided for @shareInsecure.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo se pueden guardar enlaces https (cifrados).'**
+  String get shareInsecure;
+
+  /// No description provided for @shareClose.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrar'**
+  String get shareClose;
+
+  /// No description provided for @shareDownloading.
+  ///
+  /// In es, this message translates to:
+  /// **'Descargando…'**
+  String get shareDownloading;
+
+  /// No description provided for @shareDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo, guardado en {folder}'**
+  String shareDone(String folder);
+
+  /// No description provided for @shareLeaveHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Puedes cerrar esta hoja: el archivo terminará de guardarse la próxima vez que abras Nombra.'**
+  String get shareLeaveHint;
+
+  /// No description provided for @rulesTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Reglas'**
+  String get rulesTitle;
+
+  /// No description provided for @rulesSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Las reglas activas se ofrecen al descargar o compartir, ordenadas por nombre.'**
+  String get rulesSubtitle;
+
+  /// No description provided for @ruleDefaultBadge.
+  ///
+  /// In es, this message translates to:
+  /// **'Predeterminada'**
+  String get ruleDefaultBadge;
+
+  /// No description provided for @ruleNoFolder.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin carpeta · última usada'**
+  String get ruleNoFolder;
+
+  /// No description provided for @newRule.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva regla'**
+  String get newRule;
+
+  /// No description provided for @editorTitleEdit.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar regla'**
+  String get editorTitleEdit;
+
+  /// No description provided for @editorTitleNew.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva regla'**
+  String get editorTitleNew;
+
+  /// No description provided for @editorBackTooltip.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver a Reglas'**
+  String get editorBackTooltip;
+
+  /// No description provided for @editorRuleName.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre de la regla'**
+  String get editorRuleName;
+
+  /// No description provided for @editorNameRequired.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribe un nombre'**
+  String get editorNameRequired;
+
+  /// No description provided for @editorPattern.
+  ///
+  /// In es, this message translates to:
+  /// **'Patrón'**
+  String get editorPattern;
+
+  /// No description provided for @editorBackspaceTooltip.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar último elemento'**
+  String get editorBackspaceTooltip;
+
+  /// No description provided for @editorTapToInsert.
+  ///
+  /// In es, this message translates to:
+  /// **'Toca para insertar'**
+  String get editorTapToInsert;
+
+  /// No description provided for @editorAddText.
+  ///
+  /// In es, this message translates to:
+  /// **'Texto…'**
+  String get editorAddText;
+
+  /// No description provided for @editorTextDialogTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Texto fijo'**
+  String get editorTextDialogTitle;
+
+  /// No description provided for @editorTextDialogHint.
+  ///
+  /// In es, this message translates to:
+  /// **'p. ej. Factura_'**
+  String get editorTextDialogHint;
+
+  /// No description provided for @editorExample.
+  ///
+  /// In es, this message translates to:
+  /// **'Ejemplo · {name}'**
+  String editorExample(String name);
+
+  /// No description provided for @editorTransformTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Transformar nombre'**
+  String get editorTransformTitle;
+
+  /// No description provided for @editorCase.
+  ///
+  /// In es, this message translates to:
+  /// **'Mayúsculas / minúsculas'**
+  String get editorCase;
+
+  /// No description provided for @editorCaseKeep.
+  ///
+  /// In es, this message translates to:
+  /// **'Por defecto'**
+  String get editorCaseKeep;
+
+  /// No description provided for @editorCaseUpper.
+  ///
+  /// In es, this message translates to:
+  /// **'MAYÚSCULAS'**
+  String get editorCaseUpper;
+
+  /// No description provided for @editorCaseLower.
+  ///
+  /// In es, this message translates to:
+  /// **'minúsculas'**
+  String get editorCaseLower;
+
+  /// No description provided for @editorStripCopy.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar sufijos de copia «(2)»'**
+  String get editorStripCopy;
+
+  /// No description provided for @editorReplaceSpaces.
+  ///
+  /// In es, this message translates to:
+  /// **'Reemplazar espacios'**
+  String get editorReplaceSpaces;
+
+  /// No description provided for @editorReplaceWith.
+  ///
+  /// In es, this message translates to:
+  /// **'Reemplazar por'**
+  String get editorReplaceWith;
+
+  /// No description provided for @editorSpaceDash.
+  ///
+  /// In es, this message translates to:
+  /// **'guion'**
+  String get editorSpaceDash;
+
+  /// No description provided for @editorSpaceUnderscore.
+  ///
+  /// In es, this message translates to:
+  /// **'guion bajo'**
+  String get editorSpaceUnderscore;
+
+  /// No description provided for @editorSpaceDot.
+  ///
+  /// In es, this message translates to:
+  /// **'punto'**
+  String get editorSpaceDot;
+
+  /// No description provided for @editorReplaceWithChar.
+  ///
+  /// In es, this message translates to:
+  /// **'Reemplazar por {name}'**
+  String editorReplaceWithChar(String name);
+
+  /// No description provided for @editorSanitize.
+  ///
+  /// In es, this message translates to:
+  /// **'Sanitizar nombre'**
+  String get editorSanitize;
+
+  /// No description provided for @editorSanitizeDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Quita acentos (á → a), emojis y caracteres no válidos en archivos ( / \\ : * ? \" < > | ), y deja solo letras, números, - _ y punto.'**
+  String get editorSanitizeDesc;
+
+  /// No description provided for @editorFolderTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Carpeta de destino'**
+  String get editorFolderTitle;
+
+  /// No description provided for @editorOptional.
+  ///
+  /// In es, this message translates to:
+  /// **'(opcional)'**
+  String get editorOptional;
+
+  /// No description provided for @editorFolderAlways.
+  ///
+  /// In es, this message translates to:
+  /// **'Los archivos con esta regla se guardan siempre aquí.'**
+  String get editorFolderAlways;
+
+  /// No description provided for @editorNoFolderTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin carpeta asignada'**
+  String get editorNoFolderTitle;
+
+  /// No description provided for @editorNoFolderDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Se usará la última carpeta en la que guardaste, y podrás cambiarla al descargar o compartir.'**
+  String get editorNoFolderDesc;
+
+  /// No description provided for @editorPickFolder.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegir carpeta…'**
+  String get editorPickFolder;
+
+  /// No description provided for @editorIfExists.
+  ///
+  /// In es, this message translates to:
+  /// **'Si el nombre ya existe'**
+  String get editorIfExists;
+
+  /// No description provided for @editorConflictSuffix.
+  ///
+  /// In es, this message translates to:
+  /// **'Añadir (1)'**
+  String get editorConflictSuffix;
+
+  /// No description provided for @editorConflictReplace.
+  ///
+  /// In es, this message translates to:
+  /// **'Reemplazar'**
+  String get editorConflictReplace;
+
+  /// No description provided for @editorConflictAsk.
+  ///
+  /// In es, this message translates to:
+  /// **'Preguntar'**
+  String get editorConflictAsk;
+
+  /// No description provided for @editorDeleteRule.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar regla'**
+  String get editorDeleteRule;
+
+  /// No description provided for @editorDeleteTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Eliminar la regla?'**
+  String get editorDeleteTitle;
+
+  /// No description provided for @editorDeleteBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se eliminará «{name}». Esta acción no se puede deshacer.'**
+  String editorDeleteBody(String name);
+
+  /// No description provided for @folderPickerTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegir carpeta'**
+  String get folderPickerTitle;
+
+  /// No description provided for @folderPickerRoot.
+  ///
+  /// In es, this message translates to:
+  /// **'Ubicación'**
+  String get folderPickerRoot;
+
+  /// No description provided for @folderPickerSubfolder.
+  ///
+  /// In es, this message translates to:
+  /// **'Subcarpeta (opcional)'**
+  String get folderPickerSubfolder;
+
+  /// No description provided for @folderPickerUse.
+  ///
+  /// In es, this message translates to:
+  /// **'Usar esta carpeta'**
+  String get folderPickerUse;
+
+  /// No description provided for @folderPickerSavedIn.
+  ///
+  /// In es, this message translates to:
+  /// **'Se guardará en'**
+  String get folderPickerSavedIn;
+
+  /// No description provided for @conflictTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'El archivo ya existe'**
+  String get conflictTitle;
+
+  /// No description provided for @conflictBody.
+  ///
+  /// In es, this message translates to:
+  /// **'«{name}» ya está en {folder}.'**
+  String conflictBody(String name, String folder);
+
+  /// No description provided for @conflictReplace.
+  ///
+  /// In es, this message translates to:
+  /// **'Reemplazar'**
+  String get conflictReplace;
+
+  /// No description provided for @conflictKeepBoth.
+  ///
+  /// In es, this message translates to:
+  /// **'Conservar ambos'**
+  String get conflictKeepBoth;
+
+  /// No description provided for @errRequired.
+  ///
+  /// In es, this message translates to:
+  /// **'Este campo es obligatorio'**
+  String get errRequired;
+
+  /// No description provided for @errTooLong.
+  ///
+  /// In es, this message translates to:
+  /// **'Máximo {max} caracteres'**
+  String errTooLong(int max);
+
+  /// No description provided for @errInvalidChars.
+  ///
+  /// In es, this message translates to:
+  /// **'No uses /  : * ? \" < > |'**
+  String get errInvalidChars;
+
+  /// No description provided for @errDuplicateName.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya existe una regla con ese nombre'**
+  String get errDuplicateName;
+
+  /// No description provided for @errPatternEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Agrega al menos un elemento al patrón'**
+  String get errPatternEmpty;
+
+  /// No description provided for @errSubfolderInvalid.
+  ///
+  /// In es, this message translates to:
+  /// **'Subcarpeta no válida: no uses .. ni : * ? \" < > |'**
+  String get errSubfolderInvalid;
+
+  /// No description provided for @editorDiscardTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Descartar cambios?'**
+  String get editorDiscardTitle;
+
+  /// No description provided for @editorDiscardBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Tienes cambios sin guardar en esta regla.'**
+  String get editorDiscardBody;
+
+  /// No description provided for @discard.
+  ///
+  /// In es, this message translates to:
+  /// **'Descartar'**
+  String get discard;
+
+  /// No description provided for @editorKeepEditing.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguir editando'**
+  String get editorKeepEditing;
+
+  /// No description provided for @ruleNotFound.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta regla ya no existe'**
+  String get ruleNotFound;
+
+  /// No description provided for @rulesEmptyTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Aún no tienes reglas'**
+  String get rulesEmptyTitle;
+
+  /// No description provided for @rulesEmptyBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Crea una regla para renombrar tus descargas con un patrón.'**
+  String get rulesEmptyBody;
+
+  /// No description provided for @navSettings.
+  ///
+  /// In es, this message translates to:
+  /// **'Ajustes'**
+  String get navSettings;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Ajustes'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Apariencia, idioma, descargas y datos.'**
+  String get settingsSubtitle;
+
+  /// No description provided for @settingsAppearance.
+  ///
+  /// In es, this message translates to:
+  /// **'Apariencia'**
+  String get settingsAppearance;
+
+  /// No description provided for @settingsTheme.
+  ///
+  /// In es, this message translates to:
+  /// **'Tema'**
+  String get settingsTheme;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In es, this message translates to:
+  /// **'Sistema'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In es, this message translates to:
+  /// **'Claro'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In es, this message translates to:
+  /// **'Oscuro'**
+  String get themeDark;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In es, this message translates to:
+  /// **'Idioma'**
+  String get settingsLanguage;
+
+  /// No description provided for @languageSystem.
+  ///
+  /// In es, this message translates to:
+  /// **'Sistema'**
+  String get languageSystem;
+
+  /// No description provided for @languageEs.
+  ///
+  /// In es, this message translates to:
+  /// **'Español'**
+  String get languageEs;
+
+  /// No description provided for @languageEn.
+  ///
+  /// In es, this message translates to:
+  /// **'English'**
+  String get languageEn;
+
+  /// No description provided for @settingsDownloads.
+  ///
+  /// In es, this message translates to:
+  /// **'Descargas'**
+  String get settingsDownloads;
+
+  /// No description provided for @settingsDefaultFolder.
+  ///
+  /// In es, this message translates to:
+  /// **'Carpeta predeterminada'**
+  String get settingsDefaultFolder;
+
+  /// No description provided for @settingsDefaultFolderHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Se usa cuando la regla no define una carpeta.'**
+  String get settingsDefaultFolderHint;
+
+  /// No description provided for @settingsData.
+  ///
+  /// In es, this message translates to:
+  /// **'Datos'**
+  String get settingsData;
+
+  /// No description provided for @settingsForgetRemembered.
+  ///
+  /// In es, this message translates to:
+  /// **'Olvidar la última regla usada'**
+  String get settingsForgetRemembered;
+
+  /// No description provided for @settingsForgetRememberedHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Quita la última regla usada y se vuelve a elegir automáticamente.'**
+  String get settingsForgetRememberedHint;
+
+  /// No description provided for @settingsClearHistory.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar historial de descargas'**
+  String get settingsClearHistory;
+
+  /// No description provided for @settingsClearHistoryHint.
+  ///
+  /// In es, this message translates to:
+  /// **'No borra los archivos ya guardados.'**
+  String get settingsClearHistoryHint;
+
+  /// No description provided for @settingsClearRules.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar todas las reglas'**
+  String get settingsClearRules;
+
+  /// No description provided for @settingsClearRulesHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Empiezas de nuevo, sin reglas.'**
+  String get settingsClearRulesHint;
+
+  /// No description provided for @settingsConfirmForgetTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Olvidar la última regla usada?'**
+  String get settingsConfirmForgetTitle;
+
+  /// No description provided for @settingsConfirmForgetBody.
+  ///
+  /// In es, this message translates to:
+  /// **'La regla se volverá a elegir automáticamente.'**
+  String get settingsConfirmForgetBody;
+
+  /// No description provided for @settingsConfirmHistoryTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar el historial?'**
+  String get settingsConfirmHistoryTitle;
+
+  /// No description provided for @settingsConfirmHistoryBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se quitan de la lista las descargas terminadas y con error. Los archivos guardados no se borran.'**
+  String get settingsConfirmHistoryBody;
+
+  /// No description provided for @settingsConfirmRulesTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar todas las reglas?'**
+  String get settingsConfirmRulesTitle;
+
+  /// No description provided for @settingsConfirmRulesBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se eliminan {count} reglas. No se puede deshacer.'**
+  String settingsConfirmRulesBody(int count);
+
+  /// No description provided for @settingsDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Listo'**
+  String get settingsDone;
+
+  /// No description provided for @settingsVersion.
+  ///
+  /// In es, this message translates to:
+  /// **'Versión {version} ({build})'**
+  String settingsVersion(String version, String build);
+
+  /// No description provided for @notificationChannelName.
+  ///
+  /// In es, this message translates to:
+  /// **'Archivos guardados'**
+  String get notificationChannelName;
+
+  /// No description provided for @notificationSavedTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardado'**
+  String get notificationSavedTitle;
+
+  /// No description provided for @notificationSavedBody.
+  ///
+  /// In es, this message translates to:
+  /// **'{name} · {folder}'**
+  String notificationSavedBody(String name, String folder);
+
+  /// No description provided for @notificationSaveFailedTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo guardar'**
+  String get notificationSaveFailedTitle;
+
+  /// No description provided for @quickNext.
+  ///
+  /// In es, this message translates to:
+  /// **'Siguiente número'**
+  String get quickNext;
+
+  /// No description provided for @quickNextReset.
+  ///
+  /// In es, this message translates to:
+  /// **'Reiniciar a 1'**
+  String get quickNextReset;
+
+  /// No description provided for @errInvalidNumber.
+  ///
+  /// In es, this message translates to:
+  /// **'Escribe un número entero mayor que 0'**
+  String get errInvalidNumber;
+
+  /// No description provided for @quickNextHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Con el elemento de número en el patrón, el número sigue mientras no cambies el patrón; si lo cambias, vuelve a 1.'**
+  String get quickNextHint;
+
+  /// No description provided for @homeClearRecents.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar'**
+  String get homeClearRecents;
+
+  /// No description provided for @settingsShowRecents.
+  ///
+  /// In es, this message translates to:
+  /// **'Mostrar archivos recientes'**
+  String get settingsShowRecents;
+
+  /// No description provided for @settingsShowRecentsHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Lista en Descargar los archivos guardados. Las descargas en curso siempre se ven.'**
+  String get settingsShowRecentsHint;
+
+  /// No description provided for @editorSpaceToken.
+  ///
+  /// In es, this message translates to:
+  /// **'Espacio'**
+  String get editorSpaceToken;
+
+  /// No description provided for @editorDigitsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Dígitos del número'**
+  String get editorDigitsTitle;
+
+  /// No description provided for @editorDigitsLess.
+  ///
+  /// In es, this message translates to:
+  /// **'Menos dígitos'**
+  String get editorDigitsLess;
+
+  /// No description provided for @editorDigitsMore.
+  ///
+  /// In es, this message translates to:
+  /// **'Más dígitos'**
+  String get editorDigitsMore;
+
+  /// No description provided for @editorDigitsCount.
+  ///
+  /// In es, this message translates to:
+  /// **'{count, plural, one{{count} dígito} other{{count} dígitos}}'**
+  String editorDigitsCount(int count);
+
+  /// No description provided for @editorDigitsExample.
+  ///
+  /// In es, this message translates to:
+  /// **'Ejemplo: {example}'**
+  String editorDigitsExample(String example);
+
+  /// No description provided for @ruleOptCopySuffix.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin sufijo (2)'**
+  String get ruleOptCopySuffix;
+
+  /// No description provided for @ruleOptSpaces.
+  ///
+  /// In es, this message translates to:
+  /// **'Espacios → {char}'**
+  String ruleOptSpaces(String char);
+
+  /// No description provided for @ruleOptSanitize.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre limpio'**
+  String get ruleOptSanitize;
+
+  /// No description provided for @ruleOptConflict.
+  ///
+  /// In es, this message translates to:
+  /// **'Si existe: {policy}'**
+  String ruleOptConflict(String policy);
+
+  /// No description provided for @modeNoneHint.
+  ///
+  /// In es, this message translates to:
+  /// **'El archivo se guarda con su nombre original, sin aplicar ninguna regla.'**
+  String get modeNoneHint;
+
+  /// No description provided for @ruleApply.
+  ///
+  /// In es, this message translates to:
+  /// **'Aplicar una regla'**
+  String get ruleApply;
+
+  /// No description provided for @homeActions.
+  ///
+  /// In es, this message translates to:
+  /// **'Más acciones'**
+  String get homeActions;
+
+  /// No description provided for @homeOpen.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrir'**
+  String get homeOpen;
+
+  /// No description provided for @homeRemove.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar de la lista'**
+  String get homeRemove;
+
+  /// No description provided for @homeOpenFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo abrir el archivo. Puede que lo hayan movido o borrado.'**
+  String get homeOpenFailed;
+
+  /// No description provided for @settingsAccount.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuenta'**
+  String get settingsAccount;
+
+  /// No description provided for @accountBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Inicia sesión con Google para respaldar tus reglas y recuperarlas en otro teléfono.'**
+  String get accountBody;
+
+  /// No description provided for @accountSignIn.
+  ///
+  /// In es, this message translates to:
+  /// **'Continuar con Google'**
+  String get accountSignIn;
+
+  /// No description provided for @accountSignInFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo iniciar sesión. Inténtalo de nuevo.'**
+  String get accountSignInFailed;
+
+  /// No description provided for @accountUnavailable.
+  ///
+  /// In es, this message translates to:
+  /// **'El respaldo no está disponible en esta compilación.'**
+  String get accountUnavailable;
+
+  /// No description provided for @accountSyncing.
+  ///
+  /// In es, this message translates to:
+  /// **'Respaldando tus reglas…'**
+  String get accountSyncing;
+
+  /// No description provided for @accountUpToDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Reglas respaldadas'**
+  String get accountUpToDate;
+
+  /// No description provided for @accountError.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo respaldar tus reglas. Revisa tu conexión.'**
+  String get accountError;
+
+  /// No description provided for @accountRetry.
+  ///
+  /// In es, this message translates to:
+  /// **'Reintentar'**
+  String get accountRetry;
+
+  /// No description provided for @accountSignOut.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrar sesión'**
+  String get accountSignOut;
+
+  /// No description provided for @accountSignOutHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus reglas se quedan en este teléfono y en la nube.'**
+  String get accountSignOutHint;
+
+  /// No description provided for @accountDeleteBackup.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar respaldo y cerrar sesión'**
+  String get accountDeleteBackup;
+
+  /// No description provided for @accountDeleteBackupHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Elimina tus reglas de la nube. Las de este teléfono no se tocan.'**
+  String get accountDeleteBackupHint;
+
+  /// No description provided for @accountConfirmDeleteTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar el respaldo?'**
+  String get accountConfirmDeleteTitle;
+
+  /// No description provided for @accountConfirmDeleteBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se eliminarán tus reglas de la nube y se cerrará la sesión. Las reglas de este teléfono se conservan.'**
+  String get accountConfirmDeleteBody;
+
+  /// No description provided for @accountDeleteFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo borrar el respaldo. Revisa tu conexión.'**
+  String get accountDeleteFailed;
+
+  /// No description provided for @ruleChoicesLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Reglas de nombrado'**
+  String get ruleChoicesLabel;
+
+  /// No description provided for @accountBusySigningIn.
+  ///
+  /// In es, this message translates to:
+  /// **'Iniciando sesión…'**
+  String get accountBusySigningIn;
+
+  /// No description provided for @accountBusySigningOut.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrando sesión…'**
+  String get accountBusySigningOut;
+
+  /// No description provided for @accountBusyDeleting.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrando el respaldo…'**
+  String get accountBusyDeleting;
+
+  /// No description provided for @editorExtensionLocked.
+  ///
+  /// In es, this message translates to:
+  /// **'La extensión original del archivo se conserva y no se puede editar.'**
+  String get editorExtensionLocked;
+
+  /// No description provided for @settingsLegal.
+  ///
+  /// In es, this message translates to:
+  /// **'Legal'**
+  String get settingsLegal;
+
+  /// No description provided for @legalTerms.
+  ///
+  /// In es, this message translates to:
+  /// **'Términos y condiciones'**
+  String get legalTerms;
+
+  /// No description provided for @legalPrivacy.
+  ///
+  /// In es, this message translates to:
+  /// **'Política de privacidad'**
+  String get legalPrivacy;
+
+  /// No description provided for @accountLegalNote.
+  ///
+  /// In es, this message translates to:
+  /// **'Al continuar aceptas los términos y la política de privacidad.'**
+  String get accountLegalNote;
+
+  /// No description provided for @backTooltip.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver'**
+  String get backTooltip;
+
+  /// No description provided for @accountDeleteAccount.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminar cuenta'**
+  String get accountDeleteAccount;
+
+  /// No description provided for @accountDeleteAccountHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Borra tu cuenta y el respaldo. Las reglas de este teléfono se quedan.'**
+  String get accountDeleteAccountHint;
+
+  /// No description provided for @accountConfirmDeleteAccountTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Eliminar tu cuenta?'**
+  String get accountConfirmDeleteAccountTitle;
+
+  /// No description provided for @accountConfirmDeleteAccountBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se borran tu cuenta de Nombra y el respaldo en la nube. Antes debes elegir de nuevo tu cuenta de Google. Las reglas de este teléfono se quedan. No se puede deshacer.'**
+  String get accountConfirmDeleteAccountBody;
+
+  /// No description provided for @accountBusyDeletingAccount.
+  ///
+  /// In es, this message translates to:
+  /// **'Eliminando la cuenta…'**
+  String get accountBusyDeletingAccount;
+
+  /// No description provided for @accountDeleted.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu cuenta se eliminó.'**
+  String get accountDeleted;
+
+  /// No description provided for @accountDeleteAccountFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo eliminar la cuenta. Revisa tu conexión.'**
+  String get accountDeleteAccountFailed;
+
+  /// No description provided for @settingsDeveloper.
+  ///
+  /// In es, this message translates to:
+  /// **'Modo desarrollador'**
+  String get settingsDeveloper;
+
+  /// No description provided for @developerCommonTools.
+  ///
+  /// In es, this message translates to:
+  /// **'Herramientas'**
+  String get developerCommonTools;
+
+  /// No description provided for @developerCopyReport.
+  ///
+  /// In es, this message translates to:
+  /// **'Copiar informe'**
+  String get developerCopyReport;
+
+  /// No description provided for @developerReportCopied.
+  ///
+  /// In es, this message translates to:
+  /// **'Informe copiado'**
+  String get developerReportCopied;
+
+  /// No description provided for @developerTestError.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar error de prueba'**
+  String get developerTestError;
+
+  /// No description provided for @developerTestErrorSent.
+  ///
+  /// In es, this message translates to:
+  /// **'Error de prueba enviado'**
+  String get developerTestErrorSent;
+
+  /// No description provided for @developerInformation.
+  ///
+  /// In es, this message translates to:
+  /// **'Información'**
+  String get developerInformation;
+
+  /// No description provided for @developerLoading.
+  ///
+  /// In es, this message translates to:
+  /// **'Cargando…'**
+  String get developerLoading;
+
+  /// No description provided for @developerSectionApp.
+  ///
+  /// In es, this message translates to:
+  /// **'Aplicación'**
+  String get developerSectionApp;
+
+  /// No description provided for @developerSectionDevice.
+  ///
+  /// In es, this message translates to:
+  /// **'Teléfono'**
+  String get developerSectionDevice;
+
+  /// No description provided for @developerSectionDisplay.
+  ///
+  /// In es, this message translates to:
+  /// **'Pantalla'**
+  String get developerSectionDisplay;
+
+  /// No description provided for @developerSectionLocale.
+  ///
+  /// In es, this message translates to:
+  /// **'Idioma y región'**
+  String get developerSectionLocale;
+
+  /// No description provided for @developerSectionNetwork.
+  ///
+  /// In es, this message translates to:
+  /// **'Red'**
+  String get developerSectionNetwork;
+
+  /// No description provided for @developerSectionBattery.
+  ///
+  /// In es, this message translates to:
+  /// **'Batería'**
+  String get developerSectionBattery;
+
+  /// No description provided for @developerSectionStorage.
+  ///
+  /// In es, this message translates to:
+  /// **'Almacenamiento'**
+  String get developerSectionStorage;
+
+  /// No description provided for @developerSectionFirebase.
+  ///
+  /// In es, this message translates to:
+  /// **'Firebase'**
+  String get developerSectionFirebase;
+
+  /// No description provided for @developerSectionAccount.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuenta y datos'**
+  String get developerSectionAccount;
+
+  /// No description provided for @developerSectionNotifications.
+  ///
+  /// In es, this message translates to:
+  /// **'Notificaciones'**
+  String get developerSectionNotifications;
+
+  /// No description provided for @developerSectionDependencies.
+  ///
+  /// In es, this message translates to:
+  /// **'Dependencias'**
+  String get developerSectionDependencies;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -127,8 +1458,7 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'es'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'es'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

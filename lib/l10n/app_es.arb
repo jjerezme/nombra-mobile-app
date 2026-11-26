@@ -1,6 +1,404 @@
 {
   "@@locale": "es",
   "appName": "Nombra",
-  "homeTitle": "Hola",
-  "homeSubtitle": "Esta es la app Nombra"
+  "navDownload": "Descargar",
+  "navRules": "Reglas",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "change": "Cambiar",
+  "retry": "Reintentar",
+  "delete": "Eliminar",
+  "accept": "Aceptar",
+  "modeQuick": "Personalizado",
+  "ruleAdd": "Agregar",
+  "changeFolderTooltip": "Cambiar carpeta de destino",
+  "homeUrlLabel": "URL del archivo",
+  "homePasteTooltip": "Pegar del portapapeles",
+  "homeUrlInvalid": "Introduce una URL https válida",
+  "homeUrlInsecure": "Solo se admiten enlaces https (cifrados)",
+  "homeSavedAs": "Se guardará como",
+  "homeDownload": "Descargar",
+  "homeRecents": "Recientes",
+  "homeRecentsEmpty": "Aún no hay descargas",
+  "homeProgress": "{received} de {total} · {speed}",
+  "@homeProgress": {
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
+  "homeProgressNoTotal": "{received} · {speed}",
+  "@homeProgressNoTotal": {
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "speed": {
+        "type": "String"
+      }
+    }
+  },
+  "homeWaiting": "En espera…",
+  "homeFinishing": "Guardando…",
+  "homeSavedIn": "Guardado en {folder} · {when}",
+  "@homeSavedIn": {
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "homeFailedHttp": "Error {code} · no se pudo descargar",
+  "@homeFailedHttp": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+  "homeFailed": "No se pudo descargar",
+  "homeFailedSave": "No se pudo guardar el archivo",
+  "homeNotFound": "Error 404 · no se encontró el archivo",
+  "homeFallbackDownload": "Se guardó en Download: {kind} no admite esta carpeta",
+  "@homeFallbackDownload": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNotificationsRationale": "Activa las notificaciones para ver el progreso de las descargas.",
+  "relativeNow": "ahora",
+  "relativeMinutes": "hace {minutes} min",
+  "@relativeMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "relativeHours": "hace {hours} h",
+  "@relativeHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "relativeDays": "hace {days} d",
+  "@relativeDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "downloadNotificationRunning": "Descargando {filename}",
+  "downloadNotificationError": "No se pudo descargar",
+  "shareTitle": "Guardar con Nombra",
+  "shareFileCount": "{count} archivos",
+  "@shareFileCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "shareFinalName": "Nombre final",
+  "kindImage": "imágenes",
+  "kindVideo": "videos",
+  "kindAudio": "audios",
+  "kindDocument": "documentos",
+  "kindOther": "archivos",
+  "shareNothing": "No hay un enlace ni archivos para guardar.",
+  "shareInsecure": "Solo se pueden guardar enlaces https (cifrados).",
+  "shareClose": "Cerrar",
+  "shareDownloading": "Descargando…",
+  "shareDone": "Listo, guardado en {folder}",
+  "@shareDone": {
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "shareLeaveHint": "Puedes cerrar esta hoja: el archivo terminará de guardarse la próxima vez que abras Nombra.",
+  "rulesTitle": "Reglas",
+  "rulesSubtitle": "Las reglas activas se ofrecen al descargar o compartir, ordenadas por nombre.",
+  "ruleDefaultBadge": "Predeterminada",
+  "ruleNoFolder": "Sin carpeta · última usada",
+  "newRule": "Nueva regla",
+  "editorTitleEdit": "Editar regla",
+  "editorTitleNew": "Nueva regla",
+  "editorBackTooltip": "Volver a Reglas",
+  "editorRuleName": "Nombre de la regla",
+  "editorNameRequired": "Escribe un nombre",
+  "editorPattern": "Patrón",
+  "editorBackspaceTooltip": "Borrar último elemento",
+  "editorTapToInsert": "Toca para insertar",
+  "editorAddText": "Texto…",
+  "editorTextDialogTitle": "Texto fijo",
+  "editorTextDialogHint": "p. ej. Factura_",
+  "editorExample": "Ejemplo · {name}",
+  "@editorExample": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorTransformTitle": "Transformar nombre",
+  "editorCase": "Mayúsculas / minúsculas",
+  "editorCaseKeep": "Por defecto",
+  "editorCaseUpper": "MAYÚSCULAS",
+  "editorCaseLower": "minúsculas",
+  "editorStripCopy": "Quitar sufijos de copia «(2)»",
+  "editorReplaceSpaces": "Reemplazar espacios",
+  "editorReplaceWith": "Reemplazar por",
+  "editorSpaceDash": "guion",
+  "editorSpaceUnderscore": "guion bajo",
+  "editorSpaceDot": "punto",
+  "editorReplaceWithChar": "Reemplazar por {name}",
+  "@editorReplaceWithChar": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSanitize": "Sanitizar nombre",
+  "editorSanitizeDesc": "Quita acentos (á → a), emojis y caracteres no válidos en archivos ( / \\ : * ? \" < > | ), y deja solo letras, números, - _ y punto.",
+  "editorFolderTitle": "Carpeta de destino",
+  "editorOptional": "(opcional)",
+  "editorFolderAlways": "Los archivos con esta regla se guardan siempre aquí.",
+  "editorNoFolderTitle": "Sin carpeta asignada",
+  "editorNoFolderDesc": "Se usará la última carpeta en la que guardaste, y podrás cambiarla al descargar o compartir.",
+  "editorPickFolder": "Elegir carpeta…",
+  "editorIfExists": "Si el nombre ya existe",
+  "editorConflictSuffix": "Añadir (1)",
+  "editorConflictReplace": "Reemplazar",
+  "editorConflictAsk": "Preguntar",
+  "editorDeleteRule": "Eliminar regla",
+  "editorDeleteTitle": "¿Eliminar la regla?",
+  "editorDeleteBody": "Se eliminará «{name}». Esta acción no se puede deshacer.",
+  "@editorDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "folderPickerTitle": "Elegir carpeta",
+  "folderPickerRoot": "Ubicación",
+  "folderPickerSubfolder": "Subcarpeta (opcional)",
+  "folderPickerUse": "Usar esta carpeta",
+  "folderPickerSavedIn": "Se guardará en",
+  "conflictTitle": "El archivo ya existe",
+  "conflictBody": "«{name}» ya está en {folder}.",
+  "@conflictBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "conflictReplace": "Reemplazar",
+  "conflictKeepBoth": "Conservar ambos",
+  "errRequired": "Este campo es obligatorio",
+  "errTooLong": "Máximo {max} caracteres",
+  "@errTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "errInvalidChars": "No uses /  : * ? \" < > |",
+  "errDuplicateName": "Ya existe una regla con ese nombre",
+  "errPatternEmpty": "Agrega al menos un elemento al patrón",
+  "errSubfolderInvalid": "Subcarpeta no válida: no uses .. ni : * ? \" < > |",
+  "editorDiscardTitle": "¿Descartar cambios?",
+  "editorDiscardBody": "Tienes cambios sin guardar en esta regla.",
+  "discard": "Descartar",
+  "editorKeepEditing": "Seguir editando",
+  "ruleNotFound": "Esta regla ya no existe",
+  "rulesEmptyTitle": "Aún no tienes reglas",
+  "rulesEmptyBody": "Crea una regla para renombrar tus descargas con un patrón.",
+  "navSettings": "Ajustes",
+  "settingsTitle": "Ajustes",
+  "settingsSubtitle": "Apariencia, idioma, descargas y datos.",
+  "settingsAppearance": "Apariencia",
+  "settingsTheme": "Tema",
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Oscuro",
+  "settingsLanguage": "Idioma",
+  "languageSystem": "Sistema",
+  "languageEs": "Español",
+  "languageEn": "English",
+  "settingsDownloads": "Descargas",
+  "settingsDefaultFolder": "Carpeta predeterminada",
+  "settingsDefaultFolderHint": "Se usa cuando la regla no define una carpeta.",
+  "settingsData": "Datos",
+  "settingsForgetRemembered": "Olvidar la última regla usada",
+  "settingsForgetRememberedHint": "Quita la última regla usada y se vuelve a elegir automáticamente.",
+  "settingsClearHistory": "Borrar historial de descargas",
+  "settingsClearHistoryHint": "No borra los archivos ya guardados.",
+  "settingsClearRules": "Borrar todas las reglas",
+  "settingsClearRulesHint": "Empiezas de nuevo, sin reglas.",
+  "settingsConfirmForgetTitle": "¿Olvidar la última regla usada?",
+  "settingsConfirmForgetBody": "La regla se volverá a elegir automáticamente.",
+  "settingsConfirmHistoryTitle": "¿Borrar el historial?",
+  "settingsConfirmHistoryBody": "Se quitan de la lista las descargas terminadas y con error. Los archivos guardados no se borran.",
+  "settingsConfirmRulesTitle": "¿Borrar todas las reglas?",
+  "settingsConfirmRulesBody": "Se eliminan {count} reglas. No se puede deshacer.",
+  "@settingsConfirmRulesBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsDone": "Listo",
+  "settingsVersion": "Versión {version} ({build})",
+  "@settingsVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "build": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationChannelName": "Archivos guardados",
+  "notificationSavedTitle": "Guardado",
+  "notificationSavedBody": "{name} · {folder}",
+  "notificationSaveFailedTitle": "No se pudo guardar",
+  "@notificationSavedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "quickNext": "Siguiente número",
+  "quickNextReset": "Reiniciar a 1",
+  "errInvalidNumber": "Escribe un número entero mayor que 0",
+  "quickNextHint": "Con el elemento de número en el patrón, el número sigue mientras no cambies el patrón; si lo cambias, vuelve a 1.",
+  "homeClearRecents": "Borrar",
+  "settingsShowRecents": "Mostrar archivos recientes",
+  "settingsShowRecentsHint": "Lista en Descargar los archivos guardados. Las descargas en curso siempre se ven.",
+  "editorSpaceToken": "Espacio",
+  "editorDigitsTitle": "Dígitos del número",
+  "editorDigitsLess": "Menos dígitos",
+  "editorDigitsMore": "Más dígitos",
+  "editorDigitsCount": "{count, plural, one{{count} dígito} other{{count} dígitos}}",
+  "editorDigitsExample": "Ejemplo: {example}",
+  "@editorDigitsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@editorDigitsExample": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "ruleOptCopySuffix": "Sin sufijo (2)",
+  "ruleOptSpaces": "Espacios → {char}",
+  "ruleOptSanitize": "Nombre limpio",
+  "ruleOptConflict": "Si existe: {policy}",
+  "@ruleOptSpaces": {
+    "placeholders": {
+      "char": {
+        "type": "String"
+      }
+    }
+  },
+  "@ruleOptConflict": {
+    "placeholders": {
+      "policy": {
+        "type": "String"
+      }
+    }
+  },
+  "modeNoneHint": "El archivo se guarda con su nombre original, sin aplicar ninguna regla.",
+  "ruleApply": "Aplicar una regla",
+  "homeActions": "Más acciones",
+  "homeOpen": "Abrir",
+  "homeRemove": "Quitar de la lista",
+  "homeOpenFailed": "No se pudo abrir el archivo. Puede que lo hayan movido o borrado.",
+  "settingsAccount": "Cuenta",
+  "accountBody": "Inicia sesión con Google para respaldar tus reglas y recuperarlas en otro teléfono.",
+  "accountSignIn": "Continuar con Google",
+  "accountSignInFailed": "No se pudo iniciar sesión. Inténtalo de nuevo.",
+  "accountUnavailable": "El respaldo no está disponible en esta compilación.",
+  "accountSyncing": "Respaldando tus reglas…",
+  "accountUpToDate": "Reglas respaldadas",
+  "accountError": "No se pudo respaldar tus reglas. Revisa tu conexión.",
+  "accountRetry": "Reintentar",
+  "accountSignOut": "Cerrar sesión",
+  "accountSignOutHint": "Tus reglas se quedan en este teléfono y en la nube.",
+  "accountDeleteBackup": "Borrar respaldo y cerrar sesión",
+  "accountDeleteBackupHint": "Elimina tus reglas de la nube. Las de este teléfono no se tocan.",
+  "accountConfirmDeleteTitle": "¿Borrar el respaldo?",
+  "accountConfirmDeleteBody": "Se eliminarán tus reglas de la nube y se cerrará la sesión. Las reglas de este teléfono se conservan.",
+  "accountDeleteFailed": "No se pudo borrar el respaldo. Revisa tu conexión.",
+  "ruleChoicesLabel": "Reglas de nombrado",
+  "accountBusySigningIn": "Iniciando sesión…",
+  "accountBusySigningOut": "Cerrando sesión…",
+  "accountBusyDeleting": "Borrando el respaldo…",
+  "editorExtensionLocked": "La extensión original del archivo se conserva y no se puede editar.",
+  "settingsLegal": "Legal",
+  "legalTerms": "Términos y condiciones",
+  "legalPrivacy": "Política de privacidad",
+  "accountLegalNote": "Al continuar aceptas los términos y la política de privacidad.",
+  "backTooltip": "Volver",
+  "accountDeleteAccount": "Eliminar cuenta",
+  "accountDeleteAccountHint": "Borra tu cuenta y el respaldo. Las reglas de este teléfono se quedan.",
+  "accountConfirmDeleteAccountTitle": "¿Eliminar tu cuenta?",
+  "accountConfirmDeleteAccountBody": "Se borran tu cuenta de Nombra y el respaldo en la nube. Antes debes elegir de nuevo tu cuenta de Google. Las reglas de este teléfono se quedan. No se puede deshacer.",
+  "accountBusyDeletingAccount": "Eliminando la cuenta…",
+  "accountDeleted": "Tu cuenta se eliminó.",
+  "accountDeleteAccountFailed": "No se pudo eliminar la cuenta. Revisa tu conexión.",
+  "settingsDeveloper": "Modo desarrollador",
+  "developerCommonTools": "Herramientas",
+  "developerCopyReport": "Copiar informe",
+  "developerReportCopied": "Informe copiado",
+  "developerTestError": "Enviar error de prueba",
+  "developerTestErrorSent": "Error de prueba enviado",
+  "developerInformation": "Información",
+  "developerLoading": "Cargando…",
+  "developerSectionApp": "Aplicación",
+  "developerSectionDevice": "Teléfono",
+  "developerSectionDisplay": "Pantalla",
+  "developerSectionLocale": "Idioma y región",
+  "developerSectionNetwork": "Red",
+  "developerSectionBattery": "Batería",
+  "developerSectionStorage": "Almacenamiento",
+  "developerSectionFirebase": "Firebase",
+  "developerSectionAccount": "Cuenta y datos",
+  "developerSectionNotifications": "Notificaciones",
+  "developerSectionDependencies": "Dependencias"
 }

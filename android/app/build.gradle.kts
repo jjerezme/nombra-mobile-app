@@ -19,7 +19,8 @@ android {
         applicationId = "com.jujeme.nombra"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        // Android 10+: files are saved to public folders through MediaStore, without storage permissions.
+        minSdk = 29
         targetSdk = flutter.targetSdkVersion
         // Uses the version code from pubspec.yaml. When using split APKs, 1000 * ABI_VERSION
         // is added automatically by Flutter. (https://developer.android.com/studio/build/configure-apk-splits#configure-APK-versions)
@@ -27,6 +28,11 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+    }
+
+    // AGP 9 turns resValues off by default; the flavors below set app_name through resValue.
+    buildFeatures {
+        resValues = true
     }
 
     // Two builds of the same app, each with its own Firebase project (see lib/core/environment.dart):
@@ -47,7 +53,8 @@ android {
 
     // The upload key is given as Gradle properties (UPLOAD_STORE_FILE, UPLOAD_STORE_PASSWORD, UPLOAD_KEY_ALIAS,
     // UPLOAD_KEY_PASSWORD) by scripts/build.dart, as ORG_GRADLE_PROJECT_* variables, so passwords never appear in a
-    // command line. Without them the release keeps the debug signing (fine for local preview builds).
+    // command line. Without them the dev release keeps the debug signing (fine for local preview builds); the prod release
+    // fails (see the end of this file).
     val hasUploadKey = project.hasProperty("UPLOAD_STORE_FILE")
     signingConfigs {
         if (hasUploadKey) {
@@ -82,4 +89,19 @@ flutter {
 if (listOf("dev", "prod").any { file("src/$it/google-services.json").exists() }) {
     apply(plugin = "com.google.gms.google-services")
     apply(plugin = "com.google.firebase.crashlytics")
+}
+
+// A production release (apk or bundle) must be signed with the upload key: it never falls back to the debug key.
+gradle.taskGraph.whenReady {
+    val isProdRelease = allTasks.any { task ->
+        task.project == project &&
+            task.name.endsWith("ProdRelease") &&
+            listOf("assemble", "bundle", "package").any { task.name.startsWith(it) }
+    }
+    if (isProdRelease && !project.hasProperty("UPLOAD_STORE_FILE")) {
+        throw GradleException(
+            "A prod release needs the upload key (UPLOAD_STORE_FILE, UPLOAD_STORE_PASSWORD, UPLOAD_KEY_ALIAS, " +
+                "UPLOAD_KEY_PASSWORD). Use scripts/build.dart with the key configured; see docs/BUILD.md.",
+        )
+    }
 }

@@ -4,8 +4,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 Set<String> _keys(String path) {
-  final json =
-      jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
+  final json = jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
   return json.keys.where((key) => !key.startsWith('@')).toSet();
 }
 

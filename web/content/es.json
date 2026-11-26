@@ -1,0 +1,123 @@
+{
+  "lang": "es",
+  "locale": "es-419",
+  "languageName": "Español",
+  "owner": "Jujeme",
+  "email": "jjerezme@gmail.com",
+  "updated": "Última actualización: 26 de noviembre de 2026",
+  "home": {
+    "back": "Volver"
+  },
+  "pages": {
+    "privacy": {
+      "slug": "privacy",
+      "title": "Política de privacidad",
+      "summary": "Qué datos trata la app, para qué y qué control tienes."
+    },
+    "terms": {
+      "slug": "terms",
+      "title": "Términos y condiciones",
+      "summary": "Las reglas para usar la app."
+    },
+    "delete": {
+      "slug": "delete-account",
+      "title": "Eliminar tu cuenta y tus datos",
+      "summary": "Cómo borrar tu cuenta y el respaldo de tus reglas."
+    }
+  },
+  "landing": {
+    "title": "Nombra: descarga y renombra archivos",
+    "headline": "Cada archivo, con el nombre correcto.",
+    "lead": "Nombra descarga un archivo desde un enlace, o recibe uno que compartes desde otra app, y lo guarda con el nombre que resulta de tus reglas.",
+    "download": "Disponible en Google Play",
+    "downloadNote": "Gratis para Android.",
+    "comingSoon": "Próximamente en Google Play. Gratis para Android.",
+    "featuresTitle": "Defines el nombre una vez y sirve siempre",
+    "showcase": [
+      {
+        "title": "Reglas de renombrado",
+        "text": "Decide cómo se llaman tus archivos.",
+        "bullets": [
+          "Un patrón con el nombre original, fecha, hora, número, dominio y tipo.",
+          "Mayúsculas, espacios y limpieza del nombre.",
+          "Carpeta de destino y qué hacer si el archivo ya existe."
+        ]
+      },
+      {
+        "title": "Descargas",
+        "text": "Pega un enlace y sigue usando tu teléfono.",
+        "bullets": [
+          "Descarga en segundo plano, con progreso y reintentos.",
+          "Solo enlaces https.",
+          "Se guarda en Download, Documents, Pictures, Movies o Music."
+        ]
+      },
+      {
+        "title": "Compartir con Nombra",
+        "text": "Guarda archivos directamente desde otras apps.",
+        "bullets": [
+          "«Guardar con Nombra» aparece al compartir un archivo o un enlace.",
+          "Elige la regla y la carpeta sin salir de lo que hacías."
+        ]
+      }
+    ],
+    "moreTitle": "Y más",
+    "more": [
+      {
+        "title": "Modo rápido",
+        "text": "Solo un prefijo y un sufijo, sin crear una regla."
+      },
+      {
+        "title": "Respaldo opcional",
+        "text": "Inicia sesión con Google y tus reglas se mantienen al día entre dispositivos."
+      },
+      {
+        "title": "Sin cuenta",
+        "text": "Todo funciona sin iniciar sesión."
+      },
+      {
+        "title": "Privada",
+        "text": "Sin publicidad ni analítica de uso."
+      },
+      {
+        "title": "Claro y oscuro",
+        "text": "Sigue a tu teléfono o a tu elección."
+      },
+      {
+        "title": "Dos idiomas",
+        "text": "Español e inglés."
+      }
+    ],
+    "ctaTitle": "Pon tus archivos en orden",
+    "legalTitle": "Legal"
+  },
+  "delete": {
+    "intro": "Puedes eliminar tu cuenta de Nombra y los datos asociados cuando quieras. App: Nombra. Desarrollador: {{owner}}.",
+    "sections": [
+      {
+        "title": "Opción 1: desde la app",
+        "body": "1. Abre Nombra y entra en Ajustes.\n2. En la sección de cuenta elige «Eliminar cuenta».\n3. Confirma y elige de nuevo tu cuenta de Google.\nTu cuenta y el respaldo de tus reglas se borran de inmediato."
+      },
+      {
+        "title": "Opción 2: por correo",
+        "body": "Si no puedes abrir la app o ya no tienes el teléfono, escribe a {{email}} desde el correo de tu cuenta con el asunto «Eliminar mi cuenta de Nombra». Podemos pedirte que confirmes que la cuenta es tuya.\nEliminaremos tu cuenta y tus datos y te responderemos en un máximo de 30 días."
+      },
+      {
+        "title": "Qué se borra",
+        "body": "- Tu registro de inicio de sesión (identificador, nombre y correo) en Firebase Authentication.\n- El respaldo de tus reglas en la nube."
+      },
+      {
+        "title": "Qué se conserva y por cuánto tiempo",
+        "body": "- Las reglas, ajustes, historial y archivos de tu teléfono se quedan allí: bórralos desde Ajustes o desinstala la app. Los archivos descargados están en carpetas públicas y no se borran al desinstalar.\n- Las copias técnicas de Google Firebase pueden tardar un tiempo limitado en desaparecer.\n- Los informes de fallos no llevan enlaces ni datos de la cuenta, y Firebase Crashlytics los conserva según su propia política."
+      },
+      {
+        "title": "Si usas Nombra sin cuenta",
+        "body": "No hay cuenta que eliminar: tus datos solo están en tu teléfono. Bórralos desde Ajustes o desinstala la app."
+      },
+      {
+        "title": "Borrar solo una parte",
+        "body": "Sin eliminar la cuenta puedes usar «Borrar respaldo y cerrar sesión», o borrar el historial y las reglas desde Ajustes."
+      }
+    ]
+  }
+}

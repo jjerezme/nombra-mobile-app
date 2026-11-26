@@ -13,8 +13,730 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Nombra';
 
   @override
-  String get homeTitle => 'Hello';
+  String get navDownload => 'Download';
 
   @override
-  String get homeSubtitle => 'This is the Nombra app';
+  String get navRules => 'Rules';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get change => 'Change';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get accept => 'OK';
+
+  @override
+  String get modeQuick => 'Custom';
+
+  @override
+  String get ruleAdd => 'Add';
+
+  @override
+  String get changeFolderTooltip => 'Change destination folder';
+
+  @override
+  String get homeUrlLabel => 'File URL';
+
+  @override
+  String get homePasteTooltip => 'Paste from clipboard';
+
+  @override
+  String get homeUrlInvalid => 'Enter a valid https URL';
+
+  @override
+  String get homeUrlInsecure => 'Only https (encrypted) links are supported';
+
+  @override
+  String get homeSavedAs => 'It will be saved as';
+
+  @override
+  String get homeDownload => 'Download';
+
+  @override
+  String get homeRecents => 'Recent';
+
+  @override
+  String get homeRecentsEmpty => 'No downloads yet';
+
+  @override
+  String homeProgress(String received, String total, String speed) {
+    return '$received of $total · $speed';
+  }
+
+  @override
+  String homeProgressNoTotal(String received, String speed) {
+    return '$received · $speed';
+  }
+
+  @override
+  String get homeWaiting => 'Waiting…';
+
+  @override
+  String get homeFinishing => 'Saving…';
+
+  @override
+  String homeSavedIn(String folder, String when) {
+    return 'Saved to $folder · $when';
+  }
+
+  @override
+  String homeFailedHttp(int code) {
+    return 'Error $code · could not download';
+  }
+
+  @override
+  String get homeFailed => 'Could not download';
+
+  @override
+  String get homeFailedSave => 'Could not save the file';
+
+  @override
+  String get homeNotFound => 'Error 404 · file not found';
+
+  @override
+  String homeFallbackDownload(String kind) {
+    return 'Saved to Download: $kind cannot go in this folder';
+  }
+
+  @override
+  String get homeNotificationsRationale => 'Turn on notifications to see download progress.';
+
+  @override
+  String get relativeNow => 'now';
+
+  @override
+  String relativeMinutes(int minutes) {
+    return '$minutes min ago';
+  }
+
+  @override
+  String relativeHours(int hours) {
+    return '$hours h ago';
+  }
+
+  @override
+  String relativeDays(int days) {
+    return '$days d ago';
+  }
+
+  @override
+  String downloadNotificationRunning(Object filename) {
+    return 'Downloading $filename';
+  }
+
+  @override
+  String get downloadNotificationError => 'Could not download';
+
+  @override
+  String get shareTitle => 'Save with Nombra';
+
+  @override
+  String shareFileCount(int count) {
+    return '$count files';
+  }
+
+  @override
+  String get shareFinalName => 'Final name';
+
+  @override
+  String get kindImage => 'images';
+
+  @override
+  String get kindVideo => 'videos';
+
+  @override
+  String get kindAudio => 'audio files';
+
+  @override
+  String get kindDocument => 'documents';
+
+  @override
+  String get kindOther => 'files';
+
+  @override
+  String get shareNothing => 'There is no link or file to save.';
+
+  @override
+  String get shareInsecure => 'Only https (encrypted) links can be saved.';
+
+  @override
+  String get shareClose => 'Close';
+
+  @override
+  String get shareDownloading => 'Downloading…';
+
+  @override
+  String shareDone(String folder) {
+    return 'Done, saved to $folder';
+  }
+
+  @override
+  String get shareLeaveHint => 'You can close this sheet: the file will finish saving the next time you open Nombra.';
+
+  @override
+  String get rulesTitle => 'Rules';
+
+  @override
+  String get rulesSubtitle => 'Active rules are offered when downloading or sharing, sorted by name.';
+
+  @override
+  String get ruleDefaultBadge => 'Default';
+
+  @override
+  String get ruleNoFolder => 'No folder · last used';
+
+  @override
+  String get newRule => 'New rule';
+
+  @override
+  String get editorTitleEdit => 'Edit rule';
+
+  @override
+  String get editorTitleNew => 'New rule';
+
+  @override
+  String get editorBackTooltip => 'Back to Rules';
+
+  @override
+  String get editorRuleName => 'Rule name';
+
+  @override
+  String get editorNameRequired => 'Enter a name';
+
+  @override
+  String get editorPattern => 'Pattern';
+
+  @override
+  String get editorBackspaceTooltip => 'Delete last item';
+
+  @override
+  String get editorTapToInsert => 'Tap to insert';
+
+  @override
+  String get editorAddText => 'Text…';
+
+  @override
+  String get editorTextDialogTitle => 'Fixed text';
+
+  @override
+  String get editorTextDialogHint => 'e.g. Invoice_';
+
+  @override
+  String editorExample(String name) {
+    return 'Example · $name';
+  }
+
+  @override
+  String get editorTransformTitle => 'Transform name';
+
+  @override
+  String get editorCase => 'Upper / lower case';
+
+  @override
+  String get editorCaseKeep => 'Default';
+
+  @override
+  String get editorCaseUpper => 'UPPERCASE';
+
+  @override
+  String get editorCaseLower => 'lowercase';
+
+  @override
+  String get editorStripCopy => 'Remove copy suffixes “(2)”';
+
+  @override
+  String get editorReplaceSpaces => 'Replace spaces';
+
+  @override
+  String get editorReplaceWith => 'Replace with';
+
+  @override
+  String get editorSpaceDash => 'hyphen';
+
+  @override
+  String get editorSpaceUnderscore => 'underscore';
+
+  @override
+  String get editorSpaceDot => 'dot';
+
+  @override
+  String editorReplaceWithChar(String name) {
+    return 'Replace with $name';
+  }
+
+  @override
+  String get editorSanitize => 'Sanitize name';
+
+  @override
+  String get editorSanitizeDesc =>
+      'Removes accents (á → a), emojis and characters not valid in file names ( / \\ : * ? \" < > | ), keeping only letters, digits, - _ and dots.';
+
+  @override
+  String get editorFolderTitle => 'Destination folder';
+
+  @override
+  String get editorOptional => '(optional)';
+
+  @override
+  String get editorFolderAlways => 'Files with this rule are always saved here.';
+
+  @override
+  String get editorNoFolderTitle => 'No folder assigned';
+
+  @override
+  String get editorNoFolderDesc =>
+      'The last folder you saved to will be used, and you can change it when you download or share.';
+
+  @override
+  String get editorPickFolder => 'Choose folder…';
+
+  @override
+  String get editorIfExists => 'If the name already exists';
+
+  @override
+  String get editorConflictSuffix => 'Add (1)';
+
+  @override
+  String get editorConflictReplace => 'Replace';
+
+  @override
+  String get editorConflictAsk => 'Ask';
+
+  @override
+  String get editorDeleteRule => 'Delete rule';
+
+  @override
+  String get editorDeleteTitle => 'Delete the rule?';
+
+  @override
+  String editorDeleteBody(String name) {
+    return '“$name” will be deleted. This cannot be undone.';
+  }
+
+  @override
+  String get folderPickerTitle => 'Choose folder';
+
+  @override
+  String get folderPickerRoot => 'Location';
+
+  @override
+  String get folderPickerSubfolder => 'Subfolder (optional)';
+
+  @override
+  String get folderPickerUse => 'Use this folder';
+
+  @override
+  String get folderPickerSavedIn => 'It will be saved in';
+
+  @override
+  String get conflictTitle => 'The file already exists';
+
+  @override
+  String conflictBody(String name, String folder) {
+    return '“$name” is already in $folder.';
+  }
+
+  @override
+  String get conflictReplace => 'Replace';
+
+  @override
+  String get conflictKeepBoth => 'Keep both';
+
+  @override
+  String get errRequired => 'This field is required';
+
+  @override
+  String errTooLong(int max) {
+    return 'At most $max characters';
+  }
+
+  @override
+  String get errInvalidChars => 'Do not use /  : * ? \" < > |';
+
+  @override
+  String get errDuplicateName => 'A rule with that name already exists';
+
+  @override
+  String get errPatternEmpty => 'Add at least one item to the pattern';
+
+  @override
+  String get errSubfolderInvalid => 'Invalid subfolder: do not use .. or : * ? \" < > |';
+
+  @override
+  String get editorDiscardTitle => 'Discard changes?';
+
+  @override
+  String get editorDiscardBody => 'You have unsaved changes in this rule.';
+
+  @override
+  String get discard => 'Discard';
+
+  @override
+  String get editorKeepEditing => 'Keep editing';
+
+  @override
+  String get ruleNotFound => 'This rule no longer exists';
+
+  @override
+  String get rulesEmptyTitle => 'You have no rules yet';
+
+  @override
+  String get rulesEmptyBody => 'Create a rule to rename your downloads with a pattern.';
+
+  @override
+  String get navSettings => 'Settings';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsSubtitle => 'Appearance, language, downloads and data.';
+
+  @override
+  String get settingsAppearance => 'Appearance';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get settingsLanguage => 'Language';
+
+  @override
+  String get languageSystem => 'System';
+
+  @override
+  String get languageEs => 'Español';
+
+  @override
+  String get languageEn => 'English';
+
+  @override
+  String get settingsDownloads => 'Downloads';
+
+  @override
+  String get settingsDefaultFolder => 'Default folder';
+
+  @override
+  String get settingsDefaultFolderHint => 'Used when the rule does not set a folder.';
+
+  @override
+  String get settingsData => 'Data';
+
+  @override
+  String get settingsForgetRemembered => 'Forget last rule used';
+
+  @override
+  String get settingsForgetRememberedHint => 'Removes the last rule used; the rule is picked automatically again.';
+
+  @override
+  String get settingsClearHistory => 'Clear download history';
+
+  @override
+  String get settingsClearHistoryHint => 'Files already saved are not deleted.';
+
+  @override
+  String get settingsClearRules => 'Delete all rules';
+
+  @override
+  String get settingsClearRulesHint => 'Start over with no rules.';
+
+  @override
+  String get settingsConfirmForgetTitle => 'Forget last rule used?';
+
+  @override
+  String get settingsConfirmForgetBody => 'The rule will be picked automatically again.';
+
+  @override
+  String get settingsConfirmHistoryTitle => 'Clear the history?';
+
+  @override
+  String get settingsConfirmHistoryBody =>
+      'Finished and failed downloads are removed from the list. Saved files are not deleted.';
+
+  @override
+  String get settingsConfirmRulesTitle => 'Delete all rules?';
+
+  @override
+  String settingsConfirmRulesBody(int count) {
+    return '$count rules will be deleted. This cannot be undone.';
+  }
+
+  @override
+  String get settingsDone => 'Done';
+
+  @override
+  String settingsVersion(String version, String build) {
+    return 'Version $version ($build)';
+  }
+
+  @override
+  String get notificationChannelName => 'Saved files';
+
+  @override
+  String get notificationSavedTitle => 'Saved';
+
+  @override
+  String notificationSavedBody(String name, String folder) {
+    return '$name · $folder';
+  }
+
+  @override
+  String get notificationSaveFailedTitle => 'Could not save';
+
+  @override
+  String get quickNext => 'Next number';
+
+  @override
+  String get quickNextReset => 'Reset to 1';
+
+  @override
+  String get errInvalidNumber => 'Enter a whole number greater than 0';
+
+  @override
+  String get quickNextHint =>
+      'With the number item in the pattern, the number goes on as long as you do not change the pattern; if you do, it starts again at 1.';
+
+  @override
+  String get homeClearRecents => 'Clear';
+
+  @override
+  String get settingsShowRecents => 'Show recent files';
+
+  @override
+  String get settingsShowRecentsHint => 'Lists the saved files in Download. Downloads in progress are always shown.';
+
+  @override
+  String get editorSpaceToken => 'Space';
+
+  @override
+  String get editorDigitsTitle => 'Digits of the number';
+
+  @override
+  String get editorDigitsLess => 'Fewer digits';
+
+  @override
+  String get editorDigitsMore => 'More digits';
+
+  @override
+  String editorDigitsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count digits', one: '$count digit');
+    return '$_temp0';
+  }
+
+  @override
+  String editorDigitsExample(String example) {
+    return 'Example: $example';
+  }
+
+  @override
+  String get ruleOptCopySuffix => 'No (2) suffix';
+
+  @override
+  String ruleOptSpaces(String char) {
+    return 'Spaces → $char';
+  }
+
+  @override
+  String get ruleOptSanitize => 'Clean name';
+
+  @override
+  String ruleOptConflict(String policy) {
+    return 'If it exists: $policy';
+  }
+
+  @override
+  String get modeNoneHint => 'The file is saved with its original name, without applying any rule.';
+
+  @override
+  String get ruleApply => 'Apply a rule';
+
+  @override
+  String get homeActions => 'More actions';
+
+  @override
+  String get homeOpen => 'Open';
+
+  @override
+  String get homeRemove => 'Remove from list';
+
+  @override
+  String get homeOpenFailed => 'The file could not be opened. It may have been moved or deleted.';
+
+  @override
+  String get settingsAccount => 'Account';
+
+  @override
+  String get accountBody => 'Sign in with Google to back up your rules and get them back on another phone.';
+
+  @override
+  String get accountSignIn => 'Continue with Google';
+
+  @override
+  String get accountSignInFailed => 'Could not sign in. Try again.';
+
+  @override
+  String get accountUnavailable => 'Backup is not available in this build.';
+
+  @override
+  String get accountSyncing => 'Backing up your rules…';
+
+  @override
+  String get accountUpToDate => 'Rules backed up';
+
+  @override
+  String get accountError => 'Your rules could not be backed up. Check your connection.';
+
+  @override
+  String get accountRetry => 'Retry';
+
+  @override
+  String get accountSignOut => 'Sign out';
+
+  @override
+  String get accountSignOutHint => 'Your rules stay on this phone and in the cloud.';
+
+  @override
+  String get accountDeleteBackup => 'Delete backup and sign out';
+
+  @override
+  String get accountDeleteBackupHint => 'Removes your rules from the cloud. The ones on this phone are not touched.';
+
+  @override
+  String get accountConfirmDeleteTitle => 'Delete the backup?';
+
+  @override
+  String get accountConfirmDeleteBody =>
+      'Your rules will be removed from the cloud and you will be signed out. The rules on this phone are kept.';
+
+  @override
+  String get accountDeleteFailed => 'The backup could not be deleted. Check your connection.';
+
+  @override
+  String get ruleChoicesLabel => 'Naming rules';
+
+  @override
+  String get accountBusySigningIn => 'Signing in…';
+
+  @override
+  String get accountBusySigningOut => 'Signing out…';
+
+  @override
+  String get accountBusyDeleting => 'Deleting the backup…';
+
+  @override
+  String get editorExtensionLocked => 'The original file extension is kept and cannot be edited.';
+
+  @override
+  String get settingsLegal => 'Legal';
+
+  @override
+  String get legalTerms => 'Terms and conditions';
+
+  @override
+  String get legalPrivacy => 'Privacy policy';
+
+  @override
+  String get accountLegalNote => 'By continuing you accept the terms and the privacy policy.';
+
+  @override
+  String get backTooltip => 'Back';
+
+  @override
+  String get accountDeleteAccount => 'Delete account';
+
+  @override
+  String get accountDeleteAccountHint => 'Deletes your account and the backup. The rules on this phone stay.';
+
+  @override
+  String get accountConfirmDeleteAccountTitle => 'Delete your account?';
+
+  @override
+  String get accountConfirmDeleteAccountBody =>
+      'Your Nombra account and the cloud backup are deleted. First you pick your Google account again. The rules on this phone stay. This cannot be undone.';
+
+  @override
+  String get accountBusyDeletingAccount => 'Deleting the account…';
+
+  @override
+  String get accountDeleted => 'Your account was deleted.';
+
+  @override
+  String get accountDeleteAccountFailed => 'The account could not be deleted. Check your connection.';
+
+  @override
+  String get settingsDeveloper => 'Developer mode';
+
+  @override
+  String get developerCommonTools => 'Tools';
+
+  @override
+  String get developerCopyReport => 'Copy report';
+
+  @override
+  String get developerReportCopied => 'Report copied';
+
+  @override
+  String get developerTestError => 'Send test error';
+
+  @override
+  String get developerTestErrorSent => 'Test error sent';
+
+  @override
+  String get developerInformation => 'Information';
+
+  @override
+  String get developerLoading => 'Loading…';
+
+  @override
+  String get developerSectionApp => 'App';
+
+  @override
+  String get developerSectionDevice => 'Phone';
+
+  @override
+  String get developerSectionDisplay => 'Display';
+
+  @override
+  String get developerSectionLocale => 'Language and region';
+
+  @override
+  String get developerSectionNetwork => 'Network';
+
+  @override
+  String get developerSectionBattery => 'Battery';
+
+  @override
+  String get developerSectionStorage => 'Storage';
+
+  @override
+  String get developerSectionFirebase => 'Firebase';
+
+  @override
+  String get developerSectionAccount => 'Account and data';
+
+  @override
+  String get developerSectionNotifications => 'Notifications';
+
+  @override
+  String get developerSectionDependencies => 'Dependencies';
 }

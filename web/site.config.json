@@ -1,0 +1,27 @@
+{
+  "name": "Nombra",
+  "playUrl": null,
+  "logo": {
+    "png": "assets/images/logo.png"
+  },
+  "privacy": {
+    "source": "app",
+    "file": "web/legal/{lang}.json",
+    "key": "privacy"
+  },
+  "terms": {
+    "source": "app",
+    "file": "web/legal/{lang}.json",
+    "key": "terms"
+  },
+  "theme": {
+    "light": {
+      "accent": "#0B6E5F",
+      "onAccent": "#ffffff"
+    },
+    "dark": {
+      "accent": "#5FD0BC",
+      "onAccent": "#0e0e10"
+    }
+  }
+}

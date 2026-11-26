@@ -8,7 +8,7 @@ Nombra parte de la plantilla `mobile-base` y se adaptó a Flutter (ver [ADR 001]
 | Rama de producción | `master` |
 | Lenguaje | Dart (Flutter 3.50), solo Android |
 | Estado / rutas | Riverpod / go_router |
-| Firebase | Plugins nativos de FlutterFire (`firebase_core`, `cloud_firestore`, `firebase_crashlytics`) |
+| Firebase | Plugins nativos de FlutterFire (`firebase_core`, `cloud_firestore`, `firebase_crashlytics`, `firebase_auth`, `firebase_app_check`) |
 | Entornos | Flavors `dev` y `prod` |
 | Commits | Conventional Commits en inglés + `Co-Authored-By` |
 
@@ -46,15 +46,28 @@ Nombra parte de la plantilla `mobile-base` y se adaptó a Flutter (ver [ADR 001]
 - App Check, Crashlytics, analytics sin datos personales.
 - Eliminar cuenta borra todos los datos del usuario.
 
+## Política y términos dentro de la app
+Se leen sin conexión desde Ajustes › Legal (dos filas), con el mismo texto que la web.
+
+## Modo desarrollador
+Solo en el flavor `dev`: en `prod` no existe. Herramientas comunes (copiar informe, error de prueba, con aviso flotante) e información en este orden: app · teléfono · pantalla · idioma y región · red · batería · almacenamiento · Firebase · cuenta y datos · notificaciones · dependencias.
+
+## Sitio web
+Landing, `/privacy`, `/terms` y `/delete-account` en inglés (por defecto) y español, con el generador común (`scripts/build-web.mjs`, `web/style.css`). Sin `playUrl` la landing dice «Próximamente».
+
+## Fichas de Google Play (`store/`)
+`listing/<idioma>.md` (`en-US` y `es-419`), `graphics/icon-512.png`, `graphics/feature-graphic-<idioma>.png` y `screenshots/<idioma>/`. Límites: título 30, corta 80, completa 4000, novedades 500.
+
 ## Calidad
 - Función pura nueva = test. Ningún archivo supera 500 líneas.
-- CI por PR: analyze, test, check_styles. Dependabot activo.
+- CI por PR: analyze, test, check_styles.
+- Dependabot activo (`.github/dependabot.yml` común: semanal contra `develop`, menores y parches agrupados, mayores a mano) y alertas y actualizaciones de seguridad activas en GitHub.
 
 ## Git
 Gitflow: `feature/*` y `bugfix/*` → `develop`; `release/*` y `hotfix/*` → `master`. Ver `docs/GITFLOW.md`.
 
 ## Documentación
-- `README.md` (<120 líneas) y `CLAUDE.md` (<200 líneas).
+- `README.md` (<120 líneas), `CLAUDE.md` (<200 líneas) y `CHANGELOG.md` (Keep a Changelog: «Sin publicar» sin versión mientras los cambios entran a `develop`).
 - `docs/`: `GITFLOW.md`, `ARCHITECTURE.md`, `BUILD.md`, `decisions/NNN-titulo.md`.
 - Toda decisión técnica va en un ADR; si restringe código futuro, una línea en "Reglas vigentes" de `CLAUDE.md`.
 - Español neutro (tuteo) en docs e i18n.
